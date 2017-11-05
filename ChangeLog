@@ -1,0 +1,13 @@
+# ChangeLog for squashmount
+
+*bookmarkdupes-0.2
+	Martin Väth <martin at mvath.de>:
+	- Unselect all by default to minimize risk of accidental deletion
+	- Internationalization
+	- Provide German translation
+	- Fix error catcher for bookmark removal
+	- Improve code clarity for lock handling
+
+*bookmarkdupes-0.1
+	Martin Väth <martin at mvath.de>:
+	- Initial implementation

@@ -1,0 +1,96 @@
+{
+  "extensionName": {
+    "message": "Lesezeichenduplikate",
+    "description": "Name of the extension"
+  },
+  "extensionDescription": {
+    "message": "Anzeige/Entfernung doppelter Lesezeichen",
+    "description": "Description of the extension"
+  },
+  "buttonListExactDupes": {
+    "message": "Exakte Lesezeichenduplikate",
+    "description": "Button for listing exact dupes"
+  },
+  "buttonListSimilarDupes": {
+    "message": "Ähnliche Lesezeichenduplikate",
+    "description": "Button for listing similar dupes"
+  },
+  "buttonMarkButFirst": {
+    "message": "Alle außer Gruppenersten markieren",
+    "description": "Button for marking all but first"
+  },
+  "buttonMarkButLast": {
+    "message": "Alle außer Gruppenletzten markieren",
+    "description": "Button for marking all but last"
+  },
+  "buttonUnmarkAll": {
+    "message": "Alle Markierungen entfernen",
+    "description": "Button for unmarking all"
+  },
+  "buttonRemoveMarked": {
+    "message": "Markierte Lesezeichen löschen",
+    "description": "Button for removing marked bookmarks"
+  },
+  "messageExactMatchesGroups": {
+    "message": "Exakte Duplikate ($TOTAL$ Lesezeichen in $GROUPS$ Gruppen)",
+    "description": "Report specified numbers of exact matches and groups",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "2"
+      },
+      "groups": {
+        "content": "$2",
+        "example": "1"
+      }
+    }
+  },
+  "messageSimilarMatchesGroups": {
+    "message": "Ähnliche Duplikate ($TOTAL$ Lesezeichen in $GROUPS$ Gruppen)",
+    "description": "Report specified numbers of similar matches and groups",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "2"
+      },
+      "groups": {
+        "content": "$2",
+        "example": "1"
+      }
+    }
+  },
+  "messageCalculating": {
+    "message": "Suche Duplikate",
+    "description": "Report that calculation started"
+  },
+  "messageCalculatingError": {
+    "message": "Fehler: $ERROR$",
+    "description": "Report specified error during calculation",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      }
+    }
+  },
+  "messageRemoveSuccess": {
+    "message": "$TOTAL$ Lesezeichen gelöscht!",
+    "description": "Report success when removing specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemoveFailure": {
+    "message": "Fehler: $ERROR$",
+    "description": "Report specified error when removing bookmarks",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      }
+    }
+  }
+}

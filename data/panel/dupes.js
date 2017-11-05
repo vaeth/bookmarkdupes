@@ -8,32 +8,41 @@ var calculating;
 var lock = false;
 
 function displayMessage(msg) {
-  document.getElementById("messagetext").innerHTML = msg;
+  document.getElementById("textMessage").innerHTML = msg;
 }
 
-function getButtons() {
-  return document.getElementById("extrabuttons");
+
+function getButtonsExtra() {
+  return document.getElementById("buttonsExtra");
+}
+
+function getButtonsRemove() {
+  return document.getElementById("buttonsRemove");
 }
 
 function getTop() {
-  return document.getElementById("bookmarkdupes");
+  return document.getElementById("tableBookmarks");
 }
 
 function addButton(parent, id, text) {
   let button = document.createElement("button");
   button.type = "button";
   button.id = id;
+  if (!text) {
+    text = browser.i18n.getMessage(id);
+  }
   let buttontext = document.createTextNode(text);
   button.appendChild(buttontext);
   parent.appendChild(button);
 }
 
 function addButtons() {
-  let parent = getButtons();
-  addButton(parent, "markButFirstButton", "Mark all but first");
-  addButton(parent, "markButLastButton", "Mark all but last");
-  addButton(parent, "unmarkAllButton", "Unmark all");
-  addButton(parent, "removeMarkedButton", "Remove marked bookmarks");
+  let parent = getButtonsExtra();
+  addButton(parent, "buttonMarkButFirst");
+  addButton(parent, "buttonMarkButLast");
+  addButton(parent, "buttonUnmarkAll");
+  parent = getButtonsRemove();
+  addButton(parent, "buttonRemoveMarked");
 }
 
 function clearItem(top) {
@@ -42,8 +51,9 @@ function clearItem(top) {
   }
 }
 
-function clearButtons() {
-  clearItem(getButtons());
+function clearButtonsExtra() {
+  clearItem(getButtonsExtra());
+  clearItem(getButtonsRemove());
 }
 
 function clearBookmarks() {
@@ -141,7 +151,7 @@ function calculateDupe(node, parent) {
   }
   if (ids.size > 2) {
     ++calculating.total;
-    addBookmark(text, id, true);
+    addBookmark(text, id, false);
     return;
   }
   if (calculating.groups++ == 0) {
@@ -149,11 +159,9 @@ function calculateDupe(node, parent) {
   } else {
     addRuler();
   }
-  let checked = false;
   for (let [currid, currtext] of ids) {
     ++calculating.total;
-    addBookmark(currtext, currid, checked);
-    checked = true;
+    addBookmark(currtext, currid, false);
   }
 }
 
@@ -174,7 +182,6 @@ function calculateNodes(node, parent) {
 
 function calculateFinish() {
   calculating = {};
-  lock = false;
 }
 
 function calculateTree(nodes) {
@@ -182,41 +189,40 @@ function calculateTree(nodes) {
   calculating.groups = 0;
   calculating.total = 0;
   calculateNodes(nodes[0], "");
-  displayMessage(calculating.message + " (" +
-    String(calculating.total) + " matches in " +
-    String(calculating.groups) + " groups)");
+  displayMessage(browser.i18n.getMessage((calculating.exact ?
+    "messageExactMatchesGroups" : "messageSimilarMatchesGroups"),
+    [String(calculating.total), String(calculating.groups)]));
   calculateFinish();
 }
 
 function calculateError(error) {
-  displayMessage("Error: " + error);
+  displayMessage(browser.i18n.getMessage("messageCalculatingError", error));
   calculateFinish();
 }
 
-function calculate(exact, before, after) {
-  displayMessage(before);
+function calculate(exact) {
+  displayMessage(browser.i18n.getMessage("messageCalculating"));
   calculating = {};
   calculating.exact = exact;
-  calculating.message = after;
-  clearButtons();
+  clearButtonsExtra();
   clearBookmarks();
 //https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/BookmarkTreeNode
-  browser.bookmarks.getTree().then(calculateTree, calculateError);
+  return browser.bookmarks.getTree().then(calculateTree, calculateError);
 }
 
 function removeFinish() {
-  clearButtons();
+  clearButtonsExtra();
   clearBookmarks();
-  lock = false;
 }
 
 function removeSuccess(a) {
-  displayMessage(String(a.length) + " bookmarks removed!");
+  displayMessage(browser.i18n.getMessage("messageRemoveSuccess",
+    String(a.length)));
   removeFinish();
 }
 
-function removeFailure(a) {
-  displayMessage("Failure when removing " + String(a.length) + " bookmarks!");
+function removeFailure(error) {
+  displayMessage(browser.i18n.getMessage("messageRemoveFailure", error));
   removeFinish();
 }
 
@@ -236,35 +242,44 @@ function removeMarked() {
     }
     promises.push(browser.bookmarks.remove(checkBox.id));
   }
-  Promise.all(promises).then(removeSuccess, removeFailure);
+  return Promise.all(promises).then(removeSuccess, removeFailure);
 }
 
-function eventListener(event) {
+function unlock() {
+  lock = false;
+}
+
+function clickListener(event) {
   if (lock) {
     return;
   }
   lock = true;
   switch(event.target.id) {
-    case "exactButton":
-      calculate(true, "Calculating exact dupes", "Exact dupes");
-      return;  // A promise might be running which must unlock
-    case "similarButton":
-      calculate(false, "Calculating similar dupes", "Similar dupes");
-      return;  // A promise might be running which must unlock
-    case "removeMarkedButton":
-      removeMarked();
-      return;  // A promise might be running which must unlock
-    case "markButFirstButton":
+    case "buttonListExactDupes":
+      calculate(true).then(unlock, unlock);
+      return;
+    case "buttonListSimilarDupes":
+      calculate(false).then(unlock, unlock);
+      return;
+    case "buttonRemoveMarked":
+      removeMarked().then(unlock, unlock);
+      return;
+    case "buttonMarkButFirst":
       mark(1);
       break;
-    case "markButLastButton":
+    case "buttonMarkButLast":
       mark(-1);
       break;
-    case "unmarkAllButton":
+    case "buttonUnmarkAll":
       mark(0);
       break;
   }
-  lock = false;
+  unlock();
 }
 
-document.addEventListener("click", eventListener);
+{
+  let parent = document.getElementById("buttonsBase");
+  addButton(parent, "buttonListExactDupes");
+  addButton(parent, "buttonListSimilarDupes");
+  document.addEventListener("click", clickListener);
+}

@@ -1,0 +1,96 @@
+{
+  "extensionName": {
+    "message": "Bookmark Dupes",
+    "description": "Name of the extension"
+  },
+  "extensionDescription": {
+    "message": "Display/Remove duplicate bookmarks",
+    "description": "Description of the extension"
+  },
+  "buttonListExactDupes": {
+    "message": "List exact dupes",
+    "description": "Button for listing exact dupes"
+  },
+  "buttonListSimilarDupes": {
+    "message": "List similar dupes",
+    "description": "Button for listing similar dupes"
+  },
+  "buttonMarkButFirst": {
+    "message": "Mark all but first in each group",
+    "description": "Button for marking all but first"
+  },
+  "buttonMarkButLast": {
+    "message": "Mark all but last in each group",
+    "description": "Button for marking all but last"
+  },
+  "buttonUnmarkAll": {
+    "message": "Unmark all",
+    "description": "Button for unmarking all"
+  },
+  "buttonRemoveMarked": {
+    "message": "Remove marked bookmarks",
+    "description": "Button for removing marked bookmarks"
+  },
+  "messageExactMatchesGroups": {
+    "message": "Exact dupes ($TOTAL$ matches in $GROUPS$ groups)",
+    "description": "Report specified numbers of exact matches and groups",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "2"
+      },
+      "groups": {
+        "content": "$2",
+        "example": "1"
+      }
+    }
+  },
+  "messageSimilarMatchesGroups": {
+    "message": "Similar dupes ($TOTAL$ matches in $GROUPS$ groups)",
+    "description": "Report specified numbers of similar matches and groups",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "2"
+      },
+      "groups": {
+        "content": "$2",
+        "example": "1"
+      }
+    }
+  },
+  "messageCalculating": {
+    "message": "Searching dupes",
+    "description": "Report that calculation started"
+  },
+  "messageCalculatingError": {
+    "message": "Error: $ERROR$",
+    "description": "Report specified error during calculation",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      }
+    }
+  },
+  "messageRemoveSuccess": {
+    "message": "$TOTAL$ bookmarks removed!",
+    "description": "Report success when removing specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemoveFailure": {
+    "message": "Failure: $ERROR$",
+    "description": "Report specified error when removing bookmarks",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      }
+    }
+  }
+}
