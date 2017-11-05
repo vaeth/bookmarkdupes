@@ -15,6 +15,14 @@
     "message": "List similar dupes",
     "description": "Button for listing similar dupes"
   },
+  "buttonListEmpty": {
+    "message": "List empty folders/bookmarks",
+    "description": "Button for listing empty folders/bookmarks"
+  },
+  "buttonMarkAll": {
+    "message": "Mark all",
+    "description": "Button for marking all"
+  },
   "buttonMarkButFirst": {
     "message": "Mark all but first in each group",
     "description": "Button for marking all but first"
@@ -59,8 +67,18 @@
       }
     }
   },
+  "messageEmpty": {
+    "message": "$TOTAL$ empty folders/bookmarks found",
+    "description": "Report specified number of empty folders/bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
   "messageCalculating": {
-    "message": "Searching dupes",
+    "message": "Searching",
     "description": "Report that calculation started"
   },
   "messageCalculatingError": {

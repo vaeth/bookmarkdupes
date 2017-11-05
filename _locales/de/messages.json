@@ -8,12 +8,20 @@
     "description": "Description of the extension"
   },
   "buttonListExactDupes": {
-    "message": "Exakte Lesezeichenduplikate",
+    "message": "Anzeige exakter Lesezeichenduplikate",
     "description": "Button for listing exact dupes"
   },
   "buttonListSimilarDupes": {
-    "message": "Ähnliche Lesezeichenduplikate",
+    "message": "Anzeige ähnlicher Lesezeichenduplikate",
     "description": "Button for listing similar dupes"
+  },
+  "buttonListEmpty": {
+    "message": "Anzeige leerer Ordner/Lesezeichen",
+    "description": "Button for listing empty folders/bookmarks"
+  },
+  "buttonMarkAll": {
+    "message": "Alle markieren",
+    "description": "Button for marking all"
   },
   "buttonMarkButFirst": {
     "message": "Alle außer Gruppenersten markieren",
@@ -59,8 +67,18 @@
       }
     }
   },
+  "messageEmpty": {
+    "message": "$TOTAL$ leere Ordner/Lesezeichen gefunden",
+    "description": "Report specified number of empty folders/bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
   "messageCalculating": {
-    "message": "Suche Duplikate",
+    "message": "Suche",
     "description": "Report that calculation started"
   },
   "messageCalculatingError": {

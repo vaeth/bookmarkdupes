@@ -36,10 +36,14 @@ function addButton(parent, id, text) {
   parent.appendChild(button);
 }
 
-function addButtons() {
+function addButtons(mode) {
   let parent = getButtonsExtra();
-  addButton(parent, "buttonMarkButFirst");
-  addButton(parent, "buttonMarkButLast");
+  if (mode) {
+    addButton(parent, "buttonMarkAll");
+  } else {
+    addButton(parent, "buttonMarkButFirst");
+    addButton(parent, "buttonMarkButLast");
+  }
   addButton(parent, "buttonUnmarkAll");
   parent = getButtonsRemove();
   addButton(parent, "buttonRemoveMarked");
@@ -96,7 +100,6 @@ function mark(mode) {
   }
   let first = true;
   let prev = null;
-  let count = 0;
   for (let child of top.childNodes) {
     if (child.nodeName != "TR") {
       first = true;
@@ -113,11 +116,8 @@ function mark(mode) {
       prev = child;
       continue;
     }
-    ++count;
-    setCheck(child, !first);
-    if (mode != 0) {
-      first = false;
-    }
+    setCheck(child, ((mode == 2) || (mode && !first)));
+    first = false;
   }
   if ((mode < 0) && (prev != null)) {
     setCheck(prev, false);
@@ -125,6 +125,9 @@ function mark(mode) {
 }
 
 function calculateDupe(node, parent) {
+  if ((!node.url) || node.unodifiable) {
+    return;
+  }
   let groupIndex = node.url;
   let extra;
   if (!calculating.exact) {
@@ -157,18 +160,32 @@ function calculateDupe(node, parent) {
   group.data.push(bookmark);
 }
 
-function calculateNodes(node, parent) {
-  if (node.url) {
+function calculateEmptyNode(node, parent) {
+  if (node.url || node.unmodifiable) {
+    return;
+  }
+  let bookmark = {
+    id: node.id,
+    text: parent + node.title
+  };
+  calculating.array.push(bookmark);
+}
+
+function calculateRecurse(node, parent) {
+  if (calculating.dupes) {
     calculateDupe(node, parent);
   }
-  if (!node.children) {
+  if ((!node.children) || (!node.children.length)) {
+    if (!calculating.dupes) {
+      calculateEmptyNode(node, parent);
+    }
     return;
   }
   if (node.title) {
     parent += node.title + " | ";
   }
   for (let child of node.children) {
-    calculateNodes(child, parent);
+    calculateRecurse(child, parent);
   }
 }
 
@@ -176,10 +193,11 @@ function calculateFinish() {
   calculating = {};
 }
 
-function calculateTree(nodes) {
+function calculateDupes(nodes) {
+  calculating.dupes = true;
   calculating.map = new Map();
   calculating.array = new Array();
-  calculateNodes(nodes[0], "");
+  calculateRecurse(nodes[0], "");
   let total = 0;
   let groups = 0;
   for (let group of calculating.array) {
@@ -187,7 +205,7 @@ function calculateTree(nodes) {
       continue;
     }
     if (groups++ == 0) {
-      addButtons();
+      addButtons(0);
     } else {
       addRuler();
     }
@@ -206,19 +224,44 @@ function calculateTree(nodes) {
   calculateFinish();
 }
 
+function calculateEmpty(nodes) {
+  calculating.dupes = false;
+  calculating.array = new Array();
+  calculateRecurse(nodes[0], "");
+  let total = calculating.array.length;
+  if (total) {
+    addButtons(1);
+    for (let bookmark of calculating.array) {
+      addBookmark(bookmark.text, bookmark.id, false);
+    }
+  }
+  displayMessage(browser.i18n.getMessage("messageEmpty", String(total)));
+  calculateFinish();
+}
+
 function calculateError(error) {
   displayMessage(browser.i18n.getMessage("messageCalculatingError", error));
   calculateFinish();
 }
 
-function calculate(exact) {
+function calculate(mode) {
   displayMessage(browser.i18n.getMessage("messageCalculating"));
   calculating = {};
-  calculating.exact = exact;
   clearButtonsExtra();
   clearBookmarks();
+  let mainFunction = calculateDupes;
+  switch(mode) {
+    case 0:
+      calculating.exact = true;
+      // fallthrough
+    case 1:
+      mainFunction = calculateDupes;
+      break;
+    default:
+      mainFunction = calculateEmpty;
+  }
 //https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/BookmarkTreeNode
-  return browser.bookmarks.getTree().then(calculateTree, calculateError);
+  return browser.bookmarks.getTree().then(mainFunction, calculateError);
 }
 
 function removeFinish() {
@@ -267,14 +310,20 @@ function clickListener(event) {
   lock = true;
   switch(event.target.id) {
     case "buttonListExactDupes":
-      calculate(true).then(unlock, unlock);
+      calculate(0).then(unlock, unlock);
       return;
     case "buttonListSimilarDupes":
-      calculate(false).then(unlock, unlock);
+      calculate(1).then(unlock, unlock);
+      return;
+    case "buttonListEmpty":
+      calculate(2).then(unlock, unlock);
       return;
     case "buttonRemoveMarked":
       removeMarked().then(unlock, unlock);
       return;
+    case "buttonMarkAll":
+      mark(2);
+      break;
     case "buttonMarkButFirst":
       mark(1);
       break;
@@ -292,5 +341,6 @@ function clickListener(event) {
   let parent = document.getElementById("buttonsBase");
   addButton(parent, "buttonListExactDupes");
   addButton(parent, "buttonListSimilarDupes");
+  addButton(parent, "buttonListEmpty");
   document.addEventListener("click", clickListener);
 }

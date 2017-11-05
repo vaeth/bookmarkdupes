@@ -1,5 +1,9 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-0.3
+	Martin Väth <martin at mvath.de>:
+	- List/Remove empty folders/bookmarks
+
 *bookmarkdupes-0.2
 	Martin Väth <martin at mvath.de>:
 	- Fix of serious bug: Duplicates had not been grouped correctly!
