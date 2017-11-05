@@ -73,8 +73,8 @@ function addBookmark(text, id, checked) {
   checkbox.id = id;
   let col = document.createElement("TD");
   col.appendChild(checkbox);
-  let bookmarktext = document.createTextNode(text);
-  col.appendChild(bookmarktext);
+  let textnode = document.createTextNode(text);
+  col.appendChild(textnode);
   let row = document.createElement("TR");
   row.appendChild(col);
   let top = getTop();
@@ -125,44 +125,36 @@ function mark(mode) {
 }
 
 function calculateDupe(node, parent) {
-  let url = node.url;
+  let groupIndex = node.url;
+  let extra;
   if (!calculating.exact) {
-    let index = url.indexOf("?");
+    let index = groupIndex.indexOf("?");
     if (index > 0) {
-      url = url.substring(0, index);
+      groupIndex = groupIndex.substring(0, index);
+      extra = node.url.substring(index);
     }
   }
   let id = node.id;
-  let text = parent + node.title;
-  let ids = calculating.urls.get(url);
-  if (typeof(ids) == "undefined") {
-    ids = new Map();
-    ids.set(id, text);
-    calculating.urls.set(url, ids);
+  let group = calculating.map.get(groupIndex);
+  if (typeof(group) == "undefined") {
+    group = {
+      data : new Array(),
+      ids : new Set()
+    };
+    calculating.array.push(group);
+    calculating.map.set(groupIndex, group);
+  } else if (group.ids.has(id)) {
     return;
   }
-  if (typeof(ids.get(id)) != "undefined") {
-    return;
+  group.ids.add(id);
+  let bookmark = {
+    id: id,
+    text: parent + node.title
+  };
+  if(typeof(extra) != "undefined") {
+    bookmark.extra = extra;
   }
-  ids.set(id, text);
-//calculating.urls.set(url, ids);
-  if (ids.size < 2) {
-    return;
-  }
-  if (ids.size > 2) {
-    ++calculating.total;
-    addBookmark(text, id, false);
-    return;
-  }
-  if (calculating.groups++ == 0) {
-    addButtons();
-  } else {
-    addRuler();
-  }
-  for (let [currid, currtext] of ids) {
-    ++calculating.total;
-    addBookmark(currtext, currid, false);
-  }
+  group.data.push(bookmark);
 }
 
 function calculateNodes(node, parent) {
@@ -185,13 +177,32 @@ function calculateFinish() {
 }
 
 function calculateTree(nodes) {
-  calculating.urls = new Map();
-  calculating.groups = 0;
-  calculating.total = 0;
+  calculating.map = new Map();
+  calculating.array = new Array();
   calculateNodes(nodes[0], "");
+  let total = 0;
+  let groups = 0;
+  for (let group of calculating.array) {
+    if (group.data.length < 2) {
+      continue;
+    }
+    if (groups++ == 0) {
+      addButtons();
+    } else {
+      addRuler();
+    }
+    for (let bookmark of group.data) {
+      ++total;
+      let text = bookmark.text;
+      if (typeof(bookmark.extra) != "undefined") {
+        text += " (" + bookmark.extra + ")";
+      }
+      addBookmark(text, bookmark.id, false);
+    }
+  }
   displayMessage(browser.i18n.getMessage((calculating.exact ?
     "messageExactMatchesGroups" : "messageSimilarMatchesGroups"),
-    [String(calculating.total), String(calculating.groups)]));
+    [String(total), String(groups)]));
   calculateFinish();
 }
 
