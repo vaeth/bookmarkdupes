@@ -2,7 +2,9 @@
 
 *bookmarkdupes-0.3
 	Martin Väth <martin at mvath.de>:
-	- List/Remove empty folders/bookmarks
+	- bookmarkdupes can now also display/remove empty bookmark folders
+	- Unmodifiable and other strange bookmarks are more reliably excluded
+	- Bugfix in handling of strange events
 
 *bookmarkdupes-0.2
 	Martin Väth <martin at mvath.de>:

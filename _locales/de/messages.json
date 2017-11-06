@@ -16,8 +16,8 @@
     "description": "Button for listing similar dupes"
   },
   "buttonListEmpty": {
-    "message": "Anzeige leerer Ordner/Lesezeichen",
-    "description": "Button for listing empty folders/bookmarks"
+    "message": "Anzeige leerer Ordner",
+    "description": "Button for listing empty folders"
   },
   "buttonMarkAll": {
     "message": "Alle markieren",
@@ -68,8 +68,8 @@
     }
   },
   "messageEmpty": {
-    "message": "$TOTAL$ leere Ordner/Lesezeichen gefunden",
-    "description": "Report specified number of empty folders/bookmarks",
+    "message": "$TOTAL$ leere Ordner gefunden",
+    "description": "Report specified number of empty folders",
     "placeholders": {
       "total": {
         "content": "$1",

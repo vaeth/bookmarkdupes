@@ -125,7 +125,7 @@ function mark(mode) {
 }
 
 function calculateDupe(node, parent) {
-  if ((!node.url) || node.unodifiable) {
+  if ((!node.url) || (node.type && node.type != "bookmark") || !parent) {
     return;
   }
   let groupIndex = node.url;
@@ -154,14 +154,14 @@ function calculateDupe(node, parent) {
     id: id,
     text: parent + node.title
   };
-  if(typeof(extra) != "undefined") {
+  if (typeof(extra) != "undefined") {
     bookmark.extra = extra;
   }
   group.data.push(bookmark);
 }
 
-function calculateEmptyNode(node, parent) {
-  if (node.url || node.unmodifiable) {
+function calculateEmptyFolder(node, parent) {
+  if (node.url || (node.type && (node.type != "folder")) || !parent) {
     return;
   }
   let bookmark = {
@@ -172,12 +172,15 @@ function calculateEmptyNode(node, parent) {
 }
 
 function calculateRecurse(node, parent) {
+  if (node.unmodifiable || (node.type === "separator")) {
+    return;
+  }
   if (calculating.dupes) {
     calculateDupe(node, parent);
   }
   if ((!node.children) || (!node.children.length)) {
     if (!calculating.dupes) {
-      calculateEmptyNode(node, parent);
+      calculateEmptyFolder(node, parent);
     }
     return;
   }
@@ -250,7 +253,7 @@ function calculate(mode) {
   clearButtonsExtra();
   clearBookmarks();
   let mainFunction = calculateDupes;
-  switch(mode) {
+  switch (mode) {
     case 0:
       calculating.exact = true;
       // fallthrough
@@ -304,11 +307,11 @@ function unlock() {
 }
 
 function clickListener(event) {
-  if (lock) {
+  if (lock || (!event.target) || !event.target.id) {
     return;
   }
   lock = true;
-  switch(event.target.id) {
+  switch (event.target.id) {
     case "buttonListExactDupes":
       calculate(0).then(unlock, unlock);
       return;

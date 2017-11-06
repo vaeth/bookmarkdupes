@@ -16,8 +16,8 @@
     "description": "Button for listing similar dupes"
   },
   "buttonListEmpty": {
-    "message": "List empty folders/bookmarks",
-    "description": "Button for listing empty folders/bookmarks"
+    "message": "List empty folders",
+    "description": "Button for listing empty folders"
   },
   "buttonMarkAll": {
     "message": "Mark all",
@@ -68,8 +68,8 @@
     }
   },
   "messageEmpty": {
-    "message": "$TOTAL$ empty folders/bookmarks found",
-    "description": "Report specified number of empty folders/bookmarks",
+    "message": "$TOTAL$ empty folders found",
+    "description": "Report specified number of empty folders",
     "placeholders": {
       "total": {
         "content": "$1",
