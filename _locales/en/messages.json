@@ -4,20 +4,24 @@
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Display/Remove duplicate bookmarks and empty folders",
+    "message": "Display/Remove duplicate bookmarks, empty folders, or descriptions",
     "description": "Description of the extension"
   },
   "buttonListExactDupes": {
-    "message": "List exact dupes",
+    "message": "Exact dupes",
     "description": "Button for listing exact dupes"
   },
   "buttonListSimilarDupes": {
-    "message": "List similar dupes",
+    "message": "Similar dupes",
     "description": "Button for listing similar dupes"
   },
   "buttonListEmpty": {
-    "message": "List empty folders",
+    "message": "Empty folders",
     "description": "Button for listing empty folders"
+  },
+  "buttonListAll": {
+    "message": "All bookmarks",
+    "description": "Button for listing all bookmarks"
   },
   "buttonMarkAll": {
     "message": "Mark all",
@@ -38,6 +42,10 @@
   "buttonRemoveMarked": {
     "message": "Remove marked bookmarks",
     "description": "Button for removing marked bookmarks"
+  },
+  "buttonStripMarked": {
+    "message": "Strip descriptions of marked bookmarks",
+    "description": "Button for stripping descriptions of marked bookmarks"
   },
   "messageExactMatchesGroups": {
     "message": "Exact dupes ($TOTAL$ matches in $GROUPS$ groups)",
@@ -77,6 +85,16 @@
       }
     }
   },
+  "messageAll": {
+    "message": "$TOTAL$ bookmarks found",
+    "description": "Report specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
   "messageCalculating": {
     "message": "Searching",
     "description": "Report that calculation started"
@@ -101,14 +119,50 @@
       }
     }
   },
-  "messageRemoveFailure": {
-    "message": "Failure: $ERROR$",
-    "description": "Report specified error when removing bookmarks",
+  "messageRemoveError": {
+    "message": "Error after rmoving $TOTAL$ entries: $ERROR$",
+    "description": "Report specified error after removing specified number of bookmarks/folders",
     "placeholders": {
       "error": {
         "content": "$1",
         "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
       }
     }
+  },
+  "messageStripSuccess": {
+    "message": "$TOTAL$ descriptions stripped!",
+    "description": "Report success when stripping specified number of descriptions",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripError": {
+    "message": "Error after stripping $TOTAL$ descriptions: $ERROR$",
+    "description": "Report specified error after stripping specified number of descriptions",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemovingMarked": {
+    "message": "Removing",
+    "description": "Report that removal of marked items started"
+  },
+  "errorNodeNotFound": {
+    "message": "node not found",
+    "description": "Report error that node could not be found"
   }
 }

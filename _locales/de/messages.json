@@ -4,20 +4,24 @@
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Anzeige/Entfernung doppelter Lesezeichen und leerer Ordner",
+    "message": "Anzeige/Entfernung doppelter Lesezeichen, leerer Ordner oder Beschreibungen",
     "description": "Description of the extension"
   },
   "buttonListExactDupes": {
-    "message": "Anzeige exakter Lesezeichenduplikate",
+    "message": "Exakte Lesezeichenduplikate",
     "description": "Button for listing exact dupes"
   },
   "buttonListSimilarDupes": {
-    "message": "Anzeige ähnlicher Lesezeichenduplikate",
+    "message": "Ähnliche Lesezeichenduplikate",
     "description": "Button for listing similar dupes"
   },
   "buttonListEmpty": {
-    "message": "Anzeige leerer Ordner",
+    "message": "Leere Ordner",
     "description": "Button for listing empty folders"
+  },
+  "buttonListAll": {
+    "message": "Alle Lesezeichen",
+    "description": "Button for listing all bookmarks"
   },
   "buttonMarkAll": {
     "message": "Alle markieren",
@@ -38,6 +42,10 @@
   "buttonRemoveMarked": {
     "message": "Markierte Lesezeichen löschen",
     "description": "Button for removing marked bookmarks"
+  },
+  "buttonStripMarked": {
+    "message": "Beschreibungen markierter Lesezeichen entfernen",
+    "description": "Button for stripping descriptions of marked bookmarks"
   },
   "messageExactMatchesGroups": {
     "message": "Exakte Duplikate ($TOTAL$ Lesezeichen in $GROUPS$ Gruppen)",
@@ -77,6 +85,16 @@
       }
     }
   },
+  "messageAll": {
+    "message": "$TOTAL$ Lesezeichen gefunden",
+    "description": "Report specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
   "messageCalculating": {
     "message": "Suche",
     "description": "Report that calculation started"
@@ -87,7 +105,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "Fehlerbeschreibung"
       }
     }
   },
@@ -101,14 +119,50 @@
       }
     }
   },
-  "messageRemoveFailure": {
-    "message": "Fehler: $ERROR$",
-    "description": "Report specified error when removing bookmarks",
+  "messageRemoveError": {
+    "message": "Fehler nach Löschen von $TOTAL$ Einträgen: $ERROR$",
+    "description": "Report specified error after removing specified number of bookmarks/folders",
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "Fehlerbeschreibung"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
       }
     }
+  },
+  "messageStripSuccess": {
+    "message": "$TOTAL$ Beschreibungen entfernt!",
+    "description": "Report success when stripping specified number of descriptions",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripError": {
+    "message": "Fehler nach Entfernen von $TOTAL$ Beschreibungen: $ERROR$",
+    "description": "Report specified error after stripping specified number of descriptions",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "Fehlerbeschreibung"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemovingMarked": {
+    "message": "Lösche",
+    "description": "Report that removal of marked items started"
+  },
+  "errorNodeNotFound": {
+    "message": "Eintrag nicht gefunden",
+    "description": "Report error that node could not be found"
   }
 }
