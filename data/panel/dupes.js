@@ -7,10 +7,6 @@
 
 "use strict";
 
-function displayMessage(msg) {
-  document.getElementById("textMessage").innerHTML = msg;
-}
-
 function getButtonsExtra() {
   return document.getElementById("buttonsExtra");
 }
@@ -66,6 +62,13 @@ function clearBookmarks() {
 function clearWindow() {
   clearButtonsExtra();
   clearBookmarks();
+}
+
+function displayMessage(msg) {
+  var toptext = document.getElementById("textMessage");
+  clearItem(toptext);
+  let text = document.createTextNode(msg);
+  toptext.appendChild(text);
 }
 
 function addRuler() {

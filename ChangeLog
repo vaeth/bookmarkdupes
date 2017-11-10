@@ -1,5 +1,9 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-0.5
+	Martin Väth <martin at mvath.de>:
+	- Avoid unsafe assignment to innerHTML
+
 *bookmarkdupes-0.4
 	Martin Väth <martin at mvath.de>:
 	- bookmarkdupes can now also strip descriptions of bookmarks
