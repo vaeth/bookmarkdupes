@@ -47,6 +47,14 @@
     "message": "Beschreibungen markierter Lesezeichen entfernen",
     "description": "Button for stripping descriptions of marked bookmarks"
   },
+  "buttonStopRemoving": {
+    "message": "Löschen abbrechen!",
+    "description": "Button for emergency stop of bookmark removing"
+  },
+  "buttonStopStripping": {
+    "message": "Entfernen abbrechen!",
+    "description": "Button for emergency stop of description stripping"
+  },
   "messageExactMatchesGroups": {
     "message": "Exakte Duplikate ($TOTAL$ Lesezeichen in $GROUPS$ Gruppen)",
     "description": "Report specified numbers of exact matches and groups",
@@ -109,6 +117,28 @@
       }
     }
   },
+  "messageRemoveMarked": {
+    "message": "Markierte Lesezeichen werden gelöscht.",
+    "description": "Report that removal of marked bookmarks started"
+  },
+  "messageRemoveProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ of $TODO$ Lesezeichen entfernt",
+    "description": "Report that specified number/total/percentage of bookmarks are removed",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
   "messageRemoveSuccess": {
     "message": "$TOTAL$ Lesezeichen gelöscht!",
     "description": "Report success when removing specified number of bookmarks",
@@ -129,6 +159,28 @@
       },
       "total": {
         "content": "$2",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripMarked": {
+    "message": "Beschreibungen markierter Lesezeichen werden entfernt.",
+    "description": "Report that description stripping started"
+  },
+  "messageStripProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ von $TODO$ Beschreibungen entfernt",
+    "description": "Report that specified number/total/percentage of descriptions are stripped",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
         "example": "0"
       }
     }
@@ -156,10 +208,6 @@
         "example": "0"
       }
     }
-  },
-  "messageRemovingMarked": {
-    "message": "Lösche",
-    "description": "Report that removal of marked items started"
   },
   "errorNodeNotFound": {
     "message": "Eintrag nicht gefunden",

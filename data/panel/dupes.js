@@ -7,6 +7,10 @@
 
 "use strict";
 
+function getButtonStop() {
+  return document.getElementById("buttonStop");
+}
+
 function getButtonsExtra() {
   return document.getElementById("buttonsExtra");
 }
@@ -19,6 +23,10 @@ function getTop() {
   return document.getElementById("tableBookmarks");
 }
 
+function displayMessage(msg) {
+  document.getElementById("textMessage").textContent = msg;
+}
+
 function addButton(parent, id, text) {
   let button = document.createElement("button");
   button.type = "button";
@@ -26,8 +34,7 @@ function addButton(parent, id, text) {
   if (!text) {
     text = browser.i18n.getMessage(id);
   }
-  let buttontext = document.createTextNode(text);
-  button.appendChild(buttontext);
+  button.textContent = text;
   parent.appendChild(button);
 }
 
@@ -44,10 +51,19 @@ function addButtons(mode) {
   addButton(parent, (mode == 2) ? "buttonStripMarked" : "buttonRemoveMarked");
 }
 
+function addButtonStop(text) {
+  let parent = getButtonStop();
+  addButton(parent, "buttonStop", text);
+}
+
 function clearItem(top) {
   while (top.lastChild) {
     top.removeChild(top.lastChild);
   }
+}
+
+function clearButtonStop() {
+  clearItem(getButtonStop());
 }
 
 function clearButtonsExtra() {
@@ -60,15 +76,9 @@ function clearBookmarks() {
 }
 
 function clearWindow() {
+  clearButtonStop();
   clearButtonsExtra();
   clearBookmarks();
-}
-
-function displayMessage(msg) {
-  var toptext = document.getElementById("textMessage");
-  clearItem(toptext);
-  let text = document.createTextNode(msg);
-  toptext.appendChild(text);
 }
 
 function addRuler() {
@@ -77,10 +87,10 @@ function addRuler() {
   top.appendChild(ruler);
 }
 
-function addBookmark(text, id, checked) {
+function addBookmark(text, id) {
   let checkbox = document.createElement("INPUT");
   checkbox.type = "checkbox";
-  checkbox.checked = checked;
+  checkbox.checked = false;
   checkbox.id = id;
   let col = document.createElement("TD");
   col.appendChild(checkbox);
@@ -241,7 +251,7 @@ function calculate(mode, callback) {
         if (typeof(bookmark.extra) != "undefined") {
           text += " (" + bookmark.extra + ")";
         }
-        addBookmark(text, bookmark.id, false);
+        addBookmark(text, bookmark.id);
       }
     }
     displayMessage(browser.i18n.getMessage((exact ?
@@ -257,7 +267,7 @@ function calculate(mode, callback) {
     if (total) {
       addButtons(1);
       for (let bookmark of result) {
-        addBookmark(bookmark.text, bookmark.id, false);
+        addBookmark(bookmark.text, bookmark.id);
       }
     }
     displayMessage(browser.i18n.getMessage("messageEmpty", String(total)));
@@ -271,8 +281,7 @@ function calculate(mode, callback) {
     if (total) {
       addButtons(2);
       for (let bookmark of result) {
-        addBookmark(bookmark.text, String(bookmark.index) + "X" + bookmark.id,
-          false);
+        addBookmark(bookmark.text, String(bookmark.index) + "X" + bookmark.id);
       }
     }
     displayMessage(browser.i18n.getMessage("messageAll", String(total)));
@@ -332,18 +341,53 @@ function stripBookmark(indexXId, callback, errorCallback) {
   }, errorCallback);
 }
 
-function processMarked(remove, callback) {
-  displayMessage(browser.i18n.getMessage("messageRemovingMarked"));
+function processMarked(remove, callback, getEmergencyStop) {
+  displayMessage(browser.i18n.getMessage(
+    (remove ? "messageRemovMarked" : "messageStripMarked")));
+
+  let total = 0;
+
+  function processFinish(error) {
+    if (typeof(error) != "undefined") {
+      displayMessage(browser.i18n.getMessage(
+        (remove ? "messageRemoveError" : "messageStripError"),
+        [error, String(total)]));
+    } else {
+      displayMessage(browser.i18n.getMessage(
+        (remove ? "messageRemoveSuccess" : "messageStripSuccess"),
+        String(total)));
+    }
+    clearWindow();
+    callback();
+  }
+
   let top = getTop();
-  if (!top.hasChildNodes()) {
+  let todo = 0;
+  if (top.hasChildNodes()) {
+    for (let child of top.childNodes) {
+      if (child.nodeName != "TR") {
+        continue;
+      }
+      if (getCheckBox(child).checked) {
+        ++todo;
+      }
+    }
+  }
+  if (todo == 0) {
+    processFinish();
     return;
   }
+  addButtonStop(browser.i18n.getMessage(
+    remove ? "buttonStopRemoving" : "buttonStopStripping"));
   let current = 0;
-  let total = -1;
   let process = (remove ? removeFolder : stripBookmark);
 
-  function processRecurse(a) {
+  function processRecurse(dummy) {
     ++total;
+    displayMessage(browser.i18n.getMessage(
+      (remove ? "messageRemoveProgress" : "messageStripProgress"),
+      [String(total), String(todo),
+        String(Math.round((100 * total) / todo))]));
     while (current < top.childNodes.length) {
       let child = top.childNodes[current++];
       if (child.nodeName != "TR") {
@@ -353,36 +397,41 @@ function processMarked(remove, callback) {
       if (!checkBox.checked) {
         continue;
       }
-      process(checkBox.id, processRecurse, function (error) {
-        displayMessage(browser.i18n.getMessage(
-          (remove ? "messageRemoveError" : "messageStripError"),
-          [error, String(total)]));
-        clearWindow();
-        callback();
-      });
+      if (getEmergencyStop()) {
+        break;
+      }
+      process(checkBox.id, processRecurse, processFinish);
       return;
     }
-    displayMessage(browser.i18n.getMessage(
-      (remove ? "messageRemoveSuccess" : "messageStripSuccess"),
-      String(total)));
-    clearWindow();
-    callback();
+    processFinish();
   }
 
-  processRecurse(null);
+  --total;
+  processRecurse();
 }
 
 {
   let lock = false;
+  let emergencyStop;
 
   function unlock() {
     lock = false;
   }
 
+  function getEmergencyStop() {
+    return emergencyStop;
+  }
+
   function clickListener(event) {
+    if (!event.target || !event.target.id) {
+      return;
+    }
+    if (event.target.id == "buttonStop") {
+      emergencyStop = true;
+      return;
+    }
     if (lock || (event.button && (event.button != 1)) ||
-      (event.buttons && (event.buttons != 1)) ||
-      (!event.target) || !event.target.id) {
+      (event.buttons && (event.buttons != 1))) {
       return;
     }
     lock = true;
@@ -400,10 +449,12 @@ function processMarked(remove, callback) {
         calculate(3, unlock);
         return;
       case "buttonRemoveMarked":
-        processMarked(true, unlock);
+        emergencyStop = false;
+        processMarked(true, unlock, getEmergencyStop);
         return;
       case "buttonStripMarked":
-        processMarked(false, unlock);
+        emergencyStop = false;
+        processMarked(false, unlock, getEmergencyStop);
         return;
       case "buttonMarkAll":
         mark(2);

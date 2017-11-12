@@ -47,6 +47,14 @@
     "message": "Strip descriptions of marked bookmarks",
     "description": "Button for stripping descriptions of marked bookmarks"
   },
+  "buttonStopRemoving": {
+    "message": "Stop removing!",
+    "description": "Button for emergency stop of bookmark removing"
+  },
+  "buttonStopStripping": {
+    "message": "Stop stripping!",
+    "description": "Button for emergency stop of description stripping"
+  },
   "messageExactMatchesGroups": {
     "message": "Exact dupes ($TOTAL$ matches in $GROUPS$ groups)",
     "description": "Report specified numbers of exact matches and groups",
@@ -109,6 +117,28 @@
       }
     }
   },
+  "messageRemoveMarked": {
+    "message": "Removing marked bookmarks",
+    "description": "Report that removal of marked bookmarks started"
+  },
+  "messageRemoveProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ of $TODO$ bookmarks removed",
+    "description": "Report that specified number/total/percentage of bookmarks are removed",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
   "messageRemoveSuccess": {
     "message": "$TOTAL$ bookmarks removed!",
     "description": "Report success when removing specified number of bookmarks",
@@ -129,6 +159,28 @@
       },
       "total": {
         "content": "$2",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripMarked": {
+    "message": "Stripping descriptions of marked bookmarks",
+    "description": "Report that description stripping started"
+  },
+  "messageStripProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ of $TODO$ descriptions stripped",
+    "description": "Report that specified number/total/percentage of descriptions are stripped",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
         "example": "0"
       }
     }
@@ -156,10 +208,6 @@
         "example": "0"
       }
     }
-  },
-  "messageRemovingMarked": {
-    "message": "Removing",
-    "description": "Report that removal of marked items started"
   },
   "errorNodeNotFound": {
     "message": "node not found",

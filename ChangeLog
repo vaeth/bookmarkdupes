@@ -1,5 +1,14 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-1.0
+	Martin Väth <martin at mvath.de>:
+	- Show progress when removing/stripping
+	- Add emergency stop button
+	- More specific messages
+	- Use textContent instead of redundant child text nodes
+	- Bugfix: Removing/stripping empty lists might have locked buttons
+	- Code cleanup: remove unused arguments
+
 *bookmarkdupes-0.5
 	Martin Väth <martin at mvath.de>:
 	- Avoid unsafe assignment to innerHTML
