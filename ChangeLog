@@ -1,5 +1,13 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-1.1
+	Martin Väth <martin at mvath.de>:
+	- Hash bookmark data when searching all bookmarks, resulting in
+	  slightly slower search but considerably faster stripping
+	- Refactor searching, resulting in possibly slight speedup
+	- Fix typo in localization id (causing strange or empty message)
+	- Bugfix for detection of bookmark type
+
 *bookmarkdupes-1.0
 	Martin Väth <martin at mvath.de>:
 	- Show progress when removing/stripping

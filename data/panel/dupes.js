@@ -94,20 +94,20 @@ function addBookmark(text, id) {
   checkbox.id = id;
   let col = document.createElement("TD");
   col.appendChild(checkbox);
-  let textnode = document.createTextNode(text);
-  col.appendChild(textnode);
+  let textNode = document.createTextNode(text);
+  col.appendChild(textNode);
   let row = document.createElement("TR");
   row.appendChild(col);
   let top = getTop();
   top.appendChild(row);
 }
 
-function getCheckBox(node) {
+function getCheckbox(node) {
   return node.firstChild.firstChild;
 }
 
 function setCheck(node, checked) {
-  getCheckBox(node).checked = checked;
+  getCheckbox(node).checked = checked;
 }
 
 function mark(mode) {
@@ -141,12 +141,11 @@ function mark(mode) {
   }
 }
 
-function calculate(mode, callback) {
-  let exact, dupes, empty, all, result, urlMap;
+function calculate(mode, callback, bookmarkIds) {
+  let exact, handleFunction, result, urlMap;
 
   function handleDupe(node, parent) {
-    if ((!node.url) || (node.type && node.type != "bookmark")
-      || node.unmodifiable || !parent) {
+    if ((!node.url) || (node.type && node.type != "bookmark")) {
       return;
     }
     let groupIndex = node.url;
@@ -182,9 +181,7 @@ function calculate(mode, callback) {
   }
 
   function handleEmpty(node, parent) {
-    if (((typeof(node.url) != undefined) && (node.url != null))
-      || (node.type && (node.type != "folder"))
-      || node.unmodifiable || !parent) {
+    if (node.url || (node.type && (node.type != "folder"))) {
       return;
     }
     let bookmark = {
@@ -195,28 +192,30 @@ function calculate(mode, callback) {
   }
 
   function handleAll(node, parent, index) {
-    if ((typeof(node.url) == undefined) || (node.url == null)
-      || (node.type && node.type != "bookmark")
-      || node.unmodifiable || !parent) {
+    if ((!node.url) || (node.type && node.type != "bookmark")) {
       return;
     }
     let bookmark = {
       id: node.id,
       text: parent + node.title,
-      index: index
     };
     result.push(bookmark);
+    bookmark = {
+      parentId: node.parentId,
+      title: node.title,
+      url: node.url,
+      index: index
+    };
+    if (typeof(node.type) != "undefined") {
+      bookmark.type = node.type;
+    }
+    bookmarkIds.set(node.id, bookmark);
   }
 
   function recurse(node, parent = "", index = 0) {
-    if (all) {
-      handleAll(node, parent, index);
-    } else if (dupes) {
-      handleDupe(node, parent);
-    }
     if ((!node.children) || (!node.children.length)) {
-      if (empty) {
-        handleEmpty(node, parent);
+      if (parent && !node.unmodifiable) {
+        handleFunction(node, parent, index);
       }
       return;
     }
@@ -230,7 +229,7 @@ function calculate(mode, callback) {
   }
 
   function calculateDupes(nodes) {
-    dupes = true;
+    handleFunction = handleDupe;
     urlMap = new Map();
     result = new Array();
     recurse(nodes[0]);
@@ -260,7 +259,7 @@ function calculate(mode, callback) {
   }
 
   function calculateEmpty(nodes) {
-    empty = true;
+    handleFunction = handleEmpty;
     result = new Array();
     recurse(nodes[0]);
     let total = result.length;
@@ -274,14 +273,14 @@ function calculate(mode, callback) {
   }
 
   function calculateAll(nodes) {
-    all = true;
+    handleFunction = handleAll;
     result = new Array();
     recurse(nodes[0]);
     let total = result.length;
     if (total) {
       addButtons(2);
       for (let bookmark of result) {
-        addBookmark(bookmark.text, String(bookmark.index) + "X" + bookmark.id);
+        addBookmark(bookmark.text, bookmark.id);
       }
     }
     displayMessage(browser.i18n.getMessage("messageAll", String(total)));
@@ -290,7 +289,7 @@ function calculate(mode, callback) {
   displayMessage(browser.i18n.getMessage("messageCalculating"));
   clearButtonsExtra();
   clearBookmarks();
-  let mainFunction = calculateDupes;
+  let mainFunction;
   switch (mode) {
     case 0:
       exact = true;
@@ -310,40 +309,19 @@ function calculate(mode, callback) {
 }
 
 function removeFolder(id, callback, errorCallback) {
-  browser.bookmarks.remove(id).then(callback, errorCallback);
+  return browser.bookmarks.remove(id).then(callback, errorCallback);
 }
 
-function stripBookmark(indexXId, callback, errorCallback) {
-  let id, index;
-  {
-    let x = indexXId.indexOf("X");
-    index =  Number(indexXId.substring(0, x));
-    id = indexXId.substring(x + 1);
-  }
-  browser.bookmarks.get(id).then(function (nodeArray) {
-    if (!nodeArray.length) {
-      errorCallback(browser.i18n.getMessage("errorNodeNotFound"));
-      return;
-    }
-    let node = nodeArray[0];
-    let bookmark = {
-      parentId: node.parentId,
-      title: node.title,
-      url: node.url,
-      index: index,
-    };
-    if (typeof(node.type) != "undefined") {
-      bookmark.type = node.type;
-    }
-    browser.bookmarks.create(bookmark).then(function (a) {
-      browser.bookmarks.remove(id).then(callback, errorCallback);
-    }, errorCallback);
+function stripBookmark(id, bookmarkIds, callback, errorCallback) {
+  return browser.bookmarks.create(bookmarkIds.get(id)).then(function () {
+    browser.bookmarks.remove(id).then(callback, errorCallback);
   }, errorCallback);
 }
 
-function processMarked(remove, callback, getEmergencyStop) {
+function processMarked(bookmarkIds, callback, getEmergencyStop) {
+  let remove = (bookmarkIds == null);
   displayMessage(browser.i18n.getMessage(
-    (remove ? "messageRemovMarked" : "messageStripMarked")));
+    (remove ? "messageRemoveMarked" : "messageStripMarked")));
 
   let total = 0;
 
@@ -368,7 +346,7 @@ function processMarked(remove, callback, getEmergencyStop) {
       if (child.nodeName != "TR") {
         continue;
       }
-      if (getCheckBox(child).checked) {
+      if (getCheckbox(child).checked) {
         ++todo;
       }
     }
@@ -380,9 +358,12 @@ function processMarked(remove, callback, getEmergencyStop) {
   addButtonStop(browser.i18n.getMessage(
     remove ? "buttonStopRemoving" : "buttonStopStripping"));
   let current = 0;
-  let process = (remove ? removeFolder : stripBookmark);
+  let process = (remove ? removeFolder : function (id,
+    callback, errorCallback) {
+    return stripBookmark(id, bookmarkIds, callback, errorCallback);
+  });
 
-  function processRecurse(dummy) {
+  function processRecurse() {
     ++total;
     displayMessage(browser.i18n.getMessage(
       (remove ? "messageRemoveProgress" : "messageStripProgress"),
@@ -393,14 +374,14 @@ function processMarked(remove, callback, getEmergencyStop) {
       if (child.nodeName != "TR") {
         continue;
       }
-      let checkBox = getCheckBox(child);
-      if (!checkBox.checked) {
+      let checkbox = getCheckbox(child);
+      if (!checkbox.checked) {
         continue;
       }
       if (getEmergencyStop()) {
         break;
       }
-      process(checkBox.id, processRecurse, processFinish);
+      process(checkbox.id, processRecurse, processFinish);
       return;
     }
     processFinish();
@@ -412,7 +393,7 @@ function processMarked(remove, callback, getEmergencyStop) {
 
 {
   let lock = false;
-  let emergencyStop;
+  let emergencyStop, bookmarkIds;
 
   function unlock() {
     lock = false;
@@ -446,15 +427,16 @@ function processMarked(remove, callback, getEmergencyStop) {
         calculate(2, unlock);
         return;
       case "buttonListAll":
-        calculate(3, unlock);
+        bookmarkIds = new Map;
+        calculate(3, unlock, bookmarkIds);
         return;
       case "buttonRemoveMarked":
         emergencyStop = false;
-        processMarked(true, unlock, getEmergencyStop);
+        processMarked(null, unlock, getEmergencyStop);
         return;
       case "buttonStripMarked":
         emergencyStop = false;
-        processMarked(false, unlock, getEmergencyStop);
+        processMarked(bookmarkIds, unlock, getEmergencyStop);
         return;
       case "buttonMarkAll":
         mark(2);

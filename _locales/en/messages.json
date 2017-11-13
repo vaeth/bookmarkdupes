@@ -150,8 +150,8 @@
     }
   },
   "messageRemoveError": {
-    "message": "Error after rmoving $TOTAL$ entries: $ERROR$",
-    "description": "Report specified error after removing specified number of bookmarks/folders",
+    "message": "Error after removing $TOTAL$ bookmarks: $ERROR$",
+    "description": "Report specified error after removing specified number of bookmarks",
     "placeholders": {
       "error": {
         "content": "$1",
@@ -208,9 +208,5 @@
         "example": "0"
       }
     }
-  },
-  "errorNodeNotFound": {
-    "message": "node not found",
-    "description": "Report error that node could not be found"
   }
 }

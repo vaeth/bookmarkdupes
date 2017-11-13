@@ -122,7 +122,7 @@
     "description": "Report that removal of marked bookmarks started"
   },
   "messageRemoveProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ of $TODO$ Lesezeichen entfernt",
+    "message": "($PERCENTAGE$ %) $TOTAL$ von $TODO$ Lesezeichen entfernt",
     "description": "Report that specified number/total/percentage of bookmarks are removed",
     "placeholders": {
       "total": {
@@ -150,8 +150,8 @@
     }
   },
   "messageRemoveError": {
-    "message": "Fehler nach Löschen von $TOTAL$ Einträgen: $ERROR$",
-    "description": "Report specified error after removing specified number of bookmarks/folders",
+    "message": "Fehler nach Löschen von $TOTAL$ Lesezeichen: $ERROR$",
+    "description": "Report specified error after removing specified number of bookmarks",
     "placeholders": {
       "error": {
         "content": "$1",
@@ -208,9 +208,5 @@
         "example": "0"
       }
     }
-  },
-  "errorNodeNotFound": {
-    "message": "Eintrag nicht gefunden",
-    "description": "Report error that node could not be found"
   }
 }
