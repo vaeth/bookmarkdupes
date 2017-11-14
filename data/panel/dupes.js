@@ -60,6 +60,9 @@ function addButtons(mode) {
 
 function addButtonStop(text) {
   let parent = getButtonStop();
+  if (parent.firstChild) {
+    return;
+  }
   addButton(parent, "buttonStop", text, true);
 }
 
@@ -337,69 +340,20 @@ function calculate(mode, callback, bookmarkIds) {
   }).then(callback, callback);
 }
 
-function removeFolder(id, callback, errorCallback) {
-  return browser.bookmarks.remove(id).then(callback, errorCallback);
-}
-
-function stripBookmark(id, bookmarkIds, callback, errorCallback) {
-  return browser.bookmarks.create(bookmarkIds.get(id)).then(function () {
-    browser.bookmarks.remove(id).then(callback, errorCallback);
-  }, errorCallback);
-}
-
-function processMarked(bookmarkIds, callback, getEmergencyStop) {
-  let remove = (bookmarkIds == null);
-  displayMessage(browser.i18n.getMessage(
-    (remove ? "messageRemoveMarked" : "messageStripMarked")));
-
-  let total = 0;
-
-  function processFinish(error) {
-    if (typeof(error) != "undefined") {
-      displayMessage(browser.i18n.getMessage(
-        (remove ? "messageRemoveError" : "messageStripError"),
-        [error, String(total)]));
-    } else {
-      displayMessage(browser.i18n.getMessage(
-        (remove ? "messageRemoveSuccess" : "messageStripSuccess"),
-        String(total)));
-    }
-    clearWindow();
-    callback();
+function processMarked(transferBookmarkIds) {
+  let remove, bookmarkIds;
+  if (transferBookmarkIds) {
+    displayMessage(browser.i18n.getMessage("messageStripMarked"));
+    remove = false;
+    bookmarkIds = transferBookmarkIds();
+  } else {
+    displayMessage(browser.i18n.getMessage("messageRemoveMarked"));
+    remove = true;
   }
-
   let top = getTop();
-  let todo = 0;
+  let removeList = new Array;
   if (top.hasChildNodes()) {
     for (let child of top.childNodes) {
-      if (child.nodeName != "TR") {
-        continue;
-      }
-      if (getCheckbox(child).checked) {
-        ++todo;
-      }
-    }
-  }
-  if (todo == 0) {
-    processFinish();
-    return;
-  }
-  addButtonStop(browser.i18n.getMessage(
-    remove ? "buttonStopRemoving" : "buttonStopStripping"));
-  let current = 0;
-  let process = (remove ? removeFolder : function (id,
-    callback, errorCallback) {
-    return stripBookmark(id, bookmarkIds, callback, errorCallback);
-  });
-
-  function processRecurse() {
-    ++total;
-    displayMessage(browser.i18n.getMessage(
-      (remove ? "messageRemoveProgress" : "messageStripProgress"),
-      [String(total), String(todo),
-        String(Math.round((100 * total) / todo))]));
-    while (current < top.childNodes.length) {
-      let child = top.childNodes[current++];
       if (child.nodeName != "TR") {
         continue;
       }
@@ -407,30 +361,67 @@ function processMarked(bookmarkIds, callback, getEmergencyStop) {
       if (!checkbox.checked) {
         continue;
       }
-      if (getEmergencyStop()) {
-        break;
+      let id = checkbox.id;
+      if (remove) {
+        removeList.push(id);
+        continue;
       }
-      process(checkbox.id, processRecurse, processFinish);
-      return;
+      let strip = {
+        id: id,
+        bookmark: bookmarkIds.get(id)
+      };
+      removeList.push(strip);
     }
-    processFinish();
   }
+  bookmarkIds = {};
+  clearWindow();
+  let message = {
+    command: (remove ? "remove" : "strip"),
+    removeList: removeList
+  };
+  browser.runtime.sendMessage(message);
+}
 
-  --total;
-  processRecurse();
+function sendMessageCommand(command) {
+  let message = {
+    command: command
+  };
+  browser.runtime.sendMessage(message);
+}
+
+function displayProgress(textId, buttonId, state) {
+  let total = state.total;
+  let todo = state.todo;
+  if (todo) {
+    addButtonStop(browser.i18n.getMessage(buttonId));
+  }
+  displayMessage(browser.i18n.getMessage(textId,
+    [String(total), String(todo), String(Math.round((100 * total) / todo))]));
+}
+
+function displayFinish(textId, state) {
+  clearButtonStop();
+  if (state.error) {
+    displayMessage(browser.i18n.getMessage(textId,
+      [state.error, String(state.total)]));
+    return;
+  }
+  displayMessage(browser.i18n.getMessage(textId, String(state.total)));
 }
 
 {
-  let lock = false;
-  let emergencyStop, bookmarkIds;
+  let lock = true;
+  let bookmarkIds;
+
+  function transferBookmarkIds() {
+    let r = bookmarkIds;
+    bookmarkIds = {};
+    return r;
+  }
 
   function unlock() {
     lock = false;
     enableButtons();
-  }
-
-  function getEmergencyStop() {
-    return emergencyStop;
   }
 
   function clickListener(event) {
@@ -438,7 +429,7 @@ function processMarked(bookmarkIds, callback, getEmergencyStop) {
       return;
     }
     if (event.target.id == "buttonStop") {
-      emergencyStop = true;
+      sendMessageCommand("stop");
       return;
     }
     if (lock || (event.button && (event.button != 1)) ||
@@ -462,12 +453,10 @@ function processMarked(bookmarkIds, callback, getEmergencyStop) {
         calculate(3, unlock, bookmarkIds);
         return;
       case "buttonRemoveMarked":
-        emergencyStop = false;
-        processMarked(null, unlock, getEmergencyStop);
+        processMarked(null);
         return;
       case "buttonStripMarked":
-        emergencyStop = false;
-        processMarked(bookmarkIds, unlock, getEmergencyStop);
+        processMarked(transferBookmarkIds);
         return;
       case "buttonMarkAll":
         mark(2);
@@ -491,5 +480,42 @@ function processMarked(bookmarkIds, callback, getEmergencyStop) {
   addButton(parent, "buttonListEmpty");
   addButton(parent, "buttonListAll");
   document.addEventListener("click", clickListener);
-  enableButtonsBase();
+
+  function messageListener(message) {
+    if (message.command !== "state") {
+      return;
+    }
+    let state = message.state;
+    switch (state.mode) {
+      case "removeProgress":
+        displayProgress("messageRemoveProgress", "buttonStopRemoving", state);
+        return;
+      case "stripProgress":
+        displayProgress("messageStripProgress", "buttonStopStripping", state);
+        return;
+      case "virgin":
+        break;
+      case "removeSuccess":
+        displayFinish("messageRemoveSuccess", state);
+        break;
+      case "stripSuccess":
+        displayFinish("messageStripSuccess", state);
+        break;
+      case "removeError":
+        displayFinish("messageRemoveError", state);
+        break;
+      case "stripError":
+        displayFinish("messageStripError", state);
+        break;
+      case "debug":
+        displayMessage(state.debug);
+        break;
+      default:  // should not happen
+        return;
+    }
+    unlock();
+  }
+
+  browser.runtime.onMessage.addListener(messageListener);
 }
+sendMessageCommand("sendState");

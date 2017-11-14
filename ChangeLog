@@ -1,13 +1,19 @@
 # ChangeLog for squashmount
 
-*bookmarkdupes-1.1
+*bookmarkdupes-2.0
 	Martin Väth <martin at mvath.de>:
+	- Continue removing/stripping in background if popup is closed,
+	  and redisplay current state when popup is re-opened:
+	  Other things can be done even if stripping should take ages.
+	  Moreover, this solves the bug that when the popup was closed during
+	  stripping in a bad moment, a bookmark might have been duplicated.
 	- Disable buttons instead of using a tacit lock
 	- Hash bookmark data when searching all bookmarks, resulting in
 	  slightly slower search but considerably faster stripping
 	- Refactor searching, resulting in possibly slight speedup
 	- Fix typo in localization id (causing strange or empty message)
 	- Bugfix for detection of bookmark type
+	- Various minor typo fixes in text messages
 
 *bookmarkdupes-1.0
 	Martin Väth <martin at mvath.de>:
