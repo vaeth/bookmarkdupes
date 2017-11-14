@@ -7,8 +7,8 @@
 
 "use strict";
 
-function getButtonStop() {
-  return document.getElementById("buttonStop");
+function getButtonsBase() {
+  return document.getElementById("buttonsBase");
 }
 
 function getButtonsExtra() {
@@ -19,6 +19,10 @@ function getButtonsRemove() {
   return document.getElementById("buttonsRemove");
 }
 
+function getButtonStop() {
+  return document.getElementById("buttonStop");
+}
+
 function getTop() {
   return document.getElementById("tableBookmarks");
 }
@@ -27,14 +31,17 @@ function displayMessage(msg) {
   document.getElementById("textMessage").textContent = msg;
 }
 
-function addButton(parent, id, text) {
-  let button = document.createElement("button");
+function addButton(parent, id, text, enabled) {
+  let button = document.createElement("BUTTON");
   button.type = "button";
   button.id = id;
   if (!text) {
     text = browser.i18n.getMessage(id);
   }
   button.textContent = text;
+  if (!enabled) {
+    button.disabled = true;
+  }
   parent.appendChild(button);
 }
 
@@ -53,7 +60,29 @@ function addButtons(mode) {
 
 function addButtonStop(text) {
   let parent = getButtonStop();
-  addButton(parent, "buttonStop", text);
+  addButton(parent, "buttonStop", text, true);
+}
+
+function enableButtonsOf(top, enabled) {
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  let disabled = ((typeof(enabled) != "undefined") && !enabled);
+  for (let child of top.childNodes) {
+    if (child.nodeName == "BUTTON") {
+      child.disabled = disabled;
+    }
+  }
+}
+
+function enableButtonsBase(enabled) {
+  enableButtonsOf(getButtonsBase(), enabled);
+}
+
+function enableButtons(enabled) {
+  enableButtonsBase(enabled);
+  enableButtonsOf(getButtonsExtra(), enabled);
+  enableButtonsOf(getButtonsRemove(), enabled);
 }
 
 function clearItem(top) {
@@ -397,6 +426,7 @@ function processMarked(bookmarkIds, callback, getEmergencyStop) {
 
   function unlock() {
     lock = false;
+    enableButtons();
   }
 
   function getEmergencyStop() {
@@ -404,7 +434,7 @@ function processMarked(bookmarkIds, callback, getEmergencyStop) {
   }
 
   function clickListener(event) {
-    if (!event.target || !event.target.id) {
+    if ((!event.target) || (!event.target.id)) {
       return;
     }
     if (event.target.id == "buttonStop") {
@@ -416,6 +446,7 @@ function processMarked(bookmarkIds, callback, getEmergencyStop) {
       return;
     }
     lock = true;
+    enableButtons(false);
     switch (event.target.id) {
       case "buttonListExactDupes":
         calculate(0, unlock);
@@ -454,10 +485,11 @@ function processMarked(bookmarkIds, callback, getEmergencyStop) {
     unlock();
   }
 
-  let parent = document.getElementById("buttonsBase");
+  let parent = getButtonsBase();
   addButton(parent, "buttonListExactDupes");
   addButton(parent, "buttonListSimilarDupes");
   addButton(parent, "buttonListEmpty");
   addButton(parent, "buttonListAll");
   document.addEventListener("click", clickListener);
+  enableButtonsBase();
 }
