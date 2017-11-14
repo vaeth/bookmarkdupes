@@ -23,6 +23,10 @@ function getButtonStop() {
   return document.getElementById("buttonStop");
 }
 
+function getProgressBar() {
+  return document.getElementById("progressBar");
+}
+
 function getTop() {
   return document.getElementById("tableBookmarks");
 }
@@ -58,12 +62,18 @@ function addButtons(mode) {
   addButton(parent, (mode == 2) ? "buttonStripMarked" : "buttonRemoveMarked");
 }
 
-function addButtonStop(text) {
-  let parent = getButtonStop();
+function addProgressButton(textId, percentage) {
+  let parent = getProgressBar();
   if (parent.firstChild) {
+    parent.firstChild.value = percentage;
     return;
   }
-  addButton(parent, "buttonStop", text, true);
+  let progress = document.createElement("PROGRESS");
+  progress.max = 100;
+  progress.value = percentage;
+  parent.appendChild(progress);
+  parent = getButtonStop();
+  addButton(parent, "buttonStop", browser.i18n.getMessage(textId), true);
 }
 
 function enableButtonsOf(top, enabled) {
@@ -94,7 +104,8 @@ function clearItem(top) {
   }
 }
 
-function clearButtonStop() {
+function clearProgressButton() {
+  clearItem(getProgressBar());
   clearItem(getButtonStop());
 }
 
@@ -108,7 +119,7 @@ function clearBookmarks() {
 }
 
 function clearWindow() {
-  clearButtonStop();
+  clearProgressButton();
   clearButtonsExtra();
   clearBookmarks();
 }
@@ -392,15 +403,16 @@ function sendMessageCommand(command) {
 function displayProgress(textId, buttonId, state) {
   let total = state.total;
   let todo = state.todo;
+  let percentage = (100 * total) / todo;
   if (todo) {
-    addButtonStop(browser.i18n.getMessage(buttonId));
+    addProgressButton(buttonId, percentage);
   }
   displayMessage(browser.i18n.getMessage(textId,
-    [String(total), String(todo), String(Math.round((100 * total) / todo))]));
+    [String(total), String(todo), String(Math.round(percentage))]))
 }
 
 function displayFinish(textId, state) {
-  clearButtonStop();
+  clearProgressButton();
   if (state.error) {
     displayMessage(browser.i18n.getMessage(textId,
       [state.error, String(state.total)]));

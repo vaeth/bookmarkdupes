@@ -7,7 +7,8 @@
 	  Other things can be done even if stripping should take ages.
 	  Moreover, this solves the bug that when the popup was closed during
 	  stripping in a bad moment, a bookmark might have been duplicated.
-	- Disable buttons instead of using a tacit lock
+	- Add a progress bar for removing/stripping
+	- Disable buttons visibly when locked
 	- Hash bookmark data when searching all bookmarks, resulting in
 	  slightly slower search but considerably faster stripping
 	- Refactor searching, resulting in possibly slight speedup
