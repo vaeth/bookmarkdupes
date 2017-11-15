@@ -1,5 +1,9 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-2.1
+	Martin Väth <martin at mvath.de>:
+	- Display result of removing/stripping only once
+
 *bookmarkdupes-2.0
 	Martin Väth <martin at mvath.de>:
 	- Continue removing/stripping in background if popup is closed,

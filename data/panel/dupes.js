@@ -416,9 +416,10 @@ function displayFinish(textId, state) {
   if (state.error) {
     displayMessage(browser.i18n.getMessage(textId,
       [state.error, String(state.total)]));
-    return;
+  } else {
+    displayMessage(browser.i18n.getMessage(textId, String(state.total)));
   }
-  displayMessage(browser.i18n.getMessage(textId, String(state.total)));
+  sendMessageCommand("finish");
 }
 
 {
@@ -506,26 +507,21 @@ function displayFinish(textId, state) {
         displayProgress("messageStripProgress", "buttonStopStripping", state);
         return;
       case "virgin":
-        break;
+        unlock();
+        return;
       case "removeSuccess":
         displayFinish("messageRemoveSuccess", state);
-        break;
+        return;
       case "stripSuccess":
         displayFinish("messageStripSuccess", state);
-        break;
+        return;
       case "removeError":
         displayFinish("messageRemoveError", state);
-        break;
+        return;
       case "stripError":
         displayFinish("messageStripError", state);
-        break;
-      case "debug":
-        displayMessage(state.debug);
-        break;
-      default:  // should not happen
         return;
     }
-    unlock();
   }
 
   browser.runtime.onMessage.addListener(messageListener);

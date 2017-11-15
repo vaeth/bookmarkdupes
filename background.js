@@ -2,24 +2,8 @@
  * This project is under the GNU public license 2.0
 */
 
-let state = {
-  mode: "virgin"
-};
+let state;
 let stop;
-
-/*
-function debug(msg) {
-  let s = {
-    mode: "debug",
-    debug: msg
-  }
-  let message = {
-    command: "state",
-    state: s
-  };
-  browser.runtime.sendMessage(message);
-}
-*/
 
 function removeFolder(id, callback, errorCallback) {
   return browser.bookmarks.remove(id).then(callback, errorCallback);
@@ -90,6 +74,12 @@ function processMarked(remove, removeList) {
   processRecurse();
 }
 
+function setVirginState() {
+  state = {
+    mode: "virgin"
+  };
+}
+
 function sendState() {
   let message = {
     command: "state",
@@ -106,6 +96,9 @@ function messageListener(message) {
     case "stop":
       stop = true;
       return;
+    case "finish":
+      setVirginState();
+      // fallthrough
     case "sendState":
       sendState();
       return;
@@ -118,4 +111,5 @@ function messageListener(message) {
   }
 }
 
+setVirginState();
 browser.runtime.onMessage.addListener(messageListener);

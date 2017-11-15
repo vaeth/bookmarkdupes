@@ -3,7 +3,7 @@
   "short_name": "bookmarkdupes",
   "description": "__MSG_extensionDescription__",
   "author": "Martin Väth",
-  "version": "2.0",
+  "version": "2.1",
   "manifest_version": 2,
   "homepage_url": "https://github.com/vaeth/bookmarkdupes.git",
   "default_locale": "en",
