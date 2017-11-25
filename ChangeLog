@@ -1,5 +1,10 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-2.2:
+	Martin Väth <martin at mvath.de>:
+	- Display total number of bookmarks
+	- Calculate in background
+
 *bookmarkdupes-2.1
 	Martin Väth <martin at mvath.de>:
 	- Display result of removing/stripping only once

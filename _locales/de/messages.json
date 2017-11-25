@@ -55,9 +55,13 @@
     "message": "Entfernen abbrechen!",
     "description": "Button for emergency stop of description stripping"
   },
+  "buttonStopCalculating": {
+    "message": "Berechnung abbrechen!",
+    "description": "Button for emergency stop of display calculation"
+  },
   "messageExactMatchesGroups": {
-    "message": "Exakte Duplikate ($TOTAL$ Lesezeichen in $GROUPS$ Gruppen)",
-    "description": "Report specified numbers of exact matches and groups",
+    "message": "$TOTAL$ | $ALL$ exakte Duplikate in $GROUPS$ Gruppen",
+    "description": "Report specified numbers of exact matches and groups of all",
     "placeholders": {
       "total": {
         "content": "$1",
@@ -66,12 +70,16 @@
       "groups": {
         "content": "$2",
         "example": "1"
+      },
+      "all": {
+        "content": "$3",
+        "example": "1"
       }
     }
   },
   "messageSimilarMatchesGroups": {
-    "message": "Ähnliche Duplikate ($TOTAL$ Lesezeichen in $GROUPS$ Gruppen)",
-    "description": "Report specified numbers of similar matches and groups",
+    "message": "$TOTAL$ | $ALL$ ähnliche Duplikate in $GROUPS$ Gruppen",
+    "description": "Report specified numbers of similar matches and groups of all",
     "placeholders": {
       "total": {
         "content": "$1",
@@ -79,6 +87,10 @@
       },
       "groups": {
         "content": "$2",
+        "example": "1"
+      },
+      "all": {
+        "content": "$3",
         "example": "1"
       }
     }
@@ -107,7 +119,25 @@
     "message": "Suche",
     "description": "Report that calculation started"
   },
-  "messageCalculatingError": {
+  "messageCalculateProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ von $TODO$",
+    "description": "Report that specified number/total/percentage of items are calculated",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageCalculateError": {
     "message": "Fehler: $ERROR$",
     "description": "Report specified error during calculation",
     "placeholders": {

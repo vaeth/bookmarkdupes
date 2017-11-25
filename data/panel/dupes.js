@@ -184,183 +184,73 @@ function mark(mode) {
   }
 }
 
-function calculate(mode, callback, bookmarkIds) {
-  let exact, handleFunction, result, urlMap;
-
-  function handleDupe(node, parent) {
-    if ((!node.url) || (node.type && node.type != "bookmark")) {
-      return;
+function displayDupes(exact, result) {
+  clearProgressButton();
+  let total = 0;
+  let groups = 0;
+  for (let group of result.result) {
+    if (group.data.length < 2) {
+      continue;
     }
-    let groupIndex = node.url;
-    let extra;
-    if (!exact) {
-      let index = groupIndex.indexOf("?");
-      if (index > 0) {
-        groupIndex = groupIndex.substring(0, index);
-        extra = node.url.substring(index);
+    if (groups++ == 0) {
+      addButtons(0);
+    } else {
+      addRuler();
+    }
+    for (let bookmark of group.data) {
+      ++total;
+      let text = bookmark.text;
+      if (typeof(bookmark.extra) != "undefined") {
+        text += " (" + bookmark.extra + ")";
       }
-    }
-    let id = node.id;
-    let group = urlMap.get(groupIndex);
-    if (typeof(group) == "undefined") {
-      group = {
-        data : new Array(),
-        ids : new Set()
-      };
-      result.push(group);
-      urlMap.set(groupIndex, group);
-    } else if (group.ids.has(id)) {
-      return;
-    }
-    group.ids.add(id);
-    let bookmark = {
-      id: id,
-      text: parent + node.title
-    };
-    if (typeof(extra) != "undefined") {
-      bookmark.extra = extra;
-    }
-    group.data.push(bookmark);
-  }
-
-  function handleEmpty(node, parent) {
-    if (node.url || (node.type && (node.type != "folder"))) {
-      return;
-    }
-    let bookmark = {
-      id: node.id,
-      text: parent + node.title
-    };
-    result.push(bookmark);
-  }
-
-  function handleAll(node, parent, index) {
-    if ((!node.url) || (node.type && node.type != "bookmark")) {
-      return;
-    }
-    let bookmark = {
-      id: node.id,
-      text: parent + node.title,
-    };
-    result.push(bookmark);
-    bookmark = {
-      parentId: node.parentId,
-      title: node.title,
-      url: node.url,
-      index: index
-    };
-    if (typeof(node.type) != "undefined") {
-      bookmark.type = node.type;
-    }
-    bookmarkIds.set(node.id, bookmark);
-  }
-
-  function recurse(node, parent = "", index = 0) {
-    if ((!node.children) || (!node.children.length)) {
-      if (parent && !node.unmodifiable) {
-        handleFunction(node, parent, index);
-      }
-      return;
-    }
-    if (node.title) {
-      parent += node.title + " | ";
-    }
-    index = 0;
-    for (let child of node.children) {
-      recurse(child, parent, ++index);
+      addBookmark(text, bookmark.id);
     }
   }
-
-  function calculateDupes(nodes) {
-    handleFunction = handleDupe;
-    urlMap = new Map();
-    result = new Array();
-    recurse(nodes[0]);
-    let total = 0;
-    let groups = 0;
-    for (let group of result) {
-      if (group.data.length < 2) {
-        continue;
-      }
-      if (groups++ == 0) {
-        addButtons(0);
-      } else {
-        addRuler();
-      }
-      for (let bookmark of group.data) {
-        ++total;
-        let text = bookmark.text;
-        if (typeof(bookmark.extra) != "undefined") {
-          text += " (" + bookmark.extra + ")";
-        }
-        addBookmark(text, bookmark.id);
-      }
-    }
-    displayMessage(browser.i18n.getMessage((exact ?
-      "messageExactMatchesGroups" : "messageSimilarMatchesGroups"),
-      [String(total), String(groups)]));
-  }
-
-  function calculateEmpty(nodes) {
-    handleFunction = handleEmpty;
-    result = new Array();
-    recurse(nodes[0]);
-    let total = result.length;
-    if (total) {
-      addButtons(1);
-      for (let bookmark of result) {
-        addBookmark(bookmark.text, bookmark.id);
-      }
-    }
-    displayMessage(browser.i18n.getMessage("messageEmpty", String(total)));
-  }
-
-  function calculateAll(nodes) {
-    handleFunction = handleAll;
-    result = new Array();
-    recurse(nodes[0]);
-    let total = result.length;
-    if (total) {
-      addButtons(2);
-      for (let bookmark of result) {
-        addBookmark(bookmark.text, bookmark.id);
-      }
-    }
-    displayMessage(browser.i18n.getMessage("messageAll", String(total)));
-  }
-
-  displayMessage(browser.i18n.getMessage("messageCalculating"));
-  clearButtonsExtra();
-  clearBookmarks();
-  let mainFunction;
-  switch (mode) {
-    case 0:
-      exact = true;
-      // fallthrough
-    case 1:
-      mainFunction = calculateDupes;
-      break;
-    case 2:
-      mainFunction = calculateEmpty;
-      break;
-    default:
-      mainFunction = calculateAll;
-  }
-  browser.bookmarks.getTree().then(mainFunction, function (error) {
-    displayMessage(browser.i18n.getMessage("messageCalculatingError", error));
-  }).then(callback, callback);
+  displayMessage(browser.i18n.getMessage((exact ?
+    "messageExactMatchesGroups" : "messageSimilarMatchesGroups"),
+    [String(total), String(groups), String(result.all)]));
 }
 
-function processMarked(transferBookmarkIds) {
-  let remove, bookmarkIds;
-  if (transferBookmarkIds) {
-    displayMessage(browser.i18n.getMessage("messageStripMarked"));
-    remove = false;
-    bookmarkIds = transferBookmarkIds();
-  } else {
-    displayMessage(browser.i18n.getMessage("messageRemoveMarked"));
-    remove = true;
+function displayEmpty(result) {
+  clearProgressButton();
+  let total = result.length;
+  if (total) {
+    addButtons(1);
+    for (let bookmark of result) {
+      addBookmark(bookmark.text, bookmark.id);
+    }
   }
+  displayMessage(browser.i18n.getMessage("messageEmpty", String(total)));
+}
+
+function displayAll(result) {
+  clearProgressButton();
+  let total = result.length;
+  if (total) {
+    addButtons(2);
+    for (let bookmark of result) {
+      addBookmark(bookmark.text, bookmark.id);
+    }
+  }
+  displayMessage(browser.i18n.getMessage("messageAll", String(total)));
+}
+
+function sendMessageCommand(command) {
+  let message = {
+    command: command
+  };
+  browser.runtime.sendMessage(message);
+}
+
+function calculating(command) {
+  clearButtonsExtra();
+  clearBookmarks();
+  sendMessageCommand(command);
+}
+
+function processMarked(remove) {
+  displayMessage(browser.i18n.getMessage(remove ?
+  "messageRemoveMarked" : "messageStripMarked"));
   let top = getTop();
   let removeList = new Array;
   if (top.hasChildNodes()) {
@@ -372,19 +262,9 @@ function processMarked(transferBookmarkIds) {
       if (!checkbox.checked) {
         continue;
       }
-      let id = checkbox.id;
-      if (remove) {
-        removeList.push(id);
-        continue;
-      }
-      let strip = {
-        id: id,
-        bookmark: bookmarkIds.get(id)
-      };
-      removeList.push(strip);
+      removeList.push(checkbox.id);
     }
   }
-  bookmarkIds = {};
   clearWindow();
   let message = {
     command: (remove ? "remove" : "strip"),
@@ -393,20 +273,15 @@ function processMarked(transferBookmarkIds) {
   browser.runtime.sendMessage(message);
 }
 
-function sendMessageCommand(command) {
-  let message = {
-    command: command
-  };
-  browser.runtime.sendMessage(message);
-}
-
-function displayProgress(textId, buttonId, state) {
-  let total = state.total;
+function displayProgress(textId, buttonTextId, state) {
   let todo = state.todo;
-  let percentage = (100 * total) / todo;
-  if (todo) {
-    addProgressButton(buttonId, percentage);
+  if (!todo) {
+    displayMessage(browser.i18n.getMessage("messageCalculating"));
+    return;
   }
+  let total = state.total;
+  let percentage = (100 * total) / todo;
+  addProgressButton(buttonTextId, percentage);
   displayMessage(browser.i18n.getMessage(textId,
     [String(total), String(todo), String(Math.round(percentage))]))
 }
@@ -424,13 +299,6 @@ function displayFinish(textId, state) {
 
 {
   let lock = true;
-  let bookmarkIds;
-
-  function transferBookmarkIds() {
-    let r = bookmarkIds;
-    bookmarkIds = {};
-    return r;
-  }
 
   function unlock() {
     lock = false;
@@ -453,23 +321,22 @@ function displayFinish(textId, state) {
     enableButtons(false);
     switch (event.target.id) {
       case "buttonListExactDupes":
-        calculate(0, unlock);
+        calculating("calculateExactDupes");
         return;
       case "buttonListSimilarDupes":
-        calculate(1, unlock);
+        calculating("calculateSimilarDupes");
         return;
       case "buttonListEmpty":
-        calculate(2, unlock);
+        calculating("calculateEmptyFolder");
         return;
       case "buttonListAll":
-        bookmarkIds = new Map;
-        calculate(3, unlock, bookmarkIds);
+        calculating("calculateAll");
         return;
       case "buttonRemoveMarked":
-        processMarked(null);
+        processMarked(true);
         return;
       case "buttonStripMarked":
-        processMarked(transferBookmarkIds);
+        processMarked(false);
         return;
       case "buttonMarkAll":
         mark(2);
@@ -506,9 +373,24 @@ function displayFinish(textId, state) {
       case "stripProgress":
         displayProgress("messageStripProgress", "buttonStopStripping", state);
         return;
-      case "virgin":
-        unlock();
+      case "calculatingProgress":
+        displayProgress("messageCalculateProgress", "buttonStopCalculating",
+          state);
         return;
+      case "calculatedDupesExact":
+        displayDupes(true, state.result)
+        break;
+      case "calculatedDupesSimilar":
+        displayDupes(false, state.result);
+        break;
+      case "calculatedEmptyFolder":
+        displayEmpty(state.result);
+        break;
+      case "calculatedAll":
+        displayAll(state.result);
+        break;
+      case "virgin":
+        break;
       case "removeSuccess":
         displayFinish("messageRemoveSuccess", state);
         return;
@@ -521,7 +403,14 @@ function displayFinish(textId, state) {
       case "stripError":
         displayFinish("messageStripError", state);
         return;
+      case "calculateError":
+        displayFinish("messageCalculateError", state);
+        return;
+      default:  // should not happen
+        displayMessage(state.mode);
+        return;
     }
+    unlock();
   }
 
   browser.runtime.onMessage.addListener(messageListener);
