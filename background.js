@@ -90,8 +90,8 @@ function processMarked(remove, removeList) {
   processRecurse();
 }
 
-function calculate(command) {
-  let exact, handleFunction, result, urlMap, counting;
+function calculate(command, async) {
+  let exact, handleFunction, result, urlMap;
 
   function calculateFinish(mode) {
     state = {
@@ -125,9 +125,7 @@ function calculate(command) {
     if ((!node.url) || (node.type && node.type != "bookmark")) {
       return;
     }
-    if (calculateCount()) {
-      return;
-    }
+    ++(result.all);
     let groupIndex = node.url;
     let extra;
     if (!exact) {
@@ -144,7 +142,7 @@ function calculate(command) {
         data : new Array(),
         ids : new Set()
       };
-      result.push(group);
+      result.result.push(group);
       urlMap.set(groupIndex, group);
     } else if (group.ids.has(id)) {
       return;
@@ -164,9 +162,6 @@ function calculate(command) {
     if (node.url || (node.type && (node.type != "folder"))) {
       return;
     }
-    if (calculateCount()) {
-      return;
-    }
     let bookmark = {
       id: node.id,
       text: parent + node.title
@@ -176,9 +171,6 @@ function calculate(command) {
 
   function handleAll(node, parent, index) {
     if ((!node.url) || (node.type && node.type != "bookmark")) {
-      return;
-    }
-    if (calculateCount()) {
       return;
     }
     let bookmark = {
@@ -198,62 +190,100 @@ function calculate(command) {
     bookmarkIds.set(node.id, bookmark);
   }
 
-  function recurse(node, parent = "", index = 0) {
-    if (stop) {
-      return;
-    }
-    if ((!node.children) || (!node.children.length)) {
-      if (parent && !node.unmodifiable) {
-        handleFunction(node, parent, index);
+  function recurse(node, callback) {
+
+    function recurseCount(node) {
+      if ((!node.children) || (!node.children.length)) {
+        ++(state.todo);
+        return;
       }
-      return;
+      for (let child of node.children) {
+        recurseCount(child);
+      }
     }
-    if (node.title) {
-      parent += node.title + " | ";
+
+    function recurseMain(node, parent, index, callback) {
+      if (stop) {
+        callback();
+        return;
+      }
+      if ((!node.children) || (!node.children.length)) {
+        if (parent && !node.unmodifiable) {
+          handleFunction(node, parent, index);
+        }
+        if (async) {
+          ++(state.total);
+          sendState();
+        }
+        callback();
+        return;
+      }
+      if (node.title) {
+        parent += node.title + " | ";
+      }
+      if (async) {
+        recurseChilds(node, parent, 0, callback);
+        return;
+      }
+      index = 0;
+      for (let child of node.children) {
+        recurseMain(child, parent, ++index, function () {});
+      }
+      callback();
     }
-    index = 0;
-    for (let child of node.children) {
-      recurse(child, parent, ++index);
+
+    function recurseChilds(node, parent, index, callback) {
+      if (index == node.children.length) {
+        callback();
+        return;
+      }
+      setTimeout(function () {
+        recurseMain(node.children[index], parent, index, function() {
+          recurseChilds(node, parent, index + 1, callback);
+        });
+      }, 0);
     }
+
+    if (async) {
+       recurseCount(node);
+    }
+    recurseMain(node, "", 0, callback);
   }
 
   function calculateDupes(nodes) {
     handleFunction = handleDupe;
     urlMap = new Map();
-    result = new Array();
-    recurse(nodes[0]);
-    counting = false;
-    recurse(nodes[0]);
-    urlMap = {};
     result = {
-      result: result,
-      all: state.todo
+      result: new Array(),
+      all: 0
     };
-    calculateFinish(exact ? "calculatedDupesExact" : "calculatedDupesSimilar");
+    recurse(nodes[0], function() {
+      urlMap = {};
+      calculateFinish(exact ?
+        "calculatedDupesExact" : "calculatedDupesSimilar");
+    });
   }
 
   function calculateEmpty(nodes) {
     handleFunction = handleEmpty;
     result = new Array();
-    recurse(nodes[0]);
-    counting = false;
-    recurse(nodes[0]);
-    calculateFinish("calculatedEmptyFolder");
+    recurse(nodes[0], function () {
+      calculateFinish("calculatedEmptyFolder");
+    });
   }
 
   function calculateAll(nodes) {
     handleFunction = handleAll;
     bookmarkIds = new Map();
     result = new Array();
-    recurse(nodes[0]);
-    counting = false;
-    recurse(nodes[0]);
-    calculateFinish("calculatedAll");
+    recurse(nodes[0], function () {
+      calculateFinish("calculatedAll");
+    });
   }
 
   let mainFunction;
   exact = false;
-  counting = true;
+  async = false;
   switch (command) {
     case "calculateExactDupes":
       exact = true;

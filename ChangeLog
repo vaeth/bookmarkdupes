@@ -4,6 +4,7 @@
 	Martin Väth <martin at mvath.de>:
 	- Display total number of bookmarks
 	- Calculate in background
+	- Calculate optionally asynchronously (not yet used)
 
 *bookmarkdupes-2.1
 	Martin Väth <martin at mvath.de>:
