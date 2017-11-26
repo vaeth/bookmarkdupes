@@ -60,7 +60,7 @@
     "description": "Button for emergency stop of display calculation"
   },
   "messageExactMatchesGroups": {
-    "message": "$TOTAL$ | $ALL$ exact dupes in $GROUPS$ groups",
+    "message": "$TOTAL$ (of $ALL$) exact dupes in $GROUPS$ groups",
     "description": "Report specified numbers of exact matches and groups of all",
     "placeholders": {
       "total": {
@@ -78,7 +78,7 @@
     }
   },
   "messageSimilarMatchesGroups": {
-    "message": "$TOTAL$ | $ALL$ similar dupes in $GROUPS$ groups",
+    "message": "$TOTAL$ (of $ALL$) similar dupes in $GROUPS$ groups",
     "description": "Report specified numbers of similar matches and groups of all",
     "placeholders": {
       "total": {
