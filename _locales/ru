@@ -1,0 +1,242 @@
+{
+  "extensionName": {
+    "message": "Bookmark Dupes",
+    "description": "Name of the extension"
+  },
+  "extensionDescription": {
+    "message": "Поиск, отображение и удаление дубликатов закладок, пустых папок, описаний",
+    "description": "Description of the extension"
+  },
+  "buttonListExactDupes": {
+    "message": "Точные дубликаты",
+    "description": "Button for listing exact dupes"
+  },
+  "buttonListSimilarDupes": {
+    "message": "Подобные дубликаты",
+    "description": "Button for listing similar dupes"
+  },
+  "buttonListEmpty": {
+    "message": "Пустые папки",
+    "description": "Button for listing empty folders"
+  },
+  "buttonListAll": {
+    "message": "Все закладки",
+    "description": "Button for listing all bookmarks"
+  },
+  "buttonMarkAll": {
+    "message": "Отметить все",
+    "description": "Button for marking all"
+  },
+  "buttonMarkButFirst": {
+    "message": "Отметить все первые в каждой паре дублей",
+    "description": "Button for marking all but first"
+  },
+  "buttonMarkButLast": {
+    "message": "Отметить все последние в каждой паре дублей",
+    "description": "Button for marking all but last"
+  },
+  "buttonUnmarkAll": {
+    "message": "Снять все отметки",
+    "description": "Button for unmarking all"
+  },
+  "buttonRemoveMarked": {
+    "message": "Удалить отмеченные закладки",
+    "description": "Button for removing marked bookmarks"
+  },
+  "buttonStripMarked": {
+    "message": "Очистить описания отмеченных закладок",
+    "description": "Button for stripping descriptions of marked bookmarks"
+  },
+  "buttonStopRemoving": {
+    "message": "Прекратить удаление!",
+    "description": "Button for emergency stop of bookmark removing"
+  },
+  "buttonStopStripping": {
+    "message": "Прекратить очистку!",
+    "description": "Button for emergency stop of description stripping"
+  },
+  "buttonStopCalculating": {
+    "message": "Прекратить вычисление!",
+    "description": "Button for emergency stop of display calculation"
+  },
+  "messageExactMatchesGroups": {
+    "message": "$TOTAL$ (из $ALL$) точных дублей в $GROUPS$ группах",
+    "description": "Report specified numbers of exact matches and groups of all",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "2"
+      },
+      "groups": {
+        "content": "$2",
+        "example": "1"
+      },
+      "all": {
+        "content": "$3",
+        "example": "1"
+      }
+    }
+  },
+  "messageSimilarMatchesGroups": {
+    "message": "$TOTAL$ (из $ALL$) подобных дублей в $GROUPS$ группах",
+    "description": "Report specified numbers of similar matches and groups of all",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "2"
+      },
+      "groups": {
+        "content": "$2",
+        "example": "1"
+      },
+      "all": {
+        "content": "$3",
+        "example": "1"
+      }
+    }
+  },
+  "messageEmpty": {
+    "message": "$TOTAL$ пустых папок найдено",
+    "description": "Report specified number of empty folders",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageAll": {
+    "message": "$TOTAL$ закладок найдено",
+    "description": "Report specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageCalculating": {
+    "message": "Поиск",
+    "description": "Report that calculation started"
+  },
+  "messageCalculateProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ из $TODO$",
+    "description": "Report that specified number/total/percentage of items are calculated",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageCalculateError": {
+    "message": "Ошибка: $ERROR$",
+    "description": "Report specified error during calculation",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      }
+    }
+  },
+  "messageRemoveMarked": {
+    "message": "Удаление отмеченных закладок...",
+    "description": "Report that removal of marked bookmarks started"
+  },
+  "messageRemoveProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ из $TODO$ закладок удалено",
+    "description": "Report that specified number/total/percentage of bookmarks are removed",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemoveSuccess": {
+    "message": "$TOTAL$ закладок удалено!",
+    "description": "Report success when removing specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemoveError": {
+    "message": "Ошибка после удаления $TOTAL$ закладок: $ERROR$",
+    "description": "Report specified error after removing specified number of bookmarks",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripMarked": {
+    "message": "Очистка описаний отмеченных закладок",
+    "description": "Report that description stripping started"
+  },
+  "messageStripProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ из $TODO$ описаний очищено",
+    "description": "Report that specified number/total/percentage of descriptions are stripped",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripSuccess": {
+    "message": "$TOTAL$ описаний очищено!",
+    "description": "Report success when stripping specified number of descriptions",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripError": {
+    "message": "Ошибка после очистки $TOTAL$ описаний: $ERROR$",
+    "description": "Report specified error after stripping specified number of descriptions",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  }
+}
