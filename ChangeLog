@@ -1,6 +1,13 @@
 # ChangeLog for squashmount
 
 *bookmarkdupes-2.2:
+	Pordolka:
+	- Create uk locales
+	- Create ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Create es locales
+
 	Martin Väth <martin at mvath.de>:
 	- Display total number of bookmarks
 	- Calculate in background
