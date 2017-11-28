@@ -30,3 +30,8 @@ or to strip the descriptions of the selected bookmarks in case 4.
 
 When you close the popup window and removal of bookmarks/comments is not
 yet finished, it will continue in the background.
+
+## Contributions
+
+- Juan Salvador Aleixandre (Spanisch translation) https://github.com/juaalta
+- Pordolka (Russian and Ukrain translation) https://github.com/perdolka
