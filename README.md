@@ -33,5 +33,5 @@ yet finished, it will continue in the background.
 
 ## Contributions
 
-- Juan Salvador Aleixandre (Spanisch translation) https://github.com/juaalta
-- Pordolka (Russian and Ukrain translation) https://github.com/perdolka
+- Henaro aka Ironwool https://github.com/perdolka (Russian and Ukrain translation)
+- Juan Salvador Aleixandre Talens https://github.com/juaalta (Spanisch translation)
