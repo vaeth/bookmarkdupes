@@ -1,0 +1,242 @@
+{
+  "extensionName": {
+    "message": "Marcadores Duplicados",
+    "description": "Name of the extension"
+  },
+  "extensionDescription": {
+    "message": "Mostrar/Borrar marcadores duplicados, carpetas vacías, o descripciones",
+    "description": "Description of the extension"
+  },
+  "buttonListExactDupes": {
+    "message": "Duplicados  exactos",
+    "description": "Button for listing exact dupes"
+  },
+  "buttonListSimilarDupes": {
+    "message": "Duplicados parecidos",
+    "description": "Button for listing similar dupes"
+  },
+  "buttonListEmpty": {
+    "message": "Carpetas vacías",
+    "description": "Button for listing empty folders"
+  },
+  "buttonListAll": {
+    "message": "Todos los  marcadores",
+    "description": "Button for listing all bookmarks"
+  },
+  "buttonMarkAll": {
+    "message": "Seleccionar todos",
+    "description": "Button for marking all"
+  },
+  "buttonMarkButFirst": {
+    "message": "Seleccionar todos los primeros de cada grupo",
+    "description": "Button for marking all but first"
+  },
+  "buttonMarkButLast": {
+    "message": "Seleccionar todos los últimos de cada grupo",
+    "description": "Button for marking all but last"
+  },
+  "buttonUnmarkAll": {
+    "message": "Deseleccionar todo",
+    "description": "Button for unmarking all"
+  },
+  "buttonRemoveMarked": {
+    "message": "Borrar marcadores seleccionados",
+    "description": "Button for removing marked bookmarks"
+  },
+  "buttonStripMarked": {
+    "message": "Quitar las descripciones de los marcadores seleccionados",
+    "description": "Button for stripping descriptions of marked bookmarks"
+  },
+  "buttonStopRemoving": {
+    "message": "Parar de borrar!",
+    "description": "Button for emergency stop of bookmark removing"
+  },
+  "buttonStopStripping": {
+    "message": "Parar de quitar descriociones!",
+    "description": "Button for emergency stop of description stripping"
+  },
+  "buttonStopCalculating": {
+    "message": "Parar de calcular!",
+    "description": "Button for emergency stop of display calculation"
+  },
+  "messageExactMatchesGroups": {
+    "message": "$TOTAL$ (de $ALL$) duplicados exactos dentro de $GROUPS$ gruops",
+    "description": "Report specified numbers of exact matches and groups of all",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "2"
+      },
+      "groups": {
+        "content": "$2",
+        "example": "1"
+      },
+      "all": {
+        "content": "$3",
+        "example": "1"
+      }
+    }
+  },
+  "messageSimilarMatchesGroups": {
+    "message": "$TOTAL$ (de $ALL$) duplicados parecidos dentro de $GROUPS$ grupos",
+    "description": "Report specified numbers of similar matches and groups of all",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "2"
+      },
+      "groups": {
+        "content": "$2",
+        "example": "1"
+      },
+      "all": {
+        "content": "$3",
+        "example": "1"
+      }
+    }
+  },
+  "messageEmpty": {
+    "message": "$TOTAL$ carpetas vacías encontradas",
+    "description": "Report specified number of empty folders",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageAll": {
+    "message": "$TOTAL$ marcadores encontrados",
+    "description": "Report specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageCalculating": {
+    "message": "Buscando",
+    "description": "Report that calculation started"
+  },
+  "messageCalculateProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$",
+    "description": "Report that specified number/total/percentage of items are calculated",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageCalculateError": {
+    "message": "Error: $ERROR$",
+    "description": "Report specified error during calculation",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      }
+    }
+  },
+  "messageRemoveMarked": {
+    "message": "Borrando marcadores seleccionados",
+    "description": "Report that removal of marked bookmarks started"
+  },
+  "messageRemoveProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$ marcadores borrados",
+    "description": "Report that specified number/total/percentage of bookmarks are removed",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemoveSuccess": {
+    "message": "$TOTAL$ marcadores borrados!",
+    "description": "Report success when removing specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemoveError": {
+    "message": "Error después de borrar $TOTAL$ marcadores: $ERROR$",
+    "description": "Report specified error after removing specified number of bookmarks",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripMarked": {
+    "message": "Quitando descripciones de marcadores seleccionados",
+    "description": "Report that description stripping started"
+  },
+  "messageStripProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$ descripciones quitadas",
+    "description": "Report that specified number/total/percentage of descriptions are stripped",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripSuccess": {
+    "message": "$TOTAL$ descripciones quitadas!",
+    "description": "Report success when stripping specified number of descriptions",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripError": {
+    "message": "Error después de quitar $TOTAL$ descripciones: $ERROR$",
+    "description": "Report specified error after stripping specified number of descriptions",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  }
+}
