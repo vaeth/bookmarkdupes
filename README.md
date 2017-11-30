@@ -28,10 +28,17 @@ There are also button to select/unselect convenient sets of checkboxes.
 Finally, there are buttons to remove the selected bookmarks in case 1-3,
 or to strip the descriptions of the selected bookmarks in case 4.
 
+Be aware that stripping of descriptions works by replacing the bookmark by
+a freshly created one. In particular, it updates the internally stored date
+when the bookmark was added.
+
 When you close the popup window and removal of bookmarks/comments is not
 yet finished, it will continue in the background.
 
 ## Contributions
 
+(in alphabetical order)
+
 - Henaro aka Ironwool https://github.com/perdolka (Russian and Ukrain translation)
 - Juan Salvador Aleixandre Talens https://github.com/juaalta (Spanisch translation)
+- 可称呼我YF，或随意。网名的本义是YF的用户000。 <yfdyh000 at gmail.com> https://github.com/yfdyh000 (Simplified Chinese translation)
