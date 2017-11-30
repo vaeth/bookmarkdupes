@@ -1,5 +1,9 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-2.4:
+	YFdyh000 <yfdyh000 at gmail.com>:
+	- Create zh_CN locales
+
 *bookmarkdupes-2.3:
 	- Serious bugfix: Stripping of bookmarks now works again
 
