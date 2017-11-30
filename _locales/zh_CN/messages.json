@@ -35,6 +35,14 @@
     "message": "全部选中，除了每个组中最后一项",
     "description": "Button for marking all but last"
   },
+  "buttonMarkButOldest": {
+    "message": "Mark all but oldest in each group",
+    "description": "Button for marking all but oldest"
+  },
+  "buttonMarkButNewest": {
+    "message": "Mark all but newest in each group",
+    "description": "Button for marking all but newest"
+  },
   "buttonUnmarkAll": {
     "message": "全部取消",
     "description": "Button for unmarking all"

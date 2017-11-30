@@ -22,8 +22,10 @@ The difference between 1 and 2 is that in case
 2. The URLs of the bookmarks must match up to the first ? symbol;
    the URL text after the ? symbol is appended to the displayed bookmark.
 
-After this, you will be offered the list of all bookmark with checkboxes.
-There are also button to select/unselect convenient sets of checkboxes.
+After this, you will be offered the list of bookmarks with checkboxes;
+in case 1 and 2 numbers indicate the order in which matching bookmarks
+were added according to the internally stored date.
+There are also buttons to select/unselect convenient sets of checkboxes.
 
 Finally, there are buttons to remove the selected bookmarks in case 1-3,
 or to strip the descriptions of the selected bookmarks in case 4.

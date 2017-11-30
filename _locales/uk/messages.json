@@ -35,6 +35,14 @@
     "message": "Позначити всі останні в кожній парі дублів",
     "description": "Button for marking all but last"
   },
+  "buttonMarkButOldest": {
+    "message": "Mark all but oldest in each group",
+    "description": "Button for marking all but oldest"
+  },
+  "buttonMarkButNewest": {
+    "message": "Mark all but newest in each group",
+    "description": "Button for marking all but newest"
+  },
   "buttonUnmarkAll": {
     "message": "Зняти всі позначення",
     "description": "Button for unmarking all"
