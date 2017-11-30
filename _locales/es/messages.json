@@ -35,6 +35,14 @@
     "message": "Seleccionar todos los últimos de cada grupo",
     "description": "Button for marking all but last"
   },
+  "buttonMarkButOldest": {
+    "message": "Mark all but oldest in each group",
+    "description": "Button for marking all but oldest"
+  },
+  "buttonMarkButNewest": {
+    "message": "Mark all but newest in each group",
+    "description": "Button for marking all but newest"
+  },
   "buttonUnmarkAll": {
     "message": "Deseleccionar todo",
     "description": "Button for unmarking all"

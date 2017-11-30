@@ -35,6 +35,14 @@
     "message": "Отметить все последние в каждой паре дублей",
     "description": "Button for marking all but last"
   },
+  "buttonMarkButOldest": {
+    "message": "Mark all but oldest in each group",
+    "description": "Button for marking all but oldest"
+  },
+  "buttonMarkButNewest": {
+    "message": "Mark all but newest in each group",
+    "description": "Button for marking all but newest"
+  },
   "buttonUnmarkAll": {
     "message": "Снять все отметки",
     "description": "Button for unmarking all"

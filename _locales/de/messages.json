@@ -35,6 +35,14 @@
     "message": "Alle außer Gruppenletzten markieren",
     "description": "Button for marking all but last"
   },
+  "buttonMarkButOldest": {
+    "message": "Alle außer Gruppenältesten markieren",
+    "description": "Button for marking all but oldest"
+  },
+  "buttonMarkButNewest": {
+    "message": "Alle außer Grupenjüngsten markieren",
+    "description": "Button for marking all but newest"
+  },
   "buttonUnmarkAll": {
     "message": "Alle Markierungen entfernen",
     "description": "Button for unmarking all"
