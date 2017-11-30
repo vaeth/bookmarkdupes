@@ -1,5 +1,8 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-2.3:
+	- Serious bugfix: Stripping of bookmarks now works again
+
 *bookmarkdupes-2.2:
 	Henaro aka Ironwool:
 	- Create uk locales

@@ -26,7 +26,7 @@ function removeFolder(id, callback, errorCallback) {
 }
 
 function stripBookmark(id, callback, errorCallback) {
-  return browser.bookmarks.create(bookmarkIds[id]).then(function () {
+  return browser.bookmarks.create(bookmarkIds.get(id)).then(function () {
     browser.bookmarks.remove(id).then(callback, errorCallback);
   }, errorCallback);
 }
