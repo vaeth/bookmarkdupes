@@ -56,5 +56,5 @@ yet finished, it will continue in the background.
 (in alphabetical order)
 
 - Henaro aka Ironwool https://github.com/perdolka (Russian and Ukrain translation)
-- Juan Salvador Aleixandre Talens https://github.com/juaalta (Spanisch translation)
+- Juan Salvador Aleixandre Talens https://github.com/juaalta (Spanish translation)
 - YFdyh000 <yfdyh000 at gmail.com> https://github.com/yfdyh000 (Simplified Chinese translation)

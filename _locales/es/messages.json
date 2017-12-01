@@ -36,11 +36,11 @@
     "description": "Button for marking all but last"
   },
   "buttonMarkButOldest": {
-    "message": "Mark all but oldest in each group",
+    "message": "Seleccionar todos los más viejos de cada grupo",
     "description": "Button for marking all but oldest"
   },
   "buttonMarkButNewest": {
-    "message": "Mark all but newest in each group",
+    "message": "Seleccionar todos los más nuevos de cada grupo",
     "description": "Button for marking all but newest"
   },
   "buttonUnmarkAll": {
@@ -60,7 +60,7 @@
     "description": "Button for emergency stop of bookmark removing"
   },
   "buttonStopStripping": {
-    "message": "Parar de quitar descriociones!",
+    "message": "Parar de quitar descripciones!",
     "description": "Button for emergency stop of description stripping"
   },
   "buttonStopCalculating": {
