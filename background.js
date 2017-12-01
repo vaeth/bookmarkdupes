@@ -131,7 +131,7 @@ function calculate(command, async) {
     }
     let id = node.id;
     let group = urlMap.get(groupIndex);
-    if (typeof(group) == "undefined") {
+    if (group === undefined) {
       group = {
         data : new Array(),
         ids : new Set()
@@ -147,7 +147,7 @@ function calculate(command, async) {
       id: id,
       text: parent + node.title
     };
-    if (typeof(extra) != "undefined") {
+    if (extra !== undefined) {
       bookmark.extra = extra;
     }
     group.data.push(bookmark);
@@ -177,9 +177,9 @@ function calculate(command, async) {
       parentId: node.parentId,
       title: node.title,
       url: node.url,
-      index: ((typedef(node.index) != "undefined") ? node.index : index)
+      index: ((node.index !== undefined) ? node.index : index)
     };
-    if (typeof(node.type) != "undefined") {
+    if (node.type !== undefined) {
       bookmark.type = node.type;
     }
     bookmarkIds.set(node.id, bookmark);

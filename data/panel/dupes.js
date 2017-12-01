@@ -77,7 +77,7 @@ function enableButtonsOf(top, enabled) {
   if (!top.hasChildNodes()) {
     return;
   }
-  let disabled = ((typeof(enabled) != "undefined") && !enabled);
+  let disabled = ((enabled !== undefined) && !enabled);
   for (let child of top.childNodes) {
     if (child.nodeName == "BUTTON") {
       child.disabled = disabled;
@@ -197,7 +197,7 @@ function displayDupes(exact, result) {
     for (let bookmark of group.data) {
       ++total;
       let text = bookmark.text;
-      if (typeof(bookmark.extra) != "undefined") {
+      if (bookmark.extra !== undefined) {
         text += " (" + bookmark.extra + ")";
       }
       addBookmark(text, bookmark.id);
