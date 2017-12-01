@@ -28,19 +28,19 @@
     "description": "Button for marking all"
   },
   "buttonMarkButFirst": {
-    "message": "Отметить все первые в каждой паре дублей",
+    "message": "В каждой группе выбрать все кроме верхней",
     "description": "Button for marking all but first"
   },
   "buttonMarkButLast": {
-    "message": "Отметить все последние в каждой паре дублей",
+    "message": "В каждой группе выбрать все кроме нижней",
     "description": "Button for marking all but last"
   },
   "buttonMarkButOldest": {
-    "message": "Mark all but oldest in each group",
+    "message": "В каждой группе выбрать все кроме старейшей",
     "description": "Button for marking all but oldest"
   },
   "buttonMarkButNewest": {
-    "message": "Mark all but newest in each group",
+    "message": "В каждой группе выбрать все кроме новейшей",
     "description": "Button for marking all but newest"
   },
   "buttonUnmarkAll": {
