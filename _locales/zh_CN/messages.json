@@ -1,38 +1,38 @@
 {
   "extensionName": {
-    "message": "Marcadores Duplicados",
+    "message": "Bookmark Dupes",
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Mostrar/Borrar marcadores duplicados, carpetas vacías, o descripciones",
+    "message": "显示/移除重复的书签、空文件夹或描述",
     "description": "Description of the extension"
   },
   "buttonListExactDupes": {
-    "message": "Duplicados exactos",
+    "message": "完全重复",
     "description": "Button for listing exact dupes"
   },
   "buttonListSimilarDupes": {
-    "message": "Duplicados parecidos",
+    "message": "基本重复",
     "description": "Button for listing similar dupes"
   },
   "buttonListEmpty": {
-    "message": "Carpetas vacías",
+    "message": "空文件夹",
     "description": "Button for listing empty folders"
   },
   "buttonListAll": {
-    "message": "Todos los marcadores",
+    "message": "所有书签",
     "description": "Button for listing all bookmarks"
   },
   "buttonMarkAll": {
-    "message": "Seleccionar todos",
+    "message": "全部选中",
     "description": "Button for marking all"
   },
   "buttonMarkButFirst": {
-    "message": "Seleccionar todos los primeros de cada grupo",
+    "message": "全部选中，除了每个组中第一项",
     "description": "Button for marking all but first"
   },
   "buttonMarkButLast": {
-    "message": "Seleccionar todos los últimos de cada grupo",
+    "message": "全部选中，除了每个组中最后一项",
     "description": "Button for marking all but last"
   },
   "buttonMarkButOldest": {
@@ -44,31 +44,31 @@
     "description": "Button for marking all but newest"
   },
   "buttonUnmarkAll": {
-    "message": "Deseleccionar todo",
+    "message": "全部取消",
     "description": "Button for unmarking all"
   },
   "buttonRemoveMarked": {
-    "message": "Borrar marcadores seleccionados",
+    "message": "移除选中的书签",
     "description": "Button for removing marked bookmarks"
   },
   "buttonStripMarked": {
-    "message": "Quitar las descripciones de los marcadores seleccionados",
+    "message": "剥离选中书签的描述",
     "description": "Button for stripping descriptions of marked bookmarks"
   },
   "buttonStopRemoving": {
-    "message": "Parar de borrar!",
+    "message": "停止移除！",
     "description": "Button for emergency stop of bookmark removing"
   },
   "buttonStopStripping": {
-    "message": "Parar de quitar descriociones!",
+    "message": "停止剥离！",
     "description": "Button for emergency stop of description stripping"
   },
   "buttonStopCalculating": {
-    "message": "Parar de calcular!",
+    "message": "停止计算！",
     "description": "Button for emergency stop of display calculation"
   },
   "messageExactMatchesGroups": {
-    "message": "$TOTAL$ (de $ALL$) duplicados exactos dentro de $GROUPS$ gruops",
+    "message": "$TOTAL$ / $ALL$ 个完全重复，共 $GROUPS$ 组",
     "description": "Report specified numbers of exact matches and groups of all",
     "placeholders": {
       "total": {
@@ -86,7 +86,7 @@
     }
   },
   "messageSimilarMatchesGroups": {
-    "message": "$TOTAL$ (de $ALL$) duplicados parecidos dentro de $GROUPS$ grupos",
+    "message": "$TOTAL$ / $ALL$ 个基本重复，共 $GROUPS$ 组",
     "description": "Report specified numbers of similar matches and groups of all",
     "placeholders": {
       "total": {
@@ -104,7 +104,7 @@
     }
   },
   "messageEmpty": {
-    "message": "$TOTAL$ carpetas vacías encontradas",
+    "message": "找到 $TOTAL$ 个空文件夹",
     "description": "Report specified number of empty folders",
     "placeholders": {
       "total": {
@@ -114,7 +114,7 @@
     }
   },
   "messageAll": {
-    "message": "$TOTAL$ marcadores encontrados",
+    "message": "找到 $TOTAL$ 个书签",
     "description": "Report specified number of bookmarks",
     "placeholders": {
       "total": {
@@ -124,11 +124,11 @@
     }
   },
   "messageCalculating": {
-    "message": "Buscando",
+    "message": "正在搜索",
     "description": "Report that calculation started"
   },
   "messageCalculateProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$",
+    "message": "($PERCENTAGE$%) $TOTAL$ / $TODO$",
     "description": "Report that specified number/total/percentage of items are calculated",
     "placeholders": {
       "total": {
@@ -146,7 +146,7 @@
     }
   },
   "messageCalculateError": {
-    "message": "Error: $ERROR$",
+    "message": "错误：$ERROR$",
     "description": "Report specified error during calculation",
     "placeholders": {
       "error": {
@@ -156,11 +156,11 @@
     }
   },
   "messageRemoveMarked": {
-    "message": "Borrando marcadores seleccionados",
+    "message": "正在移除选中的书签",
     "description": "Report that removal of marked bookmarks started"
   },
   "messageRemoveProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$ marcadores borrados",
+    "message": "($PERCENTAGE$%) $TOTAL$ / $TODO$ 个书签已移除",
     "description": "Report that specified number/total/percentage of bookmarks are removed",
     "placeholders": {
       "total": {
@@ -178,7 +178,7 @@
     }
   },
   "messageRemoveSuccess": {
-    "message": "$TOTAL$ marcadores borrados!",
+    "message": "$TOTAL$ 个书签已移除！",
     "description": "Report success when removing specified number of bookmarks",
     "placeholders": {
       "total": {
@@ -188,7 +188,7 @@
     }
   },
   "messageRemoveError": {
-    "message": "Error después de borrar $TOTAL$ marcadores: $ERROR$",
+    "message": "移除 $TOTAL$ 个书签时出错：$ERROR$",
     "description": "Report specified error after removing specified number of bookmarks",
     "placeholders": {
       "error": {
@@ -202,11 +202,11 @@
     }
   },
   "messageStripMarked": {
-    "message": "Quitando descripciones de marcadores seleccionados",
+    "message": "剥离已选中书签的描述",
     "description": "Report that description stripping started"
   },
   "messageStripProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$ descripciones quitadas",
+    "message": "($PERCENTAGE$%) $TOTAL$ / $TODO$ 个描述已剥离",
     "description": "Report that specified number/total/percentage of descriptions are stripped",
     "placeholders": {
       "total": {
@@ -224,7 +224,7 @@
     }
   },
   "messageStripSuccess": {
-    "message": "$TOTAL$ descripciones quitadas!",
+    "message": "$TOTAL$ 描述已剥离！",
     "description": "Report success when stripping specified number of descriptions",
     "placeholders": {
       "total": {
@@ -234,7 +234,7 @@
     }
   },
   "messageStripError": {
-    "message": "Error después de quitar $TOTAL$ descripciones: $ERROR$",
+    "message": "剥离 $TOTAL$ 个描述时出错：$ERROR$",
     "description": "Report specified error after stripping specified number of descriptions",
     "placeholders": {
       "error": {

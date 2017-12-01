@@ -2,6 +2,11 @@
  * This project is under the GNU public license 2.0
 */
 
+// For documentation on the bookmark API see e.g.
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/
+
+"use strict";
+
 let state;
 let stop;
 let bookmarkIds;
@@ -26,7 +31,7 @@ function removeFolder(id, callback, errorCallback) {
 }
 
 function stripBookmark(id, callback, errorCallback) {
-  return browser.bookmarks.create(bookmarkIds[id]).then(function () {
+  return browser.bookmarks.create(bookmarkIds.get(id)).then(function () {
     browser.bookmarks.remove(id).then(callback, errorCallback);
   }, errorCallback);
 }
@@ -90,6 +95,33 @@ function processMarked(remove, removeList) {
   processRecurse();
 }
 
+function normalizeGroup(group) {
+  let indices = new Array();
+  {
+    let i = 0;
+    for (let bookmark of group) {
+      let index = {
+        index: (i++),
+        order: bookmark.order
+      };
+      indices.push(index);
+    }
+  }
+  indices.sort(function (a, b) {
+    if (a.order > b.order) {
+      return 1;
+    }
+    if (a.order < b.order) {
+      return -1;
+    }
+    return ((a.index > b.index) ? 1 : -1);
+  });
+  let order = 0;
+  for (let index of indices) {
+    group[index.index].order = ++order;
+  }
+}
+
 function calculate(command, async) {
   let exact, folder, handleFunction, result, urlMap;
 
@@ -126,7 +158,7 @@ function calculate(command, async) {
     }
     let id = node.id;
     let group = urlMap.get(groupIndex);
-    if (typeof(group) == "undefined") {
+    if (group === undefined) {
       group = {
         data : new Array(),
         ids : new Set()
@@ -140,9 +172,10 @@ function calculate(command, async) {
     group.ids.add(id);
     let bookmark = {
       id: id,
+      order: ((node.dateAdded !== undefined) ? node.dateAdded : (-1)),
       text: parent + node.title
     };
-    if (typeof(extra) != "undefined") {
+    if (extra !== undefined) {
       bookmark.extra = extra;
     }
     group.data.push(bookmark);
@@ -172,9 +205,9 @@ function calculate(command, async) {
       parentId: node.parentId,
       title: node.title,
       url: node.url,
-      index: index
+      index: ((node.index !== undefined) ? node.index : index)
     };
-    if (typeof(node.type) != "undefined") {
+    if (node.type !== undefined) {
       bookmark.type = node.type;
     }
     bookmarkIds.set(node.id, bookmark);
@@ -257,6 +290,15 @@ function calculate(command, async) {
     };
     recurse(nodes[0], function() {
       urlMap = {};
+      let normalizeResult = new Array();
+      for (let group of result.result) {
+        if (group.data.length < 2) {
+          continue;
+        }
+        normalizeGroup(group.data);
+        normalizeResult.push(group.data);
+      }
+      result.result = normalizeResult;
       calculateFinish(exact ?
         "calculatedDupesExact" : "calculatedDupesSimilar");
     });

@@ -2,9 +2,6 @@
  * This project is under the GNU public license 2.0
 */
 
-// For documentation on the bookmark API see e.g.
-// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/
-
 "use strict";
 
 function getButtonsBase() {
@@ -56,6 +53,8 @@ function addButtons(mode) {
   } else {
     addButton(parent, "buttonMarkButFirst");
     addButton(parent, "buttonMarkButLast");
+    addButton(parent, "buttonMarkButOldest");
+    addButton(parent, "buttonMarkButNewest");
   }
   addButton(parent, "buttonUnmarkAll");
   parent = getButtonsRemove();
@@ -80,7 +79,7 @@ function enableButtonsOf(top, enabled) {
   if (!top.hasChildNodes()) {
     return;
   }
-  let disabled = ((typeof(enabled) != "undefined") && !enabled);
+  let disabled = ((enabled !== undefined) && !enabled);
   for (let child of top.childNodes) {
     if (child.nodeName == "BUTTON") {
       child.disabled = disabled;
@@ -126,20 +125,35 @@ function clearWindow() {
 
 function addRuler() {
   let ruler = document.createElement("HR");
+  let col = document.createElement("TD");
+  col.colSpan = 3;
+  col.appendChild(ruler);
+  let row =  document.createElement("TR");
+  row.appendChild(col);
   let top = getTop();
-  top.appendChild(ruler);
+  top.appendChild(row);
 }
 
-function addBookmark(text, id) {
+function addBookmark(text, id, nr) {
   let checkbox = document.createElement("INPUT");
   checkbox.type = "checkbox";
   checkbox.checked = false;
   checkbox.id = id;
   let col = document.createElement("TD");
   col.appendChild(checkbox);
-  let textNode = document.createTextNode(text);
-  col.appendChild(textNode);
   let row = document.createElement("TR");
+  row.appendChild(col);
+  if (nr !== undefined) {
+    let nrNode = document.createTextNode(String(nr));
+    col = document.createElement("TD");
+    col.appendChild(nrNode);
+    row.appendChild(col);
+  }
+  col = document.createElement("TD");
+  row.appendChild(col);
+  let textNode = document.createTextNode(text);
+  col = document.createElement("TD");
+  col.appendChild(textNode);
   row.appendChild(col);
   let top = getTop();
   top.appendChild(row);
@@ -153,57 +167,127 @@ function setCheck(node, checked) {
   getCheckbox(node).checked = checked;
 }
 
+function isCheckbox(node) {
+  return ((getCheckbox(node).nodeName) == "INPUT");
+}
+
+function getOrder(node) {
+  return Number(node.childNodes[1].firstChild.nodeValue);
+}
+
 function mark(mode) {
   let top = getTop();
   if (!top.hasChildNodes()) {
     return;
   }
-  let first = true;
-  let prev = null;
-  for (let child of top.childNodes) {
-    if (child.nodeName != "TR") {
-      first = true;
-      if ((mode < 0) && (prev != null)) {
-        setCheck(prev, false);
-      }
-      prev = null;
-      continue;
+  for (let node of top.childNodes) {
+    if (isCheckbox(node)) {
+      setCheck(node, mode);
     }
-    if (mode < 0) {
-      if (prev != null) {
-        setCheck(prev, true);
-      }
-      prev = child;
-      continue;
-    }
-    setCheck(child, ((mode == 2) || (mode && !first)));
-    first = false;
   }
-  if ((mode < 0) && (prev != null)) {
-    setCheck(prev, false);
+}
+
+function markButFirst() {
+  let top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  let mark = false;
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      mark = false;
+      continue;
+    }
+    setCheck(node, mark);
+    mark = true;
+  }
+}
+
+function markButLast() {
+  let top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  let previousNode = null;
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      if (previousNode !== null) {
+        setCheck(previousNode, false);
+        previousNode = null;
+      }
+      continue;
+    }
+    if (previousNode !== null) {
+      setCheck(previousNode, true);
+    }
+    previousNode = node;
+  }
+  if (previousNode !== null) {
+    setCheck(previousNode, false);
+  }
+}
+
+function markButOldest() {
+  let top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  for (let node of top.childNodes) {
+    if (isCheckbox(node)) {
+      setCheck(node, (getOrder(node) != 1));
+    }
+  }
+}
+
+function markButNewest() {
+  let top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  let largestSeen = 1;
+  let largestNode = null;
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      if (largestNode !== null) {
+        setCheck(largestNode, false);
+        largestNode = null;
+      }
+      largestSeen = 1;
+      continue;
+    }
+    let current = getOrder(node);
+    if (current <= largestSeen) {
+      setCheck(node, true);
+      continue;
+    }
+    if (largestNode !== null) {
+      setCheck(largestNode, true);
+    }
+    largestSeen = current;
+    largestNode = node;
+  }
+  if (largestNode !== null) {
+    setCheck(largestNode, false);
   }
 }
 
 function displayDupes(exact, result) {
   clearProgressButton();
   let total = 0;
-  let groups = 0;
+  let groups = result.result.length;
+  let addButtonsOrRuler = function () {
+    addButtons(0);
+    addButtonsOrRuler = addRuler;
+  };
   for (let group of result.result) {
-    if (group.data.length < 2) {
-      continue;
-    }
-    if (groups++ == 0) {
-      addButtons(0);
-    } else {
-      addRuler();
-    }
-    for (let bookmark of group.data) {
+    addButtonsOrRuler();
+    for (let bookmark of group) {
       ++total;
       let text = bookmark.text;
-      if (typeof(bookmark.extra) != "undefined") {
+      if (bookmark.extra !== undefined) {
         text += " (" + bookmark.extra + ")";
       }
-      addBookmark(text, bookmark.id);
+      addBookmark(text, bookmark.id, bookmark.order);
     }
   }
   displayMessage(browser.i18n.getMessage((exact ?
@@ -254,11 +338,11 @@ function processMarked(remove) {
   let top = getTop();
   let removeList = new Array;
   if (top.hasChildNodes()) {
-    for (let child of top.childNodes) {
-      if (child.nodeName != "TR") {
+    for (let node of top.childNodes) {
+      if (!isCheckbox(node)) {
         continue;
       }
-      let checkbox = getCheckbox(child);
+      let checkbox = getCheckbox(node);
       if (!checkbox.checked) {
         continue;
       }
@@ -339,16 +423,22 @@ function displayFinish(textId, state) {
         processMarked(false);
         return;
       case "buttonMarkAll":
-        mark(2);
+        mark(true);
         break;
       case "buttonMarkButFirst":
-        mark(1);
+        markButFirst();
         break;
       case "buttonMarkButLast":
-        mark(-1);
+        markButLast();
+        break;
+      case "buttonMarkButOldest":
+        markButOldest();
+        break;
+      case "buttonMarkButNewest":
+        markButNewest();
         break;
       case "buttonUnmarkAll":
-        mark(0);
+        mark(false);
         break;
     }
     unlock();

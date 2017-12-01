@@ -1,38 +1,38 @@
 {
   "extensionName": {
-    "message": "Marcadores Duplicados",
+    "message": "Bookmark Dupes",
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Mostrar/Borrar marcadores duplicados, carpetas vacías, o descripciones",
+    "message": "Пошук, відображення та видалення дублікатів закладок, порожніх папок або описів",
     "description": "Description of the extension"
   },
   "buttonListExactDupes": {
-    "message": "Duplicados exactos",
+    "message": "Точні дублікати",
     "description": "Button for listing exact dupes"
   },
   "buttonListSimilarDupes": {
-    "message": "Duplicados parecidos",
+    "message": "Подібні дублікати",
     "description": "Button for listing similar dupes"
   },
   "buttonListEmpty": {
-    "message": "Carpetas vacías",
+    "message": "Порожні папки",
     "description": "Button for listing empty folders"
   },
   "buttonListAll": {
-    "message": "Todos los marcadores",
+    "message": "Всі закладки",
     "description": "Button for listing all bookmarks"
   },
   "buttonMarkAll": {
-    "message": "Seleccionar todos",
+    "message": "Позначити всі",
     "description": "Button for marking all"
   },
   "buttonMarkButFirst": {
-    "message": "Seleccionar todos los primeros de cada grupo",
+    "message": "Позначити всі перші в кожній парі дублів",
     "description": "Button for marking all but first"
   },
   "buttonMarkButLast": {
-    "message": "Seleccionar todos los últimos de cada grupo",
+    "message": "Позначити всі останні в кожній парі дублів",
     "description": "Button for marking all but last"
   },
   "buttonMarkButOldest": {
@@ -44,31 +44,31 @@
     "description": "Button for marking all but newest"
   },
   "buttonUnmarkAll": {
-    "message": "Deseleccionar todo",
+    "message": "Зняти всі позначення",
     "description": "Button for unmarking all"
   },
   "buttonRemoveMarked": {
-    "message": "Borrar marcadores seleccionados",
+    "message": "Видалити позначені закладки",
     "description": "Button for removing marked bookmarks"
   },
   "buttonStripMarked": {
-    "message": "Quitar las descripciones de los marcadores seleccionados",
+    "message": "Очистити описи позначених закладок",
     "description": "Button for stripping descriptions of marked bookmarks"
   },
   "buttonStopRemoving": {
-    "message": "Parar de borrar!",
+    "message": "Припинити видалення!",
     "description": "Button for emergency stop of bookmark removing"
   },
   "buttonStopStripping": {
-    "message": "Parar de quitar descriociones!",
+    "message": "Зупинити очищення!",
     "description": "Button for emergency stop of description stripping"
   },
   "buttonStopCalculating": {
-    "message": "Parar de calcular!",
+    "message": "Зупинити розрахунок!",
     "description": "Button for emergency stop of display calculation"
   },
   "messageExactMatchesGroups": {
-    "message": "$TOTAL$ (de $ALL$) duplicados exactos dentro de $GROUPS$ gruops",
+    "message": "$TOTAL$ (із $ALL$) точних дублів у $GROUPS$ групах",
     "description": "Report specified numbers of exact matches and groups of all",
     "placeholders": {
       "total": {
@@ -86,7 +86,7 @@
     }
   },
   "messageSimilarMatchesGroups": {
-    "message": "$TOTAL$ (de $ALL$) duplicados parecidos dentro de $GROUPS$ grupos",
+    "message": "$TOTAL$ (із $ALL$) подібних дублів у $GROUPS$ групах",
     "description": "Report specified numbers of similar matches and groups of all",
     "placeholders": {
       "total": {
@@ -104,7 +104,7 @@
     }
   },
   "messageEmpty": {
-    "message": "$TOTAL$ carpetas vacías encontradas",
+    "message": "$TOTAL$ порожніх папок знайдено",
     "description": "Report specified number of empty folders",
     "placeholders": {
       "total": {
@@ -114,7 +114,7 @@
     }
   },
   "messageAll": {
-    "message": "$TOTAL$ marcadores encontrados",
+    "message": "$TOTAL$ закладок знайдено",
     "description": "Report specified number of bookmarks",
     "placeholders": {
       "total": {
@@ -124,11 +124,11 @@
     }
   },
   "messageCalculating": {
-    "message": "Buscando",
+    "message": "Пошук",
     "description": "Report that calculation started"
   },
   "messageCalculateProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$",
+    "message": "($PERCENTAGE$ %) $TOTAL$ із $TODO$",
     "description": "Report that specified number/total/percentage of items are calculated",
     "placeholders": {
       "total": {
@@ -146,7 +146,7 @@
     }
   },
   "messageCalculateError": {
-    "message": "Error: $ERROR$",
+    "message": "Помилка: $ERROR$",
     "description": "Report specified error during calculation",
     "placeholders": {
       "error": {
@@ -156,11 +156,11 @@
     }
   },
   "messageRemoveMarked": {
-    "message": "Borrando marcadores seleccionados",
+    "message": "Видалення позначених закладок...",
     "description": "Report that removal of marked bookmarks started"
   },
   "messageRemoveProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$ marcadores borrados",
+    "message": "($PERCENTAGE$ %) $TOTAL$ з $TODO$ закладок видалено",
     "description": "Report that specified number/total/percentage of bookmarks are removed",
     "placeholders": {
       "total": {
@@ -178,7 +178,7 @@
     }
   },
   "messageRemoveSuccess": {
-    "message": "$TOTAL$ marcadores borrados!",
+    "message": "$TOTAL$ закладок видалено!",
     "description": "Report success when removing specified number of bookmarks",
     "placeholders": {
       "total": {
@@ -188,7 +188,7 @@
     }
   },
   "messageRemoveError": {
-    "message": "Error después de borrar $TOTAL$ marcadores: $ERROR$",
+    "message": "Помилка після видалення $TOTAL$ закладок: $ERROR$",
     "description": "Report specified error after removing specified number of bookmarks",
     "placeholders": {
       "error": {
@@ -202,11 +202,11 @@
     }
   },
   "messageStripMarked": {
-    "message": "Quitando descripciones de marcadores seleccionados",
+    "message": "Очищення опису позначених закладок",
     "description": "Report that description stripping started"
   },
   "messageStripProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$ descripciones quitadas",
+    "message": "($PERCENTAGE$ %) $TOTAL$ із $TODO$ описів очищено",
     "description": "Report that specified number/total/percentage of descriptions are stripped",
     "placeholders": {
       "total": {
@@ -224,7 +224,7 @@
     }
   },
   "messageStripSuccess": {
-    "message": "$TOTAL$ descripciones quitadas!",
+    "message": "$TOTAL$ описів очищено!",
     "description": "Report success when stripping specified number of descriptions",
     "placeholders": {
       "total": {
@@ -234,7 +234,7 @@
     }
   },
   "messageStripError": {
-    "message": "Error después de quitar $TOTAL$ descripciones: $ERROR$",
+    "message": "Помилка після очищення $TOTAL$ описів: $ERROR$",
     "description": "Report specified error after stripping specified number of descriptions",
     "placeholders": {
       "error": {

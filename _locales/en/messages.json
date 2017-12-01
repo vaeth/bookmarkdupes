@@ -35,6 +35,14 @@
     "message": "Mark all but last in each group",
     "description": "Button for marking all but last"
   },
+  "buttonMarkButOldest": {
+    "message": "Mark all but oldest in each group",
+    "description": "Button for marking all but oldest"
+  },
+  "buttonMarkButNewest": {
+    "message": "Mark all but newest in each group",
+    "description": "Button for marking all but newest"
+  },
   "buttonUnmarkAll": {
     "message": "Unmark all",
     "description": "Button for unmarking all"
