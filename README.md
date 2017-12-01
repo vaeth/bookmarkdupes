@@ -31,6 +31,24 @@ or to strip the descriptions of the selected bookmarks in case 4.
 When you close the popup window and removal of bookmarks/comments is not
 yet finished, it will continue in the background.
 
+## Known Bugs
+
+1. Certain special folders (e.g. rss folders) are not distinguished from
+   empty folders.
+   https://github.com/vaeth/bookmarkdupes/issues/4
+2. Stripping of descriptions works by replacing the bookmark by a freshly
+   created one. In particular, it updates the internally stored date when
+   the bookmark was added.
+3. In certain situations, it might happen that the procedure of creating a
+   new bookmark (when stripping descriptions, see bug 2 above) places the
+   bookmark with the freshly created one too high. In particular, this might
+   happen in connection with special folders/bookmarks as in 1 or when you
+   added a bookmark between pressing the button for displaying all bookmarks
+   and stripping comments: After you modified bookmarks you should better
+   press the button for displaying all bookmarks again to update the data.
+   See https://github.com/vaeth/bookmarkdupes/issues/11 and the second part of
+   https://github.com/vaeth/bookmarkdupes/issues/8
+
 ## Contributions
 
 (in alphabetical order)

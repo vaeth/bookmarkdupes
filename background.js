@@ -2,6 +2,11 @@
  * This project is under the GNU public license 2.0
 */
 
+// For documentation on the bookmark API see e.g.
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/
+
+"use strict";
+
 let state;
 let stop;
 let bookmarkIds;
@@ -172,7 +177,7 @@ function calculate(command, async) {
       parentId: node.parentId,
       title: node.title,
       url: node.url,
-      index: index
+      index: ((typedef(node.index) != "undefined") ? node.index : index)
     };
     if (typeof(node.type) != "undefined") {
       bookmark.type = node.type;

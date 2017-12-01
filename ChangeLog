@@ -4,8 +4,14 @@
 	YFdyh000 <yfdyh000 at gmail.com>:
 	- Create zh_CN locales
 
+	- Martin Väth <martin at mvath.de>:
+	- Prefer bookmark index from bookmark API over counting if it exists.
+	  This might mitigate https://github.com/vaeth/bookmarkdupes/issues/11
+
 *bookmarkdupes-2.3:
-	- Serious bugfix: Stripping of bookmarks now works again
+	Martin Väth <martin at mvath.de>:
+	- Serious bugfix (regression): Stripping of bookmarks failed, see
+	  https://github.com/vaeth/bookmarkdupes/issues/8
 
 *bookmarkdupes-2.2:
 	Henaro aka Ironwool:
