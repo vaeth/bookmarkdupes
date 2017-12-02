@@ -12,7 +12,7 @@ let stop;
 let bookmarkIds;
 
 function setVirginState() {
-  bookmarkIds = {};
+  bookmarkIds = null;
   state = {
     mode: "virgin"
   };
@@ -39,7 +39,7 @@ function stripBookmark(id, callback, errorCallback) {
 function processMarked(remove, removeList) {
 
   function processFinish() {
-    removeList = {};
+    removeList = null;
     let total = state.total;
     state = {
       mode: (remove ? "removeSuccess" : "stripSuccess"),
@@ -49,7 +49,7 @@ function processMarked(remove, removeList) {
   }
 
   function processError(error) {
-    removeList = {};
+    removeList = null;
     let total = state.total;
     state = {
       mode: (remove ? "removeError" : "stripError"),
@@ -130,7 +130,7 @@ function calculate(command) {
       mode: mode,
       result: result
     };
-    result = {};
+    result = null;
     sendState();
   }
 
@@ -139,7 +139,7 @@ function calculate(command) {
       mode: "calculateError",
       error: error
     };
-    result = {};
+    result = null;
     sendState();
   }
 
@@ -240,7 +240,7 @@ function calculate(command) {
       all: 0
     };
     recurse(nodes[0]);
-    urlMap = {};
+    urlMap = null;
     let normalizeResult = new Array();
     for (let group of result.result) {
       if (group.data.length < 2) {
