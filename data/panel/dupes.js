@@ -359,10 +359,6 @@ function processMarked(remove) {
 
 function displayProgress(textId, buttonTextId, state) {
   let todo = state.todo;
-  if (!todo) {
-    displayMessage(browser.i18n.getMessage("messageCalculating"));
-    return;
-  }
   let total = state.total;
   let percentage = (100 * total) / todo;
   addProgressButton(buttonTextId, percentage);
@@ -464,8 +460,7 @@ function displayFinish(textId, state) {
         displayProgress("messageStripProgress", "buttonStopStripping", state);
         return;
       case "calculatingProgress":
-        displayProgress("messageCalculateProgress", "buttonStopCalculating",
-          state);
+        displayMessage(browser.i18n.getMessage("messageCalculating"));
         return;
       case "calculatedDupesExact":
         displayDupes(true, state.result)

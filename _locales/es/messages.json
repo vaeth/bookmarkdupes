@@ -63,10 +63,6 @@
     "message": "Parar de quitar descripciones!",
     "description": "Button for emergency stop of description stripping"
   },
-  "buttonStopCalculating": {
-    "message": "Parar de calcular!",
-    "description": "Button for emergency stop of display calculation"
-  },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (de $ALL$) duplicados exactos dentro de $GROUPS$ gruops",
     "description": "Report specified numbers of exact matches and groups of all",
@@ -126,24 +122,6 @@
   "messageCalculating": {
     "message": "Buscando",
     "description": "Report that calculation started"
-  },
-  "messageCalculateProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$",
-    "description": "Report that specified number/total/percentage of items are calculated",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "0"
-      },
-      "todo": {
-        "content": "$2",
-        "example": "1"
-      },
-      "percentage": {
-        "content": "$3",
-        "example": "0"
-      }
-    }
   },
   "messageCalculateError": {
     "message": "Error: $ERROR$",

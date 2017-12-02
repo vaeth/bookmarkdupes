@@ -63,10 +63,6 @@
     "message": "Зупинити очищення!",
     "description": "Button for emergency stop of description stripping"
   },
-  "buttonStopCalculating": {
-    "message": "Зупинити розрахунок!",
-    "description": "Button for emergency stop of display calculation"
-  },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (із $ALL$) точних дублів у $GROUPS$ групах",
     "description": "Report specified numbers of exact matches and groups of all",
@@ -126,24 +122,6 @@
   "messageCalculating": {
     "message": "Пошук",
     "description": "Report that calculation started"
-  },
-  "messageCalculateProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ із $TODO$",
-    "description": "Report that specified number/total/percentage of items are calculated",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "0"
-      },
-      "todo": {
-        "content": "$2",
-        "example": "1"
-      },
-      "percentage": {
-        "content": "$3",
-        "example": "0"
-      }
-    }
   },
   "messageCalculateError": {
     "message": "Помилка: $ERROR$",
