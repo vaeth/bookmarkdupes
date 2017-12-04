@@ -1,15 +1,26 @@
 # ChangeLog for squashmount
 
 *bookmarkdupes-2.4:
+	Martin Väth <martin at mvath.de>:
+	- Indicate creation order of (matching) bookmarks by numbers
+	- Add buttons to mark all but oldest/newest bookmarks, see
+	  https://github.com/vaeth/bookmarkdupes/issues/9
+	- Document that stripping comments changes internally stored date
+	- Document necessity to recalculate after bookmark changes
+	- Prefer bookmark index from bookmark API (if it exists) over counting.
+	  This might mitigate https://github.com/vaeth/bookmarkdupes/issues/11
+	- internal: remove currently unused asynchronous code
+	- internal: use null instead of {} to free closures
+
 	YFdyh000 <yfdyh000 at gmail.com>:
 	- Create zh_CN locales
 
-	- Martin Väth <martin at mvath.de>:
-	- For matching bookmarks indicate their creation order by numbers
-	- Add buttons to mark all but oldest/newest bookmarks, see
-	  https://github.com/vaeth/bookmarkdupes/issues/9
-	- Prefer bookmark index from bookmark API over counting if it exists.
-	  This might mitigate https://github.com/vaeth/bookmarkdupes/issues/11
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
 
 *bookmarkdupes-2.3:
 	Martin Väth <martin at mvath.de>:

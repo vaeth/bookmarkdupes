@@ -29,9 +29,19 @@ There are also buttons to select/unselect convenient sets of checkboxes.
 
 Finally, there are buttons to remove the selected bookmarks in case 1-3,
 or to strip the descriptions of the selected bookmarks in case 4.
+(The latter has some side effects, see section **Known Bugs**).
 
+#### Note
 When you close the popup window and removal of bookmarks/comments is not
 yet finished, it will continue in the background.
+
+## Important
+
+When you reorganized/added/removed bookmarks, make sure to update the
+displayed list (by pressing the corresponding button) before removing
+bookmarks or stripping descriptions!
+In particular, stripping descriptions with an outdated list will move
+the corresponding bookmarks to their previous location in the bookmark menu!
 
 ## Known Bugs
 
@@ -43,12 +53,10 @@ yet finished, it will continue in the background.
    the bookmark was added.
 3. In certain situations, it might happen that the procedure of creating a
    new bookmark (when stripping descriptions, see bug 2 above) places the
-   bookmark with the freshly created one too high. In particular, this might
-   happen in connection with special folders/bookmarks as in 1 or when you
-   added a bookmark between pressing the button for displaying all bookmarks
-   and stripping comments: After you modified bookmarks you should better
-   press the button for displaying all bookmarks again to update the data.
-   See https://github.com/vaeth/bookmarkdupes/issues/11 and the second part of
+   freshly created bookmark to a wrong location. In particular, this might
+   happen in connection with special folders/bookmarks as in 1 or when
+   an outdated list is used.
+   https://github.com/vaeth/bookmarkdupes/issues/11 and the second part of
    https://github.com/vaeth/bookmarkdupes/issues/8
 
 ## Contributions

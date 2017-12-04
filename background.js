@@ -12,7 +12,7 @@ let stop;
 let bookmarkIds;
 
 function setVirginState() {
-  bookmarkIds = {};
+  bookmarkIds = null;
   state = {
     mode: "virgin"
   };
@@ -39,7 +39,7 @@ function stripBookmark(id, callback, errorCallback) {
 function processMarked(remove, removeList) {
 
   function processFinish() {
-    removeList = {};
+    removeList = null;
     let total = state.total;
     state = {
       mode: (remove ? "removeSuccess" : "stripSuccess"),
@@ -49,7 +49,7 @@ function processMarked(remove, removeList) {
   }
 
   function processError(error) {
-    removeList = {};
+    removeList = null;
     let total = state.total;
     state = {
       mode: (remove ? "removeError" : "stripError"),
@@ -122,17 +122,15 @@ function normalizeGroup(group) {
   }
 }
 
-function calculate(command, async) {
+function calculate(command) {
   let exact, folder, handleFunction, result, urlMap;
-
-  function dummy() {}
 
   function calculateFinish(mode) {
     state = {
       mode: mode,
       result: result
     };
-    result = {};
+    result = null;
     sendState();
   }
 
@@ -141,11 +139,11 @@ function calculate(command, async) {
       mode: "calculateError",
       error: error
     };
-    result = {};
+    result = null;
     sendState();
   }
 
-  function handleDupe(node, parent, callback) {
+  function handleDupe(node, parent) {
     ++(result.all);
     let groupIndex = node.url;
     let extra;
@@ -166,7 +164,6 @@ function calculate(command, async) {
       result.result.push(group);
       urlMap.set(groupIndex, group);
     } else if (group.ids.has(id)) {
-      callback();
       return;
     }
     group.ids.add(id);
@@ -179,12 +176,10 @@ function calculate(command, async) {
       bookmark.extra = extra;
     }
     group.data.push(bookmark);
-    callback();
   }
 
-  function handleEmpty(node, parent, callback) {
+  function handleEmpty(node, parent) {
     if (node.url || (node.type && (node.type != "folder"))) {
-      callback();
       return;
     }
     let bookmark = {
@@ -192,10 +187,9 @@ function calculate(command, async) {
       text: parent + node.title
     };
     result.push(bookmark);
-    callback();
   }
 
-  function handleAll(node, parent, callback, index) {
+  function handleAll(node, parent, index) {
     let bookmark = {
       id: node.id,
       text: parent + node.title
@@ -211,75 +205,32 @@ function calculate(command, async) {
       bookmark.type = node.type;
     }
     bookmarkIds.set(node.id, bookmark);
-    callback();
   }
 
-  function recurse(node, callback) {
-
-    function recurseCount(node) {
+  function recurse(node) {
+    function recurseMain(node, parent, index) {
       if ((!node.children) || (!node.children.length)) {
         if (parent && !node.unmodifiable) {
-          ++(state.todo);
-        }
-        return;
-      }
-      for (let child of node.children) {
-        recurseCount(child);
-      }
-    }
-
-    function recurseMain(node, parent, index, callback) {
-      if (stop) {
-        callback();
-        return;
-      }
-      if ((!node.children) || (!node.children.length)) {
-        if (parent && !node.unmodifiable) {
-          if (async) {
-            ++(state.total);
-            sendState();
-          }
           if (folder) {
-            handleFunction(node, parent, callback);
+            handleFunction(node, parent);
             return;
           } else if (node.url && ((!node.type) || (node.type == "bookmark"))) {
-            handleFunction(node, parent, callback, index);
+            handleFunction(node, parent, index);
             return;
           }
         }
-        callback();
         return;
       }
       if (node.title) {
         parent += node.title + " | ";
       }
-      if (async) {
-        recurseChilds(node, parent, 0, callback);
-        return;
-      }
       index = 0;
       for (let child of node.children) {
-        recurseMain(child, parent, ++index, dummy);
+        recurseMain(child, parent, ++index);
       }
-      callback();
     }
 
-    function recurseChilds(node, parent, index, callback) {
-      if (index == node.children.length) {
-        callback();
-        return;
-      }
-      setTimeout(function () {
-        recurseMain(node.children[index], parent, index, function() {
-          recurseChilds(node, parent, index + 1, callback);
-        });
-      }, 0);
-    }
-
-    if (async) {
-       recurseCount(node);
-    }
-    recurseMain(node, "", 0, callback);
+    recurseMain(node, "", 0);
   }
 
   function calculateDupes(nodes) {
@@ -288,40 +239,35 @@ function calculate(command, async) {
       result: new Array(),
       all: 0
     };
-    recurse(nodes[0], function() {
-      urlMap = {};
-      let normalizeResult = new Array();
-      for (let group of result.result) {
-        if (group.data.length < 2) {
-          continue;
-        }
-        normalizeGroup(group.data);
-        normalizeResult.push(group.data);
+    recurse(nodes[0]);
+    urlMap = null;
+    let normalizeResult = new Array();
+    for (let group of result.result) {
+      if (group.data.length < 2) {
+        continue;
       }
-      result.result = normalizeResult;
-      calculateFinish(exact ?
-        "calculatedDupesExact" : "calculatedDupesSimilar");
-    });
+      normalizeGroup(group.data);
+      normalizeResult.push(group.data);
+    }
+    result.result = normalizeResult;
+    calculateFinish(exact ? "calculatedDupesExact" : "calculatedDupesSimilar");
   }
 
   function calculateEmpty(nodes) {
     result = new Array();
-    recurse(nodes[0], function () {
-      calculateFinish("calculatedEmptyFolder");
-    });
+    recurse(nodes[0]);
+    calculateFinish("calculatedEmptyFolder");
   }
 
   function calculateAll(nodes) {
     bookmarkIds = new Map();
     result = new Array();
-    recurse(nodes[0], function () {
-      calculateFinish("calculatedAll");
-    });
+    recurse(nodes[0]);
+    calculateFinish("calculatedAll");
   }
 
   let mainFunction;
   exact = false;
-  async = false;
   folder = false;
   switch (command) {
     case "calculateExactDupes":
@@ -343,11 +289,8 @@ function calculate(command, async) {
     default:  // should not happen
       return;
   }
-  stop = false;
   state = {
-    mode: "calculatingProgress",
-    total: 0,
-    todo: 0
+    mode: "calculatingProgress"
   };
   sendState();
   browser.bookmarks.getTree().then(mainFunction, calculateError);

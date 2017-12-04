@@ -63,10 +63,6 @@
     "message": "停止剥离！",
     "description": "Button for emergency stop of description stripping"
   },
-  "buttonStopCalculating": {
-    "message": "停止计算！",
-    "description": "Button for emergency stop of display calculation"
-  },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ / $ALL$ 个完全重复，共 $GROUPS$ 组",
     "description": "Report specified numbers of exact matches and groups of all",
@@ -126,24 +122,6 @@
   "messageCalculating": {
     "message": "正在搜索",
     "description": "Report that calculation started"
-  },
-  "messageCalculateProgress": {
-    "message": "($PERCENTAGE$%) $TOTAL$ / $TODO$",
-    "description": "Report that specified number/total/percentage of items are calculated",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "0"
-      },
-      "todo": {
-        "content": "$2",
-        "example": "1"
-      },
-      "percentage": {
-        "content": "$3",
-        "example": "0"
-      }
-    }
   },
   "messageCalculateError": {
     "message": "错误：$ERROR$",
