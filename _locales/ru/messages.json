@@ -63,6 +63,16 @@
     "message": "Прекратить очистку!",
     "description": "Button for emergency stop of description stripping"
   },
+  "messageCount": {
+    "message": "$TOTAL$ bookmarks marked", // new
+    "description": "Report specified number of marked bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (из $ALL$) точных дублей в $GROUPS$ группах",
     "description": "Report specified numbers of exact matches and groups of all",

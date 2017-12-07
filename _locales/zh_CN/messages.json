@@ -63,6 +63,16 @@
     "message": "停止剥离！",
     "description": "Button for emergency stop of description stripping"
   },
+  "messageCount": {
+    "message": "$TOTAL$ bookmarks marked", // new
+    "description": "Report specified number of marked bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ / $ALL$ 个完全重复，共 $GROUPS$ 组",
     "description": "Report specified numbers of exact matches and groups of all",

@@ -67,6 +67,16 @@
     "message": "Entfernen abbrechen!",
     "description": "Button for emergency stop of description stripping"
   },
+  "messageCount": {
+    "message": "$TOTAL$ Lesezeichen markiert",
+    "description": "Report specified number of marked bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (von $ALL$) exakte Duplikate in $GROUPS$ Gruppen",
     "description": "Report specified numbers of exact matches and groups of all",

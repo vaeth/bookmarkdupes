@@ -32,6 +32,10 @@ function displayMessage(msg) {
   document.getElementById("textMessage").textContent = msg;
 }
 
+function displayCount(msg) {
+  document.getElementById("textCount").textContent = msg;
+}
+
 function addButton(parent, id, text, enabled) {
   let button = document.createElement("BUTTON");
   button.type = "button";
@@ -116,6 +120,7 @@ function clearButtonsExtra() {
 }
 
 function clearBookmarks() {
+  displayCount("");
   clearItem(getTop());
 }
 
@@ -277,7 +282,9 @@ function displayDupes(exact, result) {
   clearProgressButton();
   let total = 0;
   let groups = result.result.length;
+  let returnValue = null;
   let addButtonsOrRuler = function () {
+    returnValue = -1;
     addButtons(0);
     addButtonsOrRuler = addRuler;
   };
@@ -295,30 +302,35 @@ function displayDupes(exact, result) {
   displayMessage(browser.i18n.getMessage((exact ?
     "messageExactMatchesGroups" : "messageSimilarMatchesGroups"),
     [String(total), String(groups), String(result.all)]));
+  return returnValue;
 }
 
 function displayEmpty(result) {
   clearProgressButton();
   let total = result.length;
-  if (total) {
-    addButtons(1);
-    for (let bookmark of result) {
-      addBookmark(bookmark.text, bookmark.id);
-    }
-  }
   displayMessage(browser.i18n.getMessage("messageEmpty", String(total)));
+  if (!total) {
+    return null;
+  }
+  addButtons(1);
+  for (let bookmark of result) {
+    addBookmark(bookmark.text, bookmark.id);
+  }
+  return -1;
 }
 
 function displayAll(result) {
   clearProgressButton();
   let total = result.length;
-  if (total) {
-    addButtons(2);
-    for (let bookmark of result) {
-      addBookmark(bookmark.text, bookmark.id);
-    }
-  }
   displayMessage(browser.i18n.getMessage("messageAll", String(total)));
+  if (!total) {
+    return null;
+  }
+  addButtons(2);
+  for (let bookmark of result) {
+    addBookmark(bookmark.text, bookmark.id);
+  }
+  return -1;
 }
 
 function sendMessageCommand(command) {
@@ -334,23 +346,34 @@ function calculating(command) {
   sendMessageCommand(command);
 }
 
+function pushMarked(idList) {
+  let top = getTop();
+  if (!top.hasChildNodes()) {
+    return 0;
+  }
+  let count = 0;
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      continue;
+    }
+    let checkbox = getCheckbox(node);
+    if (!checkbox.checked) {
+      continue;
+    }
+    if (idList !== undefined) {
+      idList.push(checkbox.id);
+    } else {
+      ++count;
+    }
+  }
+  return count;
+}
+
 function processMarked(remove) {
   displayMessage(browser.i18n.getMessage(remove ?
   "messageRemoveMarked" : "messageStripMarked"));
-  let top = getTop();
   let removeList = new Array;
-  if (top.hasChildNodes()) {
-    for (let node of top.childNodes) {
-      if (!isCheckbox(node)) {
-        continue;
-      }
-      let checkbox = getCheckbox(node);
-      if (!checkbox.checked) {
-        continue;
-      }
-      removeList.push(checkbox.id);
-    }
-  }
+  pushMarked(removeList);
   clearWindow();
   let message = {
     command: (remove ? "remove" : "strip"),
@@ -381,10 +404,23 @@ function displayFinish(textId, state) {
 
 {
   let lock = true;
+  let count = null;
 
   function unlock() {
     lock = false;
     enableButtons();
+  }
+
+  function checkboxListener() {
+    if (count === null) {
+      return;
+    }
+    let currentCount = pushMarked();
+    if (currentCount == count) {
+      return;
+    }
+    count = currentCount;
+    displayCount(browser.i18n.getMessage("messageCount", currentCount));
   }
 
   function clickListener(event) {
@@ -439,6 +475,7 @@ function displayFinish(textId, state) {
         mark(false);
         break;
     }
+    checkboxListener();
     unlock();
   }
 
@@ -448,12 +485,14 @@ function displayFinish(textId, state) {
   addButton(parent, "buttonListEmpty");
   addButton(parent, "buttonListAll");
   document.addEventListener("click", clickListener);
+  document.addEventListener("CheckboxStateChange", checkboxListener);
 
   function messageListener(message) {
     if (message.command !== "state") {
       return;
     }
     let state = message.state;
+    count = null;
     switch (state.mode) {
       case "removeProgress":
         displayProgress("messageRemoveProgress", "buttonStopRemoving", state);
@@ -465,16 +504,16 @@ function displayFinish(textId, state) {
         displayMessage(browser.i18n.getMessage("messageCalculating"));
         return;
       case "calculatedDupesExact":
-        displayDupes(true, state.result)
+        count = displayDupes(true, state.result)
         break;
       case "calculatedDupesSimilar":
-        displayDupes(false, state.result);
+        count = displayDupes(false, state.result);
         break;
       case "calculatedEmptyFolder":
-        displayEmpty(state.result);
+        count = displayEmpty(state.result);
         break;
       case "calculatedAll":
-        displayAll(state.result);
+        count = displayAll(state.result);
         break;
       case "virgin":
         break;
@@ -497,6 +536,7 @@ function displayFinish(textId, state) {
         displayMessage(state.mode);
         return;
     }
+    checkboxListener();
     unlock();
   }
 

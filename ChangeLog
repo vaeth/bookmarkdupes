@@ -5,6 +5,7 @@
 	- Indicate creation order of (matching) bookmarks by numbers
 	- Add buttons to mark all but oldest/newest bookmarks, see
 	  https://github.com/vaeth/bookmarkdupes/issues/9
+	- Display number of marked bookmarks
 	- Document that stripping descriptions changes internally stored date
 	- Document necessity to recalculate after bookmark changes
 	- Prefer bookmark index from bookmark API (if it exists) over counting.
