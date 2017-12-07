@@ -61,10 +61,17 @@ function addButtons(mode) {
     addButton(parent, "buttonMarkButNewest");
   }
   addButton(parent, "buttonUnmarkAll");
+  let row = document.createElement("TR");
+  let col = document.createElement("TD");
+  let text = document.createTextNode(browser.i18n.getMessage((mode == 2) ?
+    "messageStripInfo" : "messageRemoveInfo"));
+  col.appendChild(text);
+  row.appendChild(col);
+  col = document.createElement("TD");
+  addButton(col, (mode == 2) ? "buttonStripMarked" : "buttonRemoveMarked");
+  row.appendChild(col);
   parent = getButtonsRemove();
-  parent.textContent = browser.i18n.getMessage((mode == 2) ?
-    "messageStripInfo" : "messageRemoveInfo") + " ";
-  addButton(parent, (mode == 2) ? "buttonStripMarked" : "buttonRemoveMarked");
+  parent.appendChild(row);
 }
 
 function addProgressButton(textId, percentage) {
@@ -89,6 +96,8 @@ function enableButtonsOf(top, enabled) {
   for (let child of top.childNodes) {
     if (child.nodeName == "BUTTON") {
       child.disabled = disabled;
+    } else {
+      enableButtonsOf(child, enabled);
     }
   }
 }
