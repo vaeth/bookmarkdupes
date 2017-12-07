@@ -32,7 +32,7 @@ or to strip the descriptions of the selected bookmarks in case 4.
 (The latter has some side effects, see section **Known Bugs**).
 
 #### Note
-When you close the popup window and removal of bookmarks/comments is not
+When you close the popup window and removal of bookmarks/descriptions is not
 yet finished, it will continue in the background.
 
 ## Important
