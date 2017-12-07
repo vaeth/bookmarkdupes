@@ -12,6 +12,7 @@
 	  This might mitigate https://github.com/vaeth/bookmarkdupes/issues/11
 	- internal: remove currently unused asynchronous code
 	- internal: use null instead of {} to free closures
+	- internal: XHTML Transitional -> Strict
 
 	YFdyh000 <yfdyh000 at gmail.com>:
 	- Create zh_CN locales
