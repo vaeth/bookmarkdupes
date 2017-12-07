@@ -64,7 +64,7 @@
     "description": "Button for emergency stop of description stripping"
   },
   "messageCount": {
-    "message": "$TOTAL$ bookmarks marked", // new
+    "message": "$TOTAL$ закладок позначено",
     "description": "Report specified number of marked bookmarks",
     "placeholders": {
       "total": {
@@ -144,7 +144,7 @@
     }
   },
   "messageRemoveInfo": {
-    "message": "Marked bookmarks refer to those since you last pressed the button to calculate the list.", // new
+    "message": "Закладки позначено відтоді, як ви в останнє натискали кнопку, вираховуючи список.",
     "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "messageRemoveMarked": {
