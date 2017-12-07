@@ -133,6 +133,10 @@
       }
     }
   },
+  "messageRemoveInfo": {
+    "message": "Marked bookmarks refer to those since you last pressed the button to calculate the list.", // new
+    "description": "Explain that bookmarks refer to those of last update of the list"
+  },
   "messageRemoveMarked": {
     "message": "Borrando marcadores seleccionados",
     "description": "Report that removal of marked bookmarks started"
@@ -178,6 +182,10 @@
         "example": "0"
       }
     }
+  },
+  "messageStripInfo": {
+    "message": "Stripping of descriptions will update the internally stored date when the bookmark was added. Moreover, it will move the bookmark to the location where it was since you last pressed the button to calculate this list.", // new
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "Quitando descripciones de marcadores seleccionados",

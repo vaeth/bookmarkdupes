@@ -47,6 +47,10 @@
     "message": "Alle Markierungen entfernen",
     "description": "Button for unmarking all"
   },
+  "messageRemoveInfo": {
+    "message": "Markierte Lesezeichen beziehen sich auf diejenigen seit dem letzten Drücken des Knopfes zur Berechnung der Liste.",
+    "description": "Explain that bookmarks refer to those of last update of the list"
+  },
   "buttonRemoveMarked": {
     "message": "Markierte Lesezeichen löschen",
     "description": "Button for removing marked bookmarks"
@@ -178,6 +182,10 @@
         "example": "0"
       }
     }
+  },
+  "messageStripInfo": {
+    "message": "Entfernung von Beschreibungen aktualisiert das intern gespeicherte Datum, wann das Lesezeichen hinzugefügt wurde. Darüberhinaus verschiebt es das Lesezeichen zu dem Ort, an dem es war, als der Knopf zum Berechnen dieser Liste zuletzt gedrückt wurde.",
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "Beschreibungen markierter Lesezeichen werden entfernt.",

@@ -58,6 +58,8 @@ function addButtons(mode) {
   }
   addButton(parent, "buttonUnmarkAll");
   parent = getButtonsRemove();
+  parent.textContent = browser.i18n.getMessage((mode == 2) ?
+    "messageStripInfo" : "messageRemoveInfo") + " ";
   addButton(parent, (mode == 2) ? "buttonStripMarked" : "buttonRemoveMarked");
 }
 
