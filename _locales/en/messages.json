@@ -194,7 +194,7 @@
     }
   },
   "messageStripInfo": {
-    "message": "Stripping of descriptions will update the internally stored date when the bookmark was added. Moreover, it will move the bookmark to the location where it was since you last pressed the button to calculate this list.",
+    "message": "Stripping of descriptions will update the internal bookmark generation date. Moreover, it will move the bookmark to the location where it was since you last pressed the button to calculate this list.",
     "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {

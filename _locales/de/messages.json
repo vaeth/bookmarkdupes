@@ -194,7 +194,7 @@
     }
   },
   "messageStripInfo": {
-    "message": "Entfernung von Beschreibungen aktualisiert das intern gespeicherte Datum, wann das Lesezeichen hinzugefügt wurde. Darüberhinaus verschiebt es das Lesezeichen zu dem Ort, an dem es war, als der Knopf zum Berechnen dieser Liste zuletzt gedrückt wurde.",
+    "message": "Entfernung von Beschreibungen aktualisiert das intern gespeicherte Erzeugungsdatum des Lesezeichens. Außerdem verschiebt es das Lesezeichen an die Stelle, an der es beim Drücken des Knopfes zur Berechnung dieser Liste war.",
     "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
