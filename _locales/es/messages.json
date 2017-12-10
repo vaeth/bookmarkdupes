@@ -23,10 +23,6 @@
     "message": "Todos los marcadores",
     "description": "Button for listing all bookmarks"
   },
-  "buttonMarkAll": {
-    "message": "Seleccionar todos",
-    "description": "Button for marking all"
-  },
   "buttonMarkButFirst": {
     "message": "Seleccionar todos los primeros de cada grupo",
     "description": "Button for marking all but first"
@@ -43,9 +39,33 @@
     "message": "Seleccionar todos los más nuevos de cada grupo",
     "description": "Button for marking all but newest"
   },
+  "buttonMarkAll": {
+    "message": "Seleccionar todos",
+    "description": "Button for marking all"
+  },
   "buttonUnmarkAll": {
     "message": "Deseleccionar todo",
     "description": "Button for unmarking all"
+  },
+  "buttonMarkCategory": {
+    "message": "Mark all from “$TITLE$”", // new
+    "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "buttonUnmarkCategory": {
+    "message": "Unmark all from “$TITLE$”", // new
+    "description": "Button for unmarking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
   },
   "buttonRemoveMarked": {
     "message": "Borrar marcadores seleccionados",

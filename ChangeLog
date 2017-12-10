@@ -1,5 +1,11 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-2.5:
+	Martin Väth <martin at mvath.de>:
+	- Add new mark/unmark buttons for categories
+	- Rearrange placement of buttons
+	- Fix display of group separators
+
 *bookmarkdupes-2.4:
 	Martin Väth <martin at mvath.de>:
 	- Indicate creation order of (matching) bookmarks by numbers

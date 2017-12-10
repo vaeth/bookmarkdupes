@@ -23,10 +23,6 @@
     "message": "Все закладки",
     "description": "Button for listing all bookmarks"
   },
-  "buttonMarkAll": {
-    "message": "Отметить все",
-    "description": "Button for marking all"
-  },
   "buttonMarkButFirst": {
     "message": "В каждой группе выбрать все кроме верхней",
     "description": "Button for marking all but first"
@@ -43,9 +39,33 @@
     "message": "В каждой группе выбрать все кроме новейшей",
     "description": "Button for marking all but newest"
   },
+  "buttonMarkAll": {
+    "message": "Отметить все",
+    "description": "Button for marking all"
+  },
   "buttonUnmarkAll": {
     "message": "Снять все отметки",
     "description": "Button for unmarking all"
+  },
+  "buttonMarkCategory": {
+    "message": "Mark all from “$TITLE$”", // new
+    "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "buttonUnmarkCategory": {
+    "message": "Unmark all from “$TITLE$”", // new
+    "description": "Button for unmarking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
   },
   "buttonRemoveMarked": {
     "message": "Удалить отмеченные закладки",

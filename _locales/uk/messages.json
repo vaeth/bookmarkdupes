@@ -23,10 +23,6 @@
     "message": "Всі закладки",
     "description": "Button for listing all bookmarks"
   },
-  "buttonMarkAll": {
-    "message": "Позначити всі",
-    "description": "Button for marking all"
-  },
   "buttonMarkButFirst": {
     "message": "В кожній групі обрати всі крім верхньої",
     "description": "Button for marking all but first"
@@ -43,9 +39,33 @@
     "message": "В кожній групі обрати всі крім найновішої",
     "description": "Button for marking all but newest"
   },
+  "buttonMarkAll": {
+    "message": "Позначити всі",
+    "description": "Button for marking all"
+  },
   "buttonUnmarkAll": {
     "message": "Зняти всі позначення",
     "description": "Button for unmarking all"
+  },
+  "buttonMarkCategory": {
+    "message": "Mark all from “$TITLE$”", // new
+    "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "buttonUnmarkCategory": {
+    "message": "Unmark all from “$TITLE$”", // new
+    "description": "Button for unmarking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
   },
   "buttonRemoveMarked": {
     "message": "Видалити позначені закладки",

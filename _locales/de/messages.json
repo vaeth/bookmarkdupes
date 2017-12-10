@@ -23,10 +23,6 @@
     "message": "Alle Lesezeichen",
     "description": "Button for listing all bookmarks"
   },
-  "buttonMarkAll": {
-    "message": "Alle markieren",
-    "description": "Button for marking all"
-  },
   "buttonMarkButFirst": {
     "message": "Alle außer Gruppenersten markieren",
     "description": "Button for marking all but first"
@@ -43,9 +39,33 @@
     "message": "Alle außer Grupenjüngsten markieren",
     "description": "Button for marking all but newest"
   },
+  "buttonMarkAll": {
+    "message": "Alle markieren",
+    "description": "Button for marking all"
+  },
   "buttonUnmarkAll": {
     "message": "Alle Markierungen entfernen",
     "description": "Button for unmarking all"
+  },
+  "buttonMarkCategory": {
+    "message": "Alle markieren aus „$TITLE$“",
+    "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Lesezeichen-Menü"
+      }
+    }
+  },
+  "buttonUnmarkCategory": {
+    "message": "Alle Markierungen entfernen aus „$TITLE$“",
+    "description": "Button for unmarking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Lesezeichen-Menü"
+      }
+    }
   },
   "messageRemoveInfo": {
     "message": "Markierte Lesezeichen beziehen sich auf diejenigen seit dem letzten Drücken des Knopfes zur Berechnung der Liste.",

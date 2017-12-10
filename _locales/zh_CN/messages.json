@@ -23,10 +23,6 @@
     "message": "所有书签",
     "description": "Button for listing all bookmarks"
   },
-  "buttonMarkAll": {
-    "message": "全部选中",
-    "description": "Button for marking all"
-  },
   "buttonMarkButFirst": {
     "message": "全部选中，除了每个组中第一项",
     "description": "Button for marking all but first"
@@ -43,9 +39,33 @@
     "message": "Mark all but newest in each group", // new
     "description": "Button for marking all but newest"
   },
+  "buttonMarkAll": {
+    "message": "全部选中",
+    "description": "Button for marking all"
+  },
   "buttonUnmarkAll": {
     "message": "全部取消",
     "description": "Button for unmarking all"
+  },
+  "buttonMarkCategory": {
+    "message": "Mark all from “$TITLE$”", // new
+    "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "buttonUnmarkCategory": {
+    "message": "Unmark all from “$TITLE$”", // new
+    "description": "Button for unmarking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
   },
   "buttonRemoveMarked": {
     "message": "移除选中的书签",
