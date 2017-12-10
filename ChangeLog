@@ -3,6 +3,8 @@
 *bookmarkdupes-2.5:
 	Martin Väth <martin at mvath.de>:
 	- Add new mark/unmark buttons for categories
+	- Add checkbox to display URL in listings
+	- Display 0 matches only once
 	- Rearrange placement of buttons
 	- Fix display of group separators
 

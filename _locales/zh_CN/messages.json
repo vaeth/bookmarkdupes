@@ -83,6 +83,10 @@
     "message": "停止剥离！",
     "description": "Button for emergency stop of description stripping"
   },
+  "checkboxFullUrl": {
+    "message": "Display URL in listings", // new
+    "description": "Checkbox for displaying URL in listings"
+  },
   "messageCount": {
     "message": "$TOTAL$ bookmarks marked", // new
     "description": "Report specified number of marked bookmarks",

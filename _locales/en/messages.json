@@ -83,6 +83,10 @@
     "message": "Stop stripping!",
     "description": "Button for emergency stop of description stripping"
   },
+  "checkboxFullUrl": {
+    "message": "Display URL in listings",
+    "description": "Checkbox for displaying URL in listings"
+  },
   "messageCount": {
     "message": "$TOTAL$ bookmarks marked",
     "description": "Report specified number of marked bookmarks",

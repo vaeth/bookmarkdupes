@@ -87,6 +87,10 @@
     "message": "Entfernen abbrechen!",
     "description": "Button for emergency stop of description stripping"
   },
+  "checkboxFullUrl": {
+    "message": "URL in Listen anzeigen",
+    "description": "Checkbox for displaying URL in listings"
+  },
   "messageCount": {
     "message": "$TOTAL$ Lesezeichen markiert",
     "description": "Report specified number of marked bookmarks",

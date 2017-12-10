@@ -10,20 +10,28 @@
 let state;
 let stop;
 let bookmarkIds;
+let options = {
+  fullUrl: false
+};
 
 function setVirginState() {
   bookmarkIds = null;
   state = {
-    mode: "virgin"
+    mode: "virgin",
   };
 }
 
 function sendState() {
   let message = {
     command: "state",
-    state: state
+    state: state,
+    options: options
   };
   browser.runtime.sendMessage(message);
+}
+
+function setOptionFullUrl(value) {
+  options.fullUrl = value;
 }
 
 function removeFolder(id, callback, errorCallback) {
@@ -161,7 +169,9 @@ function calculate(command) {
     ++(result.all);
     let groupIndex = node.url;
     let extra;
-    if (!exact) {
+    if (options.fullUrl) {
+      extra = node.url;
+    } else if (!exact) {
       let index = groupIndex.indexOf("?");
       if (index > 0) {
         groupIndex = groupIndex.substring(0, index);
@@ -213,6 +223,9 @@ function calculate(command) {
       id: id,
       text: parent + node.title
     };
+    if (options.fullUrl) {
+      bookmark.extra = node.url;
+    }
     result.list.push(bookmark);
     bookmark = {
       parentId: node.parentId,
@@ -337,6 +350,9 @@ function messageListener(message) {
       // fallthrough
     case "sendState":
       sendState();
+      return;
+    case "setOptionFullUrl":
+      setOptionFullUrl(message.value);
       return;
     case "remove":
       processMarked(true, message.removeList);
