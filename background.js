@@ -188,7 +188,7 @@ function calculate(command) {
       result.list.push(group);
       urlMap.set(groupIndex, group);
     } else if (group.ids.has(id)) {  // should not happen
-      return;
+      return;  // it is a bug if we get here
     }
     group.ids.add(id);
     result.category.add(id);
@@ -302,6 +302,7 @@ function calculate(command) {
     calculateFinish("calculatedAll");
   }
 
+  bookmarkIds = null;
   let mainFunction;
   exact = false;
   folder = false;
@@ -323,7 +324,7 @@ function calculate(command) {
       handleFunction = handleAll;
       break;
     default:  // should not happen
-      return;
+      return;  // it is a bug if we get here
   }
   result = {
     list: new Array(),
@@ -337,6 +338,17 @@ function calculate(command) {
   browser.bookmarks.getTree().then(mainFunction, calculateError);
 }
 
+function setCheckboxes(checkboxes) {
+  if (!state.hasOwnProperty("result")) {  // should not happen
+    return;  // It is a bug if we get here
+  }
+  if ((checkboxes === undefined) || !(checkboxes.length)) {
+    delete state.result.checkboxes;  // Send only nonempty sets
+    return;
+  }
+  state.result.checkboxes = new Set(checkboxes);
+}
+
 function messageListener(message) {
   if (!message.command) {
     return;
@@ -344,6 +356,9 @@ function messageListener(message) {
   switch (message.command) {
     case "stop":
       stop = true;
+      return;
+    case "setCheckboxes":
+      setCheckboxes(message.checkboxes);
       return;
     case "finish":
       setVirginState();

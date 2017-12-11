@@ -4,9 +4,11 @@
 	Martin Väth <martin at mvath.de>:
 	- Add new mark/unmark buttons for categories
 	- Add checkbox to display URL in listings
+	- Remember marked bookmarks when panel is closed
 	- Display 0 matches only once
 	- Rearrange placement of buttons
 	- Fix display of group separators
+	- internal: Use boolean tests for zero (presumably quicker)
 
 *bookmarkdupes-2.4:
 	Martin Väth <martin at mvath.de>:
