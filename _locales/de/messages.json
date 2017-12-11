@@ -73,7 +73,7 @@
     "placeholders": {
       "title": {
         "content": "$1",
-        "example": "Bookmarks Toolbar"
+        "example": "Lesezeichen-Menü"
       }
     }
   },
@@ -83,7 +83,7 @@
     "placeholders": {
       "title": {
         "content": "$1",
-        "example": "Bookmarks Toolbar"
+        "example": "Lesezeichen-Menü"
       }
     }
   },
