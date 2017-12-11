@@ -53,7 +53,7 @@
     "placeholders": {
       "title": {
         "content": "$1",
-        "example": "Bookmarks Toolbar"
+        "example": "Bookmarks Toolbar" // new
       }
     }
   },
@@ -63,7 +63,27 @@
     "placeholders": {
       "title": {
         "content": "$1",
-        "example": "Bookmarks Toolbar"
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
+  "buttonMarkOtherCategories": {
+    "message": "In groups containing “$TITLE$” mark all but these", // new
+    "description": "Button for marking all but specified categories in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
+  "buttonUnmarkOtherCategories": {
+    "message": "In groups with “$TITLE$” mark only these", // new
+    "description": "Button for marking only specified category in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
       }
     }
   },
@@ -163,7 +183,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "error description" // new
       }
     }
   },
@@ -209,7 +229,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "error description" // new
       },
       "total": {
         "content": "$2",
@@ -259,7 +279,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "error description" // new
       },
       "total": {
         "content": "$2",

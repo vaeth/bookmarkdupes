@@ -24,6 +24,10 @@ function getButtonsMark() {
   return document.getElementById("buttonsMark");
 }
 
+function getButtonsCategories() {
+  return document.getElementById("buttonsCategories");
+}
+
 function getButtonStop() {
   return document.getElementById("buttonStop");
 }
@@ -106,11 +110,11 @@ function addButtonRemove(infoId, buttonId) {
   parent.appendChild(row);
 }
 
-function addButtonsCategories(categoryTitles) {
+function addButtonsCategories(mode, categoryTitles) {
   if ((categoryTitles === undefined) || !(categoryTitles.length)) {
     return;
   }
-  let parent = getButtonsMark();
+  let parent = ((mode == 0) ? getButtonsCategories() : getButtonsMark());
   for (let i = 0; i < categoryTitles.length; ++i) {
     let title = categoryTitles[i];
     let row =  document.createElement("TR");
@@ -118,6 +122,12 @@ function addButtonsCategories(categoryTitles) {
       browser.i18n.getMessage("buttonMarkCategory", title));
     appendButtonCol(row, "unmarkCategory?id=" + String(i),
       browser.i18n.getMessage("buttonUnmarkCategory", title));
+    if (mode == 0) {
+      appendButtonCol(row, "markOtherCategories?id=" + String(i),
+        browser.i18n.getMessage("buttonMarkOtherCategories", title));
+      appendButtonCol(row, "unmarkOtherCategories?id=" + String(i),
+        browser.i18n.getMessage("buttonUnmarkOtherCategories", title));
+    }
     parent.appendChild(row);
   }
 }
@@ -147,7 +157,7 @@ function addButtonsMode(mode, categoryTitles) {
     addButtonRemove("messageRemoveInfo", "buttonRemoveMarked");
   }
   addButtonsMark(mode);
-  addButtonsCategories(categoryTitles);
+  addButtonsCategories(mode, categoryTitles);
 }
 
 function addProgressButton(textId, percentage) {
@@ -187,6 +197,7 @@ function enableButtons(enabled) {
   enableButtonsBase(enabled);
   enableButtonsOf(getButtonsRemove(), enabled);
   enableButtonsOf(getButtonsMark(), enabled);
+  enableButtonsOf(getButtonsCategories(), enabled);
 }
 
 function clearItem(top) {
@@ -203,6 +214,7 @@ function clearProgressButton() {
 function clearButtonsMode() {
   clearItem(getButtonsRemove());
   clearItem(getButtonsMark());
+  clearItem(getButtonsCategories());
 }
 
 function clearBookmarks() {
@@ -363,17 +375,7 @@ function SplitNumber(text, begin) {
   return Number(text.substring(begin.length));
 }
 
-function markCategories(buttonId, categories) {
-  let enable = false;
-  let id = SplitNumber(buttonId, "unmarkCategory?id=");
-  if (id < 0) {
-    id = SplitNumber(buttonId, "markCategory?id=");
-    if (id < 0) {
-      return;
-    }
-    enable = true;
-  }
-  let category = categories[id];
+function markCategory(category, checked) {
   let top = getTop();
   if (!top.hasChildNodes()) {
     return;
@@ -386,7 +388,67 @@ function markCategories(buttonId, categories) {
     if (!category.has(checkbox.id)) {
       continue;
     }
-    checkbox.checked = enable;
+    checkbox.checked = checked;
+  }
+}
+
+function markOtherCategories(category, checked) {
+  let top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  let groupMatches = false;
+  let previousCheckboxes = new Array();
+  let unchecked = !checked;
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      groupMatches = false;
+      if (previousCheckboxes.length > 0) {  // test for speed reasons
+        previousCheckboxes = new Array();
+      }
+      continue;
+    }
+    let checkbox = getCheckbox(node);
+    if (!category.has(checkbox.id)) {
+      if (groupMatches) {
+        checkbox.checked = checked;
+        continue;
+      }
+      previousCheckboxes.push(checkbox);
+      continue;
+    }
+    checkbox.checked = unchecked;
+    groupMatches = true;
+    if (previousCheckboxes.length == 0) {
+      continue;
+    }
+    for (let previous of previousCheckboxes) {
+      previous.checked = checked;
+    }
+    previousCheckboxes = new Array();
+  }
+}
+
+function markCategories(buttonId, categories) {
+  let id = SplitNumber(buttonId, "markCategory?id=");
+  if (id >= 0) {
+    markCategory(categories[id], true);
+    return;
+  }
+  id = SplitNumber(buttonId, "unmarkCategory?id=");
+  if (id >= 0) {
+    markCategory(categories[id], false);
+    return;
+  }
+  id = SplitNumber(buttonId, "markOtherCategories?id=");
+  if (id >= 0) {
+    markOtherCategories(categories[id], true);
+    return;
+  }
+  id = SplitNumber(buttonId, "unmarkOtherCategories?id=");
+  if (id >= 0) {
+    markOtherCategories(categories[id], false);
+    return;
   }
 }
 
@@ -479,7 +541,7 @@ function pushMarked(idList) {
 function processMarked(remove) {
   displayMessage(browser.i18n.getMessage(remove ?
   "messageRemoveMarked" : "messageStripMarked"));
-  let removeList = new Array;
+  let removeList = new Array();
   pushMarked(removeList);
   clearWindow();
   let message = {
@@ -617,6 +679,9 @@ function displayFinish(textId, state) {
       case "buttonUnmarkAll":
         mark(false);
         break;
+      case "checkboxFullUrl":
+        unlock();
+        return;
       default:
         markCategories(event.target.id, categories);
     }

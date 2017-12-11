@@ -67,6 +67,26 @@
       }
     }
   },
+  "buttonMarkOtherCategories": {
+    "message": "Markiere in Gruppen mit “$TITLE$” alle außer diesen",
+    "description": "Button for marking all but specified categories in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "buttonUnmarkOtherCategories": {
+    "message": "Markiere in Gruppen mit “$TITLE$” nur diese",
+    "description": "Button for marking only specified category in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
+  },
   "messageRemoveInfo": {
     "message": "Markierte Lesezeichen beziehen sich auf diejenigen seit dem letzten Drücken des Knopfes zur Berechnung der Liste.",
     "description": "Explain that bookmarks refer to those of last update of the list"
