@@ -68,7 +68,7 @@
     }
   },
   "buttonMarkOtherCategories": {
-    "message": "Markiere in Gruppen mit “$TITLE$” alle außer diesen",
+    "message": "Markiere in Gruppen mit „$TITLE$“ alle außer diesen",
     "description": "Button for marking all but specified categories in groups with it",
     "placeholders": {
       "title": {
@@ -78,7 +78,7 @@
     }
   },
   "buttonUnmarkOtherCategories": {
-    "message": "Markiere in Gruppen mit “$TITLE$” nur diese",
+    "message": "Markiere in Gruppen mit „$TITLE$“ nur diese",
     "description": "Button for marking only specified category in groups with it",
     "placeholders": {
       "title": {
