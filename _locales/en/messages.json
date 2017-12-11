@@ -23,10 +23,6 @@
     "message": "All bookmarks",
     "description": "Button for listing all bookmarks"
   },
-  "buttonMarkAll": {
-    "message": "Mark all",
-    "description": "Button for marking all"
-  },
   "buttonMarkButFirst": {
     "message": "Mark all but first in each group",
     "description": "Button for marking all but first"
@@ -43,9 +39,53 @@
     "message": "Mark all but newest in each group",
     "description": "Button for marking all but newest"
   },
+  "buttonMarkAll": {
+    "message": "Mark all",
+    "description": "Button for marking all"
+  },
   "buttonUnmarkAll": {
     "message": "Unmark all",
     "description": "Button for unmarking all"
+  },
+  "buttonMarkCategory": {
+    "message": "Mark all from “$TITLE$”",
+    "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "buttonUnmarkCategory": {
+    "message": "Unmark all from “$TITLE$”",
+    "description": "Button for unmarking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "buttonMarkOtherCategories": {
+    "message": "In groups containing “$TITLE$” mark all but these",
+    "description": "Button for marking all but specified categories in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "buttonUnmarkOtherCategories": {
+    "message": "In groups with “$TITLE$” mark only these",
+    "description": "Button for marking only specified category in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar"
+      }
+    }
   },
   "buttonRemoveMarked": {
     "message": "Remove marked bookmarks",
@@ -62,6 +102,20 @@
   "buttonStopStripping": {
     "message": "Stop stripping!",
     "description": "Button for emergency stop of description stripping"
+  },
+  "checkboxFullUrl": {
+    "message": "Display URL in listings",
+    "description": "Checkbox for displaying URL in listings"
+  },
+  "messageCount": {
+    "message": "$TOTAL$ bookmarks marked",
+    "description": "Report specified number of marked bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
   },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (of $ALL$) exact dupes in $GROUPS$ groups",
@@ -133,6 +187,10 @@
       }
     }
   },
+  "messageRemoveInfo": {
+    "message": "Marked bookmarks refer to those since you last pressed the button to calculate the list.",
+    "description": "Explain that bookmarks refer to those of last update of the list"
+  },
   "messageRemoveMarked": {
     "message": "Removing marked bookmarks",
     "description": "Report that removal of marked bookmarks started"
@@ -178,6 +236,10 @@
         "example": "0"
       }
     }
+  },
+  "messageStripInfo": {
+    "message": "Stripping of descriptions will update the internal bookmark generation date. Moreover, it will move the bookmark to the location where it was since you last pressed the button to calculate this list.",
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "Stripping descriptions of marked bookmarks",

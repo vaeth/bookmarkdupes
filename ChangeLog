@@ -1,16 +1,28 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-2.5:
+	Martin Väth <martin at mvath.de>:
+	- Add new mark/unmark buttons for categories
+	- Add checkbox to display URL in listings
+	- Remember marked bookmarks when panel is closed
+	- Display 0 matches only once
+	- Rearrange placement of buttons
+	- Fix display of group separators
+	- internal: Use boolean tests for zero (presumably quicker)
+
 *bookmarkdupes-2.4:
 	Martin Väth <martin at mvath.de>:
 	- Indicate creation order of (matching) bookmarks by numbers
 	- Add buttons to mark all but oldest/newest bookmarks, see
 	  https://github.com/vaeth/bookmarkdupes/issues/9
-	- Document that stripping comments changes internally stored date
+	- Display number of marked bookmarks
+	- Document that stripping descriptions changes internally stored date
 	- Document necessity to recalculate after bookmark changes
 	- Prefer bookmark index from bookmark API (if it exists) over counting.
 	  This might mitigate https://github.com/vaeth/bookmarkdupes/issues/11
 	- internal: remove currently unused asynchronous code
 	- internal: use null instead of {} to free closures
+	- internal: XHTML Transitional -> Strict
 
 	YFdyh000 <yfdyh000 at gmail.com>:
 	- Create zh_CN locales

@@ -23,10 +23,6 @@
     "message": "所有书签",
     "description": "Button for listing all bookmarks"
   },
-  "buttonMarkAll": {
-    "message": "全部选中",
-    "description": "Button for marking all"
-  },
   "buttonMarkButFirst": {
     "message": "全部选中，除了每个组中第一项",
     "description": "Button for marking all but first"
@@ -36,16 +32,60 @@
     "description": "Button for marking all but last"
   },
   "buttonMarkButOldest": {
-    "message": "Mark all but oldest in each group",
+    "message": "Mark all but oldest in each group", // new
     "description": "Button for marking all but oldest"
   },
   "buttonMarkButNewest": {
-    "message": "Mark all but newest in each group",
+    "message": "Mark all but newest in each group", // new
     "description": "Button for marking all but newest"
+  },
+  "buttonMarkAll": {
+    "message": "全部选中",
+    "description": "Button for marking all"
   },
   "buttonUnmarkAll": {
     "message": "全部取消",
     "description": "Button for unmarking all"
+  },
+  "buttonMarkCategory": {
+    "message": "Mark all from “$TITLE$”", // new
+    "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
+  "buttonUnmarkCategory": {
+    "message": "Unmark all from “$TITLE$”", // new
+    "description": "Button for unmarking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
+  "buttonMarkOtherCategories": {
+    "message": "In groups containing “$TITLE$” mark all but these", // new
+    "description": "Button for marking all but specified categories in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
+  "buttonUnmarkOtherCategories": {
+    "message": "In groups with “$TITLE$” mark only these", // new
+    "description": "Button for marking only specified category in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
   },
   "buttonRemoveMarked": {
     "message": "移除选中的书签",
@@ -62,6 +102,20 @@
   "buttonStopStripping": {
     "message": "停止剥离！",
     "description": "Button for emergency stop of description stripping"
+  },
+  "checkboxFullUrl": {
+    "message": "Display URL in listings", // new
+    "description": "Checkbox for displaying URL in listings"
+  },
+  "messageCount": {
+    "message": "$TOTAL$ bookmarks marked", // new
+    "description": "Report specified number of marked bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
   },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ / $ALL$ 个完全重复，共 $GROUPS$ 组",
@@ -129,9 +183,13 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "error description" // new
       }
     }
+  },
+  "messageRemoveInfo": {
+    "message": "Marked bookmarks refer to those since you last pressed the button to calculate the list.", // new
+    "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "messageRemoveMarked": {
     "message": "正在移除选中的书签",
@@ -171,13 +229,17 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "error description" // new
       },
       "total": {
         "content": "$2",
         "example": "0"
       }
     }
+  },
+  "messageStripInfo": {
+    "message": "Stripping of descriptions will update the internal bookmark generation date. Moreover, it will move the bookmark to the location where it was since you last pressed the button to calculate this list.", // new
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "剥离已选中书签的描述",
@@ -217,7 +279,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "error description" // new
       },
       "total": {
         "content": "$2",

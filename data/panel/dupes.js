@@ -8,12 +8,24 @@ function getButtonsBase() {
   return document.getElementById("buttonsBase");
 }
 
-function getButtonsExtra() {
-  return document.getElementById("buttonsExtra");
+function getCheckboxOptions() {
+  return document.getElementById("checkboxOptions");
+}
+
+function getCheckboxFullUrl() {
+  return document.getElementById("checkboxFullUrl");
 }
 
 function getButtonsRemove() {
   return document.getElementById("buttonsRemove");
+}
+
+function getButtonsMark() {
+  return document.getElementById("buttonsMark");
+}
+
+function getButtonsCategories() {
+  return document.getElementById("buttonsCategories");
 }
 
 function getButtonStop() {
@@ -32,7 +44,35 @@ function displayMessage(msg) {
   document.getElementById("textMessage").textContent = msg;
 }
 
-function addButton(parent, id, text, enabled) {
+function displayCount(msg) {
+  document.getElementById("textCount").textContent = msg;
+}
+
+function appendTextNodeCol(row, text) {
+  let col = document.createElement("TD");
+  let textNode = document.createTextNode(text);
+  col.appendChild(textNode);
+  row.appendChild(col);
+}
+
+function appendCheckbox(parent, id, checked, disabled) {
+  let checkbox = document.createElement("INPUT");
+  checkbox.type = "checkbox";
+  checkbox.checked = checked;
+  checkbox.id = id;
+  if (disabled === true) {
+    checkbox.disabled = true;
+  }
+  parent.appendChild(checkbox);
+}
+
+function appendCheckboxCol(row, id, checked, disabled) {
+  let col = document.createElement("TD");
+  appendCheckbox(col, id, checked, disabled);
+  row.appendChild(col);
+}
+
+function appendButton(parent, id, text, enabled) {
   let button = document.createElement("BUTTON");
   button.type = "button";
   button.id = id;
@@ -46,19 +86,78 @@ function addButton(parent, id, text, enabled) {
   parent.appendChild(button);
 }
 
-function addButtons(mode) {
-  let parent = getButtonsExtra();
-  if (mode) {
-    addButton(parent, "buttonMarkAll");
-  } else {
-    addButton(parent, "buttonMarkButFirst");
-    addButton(parent, "buttonMarkButLast");
-    addButton(parent, "buttonMarkButOldest");
-    addButton(parent, "buttonMarkButNewest");
+function appendButtonCol(row, id, text, enabled) {
+  let col = document.createElement("TD");
+  appendButton(col, id, text, enabled);
+  row.appendChild(col);
+}
+
+function addButtonsBase() {
+  let row = document.createElement("TR");
+  appendButtonCol(row, "buttonListExactDupes");
+  appendButtonCol(row, "buttonListSimilarDupes");
+  appendButtonCol(row, "buttonListEmpty");
+  appendButtonCol(row, "buttonListAll");
+  let parent = getButtonsBase();
+  parent.appendChild(row);
+}
+
+function addButtonRemove(infoId, buttonId) {
+  let row = document.createElement("TR");
+  appendTextNodeCol(row, browser.i18n.getMessage(infoId));
+  appendButtonCol(row, buttonId);
+  let parent = getButtonsRemove();
+  parent.appendChild(row);
+}
+
+function addButtonsCategories(mode, categoryTitles) {
+  if ((!categoryTitles) || !(categoryTitles.length)) {
+    return;
   }
-  addButton(parent, "buttonUnmarkAll");
-  parent = getButtonsRemove();
-  addButton(parent, (mode == 2) ? "buttonStripMarked" : "buttonRemoveMarked");
+  let parent = (mode ? getButtonsMark() : getButtonsCategories());
+  for (let i = 0; i < categoryTitles.length; ++i) {
+    let title = categoryTitles[i];
+    let row =  document.createElement("TR");
+    appendButtonCol(row, "markCategory?id=" + String(i),
+      browser.i18n.getMessage("buttonMarkCategory", title));
+    appendButtonCol(row, "unmarkCategory?id=" + String(i),
+      browser.i18n.getMessage("buttonUnmarkCategory", title));
+    if (!mode) {
+      appendButtonCol(row, "markOtherCategories?id=" + String(i),
+        browser.i18n.getMessage("buttonMarkOtherCategories", title));
+      appendButtonCol(row, "unmarkOtherCategories?id=" + String(i),
+        browser.i18n.getMessage("buttonUnmarkOtherCategories", title));
+    }
+    parent.appendChild(row);
+  }
+}
+
+function addButtonsMark(mode) {
+  let parent = getButtonsMark();
+  if (!mode) {
+    let row = document.createElement("TR");
+    appendButtonCol(row, "buttonMarkButFirst");
+    appendButtonCol(row, "buttonMarkButLast");
+    parent.appendChild(row);
+    row = document.createElement("TR");
+    appendButtonCol(row, "buttonMarkButOldest");
+    appendButtonCol(row, "buttonMarkButNewest");
+    parent.appendChild(row);
+  }
+  let row = document.createElement("TR");
+  appendButtonCol(row, "buttonMarkAll");
+  appendButton(row, "buttonUnmarkAll");
+  parent.appendChild(row);
+}
+
+function addButtonsMode(mode, categoryTitles) {
+  if (mode == 2) {
+    addButtonRemove("messageStripInfo", "buttonStripMarked");
+  } else {
+    addButtonRemove("messageRemoveInfo", "buttonRemoveMarked");
+  }
+  addButtonsMark(mode);
+  addButtonsCategories(mode, categoryTitles);
 }
 
 function addProgressButton(textId, percentage) {
@@ -72,7 +171,7 @@ function addProgressButton(textId, percentage) {
   progress.value = percentage;
   parent.appendChild(progress);
   parent = getButtonStop();
-  addButton(parent, "buttonStop", browser.i18n.getMessage(textId), true);
+  appendButton(parent, "buttonStop", browser.i18n.getMessage(textId), true);
 }
 
 function enableButtonsOf(top, enabled) {
@@ -81,20 +180,24 @@ function enableButtonsOf(top, enabled) {
   }
   let disabled = ((enabled !== undefined) && !enabled);
   for (let child of top.childNodes) {
-    if (child.nodeName == "BUTTON") {
+    if ((child.nodeName == "BUTTON") || (child.nodeName == "INPUT")) {
       child.disabled = disabled;
+    } else {
+      enableButtonsOf(child, enabled);
     }
   }
 }
 
 function enableButtonsBase(enabled) {
   enableButtonsOf(getButtonsBase(), enabled);
+  enableButtonsOf(getCheckboxOptions(), enabled);
 }
 
 function enableButtons(enabled) {
   enableButtonsBase(enabled);
-  enableButtonsOf(getButtonsExtra(), enabled);
   enableButtonsOf(getButtonsRemove(), enabled);
+  enableButtonsOf(getButtonsMark(), enabled);
+  enableButtonsOf(getButtonsCategories(), enabled);
 }
 
 function clearItem(top) {
@@ -108,25 +211,27 @@ function clearProgressButton() {
   clearItem(getButtonStop());
 }
 
-function clearButtonsExtra() {
-  clearItem(getButtonsExtra());
+function clearButtonsMode() {
   clearItem(getButtonsRemove());
+  clearItem(getButtonsMark());
+  clearItem(getButtonsCategories());
 }
 
 function clearBookmarks() {
+  displayCount("");
   clearItem(getTop());
 }
 
 function clearWindow() {
   clearProgressButton();
-  clearButtonsExtra();
+  clearButtonsMode();
   clearBookmarks();
 }
 
 function addRuler() {
   let ruler = document.createElement("HR");
   let col = document.createElement("TD");
-  col.colSpan = 3;
+  col.colSpan = 4;
   col.appendChild(ruler);
   let row =  document.createElement("TR");
   row.appendChild(col);
@@ -134,27 +239,20 @@ function addRuler() {
   top.appendChild(row);
 }
 
-function addBookmark(text, id, nr) {
-  let checkbox = document.createElement("INPUT");
-  checkbox.type = "checkbox";
-  checkbox.checked = false;
-  checkbox.id = id;
-  let col = document.createElement("TD");
-  col.appendChild(checkbox);
+function addBookmark(bookmark, checkboxes) {
   let row = document.createElement("TR");
-  row.appendChild(col);
-  if (nr !== undefined) {
-    let nrNode = document.createTextNode(String(nr));
-    col = document.createElement("TD");
-    col.appendChild(nrNode);
+  appendCheckboxCol(row, bookmark.id,
+    (checkboxes && (checkboxes.has(bookmark.id))));
+  if (bookmark.order !== undefined) {
+    appendTextNodeCol(row, String(bookmark.order));
+    let col = document.createElement("TD");
     row.appendChild(col);
   }
-  col = document.createElement("TD");
-  row.appendChild(col);
-  let textNode = document.createTextNode(text);
-  col = document.createElement("TD");
-  col.appendChild(textNode);
-  row.appendChild(col);
+  let text = bookmark.text;
+  if (bookmark.extra) {
+    text += " (" + bookmark.extra + ")";
+  }
+  appendTextNodeCol(row, text);
   let top = getTop();
   top.appendChild(row);
 }
@@ -271,52 +369,149 @@ function markButNewest() {
   }
 }
 
+function SplitNumber(text, begin) {
+  if (text.substring(0, begin.length) !== begin) {
+    return -1;
+  }
+  return Number(text.substring(begin.length));
+}
+
+function markCategory(category, checked) {
+  let top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      continue;
+    }
+    let checkbox = getCheckbox(node);
+    if (!category.has(checkbox.id)) {
+      continue;
+    }
+    checkbox.checked = checked;
+  }
+}
+
+function markOtherCategories(category, checked) {
+  let top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  let groupMatches = false;
+  let previousCheckboxes = new Array();
+  let unchecked = !checked;
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      groupMatches = false;
+      if (previousCheckboxes.length > 0) {  // test for speed reasons
+        previousCheckboxes = new Array();
+      }
+      continue;
+    }
+    let checkbox = getCheckbox(node);
+    if (!category.has(checkbox.id)) {
+      if (groupMatches) {
+        checkbox.checked = checked;
+        continue;
+      }
+      previousCheckboxes.push(checkbox);
+      continue;
+    }
+    checkbox.checked = unchecked;
+    groupMatches = true;
+    if (!previousCheckboxes.length) {
+      continue;
+    }
+    for (let previous of previousCheckboxes) {
+      previous.checked = checked;
+    }
+    previousCheckboxes = new Array();
+  }
+}
+
+function markCategories(buttonId, categories) {
+  let id = SplitNumber(buttonId, "markCategory?id=");
+  if (id >= 0) {
+    markCategory(categories[id], true);
+    return true;
+  }
+  id = SplitNumber(buttonId, "unmarkCategory?id=");
+  if (id >= 0) {
+    markCategory(categories[id], false);
+    return true;
+  }
+  id = SplitNumber(buttonId, "markOtherCategories?id=");
+  if (id >= 0) {
+    markOtherCategories(categories[id], true);
+    return true;
+  }
+  id = SplitNumber(buttonId, "unmarkOtherCategories?id=");
+  if (id >= 0) {
+    markOtherCategories(categories[id], false);
+    return true;
+  }
+  return false;
+}
+
+function checkboxesToSet(result) {
+  if (result.checkboxes) {
+    result.checkboxes = new Set(result.checkboxes);
+  }
+}
+
 function displayDupes(exact, result) {
   clearProgressButton();
   let total = 0;
-  let groups = result.result.length;
-  let addButtonsOrRuler = function () {
-    addButtons(0);
+  let groups = result.list.length;
+  let returnValue = false;
+  let addButtonsOrRuler = function (categoryTitles) {
+    returnValue = true;
     addButtonsOrRuler = addRuler;
+    addButtonsMode(0, categoryTitles);
+    checkboxesToSet(result);
   };
-  for (let group of result.result) {
-    addButtonsOrRuler();
+  for (let group of result.list) {
+    addButtonsOrRuler(result.categoryTitles);
+    total += group.length;
     for (let bookmark of group) {
-      ++total;
-      let text = bookmark.text;
-      if (bookmark.extra !== undefined) {
-        text += " (" + bookmark.extra + ")";
-      }
-      addBookmark(text, bookmark.id, bookmark.order);
+      addBookmark(bookmark, result.checkboxes);
     }
   }
   displayMessage(browser.i18n.getMessage((exact ?
     "messageExactMatchesGroups" : "messageSimilarMatchesGroups"),
     [String(total), String(groups), String(result.all)]));
+  return returnValue;
 }
 
 function displayEmpty(result) {
   clearProgressButton();
-  let total = result.length;
-  if (total) {
-    addButtons(1);
-    for (let bookmark of result) {
-      addBookmark(bookmark.text, bookmark.id);
-    }
-  }
+  let total = result.list.length;
   displayMessage(browser.i18n.getMessage("messageEmpty", String(total)));
+  if (!total) {
+    return false;
+  }
+  addButtonsMode(1, result.categoryTitles);
+  checkboxesToSet(result);
+  for (let bookmark of result.list) {
+    addBookmark(bookmark, result.checkboxes);
+  }
+  return true;
 }
 
 function displayAll(result) {
   clearProgressButton();
-  let total = result.length;
-  if (total) {
-    addButtons(2);
-    for (let bookmark of result) {
-      addBookmark(bookmark.text, bookmark.id);
-    }
-  }
+  let total = result.list.length;
   displayMessage(browser.i18n.getMessage("messageAll", String(total)));
+  if (!total) {
+    return false;
+  }
+  addButtonsMode(2, result.categoryTitles);
+  checkboxesToSet(result);
+  for (let bookmark of result.list) {
+    addBookmark(bookmark, result.checkboxes);
+  }
+  return true;
 }
 
 function sendMessageCommand(command) {
@@ -327,28 +522,38 @@ function sendMessageCommand(command) {
 }
 
 function calculating(command) {
-  clearButtonsExtra();
-  clearBookmarks();
+  clearWindow();
   sendMessageCommand(command);
+}
+
+function pushMarked(idList) {
+  let top = getTop();
+  if (!top.hasChildNodes()) {
+    return 0;
+  }
+  let count = 0;
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      continue;
+    }
+    let checkbox = getCheckbox(node);
+    if (!checkbox.checked) {
+      continue;
+    }
+    if (idList) {
+      idList.push(checkbox.id);
+    } else {
+      ++count;
+    }
+  }
+  return count;
 }
 
 function processMarked(remove) {
   displayMessage(browser.i18n.getMessage(remove ?
   "messageRemoveMarked" : "messageStripMarked"));
-  let top = getTop();
-  let removeList = new Array;
-  if (top.hasChildNodes()) {
-    for (let node of top.childNodes) {
-      if (!isCheckbox(node)) {
-        continue;
-      }
-      let checkbox = getCheckbox(node);
-      if (!checkbox.checked) {
-        continue;
-      }
-      removeList.push(checkbox.id);
-    }
-  }
+  let removeList = new Array();
+  pushMarked(removeList);
   clearWindow();
   let message = {
     command: (remove ? "remove" : "strip"),
@@ -374,15 +579,79 @@ function displayFinish(textId, state) {
   } else {
     displayMessage(browser.i18n.getMessage(textId, String(state.total)));
   }
-  sendMessageCommand("finish");
 }
 
 {
   let lock = true;
+  let count = null;
+  let categories;
 
   function unlock() {
     lock = false;
     enableButtons();
+  }
+
+  function countMarked(send) {
+    if (count === null) {
+      return;
+    }
+    let currentCount;
+    if (send) {
+      // We send an array, because a set has to be built by the client anyway
+      let checkboxes = new Array();
+      pushMarked(checkboxes);
+      let message = {
+        command: "setCheckboxes"
+      };
+      currentCount = checkboxes.length;
+      if (currentCount) {  // Send only nonempty arrays
+        message.checkboxes = checkboxes;
+      }
+      browser.runtime.sendMessage(message);
+    } else {
+      currentCount = pushMarked();
+    }
+    if (currentCount == count) {
+      return;
+    }
+    count = currentCount;
+    displayCount(browser.i18n.getMessage("messageCount", currentCount));
+  }
+
+  function checkboxFullUrl() {
+    let message = {
+      command: "setOptionFullUrl",
+      value: getCheckboxFullUrl().checked
+    };
+    browser.runtime.sendMessage(message);
+  }
+
+  function displayOptions(options) {
+    let parent = getCheckboxOptions();
+    if (parent.hasChildNodes()) {
+      let checkbox = parent.firstChild.firstChild.firstChild;
+      if (options.fullUrl != checkbox.checked) {
+        checkbox.checked = options.fullUrl;
+      }
+      return;
+    }
+    let row = document.createElement("TR");
+    appendCheckboxCol(row, "checkboxFullUrl", options.fullUrl, lock);
+    appendTextNodeCol(row, browser.i18n.getMessage("checkboxFullUrl"));
+    parent.appendChild(row);
+    addButtonsBase();
+  }
+
+  function checkboxListener(event) {
+    if ((!event.target) || (!event.target.id)) {
+      return;
+    }
+    switch (event.target.id) {
+      case "checkboxFullUrl":
+        checkboxFullUrl();
+        return;
+    }
+    countMarked(true);
   }
 
   function clickListener(event) {
@@ -436,23 +705,31 @@ function displayFinish(textId, state) {
       case "buttonUnmarkAll":
         mark(false);
         break;
+      case "checkboxFullUrl":
+        unlock();
+        return;
+      default:
+        if (!markCategories(event.target.id, categories)) {
+          unlock();
+          return;
+        }
     }
+    countMarked(true);
     unlock();
   }
-
-  let parent = getButtonsBase();
-  addButton(parent, "buttonListExactDupes");
-  addButton(parent, "buttonListSimilarDupes");
-  addButton(parent, "buttonListEmpty");
-  addButton(parent, "buttonListAll");
-  document.addEventListener("click", clickListener);
 
   function messageListener(message) {
     if (message.command !== "state") {
       return;
     }
     let state = message.state;
+    displayOptions(message.options);
+    categories = count = null;
+    let selectMode;
     switch (state.mode) {
+      case "virgin":
+        unlock();
+        return;
       case "removeProgress":
         displayProgress("messageRemoveProgress", "buttonStopRemoving", state);
         return;
@@ -463,41 +740,50 @@ function displayFinish(textId, state) {
         displayMessage(browser.i18n.getMessage("messageCalculating"));
         return;
       case "calculatedDupesExact":
-        displayDupes(true, state.result)
+        selectMode = displayDupes(true, state.result);
         break;
       case "calculatedDupesSimilar":
-        displayDupes(false, state.result);
+        selectMode = displayDupes(false, state.result);
         break;
       case "calculatedEmptyFolder":
-        displayEmpty(state.result);
+        selectMode = displayEmpty(state.result);
         break;
       case "calculatedAll":
-        displayAll(state.result);
-        break;
-      case "virgin":
+        selectMode = displayAll(state.result);
         break;
       case "removeSuccess":
         displayFinish("messageRemoveSuccess", state);
-        return;
+        break;
       case "stripSuccess":
         displayFinish("messageStripSuccess", state);
-        return;
+        break;
       case "removeError":
         displayFinish("messageRemoveError", state);
-        return;
+        break;
       case "stripError":
         displayFinish("messageStripError", state);
-        return;
+        break;
       case "calculateError":
         displayFinish("messageCalculateError", state);
-        return;
+        break;
       default:  // should not happen
-        displayMessage(state.mode);
+        displayMessage(state.mode);  // it is a bug if we get here
         return;
+    }
+    if (!selectMode) {
+      sendMessageCommand("finish");
+      return;
+    }
+    count = -1;
+    countMarked(false);
+    if (state.result && state.result.categories) {
+      categories = state.result.categories;
     }
     unlock();
   }
 
+  document.addEventListener("CheckboxStateChange", checkboxListener);
+  document.addEventListener("click", clickListener);
   browser.runtime.onMessage.addListener(messageListener);
 }
 sendMessageCommand("sendState");

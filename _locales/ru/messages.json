@@ -23,10 +23,6 @@
     "message": "Все закладки",
     "description": "Button for listing all bookmarks"
   },
-  "buttonMarkAll": {
-    "message": "Отметить все",
-    "description": "Button for marking all"
-  },
   "buttonMarkButFirst": {
     "message": "В каждой группе выбрать все кроме верхней",
     "description": "Button for marking all but first"
@@ -43,9 +39,53 @@
     "message": "В каждой группе выбрать все кроме новейшей",
     "description": "Button for marking all but newest"
   },
+  "buttonMarkAll": {
+    "message": "Отметить все",
+    "description": "Button for marking all"
+  },
   "buttonUnmarkAll": {
     "message": "Снять все отметки",
     "description": "Button for unmarking all"
+  },
+  "buttonMarkCategory": {
+    "message": "Mark all from “$TITLE$”", // new
+    "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
+  "buttonUnmarkCategory": {
+    "message": "Unmark all from “$TITLE$”", // new
+    "description": "Button for unmarking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
+  "buttonMarkOtherCategories": {
+    "message": "In groups containing “$TITLE$” mark all but these", // new
+    "description": "Button for marking all but specified categories in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
+  "buttonUnmarkOtherCategories": {
+    "message": "In groups with “$TITLE$” mark only these", // new
+    "description": "Button for marking only specified category in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
   },
   "buttonRemoveMarked": {
     "message": "Удалить отмеченные закладки",
@@ -62,6 +102,20 @@
   "buttonStopStripping": {
     "message": "Прекратить очистку!",
     "description": "Button for emergency stop of description stripping"
+  },
+  "checkboxFullUrl": {
+    "message": "Display URL in listings", // new
+    "description": "Checkbox for displaying URL in listings"
+  },
+  "messageCount": {
+    "message": "$TOTAL$ закладок отмечено",
+    "description": "Report specified number of marked bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
   },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (из $ALL$) точных дублей в $GROUPS$ группах",
@@ -129,9 +183,13 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "error description" // new
       }
     }
+  },
+  "messageRemoveInfo": {
+    "message": "Закладки отмечены с тех пор, как вы в последний раз нажимали кнопку, вычисляя список.",
+    "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "messageRemoveMarked": {
     "message": "Удаление отмеченных закладок...",
@@ -171,13 +229,17 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "error description" // new
       },
       "total": {
         "content": "$2",
         "example": "0"
       }
     }
+  },
+  "messageStripInfo": {
+    "message": "Очистка описания обновит дату создания закладки. Кроме того, это возвратит закладку в то место, где она была, когда вы в последний раз нажимали кнопку, вычисляя этот список.",
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "Очистка описаний отмеченных закладок",
@@ -217,7 +279,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description"
+        "example": "error description" // new
       },
       "total": {
         "content": "$2",

@@ -10,20 +10,28 @@
 let state;
 let stop;
 let bookmarkIds;
+let options = {
+  fullUrl: false
+};
 
 function setVirginState() {
   bookmarkIds = null;
   state = {
-    mode: "virgin"
+    mode: "virgin",
   };
 }
 
 function sendState() {
   let message = {
     command: "state",
-    state: state
+    state: state,
+    options: options
   };
   browser.runtime.sendMessage(message);
+}
+
+function setOptionFullUrl(value) {
+  options.fullUrl = value;
 }
 
 function removeFolder(id, callback, errorCallback) {
@@ -125,7 +133,21 @@ function normalizeGroup(group) {
 function calculate(command) {
   let exact, folder, handleFunction, result, urlMap;
 
+  function pushCategory() {
+    if (result.categoryTitle && result.category.size) {
+      result.categoryTitles.push(result.categoryTitle);
+      result.categories.push(result.category);
+    }
+  }
+
   function calculateFinish(mode) {
+    pushCategory();
+    delete result.category;
+    delete result.categoryTitle;
+    if (result.categories.length <= 1) {
+      delete result.categories;
+      delete result.categoryTitles;
+    }
     state = {
       mode: mode,
       result: result
@@ -147,7 +169,9 @@ function calculate(command) {
     ++(result.all);
     let groupIndex = node.url;
     let extra;
-    if (!exact) {
+    if (options.fullUrl) {
+      extra = node.url;
+    } else if (!exact) {
       let index = groupIndex.indexOf("?");
       if (index > 0) {
         groupIndex = groupIndex.substring(0, index);
@@ -156,17 +180,18 @@ function calculate(command) {
     }
     let id = node.id;
     let group = urlMap.get(groupIndex);
-    if (group === undefined) {
+    if (!group) {
       group = {
         data : new Array(),
         ids : new Set()
       };
-      result.result.push(group);
+      result.list.push(group);
       urlMap.set(groupIndex, group);
-    } else if (group.ids.has(id)) {
-      return;
+    } else if (group.ids.has(id)) {  // should not happen
+      return;  // it is a bug if we get here
     }
     group.ids.add(id);
+    result.category.add(id);
     let bookmark = {
       id: id,
       order: ((node.dateAdded !== undefined) ? node.dateAdded : (-1)),
@@ -182,19 +207,26 @@ function calculate(command) {
     if (node.url || (node.type && (node.type != "folder"))) {
       return;
     }
+    let id = node.id;
+    result.category.add(id);
     let bookmark = {
-      id: node.id,
+      id: id,
       text: parent + node.title
     };
-    result.push(bookmark);
+    result.list.push(bookmark);
   }
 
   function handleAll(node, parent, index) {
+    let id = node.id;
+    result.category.add(id);
     let bookmark = {
-      id: node.id,
+      id: id,
       text: parent + node.title
     };
-    result.push(bookmark);
+    if (options.fullUrl) {
+      bookmark.extra = node.url;
+    }
+    result.list.push(bookmark);
     bookmark = {
       parentId: node.parentId,
       title: node.title,
@@ -204,13 +236,19 @@ function calculate(command) {
     if (node.type !== undefined) {
       bookmark.type = node.type;
     }
-    bookmarkIds.set(node.id, bookmark);
+    bookmarkIds.set(id, bookmark);
+  }
+
+  function prepareCategory(title) {
+    pushCategory();
+    result.categoryTitle = title;
+    result.category = new Set()
   }
 
   function recurse(node) {
     function recurseMain(node, parent, index) {
       if ((!node.children) || (!node.children.length)) {
-        if (parent && !node.unmodifiable) {
+        if (parent && !node.unmodifable) {
           if (folder) {
             handleFunction(node, parent);
             return;
@@ -222,6 +260,9 @@ function calculate(command) {
         return;
       }
       if (node.title) {
+        if (!parent) {
+          prepareCategory(node.title);
+        }
         parent += node.title + " | ";
       }
       index = 0;
@@ -235,37 +276,33 @@ function calculate(command) {
 
   function calculateDupes(nodes) {
     urlMap = new Map();
-    result = {
-      result: new Array(),
-      all: 0
-    };
+    result.all = 0;
     recurse(nodes[0]);
     urlMap = null;
     let normalizeResult = new Array();
-    for (let group of result.result) {
+    for (let group of result.list) {
       if (group.data.length < 2) {
         continue;
       }
       normalizeGroup(group.data);
       normalizeResult.push(group.data);
     }
-    result.result = normalizeResult;
+    result.list = normalizeResult;
     calculateFinish(exact ? "calculatedDupesExact" : "calculatedDupesSimilar");
   }
 
   function calculateEmpty(nodes) {
-    result = new Array();
     recurse(nodes[0]);
     calculateFinish("calculatedEmptyFolder");
   }
 
   function calculateAll(nodes) {
     bookmarkIds = new Map();
-    result = new Array();
     recurse(nodes[0]);
     calculateFinish("calculatedAll");
   }
 
+  bookmarkIds = null;
   let mainFunction;
   exact = false;
   folder = false;
@@ -287,13 +324,29 @@ function calculate(command) {
       handleFunction = handleAll;
       break;
     default:  // should not happen
-      return;
+      return;  // it is a bug if we get here
+  }
+  result = {
+    list: new Array(),
+    categories: new Array(),
+    categoryTitles: new Array()
   }
   state = {
     mode: "calculatingProgress"
   };
   sendState();
   browser.bookmarks.getTree().then(mainFunction, calculateError);
+}
+
+function setCheckboxes(checkboxes) {
+  if (!state.hasOwnProperty("result")) {  // should not happen
+    return;  // It is a bug if we get here
+  }
+  if (checkboxes && checkboxes.length) {
+    state.result.checkboxes = checkboxes;
+    return;
+  }
+  delete state.result.checkboxes;  // send only nonempty arrays
 }
 
 function messageListener(message) {
@@ -304,11 +357,17 @@ function messageListener(message) {
     case "stop":
       stop = true;
       return;
+    case "setCheckboxes":
+      setCheckboxes(message.checkboxes);
+      return;
     case "finish":
       setVirginState();
       // fallthrough
     case "sendState":
       sendState();
+      return;
+    case "setOptionFullUrl":
+      setOptionFullUrl(message.value);
       return;
     case "remove":
       processMarked(true, message.removeList);

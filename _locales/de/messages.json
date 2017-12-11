@@ -23,10 +23,6 @@
     "message": "Alle Lesezeichen",
     "description": "Button for listing all bookmarks"
   },
-  "buttonMarkAll": {
-    "message": "Alle markieren",
-    "description": "Button for marking all"
-  },
   "buttonMarkButFirst": {
     "message": "Alle außer Gruppenersten markieren",
     "description": "Button for marking all but first"
@@ -43,9 +39,57 @@
     "message": "Alle außer Grupenjüngsten markieren",
     "description": "Button for marking all but newest"
   },
+  "buttonMarkAll": {
+    "message": "Alle markieren",
+    "description": "Button for marking all"
+  },
   "buttonUnmarkAll": {
     "message": "Alle Markierungen entfernen",
     "description": "Button for unmarking all"
+  },
+  "buttonMarkCategory": {
+    "message": "Alle markieren aus „$TITLE$“",
+    "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Lesezeichen-Menü"
+      }
+    }
+  },
+  "buttonUnmarkCategory": {
+    "message": "Alle Markierungen entfernen aus „$TITLE$“",
+    "description": "Button for unmarking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Lesezeichen-Menü"
+      }
+    }
+  },
+  "buttonMarkOtherCategories": {
+    "message": "Markiere in Gruppen mit “$TITLE$” alle außer diesen",
+    "description": "Button for marking all but specified categories in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Lesezeichen-Menü"
+      }
+    }
+  },
+  "buttonUnmarkOtherCategories": {
+    "message": "Markiere in Gruppen mit “$TITLE$” nur diese",
+    "description": "Button for marking only specified category in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Lesezeichen-Menü"
+      }
+    }
+  },
+  "messageRemoveInfo": {
+    "message": "Markierte Lesezeichen beziehen sich auf diejenigen seit dem letzten Drücken des Knopfes zur Berechnung der Liste.",
+    "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "buttonRemoveMarked": {
     "message": "Markierte Lesezeichen löschen",
@@ -62,6 +106,20 @@
   "buttonStopStripping": {
     "message": "Entfernen abbrechen!",
     "description": "Button for emergency stop of description stripping"
+  },
+  "checkboxFullUrl": {
+    "message": "URL in Listen anzeigen",
+    "description": "Checkbox for displaying URL in listings"
+  },
+  "messageCount": {
+    "message": "$TOTAL$ Lesezeichen markiert",
+    "description": "Report specified number of marked bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
   },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (von $ALL$) exakte Duplikate in $GROUPS$ Gruppen",
@@ -178,6 +236,10 @@
         "example": "0"
       }
     }
+  },
+  "messageStripInfo": {
+    "message": "Entfernung von Beschreibungen aktualisiert das intern gespeicherte Erzeugungsdatum des Lesezeichens. Außerdem verschiebt es das Lesezeichen an die Stelle, an der es beim Drücken des Knopfes zur Berechnung dieser Liste war.",
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "Beschreibungen markierter Lesezeichen werden entfernt.",
