@@ -180,7 +180,7 @@ function calculate(command) {
     }
     let id = node.id;
     let group = urlMap.get(groupIndex);
-    if (group === undefined) {
+    if (!group) {
       group = {
         data : new Array(),
         ids : new Set()
@@ -342,11 +342,11 @@ function setCheckboxes(checkboxes) {
   if (!state.hasOwnProperty("result")) {  // should not happen
     return;  // It is a bug if we get here
   }
-  if ((checkboxes === undefined) || !(checkboxes.length)) {
-    delete state.result.checkboxes;  // Send only nonempty sets
+  if (checkboxes && checkboxes.length) {
+    state.result.checkboxes = checkboxes;
     return;
   }
-  state.result.checkboxes = new Set(checkboxes);
+  delete state.result.checkboxes;  // send only nonempty arrays
 }
 
 function messageListener(message) {

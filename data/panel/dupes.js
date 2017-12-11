@@ -111,7 +111,7 @@ function addButtonRemove(infoId, buttonId) {
 }
 
 function addButtonsCategories(mode, categoryTitles) {
-  if ((categoryTitles === undefined) || !categoryTitles.length) {
+  if ((!categoryTitles) || !(categoryTitles.length)) {
     return;
   }
   let parent = (mode ? getButtonsMark() : getButtonsCategories());
@@ -249,7 +249,7 @@ function addBookmark(bookmark, checkboxes) {
     row.appendChild(col);
   }
   let text = bookmark.text;
-  if (bookmark.extra !== undefined) {
+  if (bookmark.extra) {
     text += " (" + bookmark.extra + ")";
   }
   appendTextNodeCol(row, text);
@@ -454,6 +454,12 @@ function markCategories(buttonId, categories) {
   return false;
 }
 
+function checkboxesToSet(result) {
+  if (result.checkboxes) {
+    result.checkboxes = new Set(result.checkboxes);
+  }
+}
+
 function displayDupes(exact, result) {
   clearProgressButton();
   let total = 0;
@@ -463,6 +469,7 @@ function displayDupes(exact, result) {
     returnValue = true;
     addButtonsOrRuler = addRuler;
     addButtonsMode(0, categoryTitles);
+    checkboxesToSet(result);
   };
   for (let group of result.list) {
     addButtonsOrRuler(result.categoryTitles);
@@ -485,6 +492,7 @@ function displayEmpty(result) {
     return false;
   }
   addButtonsMode(1, result.categoryTitles);
+  checkboxesToSet(result);
   for (let bookmark of result.list) {
     addBookmark(bookmark, result.checkboxes);
   }
@@ -499,6 +507,7 @@ function displayAll(result) {
     return false;
   }
   addButtonsMode(2, result.categoryTitles);
+  checkboxesToSet(result);
   for (let bookmark of result.list) {
     addBookmark(bookmark, result.checkboxes);
   }
@@ -531,7 +540,7 @@ function pushMarked(idList) {
     if (!checkbox.checked) {
       continue;
     }
-    if (idList !== undefined) {
+    if (idList) {
       idList.push(checkbox.id);
     } else {
       ++count;
@@ -767,7 +776,7 @@ function displayFinish(textId, state) {
     }
     count = -1;
     countMarked(false);
-    if (state.result && (state.result.categories !== undefined)) {
+    if (state.result && state.result.categories) {
       categories = state.result.categories;
     }
     unlock();
