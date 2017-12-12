@@ -246,9 +246,9 @@ function calculate(command) {
           if (folder) {
             handleFunction(node, parent);
             return;
-          } else if (node.url && ((!node.type) || (node.type == "bookmark"))) {
+          } else if (node.url && ((!node.type) || (node.type == "bookmark")) &&
+              (node.url.substr(0, 6) !== "place:")) {
             handleFunction(node, parent, index);
-            return;
           }
         }
         return;

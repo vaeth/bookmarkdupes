@@ -8,6 +8,7 @@
 	- Display 0 matches only once
 	- Rearrange placement of buttons
 	- Fix display of group separators
+	- Ignore bookmarks whose URL starts with "place:"
 	- internal: Use boolean tests for zero (presumably quicker)
 
 	Henaro aka Ironwool:
