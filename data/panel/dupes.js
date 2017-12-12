@@ -48,6 +48,10 @@ function getCheckboxFullUrl() {
   return document.getElementById("checkboxFullUrl");
 }
 
+function getCheckboxExtra() {
+  return document.getElementById("checkboxExtra");
+}
+
 function appendTextNodeCol(row, text) {
   let col = document.createElement("TD");
   let textNode = document.createTextNode(text);
@@ -177,12 +181,18 @@ function addProgressButton(textId, percentage) {
   appendButton(parent, "buttonStop", browser.i18n.getMessage(textId), true);
 }
 
-function addCheckboxOptions(options) {
+function addCheckboxOptions(options, extra) {
   let row = document.createElement("TR");
   appendCheckboxCol(row, "checkboxFullUrl", options.fullUrl);
   appendTextNodeCol(row, browser.i18n.getMessage("checkboxFullUrl"));
   let parent = getCheckboxOptions();
   parent.appendChild(row);
+  if (extra) {
+    row = document.createElement("TR");
+    appendCheckboxCol(row, "checkboxExtra", options.extra);
+    appendTextNodeCol(row, browser.i18n.getMessage("checkboxExtra"));
+    parent.appendChild(row);
+  }
 }
 
 function enableButtonsOf(top, enabled) {
@@ -261,9 +271,11 @@ function addBookmark(bookmark, result) {
     row.appendChild(col);
   }
   let text = bookmark.text;
-  let extra = result.options.fullUrl ? bookmark.url : bookmark.extra;
-  if (extra) {
-    text += " (" + extra + ")";
+  let appendix;
+  if (result.options.fullUrl) {
+    text += " (" + bookmark.url + ")";
+  } else if (result.options.extra && bookmark.extra) {
+    text += " (" + bookmark.extra + ")";
   }
   appendTextNodeCol(row, text);
   let top = getTop();
@@ -482,7 +494,7 @@ function displayDupes(exact, result) {
     returnValue = true;
     addButtonsOrRuler = addRuler;
     addButtonsMode(0, categoryTitles);
-    addCheckboxOptions(result.options);
+    addCheckboxOptions(result.options, !exact);
     checkboxesToSet(result);
   };
   for (let group of result.list) {
@@ -651,8 +663,12 @@ function displayFinish(textId, state) {
     startLock();
     let message = {
       command: "setOptions",
-      value: getCheckboxFullUrl().checked
+      fullUrl: getCheckboxFullUrl().checked
     };
+    let checkboxExtra = getCheckboxExtra();
+    if (checkboxExtra) {
+      message.extra = checkboxExtra.checked;
+    }
     addCheckboxes(message);
     clearWindow();
     browser.runtime.sendMessage(message);
@@ -664,6 +680,7 @@ function displayFinish(textId, state) {
     }
     switch (event.target.id) {
       case "checkboxFullUrl":
+      case "checkboxExtra":
         setCheckboxOptions();
         return;
     }

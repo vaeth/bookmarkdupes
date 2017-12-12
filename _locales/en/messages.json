@@ -107,6 +107,10 @@
     "message": "Display URL in listings",
     "description": "Checkbox for displaying URL in listings"
   },
+  "checkboxExtra": {
+    "message": "Display URL tail (following “?”) in listing",
+    "description": "Checkbox for displaying the URL tail (following “?”) in the similar matching listing"
+  },
   "messageCount": {
     "message": "$TOTAL$ bookmarks marked",
     "description": "Report specified number of marked bookmarks",

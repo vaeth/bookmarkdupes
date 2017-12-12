@@ -111,6 +111,10 @@
     "message": "URL in Listen anzeigen",
     "description": "Checkbox for displaying URL in listings"
   },
+  "checkboxExtra": {
+    "message": "URL-Ergänzung (nach „?“) anzeigen",
+    "description": "Checkbox for displaying the URL tail (following “?”) in the similar matching listing"
+  },
   "messageCount": {
     "message": "$TOTAL$ Lesezeichen markiert",
     "description": "Report specified number of marked bookmarks",

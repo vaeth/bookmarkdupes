@@ -11,7 +11,8 @@ let state;
 let stop;
 let bookmarkIds;
 let options = {
-  fullUrl: false
+  fullUrl: false,
+  extra: true
 };
 
 function setVirginState() {
@@ -344,7 +345,10 @@ function setCheckboxes(checkboxes) {
 }
 
 function setOptions(message) {
-  options.fullUrl = message.value;
+  options.fullUrl = message.fullUrl;
+  if (message.hasOwnProperty("extra")) {
+    options.extra = message.extra;
+  }
   setCheckboxes(message.checkboxes);
   sendState();
 }
