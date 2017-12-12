@@ -10,6 +10,13 @@
 	- Fix display of group separators
 	- internal: Use boolean tests for zero (presumably quicker)
 
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-2.4:
 	Martin Väth <martin at mvath.de>:
 	- Indicate creation order of (matching) bookmarks by numbers
