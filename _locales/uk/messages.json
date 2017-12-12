@@ -48,42 +48,42 @@
     "description": "Button for unmarking all"
   },
   "buttonMarkCategory": {
-    "message": "Mark all from “$TITLE$”", // new
+    "message": "Позначити все з “$TITLE$”",
     "description": "Button for marking all of specified category",
     "placeholders": {
       "title": {
         "content": "$1",
-        "example": "Bookmarks Toolbar" // new
+        "example": "Панель закладок"
       }
     }
   },
   "buttonUnmarkCategory": {
-    "message": "Unmark all from “$TITLE$”", // new
+    "message": "Зняти позначку зі всіх з “$TITLE$”",
     "description": "Button for unmarking all of specified category",
     "placeholders": {
       "title": {
         "content": "$1",
-        "example": "Bookmarks Toolbar" // new
+        "example": "Панель закладок"
       }
     }
   },
   "buttonMarkOtherCategories": {
-    "message": "In groups containing “$TITLE$” mark all but these", // new
+    "message": "У групах, що містять “$TITLE$” позначити все, крім цих",
     "description": "Button for marking all but specified categories in groups with it",
     "placeholders": {
       "title": {
         "content": "$1",
-        "example": "Bookmarks Toolbar" // new
+        "example": "Панель закладок"
       }
     }
   },
   "buttonUnmarkOtherCategories": {
-    "message": "In groups with “$TITLE$” mark only these", // new
+    "message": "У групах, що містять “$TITLE$” позначити тільки ці",
     "description": "Button for marking only specified category in groups with it",
     "placeholders": {
       "title": {
         "content": "$1",
-        "example": "Bookmarks Toolbar" // new
+        "example": "Панель закладок"
       }
     }
   },
@@ -104,7 +104,7 @@
     "description": "Button for emergency stop of description stripping"
   },
   "checkboxFullUrl": {
-    "message": "Display URL in listings", // new
+    "message": "Відображати URL-и в списках",
     "description": "Checkbox for displaying URL in listings"
   },
   "messageCount": {
@@ -183,7 +183,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description" // new
+        "example": "опис помилки"
       }
     }
   },
@@ -229,7 +229,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description" // new
+        "example": "опис помилки"
       },
       "total": {
         "content": "$2",
@@ -279,7 +279,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description" // new
+        "example": "опис помилки"
       },
       "total": {
         "content": "$2",
