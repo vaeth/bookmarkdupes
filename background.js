@@ -167,15 +167,14 @@ function calculate(command) {
 
   function handleDupe(node, parent) {
     ++(result.all);
-    let groupIndex = node.url;
+    let url = node.url;
+    let groupIndex = url;
     let extra;
-    if (options.fullUrl) {
-      extra = node.url;
-    } else if (!exact) {
+    if (!exact) {
       let index = groupIndex.indexOf("?");
       if (index > 0) {
         groupIndex = groupIndex.substring(0, index);
-        extra = node.url.substring(index);
+        extra = url.substring(index);
       }
     }
     let id = node.id;
@@ -195,7 +194,8 @@ function calculate(command) {
     let bookmark = {
       id: id,
       order: ((node.dateAdded !== undefined) ? node.dateAdded : (-1)),
-      text: parent + node.title
+      text: parent + node.title,
+      url: url
     };
     if (extra !== undefined) {
       bookmark.extra = extra;
@@ -221,11 +221,9 @@ function calculate(command) {
     result.category.add(id);
     let bookmark = {
       id: id,
-      text: parent + node.title
+      text: parent + node.title,
+      url: node.url
     };
-    if (options.fullUrl) {
-      bookmark.extra = node.url;
-    }
     result.list.push(bookmark);
     bookmark = {
       parentId: node.parentId,
@@ -368,6 +366,10 @@ function messageListener(message) {
       return;
     case "setOptionFullUrl":
       setOptionFullUrl(message.value);
+      if (message.update) {
+        setCheckboxes(message.checkboxes);
+        sendState();
+      }
       return;
     case "remove":
       processMarked(true, message.removeList);

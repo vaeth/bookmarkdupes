@@ -239,18 +239,19 @@ function addRuler() {
   top.appendChild(row);
 }
 
-function addBookmark(bookmark, checkboxes) {
+function addBookmark(bookmark, result) {
   let row = document.createElement("TR");
   appendCheckboxCol(row, bookmark.id,
-    (checkboxes && (checkboxes.has(bookmark.id))));
+    (result.checkboxes && (result.checkboxes.has(bookmark.id))));
   if (bookmark.order !== undefined) {
     appendTextNodeCol(row, String(bookmark.order));
     let col = document.createElement("TD");
     row.appendChild(col);
   }
   let text = bookmark.text;
-  if (bookmark.extra) {
-    text += " (" + bookmark.extra + ")";
+  let extra = result.fullUrl ? bookmark.url : bookmark.extra;
+  if (extra) {
+    text += " (" + extra + ")";
   }
   appendTextNodeCol(row, text);
   let top = getTop();
@@ -454,9 +455,12 @@ function markCategories(buttonId, categories) {
   return false;
 }
 
-function checkboxesToSet(result) {
+function normalizeResult(result) {
   if (result.checkboxes) {
     result.checkboxes = new Set(result.checkboxes);
+  }
+  if (getCheckboxFullUrl().checked) {
+    result.fullUrl = true;
   }
 }
 
@@ -469,13 +473,13 @@ function displayDupes(exact, result) {
     returnValue = true;
     addButtonsOrRuler = addRuler;
     addButtonsMode(0, categoryTitles);
-    checkboxesToSet(result);
+    normalizeResult(result);
   };
   for (let group of result.list) {
     addButtonsOrRuler(result.categoryTitles);
     total += group.length;
     for (let bookmark of group) {
-      addBookmark(bookmark, result.checkboxes);
+      addBookmark(bookmark, result);
     }
   }
   displayMessage(browser.i18n.getMessage((exact ?
@@ -492,9 +496,9 @@ function displayEmpty(result) {
     return false;
   }
   addButtonsMode(1, result.categoryTitles);
-  checkboxesToSet(result);
+  normalizeResult(result);
   for (let bookmark of result.list) {
-    addBookmark(bookmark, result.checkboxes);
+    addBookmark(bookmark, result);
   }
   return true;
 }
@@ -507,9 +511,9 @@ function displayAll(result) {
     return false;
   }
   addButtonsMode(2, result.categoryTitles);
-  checkboxesToSet(result);
+  normalizeResult(result);
   for (let bookmark of result.list) {
-    addBookmark(bookmark, result.checkboxes);
+    addBookmark(bookmark, result);
   }
   return true;
 }
@@ -586,9 +590,25 @@ function displayFinish(textId, state) {
   let count = null;
   let categories;
 
-  function unlock() {
+  function startLock() {
+    lock = true;
+    enableButtons(false);
+  }
+
+  function endLock() {
     lock = false;
     enableButtons();
+  }
+
+  function addCheckboxes(message) {
+      // We send an array, because a set has to be built by the client anyway
+      let checkboxes = new Array();
+      pushMarked(checkboxes);
+      let count = checkboxes.length;
+      if (count) {  // Send only nonempty arrays
+        message.checkboxes = checkboxes;
+      }
+      return count;
   }
 
   function countMarked(send) {
@@ -597,16 +617,10 @@ function displayFinish(textId, state) {
     }
     let currentCount;
     if (send) {
-      // We send an array, because a set has to be built by the client anyway
-      let checkboxes = new Array();
-      pushMarked(checkboxes);
       let message = {
         command: "setCheckboxes"
       };
-      currentCount = checkboxes.length;
-      if (currentCount) {  // Send only nonempty arrays
-        message.checkboxes = checkboxes;
-      }
+      currentCount = addCheckboxes(message);
       browser.runtime.sendMessage(message);
     } else {
       currentCount = pushMarked();
@@ -623,6 +637,12 @@ function displayFinish(textId, state) {
       command: "setOptionFullUrl",
       value: getCheckboxFullUrl().checked
     };
+    if ((count !== null) && !lock) {
+      startLock();
+      message.update = true;
+      addCheckboxes(message);
+      clearWindow();
+    }
     browser.runtime.sendMessage(message);
   }
 
@@ -666,8 +686,7 @@ function displayFinish(textId, state) {
       (event.buttons && (event.buttons != 1))) {
       return;
     }
-    lock = true;
-    enableButtons(false);
+    startLock();
     switch (event.target.id) {
       case "buttonListExactDupes":
         calculating("calculateExactDupes");
@@ -706,16 +725,16 @@ function displayFinish(textId, state) {
         mark(false);
         break;
       case "checkboxFullUrl":
-        unlock();
+        endLock();
         return;
       default:
         if (!markCategories(event.target.id, categories)) {
-          unlock();
+          endLock();
           return;
         }
     }
     countMarked(true);
-    unlock();
+    endLock();
   }
 
   function messageListener(message) {
@@ -728,7 +747,7 @@ function displayFinish(textId, state) {
     let selectMode;
     switch (state.mode) {
       case "virgin":
-        unlock();
+        endLock();
         return;
       case "removeProgress":
         displayProgress("messageRemoveProgress", "buttonStopRemoving", state);
@@ -779,7 +798,7 @@ function displayFinish(textId, state) {
     if (state.result && state.result.categories) {
       categories = state.result.categories;
     }
-    unlock();
+    endLock();
   }
 
   document.addEventListener("CheckboxStateChange", checkboxListener);
