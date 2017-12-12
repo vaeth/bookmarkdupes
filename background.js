@@ -25,13 +25,8 @@ function sendState() {
   let message = {
     command: "state",
     state: state,
-    options: options
   };
   browser.runtime.sendMessage(message);
-}
-
-function setOptionFullUrl(value) {
-  options.fullUrl = value;
 }
 
 function removeFolder(id, callback, errorCallback) {
@@ -148,6 +143,7 @@ function calculate(command) {
       delete result.categories;
       delete result.categoryTitles;
     }
+    result.options = options;
     state = {
       mode: mode,
       result: result
@@ -347,6 +343,12 @@ function setCheckboxes(checkboxes) {
   delete state.result.checkboxes;  // send only nonempty arrays
 }
 
+function setOptions(message) {
+  options.fullUrl = message.value;
+  setCheckboxes(message.checkboxes);
+  sendState();
+}
+
 function messageListener(message) {
   if (!message.command) {
     return;
@@ -364,12 +366,8 @@ function messageListener(message) {
     case "sendState":
       sendState();
       return;
-    case "setOptionFullUrl":
-      setOptionFullUrl(message.value);
-      if (message.update) {
-        setCheckboxes(message.checkboxes);
-        sendState();
-      }
+    case "setOptions":
+      setOptions(message);
       return;
     case "remove":
       processMarked(true, message.removeList);
