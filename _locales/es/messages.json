@@ -4,7 +4,7 @@
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Mostrar/Borrar marcadores duplicados, carpetas vacías, o descripciones",
+    "message": "Mostrar/Eliminar marcadores duplicados, carpetas vacías, o descripciones",
     "description": "Description of the extension"
   },
   "buttonListExactDupes": {
@@ -44,11 +44,11 @@
     "description": "Button for marking all"
   },
   "buttonUnmarkAll": {
-    "message": "Deseleccionar todo",
+    "message": "Deseleccionar todos",
     "description": "Button for unmarking all"
   },
   "buttonMarkCategory": {
-    "message": "Mark all from “$TITLE$”", // new
+    "message": "Marcar todos de “$TITLE$”", // new
     "description": "Button for marking all of specified category",
     "placeholders": {
       "title": {
@@ -58,7 +58,7 @@
     }
   },
   "buttonUnmarkCategory": {
-    "message": "Unmark all from “$TITLE$”", // new
+    "message": "Desmarcar todos de “$TITLE$”", // new
     "description": "Button for unmarking all of specified category",
     "placeholders": {
       "title": {
@@ -68,7 +68,7 @@
     }
   },
   "buttonMarkOtherCategories": {
-    "message": "In groups containing “$TITLE$” mark all but these", // new
+    "message": "Marcar todos, menos los que contengan el grupo “$TITLE$”", // new
     "description": "Button for marking all but specified categories in groups with it",
     "placeholders": {
       "title": {
@@ -78,7 +78,7 @@
     }
   },
   "buttonUnmarkOtherCategories": {
-    "message": "In groups with “$TITLE$” mark only these", // new
+    "message": "Marcar sólo los del grupo “$TITLE$”", // new
     "description": "Button for marking only specified category in groups with it",
     "placeholders": {
       "title": {
@@ -88,27 +88,27 @@
     }
   },
   "buttonRemoveMarked": {
-    "message": "Borrar marcadores seleccionados",
+    "message": "Eliminar marcadores seleccionados",
     "description": "Button for removing marked bookmarks"
   },
   "buttonStripMarked": {
-    "message": "Quitar las descripciones de los marcadores seleccionados",
+    "message": "Eliminar las descripciones de los marcadores seleccionados",
     "description": "Button for stripping descriptions of marked bookmarks"
   },
   "buttonStopRemoving": {
-    "message": "Parar de borrar!",
+    "message": "Parar de eliminar!",
     "description": "Button for emergency stop of bookmark removing"
   },
   "buttonStopStripping": {
-    "message": "Parar de quitar descripciones!",
+    "message": "Parar de eliminar descripciones!",
     "description": "Button for emergency stop of description stripping"
   },
   "checkboxFullUrl": {
-    "message": "Display URL in listings", // new
+    "message": "Mostrar las URL en las listas", // new
     "description": "Checkbox for displaying URL in listings"
   },
   "messageCount": {
-    "message": "$TOTAL$ bookmarks marked", // new
+    "message": "$TOTAL$ marcadores seleccionados", // new
     "description": "Report specified number of marked bookmarks",
     "placeholders": {
       "total": {
@@ -118,7 +118,7 @@
     }
   },
   "messageExactMatchesGroups": {
-    "message": "$TOTAL$ (de $ALL$) duplicados exactos dentro de $GROUPS$ gruops",
+    "message": "$TOTAL$ (de $ALL$) duplicados exactos dentro de $GROUPS$ grupos",
     "description": "Report specified numbers of exact matches and groups of all",
     "placeholders": {
       "total": {
@@ -188,11 +188,11 @@
     }
   },
   "messageRemoveInfo": {
-    "message": "Marked bookmarks refer to those since you last pressed the button to calculate the list.", // new
+    "message": "Los marcadores seleccionados se refieren a los obtenidos la última vez que se pulsó el botón para obtener la lista.", // new
     "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "messageRemoveMarked": {
-    "message": "Borrando marcadores seleccionados",
+    "message": "Eliminando marcadores seleccionados",
     "description": "Report that removal of marked bookmarks started"
   },
   "messageRemoveProgress": {
@@ -224,7 +224,7 @@
     }
   },
   "messageRemoveError": {
-    "message": "Error después de borrar $TOTAL$ marcadores: $ERROR$",
+    "message": "Error después de eliminar $TOTAL$ marcadores: $ERROR$",
     "description": "Report specified error after removing specified number of bookmarks",
     "placeholders": {
       "error": {
@@ -238,15 +238,15 @@
     }
   },
   "messageStripInfo": {
-    "message": "Stripping of descriptions will update the internal bookmark generation date. Moreover, it will move the bookmark to the location where it was since you last pressed the button to calculate this list.", // new
+    "message": "La eliminación de descripciones actualizará la fecha de generación de marcador interno. Además, moverá el marcador a la ubicación donde estaba la última vez que se presionó el botón para obtener esta lista.", // new
     "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
-    "message": "Quitando descripciones de marcadores seleccionados",
+    "message": "Eliminando descripciones de marcadores seleccionados",
     "description": "Report that description stripping started"
   },
   "messageStripProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$ descripciones quitadas",
+    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$ descripciones eliminadas",
     "description": "Report that specified number/total/percentage of descriptions are stripped",
     "placeholders": {
       "total": {
@@ -264,7 +264,7 @@
     }
   },
   "messageStripSuccess": {
-    "message": "$TOTAL$ descripciones quitadas!",
+    "message": "$TOTAL$ descripciones eliminadas!",
     "description": "Report success when stripping specified number of descriptions",
     "placeholders": {
       "total": {
@@ -274,7 +274,7 @@
     }
   },
   "messageStripError": {
-    "message": "Error después de quitar $TOTAL$ descripciones: $ERROR$",
+    "message": "Error después de eliminar $TOTAL$ descripciones: $ERROR$",
     "description": "Report specified error after stripping specified number of descriptions",
     "placeholders": {
       "error": {
