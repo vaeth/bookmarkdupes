@@ -271,9 +271,12 @@ function addBookmark(bookmark, result) {
     row.appendChild(col);
   }
   let text = bookmark.text;
-  let appendix;
-  if (result.options.fullUrl) {
-    text += " (" + bookmark.url + ")";
+  let url;
+  if (bookmark.url) {
+    url = row.title = bookmark.url;
+  }
+  if (result.options.fullUrl && url) {
+    text += " (" + url + ")";
   } else if (result.options.extra && bookmark.extra) {
     text += " (" + bookmark.extra + ")";
   }

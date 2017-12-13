@@ -3,6 +3,7 @@
 *bookmarkdupes-2.5:
 	Martin Väth <martin at mvath.de>:
 	- Add new mark/unmark buttons for categories
+	- Show bookmark URLs as titles (shown when hovering over bookmark)
 	- Add checkbox to display URL in listings
 	- Add checkbox to display URL tail for similar bookmarks
 	- Remember marked bookmarks when panel is closed
