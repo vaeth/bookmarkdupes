@@ -11,41 +11,81 @@
     "message": "Exact dupes",
     "description": "Button for listing exact dupes"
   },
+  "titleButtonListExactDupes": {
+    "message": "(Re)calculate the list of exact bookmark dupes. Two bookmarks are considered to be exact dupes if their URLs is identical.", // new
+    "description": "Explain that the list of exact bookmark dupes will be (re)calculated, and that exact dupes are those with identical URLs"
+  },
   "buttonListSimilarDupes": {
     "message": "Similar dupes",
     "description": "Button for listing similar dupes"
+  },
+  "titleButtonListSimilarDupes": {
+    "message": "(Re)calculate the list of similar bookmark dupes. Two bookmarks are considered to be similar dupes if their URLs match up to the first “?”.", // new
+    "description": "Explain that the list of similar bookmasrk dupes will be (re)calculated, and that dupes are similar if their URLs match up to the first “?”"
   },
   "buttonListEmpty": {
     "message": "Empty folders",
     "description": "Button for listing empty folders"
   },
+  "titleButtonListEmpty": {
+    "message": "(Re)calculate the list of empty folders. The result might falsely contain live bookmarks.", // new
+    "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
+  },
   "buttonListAll": {
     "message": "All bookmarks",
     "description": "Button for listing all bookmarks"
+  },
+  "titleButtonListAll": {
+    "message": "(Re)calculate the list of all bookmarks for stripping descriptions. The list consists of those bookmarks with a nonempty URL.", // new
+    "description": "Explain that the list of all bookmarks will be (re)calculated for stripping descriptions and that it consists of those bookmarks with a nonempty URL"
   },
   "buttonMarkButFirst": {
     "message": "Mark all but first in each group",
     "description": "Button for marking all but first"
   },
+  "titleButtonMarkButFirst": {
+    "message": "Additionally the first bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the first bookmark in each group will be unmarked"
+  },
   "buttonMarkButLast": {
     "message": "Mark all but last in each group",
     "description": "Button for marking all but last"
+  },
+  "titleButtonMarkButLast": {
+    "message": "Additionally the last bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the last bookmark in each group will be unmarked"
   },
   "buttonMarkButOldest": {
     "message": "Mark all but oldest in each group",
     "description": "Button for marking all but oldest"
   },
+  "titleButtonMarkButOldest": {
+    "message": "Additionally the oldest bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the oldest bookmark in each group will be unmarked"
+  },
   "buttonMarkButNewest": {
     "message": "Mark all but newest in each group",
     "description": "Button for marking all but newest"
+  },
+  "titleButtonMarkButNewest": {
+    "message": "Additionally the newest bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the newest bookmark in each group will be unmarked"
   },
   "buttonMarkAll": {
     "message": "Mark all",
     "description": "Button for marking all"
   },
+  "titleButtonMarkAll": {
+    "message": "Mark all bookmarks.", // new
+    "description": "Explain that all bookmarks will be marked"
+  },
   "buttonUnmarkAll": {
     "message": "Unmark all",
     "description": "Button for unmarking all"
+  },
+  "titleButtonUnmarkAll": {
+    "message": "Unmark all bookmarks.", // new
+    "description": "Explain that all bookmarks will be unmarked"
   },
   "buttonMarkCategory": {
     "message": "Mark all from “$TITLE$”",
@@ -54,6 +94,16 @@
       "title": {
         "content": "$1",
         "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "titleButtonMarkCategory": {
+    "message": "Mark all bookmarks from “$TITLE$”.", // new
+    "description": "Explain that all bookmarks of specified category will be marked",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
       }
     }
   },
@@ -67,6 +117,16 @@
       }
     }
   },
+  "titleButtonUnmarkCategory": {
+    "message": "Unmark all bookmarks from “$TITLE$”.", // new
+    "description": "Explain that all bookmarks of specified category will be unmarked",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
   "buttonMarkOtherCategories": {
     "message": "In groups containing “$TITLE$” mark all but these",
     "description": "Button for marking all but specified categories in groups with it",
@@ -74,6 +134,16 @@
       "title": {
         "content": "$1",
         "example": "Bookmarks Toolbar"
+      }
+    }
+  },
+  "titleButtonMarkOtherCategories": {
+    "message": "Additionally the bookmarks from “$TITLE$” are unmarked.", // new
+    "description": "Explain that additionally the bookmarks from specified category will be unmarked",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
       }
     }
   },
@@ -87,13 +157,31 @@
       }
     }
   },
+  "titleButtonUnmarkOtherCategories": {
+    "message": "Additionally the bookmarks not from “$TITLE$” in these groups are unmarked.", // new
+    "description": "Explain that additionally the bookmarks not from specified category in these groups will be unmarked",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Bookmarks Toolbar" // new
+      }
+    }
+  },
   "buttonRemoveMarked": {
     "message": "Remove marked bookmarks",
     "description": "Button for removing marked bookmarks"
   },
+  "titleButtonRemoveMarked": {
+    "message": "Marked bookmarks refer to those since you last pressed the button to calculate the list.",
+    "description": "Explain that bookmarks refer to those of last update of the list"
+  },
   "buttonStripMarked": {
     "message": "Strip descriptions of marked bookmarks",
     "description": "Button for stripping descriptions of marked bookmarks"
+  },
+  "titleButtonStripMarked": {
+    "message": "Stripping of descriptions will update the internal bookmark generation date. Moreover, it will move the bookmark to the location where it was since you last pressed the button to calculate this list.",
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "buttonStopRemoving": {
     "message": "Stop removing!",
@@ -104,8 +192,8 @@
     "description": "Button for emergency stop of description stripping"
   },
   "checkboxFullUrl": {
-    "message": "Display URL in listings",
-    "description": "Checkbox for displaying URL in listings"
+    "message": "Display URL in listing. In any case the URL will appear if you hover over the bookmark.", // new
+    "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
   },
   "checkboxExtra": {
     "message": "Display URL tail (following “?”) in listing",
@@ -139,6 +227,10 @@
       }
     }
   },
+  "titleMessageExactMatchesGroups": {
+    "message": "Two bookmarks are considered to be exact dupes if their URLs is identical.", // new
+    "description": "Explain that exact dupes are those with identical URLs"
+  },
   "messageSimilarMatchesGroups": {
     "message": "$TOTAL$ (of $ALL$) similar dupes in $GROUPS$ groups",
     "description": "Report specified numbers of similar matches and groups of all",
@@ -157,6 +249,10 @@
       }
     }
   },
+  "titleMessageSimilarMatchesGroups": {
+    "message": "Two bookmarks are considered to be similar dupes if their URLs match up to the first “?”.", // new
+    "description": "Explain that similar dupes are those whose URLs match up to the first “?”"
+  },
   "messageEmpty": {
     "message": "$TOTAL$ empty folders found",
     "description": "Report specified number of empty folders",
@@ -167,6 +263,10 @@
       }
     }
   },
+  "titleMessageEmpty": {
+    "message": "The list might falsely contain live bookmarks.", // new
+    "description": "Explain that the list might falsely contain live bookmarks"
+  },
   "messageAll": {
     "message": "$TOTAL$ bookmarks found",
     "description": "Report specified number of bookmarks",
@@ -176,6 +276,10 @@
         "example": "0"
       }
     }
+  },
+  "titleMessageAll": {
+    "message": "The list consists of those bookmarks with a nonempty URL.", // new
+    "description": "Explain that the list consists of those bookmarks with a nonempty URL"
   },
   "messageCalculating": {
     "message": "Searching",
@@ -190,10 +294,6 @@
         "example": "error description"
       }
     }
-  },
-  "messageRemoveInfo": {
-    "message": "Marked bookmarks refer to those since you last pressed the button to calculate the list.",
-    "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "messageRemoveMarked": {
     "message": "Removing marked bookmarks",
@@ -240,10 +340,6 @@
         "example": "0"
       }
     }
-  },
-  "messageStripInfo": {
-    "message": "Stripping of descriptions will update the internal bookmark generation date. Moreover, it will move the bookmark to the location where it was since you last pressed the button to calculate this list.",
-    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "Stripping descriptions of marked bookmarks",

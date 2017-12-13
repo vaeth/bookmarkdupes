@@ -1,11 +1,12 @@
 # ChangeLog for squashmount
 
-*bookmarkdupes-2.5:
+*bookmarkdupes-3.0:
 	Martin Väth <martin at mvath.de>:
 	- Add new mark/unmark buttons for categories
-	- Show bookmark URLs as titles (shown when hovering over bookmark)
-	- Add checkbox to display URL in listings
-	- Add checkbox to display URL tail for similar bookmarks
+	- Use titles (tooltips) where possible
+	- Show bookmark URLs as titles (tooltips)
+	- Add checkbox to display URL in listing
+	- Add checkbox to display URL tail for similar bookmarks optionally
 	- Remember marked bookmarks when panel is closed
 	- Display 0 matches only once
 	- Rearrange placement of buttons

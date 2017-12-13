@@ -36,12 +36,8 @@ function getTop() {
   return document.getElementById("tableBookmarks");
 }
 
-function displayMessage(msg) {
-  document.getElementById("textMessage").textContent = msg;
-}
-
-function displayCount(msg) {
-  document.getElementById("textCount").textContent = msg;
+function getMessageNode() {
+  return document.getElementById("textMessage");
 }
 
 function getCheckboxFullUrl() {
@@ -50,6 +46,20 @@ function getCheckboxFullUrl() {
 
 function getCheckboxExtra() {
   return document.getElementById("checkboxExtra");
+}
+
+function displayCount(text) {
+  document.getElementById("textCount").textContent = text;
+}
+
+function displayMessage(text, title) {
+  let message = getMessageNode();
+  message.textContent = text;
+  if (title) {
+    message.title = title;
+    return;
+  }
+  message.removeAttribute("TITLE");
 }
 
 function appendTextNodeCol(row, text) {
@@ -76,23 +86,25 @@ function appendCheckboxCol(row, id, checked, disabled) {
   row.appendChild(col);
 }
 
-function appendButton(parent, id, text, enabled) {
+function appendButton(parent, id, titleId, text, titleText, enabled) {
   let button = document.createElement("BUTTON");
   button.type = "button";
   button.id = id;
-  if (!text) {
-    text = browser.i18n.getMessage(id);
+  button.textContent = (text ? text : browser.i18n.getMessage(id));
+  if (titleId) {
+    button.title = browser.i18n.getMessage(titleId);
+  } else if (titleText) {
+    button.title = titleText;
   }
-  button.textContent = text;
   if (!enabled) {
     button.disabled = true;
   }
   parent.appendChild(button);
 }
 
-function appendButtonCol(row, id, text, enabled) {
+function appendButtonCol(row, id, titleId, text, titleText, enabled) {
   let col = document.createElement("TD");
-  appendButton(col, id, text, enabled);
+  appendButton(col, id, titleId, text, titleText, enabled);
   row.appendChild(col);
 }
 
@@ -102,17 +114,21 @@ function addButtonsBase() {
     return;
   }
   let row = document.createElement("TR");
-  appendButtonCol(row, "buttonListExactDupes");
-  appendButtonCol(row, "buttonListSimilarDupes");
-  appendButtonCol(row, "buttonListEmpty");
-  appendButtonCol(row, "buttonListAll");
+  appendButtonCol(row, "buttonListExactDupes", "titleButtonListExactDupes");
+  appendButtonCol(row, "buttonListSimilarDupes",
+    "titleButtonListSimilarDupes");
+  appendButtonCol(row, "buttonListEmpty", "titleButtonListEmpty");
+  appendButtonCol(row, "buttonListAll", "titleButtonListAll");
   parent.appendChild(row);
 }
 
-function addButtonRemove(infoId, buttonId) {
+function addButtonRemove(buttonId, titleId) {
   let row = document.createElement("TR");
-  appendTextNodeCol(row, browser.i18n.getMessage(infoId));
-  appendButtonCol(row, buttonId);
+  let col = document.createElement("TD");
+  col.width = "50pt";
+  col.style.height = "50pt";
+  row.append(col);
+  appendButtonCol(row, buttonId, titleId);
   let parent = getButtonsRemove();
   parent.appendChild(row);
 }
@@ -125,15 +141,19 @@ function addButtonsCategories(mode, categoryTitles) {
   for (let i = 0; i < categoryTitles.length; ++i) {
     let title = categoryTitles[i];
     let row =  document.createElement("TR");
-    appendButtonCol(row, "markCategory?id=" + String(i),
-      browser.i18n.getMessage("buttonMarkCategory", title));
-    appendButtonCol(row, "unmarkCategory?id=" + String(i),
-      browser.i18n.getMessage("buttonUnmarkCategory", title));
+    appendButtonCol(row, "markCategory?id=" + String(i), null,
+      browser.i18n.getMessage("buttonMarkCategory", title),
+      browser.i18n.getMessage("titleButtonMarkCategory", title));
+    appendButtonCol(row, "unmarkCategory?id=" + String(i), null,
+      browser.i18n.getMessage("buttonUnmarkCategory", title),
+      browser.i18n.getMessage("titleButtonUnmarkCategory", title));
     if (!mode) {
-      appendButtonCol(row, "markOtherCategories?id=" + String(i),
-        browser.i18n.getMessage("buttonMarkOtherCategories", title));
-      appendButtonCol(row, "unmarkOtherCategories?id=" + String(i),
-        browser.i18n.getMessage("buttonUnmarkOtherCategories", title));
+      appendButtonCol(row, "markOtherCategories?id=" + String(i), null,
+        browser.i18n.getMessage("buttonMarkOtherCategories", title),
+        browser.i18n.getMessage("titleButtonMarkOtherCategories", title));
+      appendButtonCol(row, "unmarkOtherCategories?id=" + String(i), null,
+        browser.i18n.getMessage("buttonUnmarkOtherCategories", title),
+        browser.i18n.getMessage("titleButtonUnmarkOtherCategories", title));
     }
     parent.appendChild(row);
   }
@@ -143,25 +163,25 @@ function addButtonsMark(mode) {
   let parent = getButtonsMark();
   if (!mode) {
     let row = document.createElement("TR");
-    appendButtonCol(row, "buttonMarkButFirst");
-    appendButtonCol(row, "buttonMarkButLast");
+    appendButtonCol(row, "buttonMarkButFirst", "titleButtonMarkButFirst");
+    appendButtonCol(row, "buttonMarkButLast", "titleButtonMarkButLast");
     parent.appendChild(row);
     row = document.createElement("TR");
-    appendButtonCol(row, "buttonMarkButOldest");
-    appendButtonCol(row, "buttonMarkButNewest");
+    appendButtonCol(row, "buttonMarkButOldest", "titleButtonMarkButOldest");
+    appendButtonCol(row, "buttonMarkButNewest", "titleButtonMarkButNewest");
     parent.appendChild(row);
   }
   let row = document.createElement("TR");
-  appendButtonCol(row, "buttonMarkAll");
-  appendButton(row, "buttonUnmarkAll");
+  appendButtonCol(row, "buttonMarkAll", "titleButtonMarkAll");
+  appendButton(row, "buttonUnmarkAll", "titleButtonUnmarkAll");
   parent.appendChild(row);
 }
 
 function addButtonsMode(mode, categoryTitles) {
   if (mode == 2) {
-    addButtonRemove("messageStripInfo", "buttonStripMarked");
+    addButtonRemove("buttonStripMarked", "titleButtonStripMarked");
   } else {
-    addButtonRemove("messageRemoveInfo", "buttonRemoveMarked");
+    addButtonRemove("buttonRemoveMarked", "titleButtonRemoveMarked");
   }
   addButtonsMark(mode);
   addButtonsCategories(mode, categoryTitles);
@@ -178,7 +198,8 @@ function addProgressButton(textId, percentage) {
   progress.value = percentage;
   parent.appendChild(progress);
   parent = getButtonStop();
-  appendButton(parent, "buttonStop", browser.i18n.getMessage(textId), true);
+  appendButton(parent, "buttonStop", null,
+    browser.i18n.getMessage(textId), null, true);
 }
 
 function addCheckboxOptions(options, extra) {
@@ -508,15 +529,18 @@ function displayDupes(exact, result) {
     }
   }
   displayMessage(browser.i18n.getMessage((exact ?
-    "messageExactMatchesGroups" : "messageSimilarMatchesGroups"),
-    [String(total), String(groups), String(result.all)]));
+      "messageExactMatchesGroups" : "messageSimilarMatchesGroups"),
+      [String(total), String(groups), String(result.all)]),
+    browser.i18n.getMessage((exact ?
+      "titleMessageExactMatchesGroups" : "titleMessageSimilarMatchesGroups")));
   return returnValue;
 }
 
 function displayEmpty(result) {
   clearProgressButton();
   let total = result.list.length;
-  displayMessage(browser.i18n.getMessage("messageEmpty", String(total)));
+  displayMessage(browser.i18n.getMessage("messageEmpty", String(total)),
+    browser.i18n.getMessage("titleMessageEmpty"));
   if (!total) {
     return false;
   }
@@ -531,7 +555,8 @@ function displayEmpty(result) {
 function displayAll(result) {
   clearProgressButton();
   let total = result.list.length;
-  displayMessage(browser.i18n.getMessage("messageAll", String(total)));
+  displayMessage(browser.i18n.getMessage("messageAll", String(total)),
+    browser.i18n.getMessage("titleMessageAll"));
   if (!total) {
     return false;
   }

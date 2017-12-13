@@ -11,45 +11,95 @@
     "message": "Точні дублікати",
     "description": "Button for listing exact dupes"
   },
+  "titleButtonListExactDupes": {
+    "message": "(Re)calculate the list of exact bookmark dupes. Two bookmarks are considered to be exact dupes if their URLs is identical.", // new
+    "description": "Explain that the list of exact bookmark dupes will be (re)calculated, and that exact dupes are those with identical URLs"
+  },
   "buttonListSimilarDupes": {
     "message": "Подібні дублікати",
     "description": "Button for listing similar dupes"
+  },
+  "titleButtonListSimilarDupes": {
+    "message": "(Re)calculate the list of similar bookmark dupes. Two bookmarks are considered to be similar dupes if their URLs match up to the first “?”.", // new
+    "description": "Explain that the list of similar bookmasrk dupes will be (re)calculated, and that dupes are similar if their URLs match up to the first “?”"
   },
   "buttonListEmpty": {
     "message": "Порожні папки",
     "description": "Button for listing empty folders"
   },
+  "titleButtonListEmpty": {
+    "message": "(Re)calculate the list of empty folders. The result might falsely contain live bookmarks.", // new
+    "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
+  },
   "buttonListAll": {
     "message": "Всі закладки",
     "description": "Button for listing all bookmarks"
+  },
+  "titleButtonListAll": {
+    "message": "(Re)calculate the list of all bookmarks for stripping descriptions. The list consists of those bookmarks with a nonempty URL.", // new
+    "description": "Explain that the list of all bookmarks will be (re)calculated for stripping descriptions and that it consists of those bookmarks with a nonempty URL"
   },
   "buttonMarkButFirst": {
     "message": "В кожній групі обрати всі крім верхньої",
     "description": "Button for marking all but first"
   },
+  "titleButtonMarkButFirst": {
+    "message": "Additionally the first bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the first bookmark in each group will be unmarked"
+  },
   "buttonMarkButLast": {
     "message": "В кожній групі обрати всі крім нижньої",
     "description": "Button for marking all but last"
+  },
+  "titleButtonMarkButLast": {
+    "message": "Additionally the last bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the last bookmark in each group will be unmarked"
   },
   "buttonMarkButOldest": {
     "message": "В кожній групі обрати всі крім найстарішої",
     "description": "Button for marking all but oldest"
   },
+  "titleButtonMarkButOldest": {
+    "message": "Additionally the oldest bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the oldest bookmark in each group will be unmarked"
+  },
   "buttonMarkButNewest": {
     "message": "В кожній групі обрати всі крім найновішої",
     "description": "Button for marking all but newest"
+  },
+  "titleButtonMarkButNewest": {
+    "message": "Additionally the newest bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the newest bookmark in each group will be unmarked"
   },
   "buttonMarkAll": {
     "message": "Позначити всі",
     "description": "Button for marking all"
   },
+  "titleButtonMarkAll": {
+    "message": "Mark all bookmarks.", // new
+    "description": "Explain that all bookmarks will be marked"
+  },
   "buttonUnmarkAll": {
     "message": "Зняти всі позначення",
     "description": "Button for unmarking all"
   },
+  "titleButtonUnmarkAll": {
+    "message": "Unmark all bookmarks.", // new
+    "description": "Explain that all bookmarks will be unmarked"
+  },
   "buttonMarkCategory": {
     "message": "Позначити все з “$TITLE$”",
     "description": "Button for marking all of specified category",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Панель закладок"
+      }
+    }
+  },
+  "titleButtonMarkCategory": {
+    "message": "Mark all bookmarks from “$TITLE$”.", // new
+    "description": "Explain that all bookmarks of specified category will be marked",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -67,9 +117,29 @@
       }
     }
   },
+  "titleButtonUnmarkCategory": {
+    "message": "Unmark all bookmarks from “$TITLE$”.", // new
+    "description": "Explain that all bookmarks of specified category will be unmarked",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Панель закладок"
+      }
+    }
+  },
   "buttonMarkOtherCategories": {
     "message": "У групах, що містять “$TITLE$” позначити все, крім цих",
     "description": "Button for marking all but specified categories in groups with it",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Панель закладок"
+      }
+    }
+  },
+  "titleButtonMarkOtherCategories": {
+    "message": "Additionally the bookmarks from “$TITLE$” are unmarked.", // new
+    "description": "Explain that additionally the bookmarks from specified category will be unmarked",
     "placeholders": {
       "title": {
         "content": "$1",
@@ -87,13 +157,31 @@
       }
     }
   },
+  "titleButtonUnmarkOtherCategories": {
+    "message": "Additionally the bookmarks not from “$TITLE$” in these groups are unmarked.", // new
+    "description": "Explain that additionally the bookmarks not from specified category in these groups will be unmarked",
+    "placeholders": {
+      "title": {
+        "content": "$1",
+        "example": "Панель закладок"
+      }
+    }
+  },
   "buttonRemoveMarked": {
     "message": "Видалити позначені закладки",
     "description": "Button for removing marked bookmarks"
   },
+  "titleButtonRemoveMarked": {
+    "message": "Закладки позначено відтоді, як ви в останнє натискали кнопку, вираховуючи список.",
+    "description": "Explain that bookmarks refer to those of last update of the list"
+  },
   "buttonStripMarked": {
     "message": "Очистити описи позначених закладок",
     "description": "Button for stripping descriptions of marked bookmarks"
+  },
+  "titleButtonStripMarked": {
+    "message": "Очищення опису оновить дату створення закладки. Крім того, це поверне закладку в те місце, де вона була, коли ви востаннє натискали кнопку, вираховуючи цей список.",
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "buttonStopRemoving": {
     "message": "Припинити видалення!",
@@ -104,8 +192,8 @@
     "description": "Button for emergency stop of description stripping"
   },
   "checkboxFullUrl": {
-    "message": "Відображати URL-и в списках",
-    "description": "Checkbox for displaying URL in listings"
+    "message": "Display URL in listing. In any case the URL will appear if you hover over the bookmark.", // new
+    "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
   },
   "checkboxExtra": {
     "message": "Display URL tail (following “?”) in listing", // new
@@ -139,6 +227,10 @@
       }
     }
   },
+  "titleMessageExactMatchesGroups": {
+    "message": "Two bookmarks are considered to be exact dupes if their URLs is identical.", // new
+    "description": "Explain that exact dupes are those with identical URLs"
+  },
   "messageSimilarMatchesGroups": {
     "message": "$TOTAL$ (із $ALL$) подібних дублів у $GROUPS$ групах",
     "description": "Report specified numbers of similar matches and groups of all",
@@ -157,6 +249,10 @@
       }
     }
   },
+  "titleMessageSimilarMatchesGroups": {
+    "message": "Two bookmarks are considered to be similar dupes if their URLs match up to the first “?”.", // new
+    "description": "Explain that similar dupes are those whose URLs match up to the first “?”"
+  },
   "messageEmpty": {
     "message": "$TOTAL$ порожніх папок знайдено",
     "description": "Report specified number of empty folders",
@@ -167,6 +263,10 @@
       }
     }
   },
+  "titleMessageEmpty": {
+    "message": "The list might falsely contain live bookmarks.", // new
+    "description": "Explain that the list might falsely contain live bookmarks"
+  },
   "messageAll": {
     "message": "$TOTAL$ закладок знайдено",
     "description": "Report specified number of bookmarks",
@@ -176,6 +276,10 @@
         "example": "0"
       }
     }
+  },
+  "titleMessageAll": {
+    "message": "The list consists of those bookmarks with a nonempty URL.", // new
+    "description": "Explain that the list consists of those bookmarks with a nonempty URL"
   },
   "messageCalculating": {
     "message": "Пошук",
@@ -190,10 +294,6 @@
         "example": "опис помилки"
       }
     }
-  },
-  "messageRemoveInfo": {
-    "message": "Закладки позначено відтоді, як ви в останнє натискали кнопку, вираховуючи список.",
-    "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "messageRemoveMarked": {
     "message": "Видалення позначених закладок...",
@@ -240,10 +340,6 @@
         "example": "0"
       }
     }
-  },
-  "messageStripInfo": {
-    "message": "Очищення опису оновить дату створення закладки. Крім того, це поверне закладку в те місце, де вона була, коли ви востаннє натискали кнопку, вираховуючи цей список.",
-    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "Очищення опису позначених закладок",
