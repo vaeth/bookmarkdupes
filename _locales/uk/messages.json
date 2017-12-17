@@ -128,7 +128,7 @@
     }
   },
   "buttonMarkOtherCategories": {
-    "message": "Де є закладки з “$TITLE$” - обрати все крім них.",
+    "message": "Де є закладки з “$TITLE$” - обрати все крім них",
     "description": "Button for marking all but specified categories in groups with it",
     "placeholders": {
       "title": {
@@ -138,7 +138,7 @@
     }
   },
   "titleButtonMarkOtherCategories": {
-    "message": "В тих групах дублів, де є закладки з “$TITLE$”, буде позначено все, крім них.",
+    "message": "В тих групах дублів, де є закладки з “$TITLE$”, буде позначено все, крім них",
     "description": "Explain that additionally the bookmarks from specified category will be unmarked",
     "placeholders": {
       "title": {
