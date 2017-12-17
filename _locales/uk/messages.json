@@ -148,7 +148,7 @@
     }
   },
   "buttonUnmarkOtherCategories": {
-    "message": "Де є закладки з “$TITLE$” - обрати лише їх.",
+    "message": "Де є закладки з “$TITLE$” - обрати лише їх",
     "description": "Button for marking only specified category in groups with it",
     "placeholders": {
       "title": {
