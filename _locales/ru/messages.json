@@ -138,7 +138,7 @@
     }
   },
   "titleButtonMarkOtherCategories": {
-    "message": "В группах дублей где есть закладки из “$TITLE$” будет выбрано все, кроме них.",
+    "message": "В группах дублей где есть закладки из “$TITLE$” будет выбрано всё, кроме них.",
     "description": "Explain that additionally the bookmarks from specified category will be unmarked",
     "placeholders": {
       "title": {
