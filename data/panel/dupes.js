@@ -198,7 +198,7 @@ function addSelectFolder(result) {
   let select = document.createElement("SELECT");
   select.title = browser.i18n.getMessage("titleSelectFolder");
   select.id = "selectedFolder";
-  addSelectOption(select);
+  addSelectOption(select, browser.i18n.getMessage("OptionNonFolder"), "'");
   let folders = result.folders;
   for (let i = 0; i < folders.length; ++i) {
     if (!folders[i]) {
@@ -823,7 +823,14 @@ function displayFinish(textId, state) {
   }
 
   function toggleButtonsFolders() {
-    if ((markMode === null) || !getSelectedFolder()) {
+    let haveSelected = (markMode !== null);
+    if (haveSelected) {
+      let name = getSelectedFolder();
+      if ((!name) || (name === "'")) {
+        haveSelected = false;
+      }
+    }
+    if (!haveSelected) {
       clearButtonsFolders();
       return;
     }

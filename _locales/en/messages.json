@@ -87,6 +87,10 @@
     "message": "Unmark all bookmarks.",
     "description": "Explain that all bookmarks will be unmarked"
   },
+  "optionNonFolder": {
+    "message": "-- Select a folder to get corresponding buttons for marking --",
+    "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
+  },
   "titleSelectFolder": {
     "message": "If a folder is selected corresponding buttons will appear for marking.",
     "description": "Explain that selecting a folder will provide corresponding buttons for marking"

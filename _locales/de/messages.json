@@ -87,6 +87,10 @@
     "message": "Entfernt Markierungen von allen Lesezeichen.",
     "description": "Explain that all bookmarks will be unmarked"
   },
+  "optionNonFolder": {
+    "message": "-- Ordnerwahl für zugehörige Markierungsknöpfe --",
+    "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
+  },
   "titleSelectFolder": {
     "message": "Bei Auswahl eines Ordner erscheinen entsprechende Knöpfe zur Markierung.",
     "description": "Explain that selecting a folder will provide corresponding buttons for marking"
