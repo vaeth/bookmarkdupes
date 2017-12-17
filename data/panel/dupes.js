@@ -20,6 +20,10 @@ function getButtonsMark() {
   return document.getElementById("buttonsMark");
 }
 
+function getSelectFolder() {
+  return document.getElementById("selectFolder");
+}
+
 function getButtonsFolders() {
   return document.getElementById("buttonsFolders");
 }
@@ -152,13 +156,49 @@ function addButtonRemove(buttonId, titleId) {
   parent.appendChild(row);
 }
 
-function addButtonsFolders(mode, result) {
+function addButtonsFolders(mode, enabled) {
+  let parent = getButtonsFolders();
+  if (parent.hasChildNodes()) {  // Already done
+    return;
+  }
+  appendButtonRow(parent, "buttonMarkFolder", "titleButtonMarkFolder",
+    null, null, enabled);
+  appendButtonRow(parent, "buttonUnmarkFolder", "titleButtonUnmarkFolder",
+    null, null, enabled);
+  if (mode) {
+    return;
+  }
+  appendButtonRow(parent, "buttonMarkFolderOther",
+    "titleButtonMarkFolderOther", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkFolderButFirst",
+    "titleButtonMarkFolderButFirst", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkFolderButLast",
+    "titleButtonMarkFolderButLast", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkFolderButOldest",
+    "titleButtonMarkFolderButOldest", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkFolderButNewest",
+    "titleButtonMarkFolderButNewest", null, null, enabled);
+}
+
+function addSelectOption(select, content, value) {
+  let option = document.createElement("OPTION");
+  if (content) {
+    option.textContent = content;
+  }
+  if (value) {
+    option.value = value;
+  }
+  select.appendChild(option);
+}
+
+function addSelectFolder(result) {
   if (!result.foldersDisplay) {
     return;
   }
   let select = document.createElement("SELECT");
   select.title = browser.i18n.getMessage("titleSelectFolder");
   select.id = "selectedFolder";
+  addSelectOption(select);
   let folders = result.folders;
   for (let i = 0; i < folders.length; ++i) {
     if (!folders[i]) {
@@ -168,31 +208,15 @@ function addButtonsFolders(mode, result) {
     if (!folder.ids) {
       continue;
     }
-    let option = document.createElement("OPTION");
-    option.value = String(i);
-    option.textContent = getName(folders, folder.parent, folder.name);
-    select.appendChild(option);
+    addSelectOption(select, getName(folders, folder.parent, folder.name),
+      String(i));
   }
   let col = document.createElement("TD");
   col.appendChild(select);
   let row = document.createElement("TR");
   row.appendChild(col);
-  let parent = getButtonsFolders();
+  let parent = getSelectFolder();
   parent.appendChild(row);
-  appendButtonRow(parent, "buttonMarkFolder", "titleButtonMarkFolder");
-  appendButtonRow(parent, "buttonUnmarkFolder", "titleButtonUnmarkFolder");
-  if (!mode) {
-    appendButtonRow(parent, "buttonMarkFolderOther",
-      "titleButtonMarkFolderOther");
-    appendButtonRow(parent, "buttonMarkFolderButFirst",
-      "titleButtonMarkFolderButFirst");
-    appendButtonRow(parent, "buttonMarkFolderButLast",
-      "titleButtonMarkFolderButLast");
-    appendButtonRow(parent, "buttonMarkFolderButOldest",
-      "titleButtonMarkFolderButOldest");
-    appendButtonRow(parent, "buttonMarkFolderButNewest",
-      "titleButtonMarkFolderButNewest");
-  }
 }
 
 function addButtonsMark(mode) {
@@ -220,7 +244,7 @@ function addButtonsMode(mode, result) {
     addButtonRemove("buttonRemoveMarked", "titleButtonRemoveMarked");
   }
   addButtonsMark(mode);
-  addButtonsFolders(mode, result);
+  addSelectFolder(result);
 }
 
 function addProgressButton(textId, percentage) {
@@ -258,7 +282,8 @@ function enableButtonsOf(top, enabled) {
   }
   let disabled = ((enabled !== undefined) && !enabled);
   for (let child of top.childNodes) {
-    if ((child.nodeName == "BUTTON") || (child.nodeName == "INPUT")) {
+    if ((child.nodeName == "BUTTON") || (child.nodeName == "INPUT")
+      || (child.nodeName == "SELECT")) {
       child.disabled = disabled;
     } else {
       enableButtonsOf(child, enabled);
@@ -274,6 +299,7 @@ function enableButtons(enabled) {
   enableButtonsBase(enabled);
   enableButtonsOf(getButtonsRemove(), enabled);
   enableButtonsOf(getButtonsMark(), enabled);
+  enableButtonsOf(getSelectFolder(), enabled);
   enableButtonsOf(getButtonsFolders(), enabled);
   enableButtonsOf(getCheckboxOptions(), enabled);
 }
@@ -289,10 +315,15 @@ function clearProgressButton() {
   clearItem(getButtonStop());
 }
 
+function clearButtonsFolders() {
+  clearItem(getButtonsFolders());
+}
+
 function clearButtonsMode() {
   clearItem(getButtonsRemove());
   clearItem(getButtonsMark());
-  clearItem(getButtonsFolders());
+  clearItem(getSelectFolder());
+  clearButtonsFolders();
   clearItem(getCheckboxOptions());
 }
 
@@ -715,6 +746,7 @@ function displayFinish(textId, state) {
   let firstcall = true;
   let lock = true;
   let count = null;
+  let markMode = null;
   let folders;
 
   function startLock() {
@@ -788,6 +820,24 @@ function displayFinish(textId, state) {
         return;
     }
     countMarked(true);
+  }
+
+  function toggleButtonsFolders() {
+    if ((markMode === null) || !getSelectedFolder()) {
+      clearButtonsFolders();
+      return;
+    }
+    addButtonsFolders(markMode, !lock);
+  }
+
+  function selectListener(event) {
+    if ((!event.target) || (!event.target.id)) {
+      return;
+    }
+    switch (event.target.id) {
+      case "selectedFolder":
+        toggleButtonsFolders();
+    }
   }
 
   function clickListener(event) {
@@ -877,8 +927,9 @@ function displayFinish(textId, state) {
       addButtonsBase();
     }
     let state = message.state;
-    folders = count = null;
+    folders = count = markMode = null;
     let selectMode;
+    let newMarkMode = null;
     switch (state.mode) {
       case "virgin":
         endLock();
@@ -893,15 +944,19 @@ function displayFinish(textId, state) {
         displayMessage(browser.i18n.getMessage("messageCalculating"));
         return;
       case "calculatedDupesExact":
+        newMarkMode = 0;
         selectMode = displayDupes(true, state.result);
         break;
       case "calculatedDupesSimilar":
+        newMarkMode = 0;
         selectMode = displayDupes(false, state.result);
         break;
       case "calculatedEmptyFolder":
+        newMarkMode = 1;
         selectMode = displayEmpty(state.result);
         break;
       case "calculatedAll":
+        newMarkMode = 1;
         selectMode = displayAll(state.result);
         break;
       case "removeSuccess":
@@ -927,16 +982,13 @@ function displayFinish(textId, state) {
       sendMessageCommand("finish");
       return;
     }
+    markMode = newMarkMode;
     count = -1;
     countMarked(false);
     if (state.result && state.result.foldersDisplay) {
       folders = new Array();
       for (let folder of state.result.folders) {
-        if (folder && folder.ids) {
-          folders.push(folder.ids);
-        } else {
-          folders.push(null);
-        }
+        folders.push((folder && folder.ids) ? folder.ids : null);
       }
     }
     endLock();
@@ -944,6 +996,7 @@ function displayFinish(textId, state) {
 
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);
+  document.addEventListener("change", selectListener);
   browser.runtime.onMessage.addListener(messageListener);
 }
 sendMessageCommand("sendState");

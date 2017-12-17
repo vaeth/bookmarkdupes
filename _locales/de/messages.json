@@ -88,8 +88,8 @@
     "description": "Explain that all bookmarks will be unmarked"
   },
   "titleSelectFolder": {
-    "message": "Der ausgewählte Ordner bezieht sich auf die untenstehenden Markierungsknöpfe.",
-    "description": "Explain that the selected folder refers to marking buttons below"
+    "message": "Bei Auswahl eines Ordner erscheinen entsprechende Knöpfe zur Markierung.",
+    "description": "Explain that selecting a folder will provide corresponding buttons for marking"
   },
   "buttonMarkFolder": {
     "message": "Alle aus dem ausgewählten Ordner markieren",

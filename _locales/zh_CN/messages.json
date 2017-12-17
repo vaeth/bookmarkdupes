@@ -88,8 +88,8 @@
     "description": "Explain that all bookmarks will be unmarked"
   },
   "titleSelectFolder": {
-    "message": "Select the reference folder for marking buttons below.", // new
-    "description": "Explain that the selected folder refers to marking buttons below"
+    "message": "If a folder is selected corresponding buttons will appear for marking.", // new
+    "description": "Explain that selecting a folder will provide corresponding buttons for marking"
   },
   "buttonMarkFolder": {
     "message": "Mark all from selected folder", // new
