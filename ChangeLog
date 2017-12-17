@@ -1,5 +1,16 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-4.0:
+	Martin Väth <martin at mvath.de>:
+	- Support folder selection (instead of only 2 categories)
+	- Provide buttons for not marking first/last/oldest/newest for folders
+	- bugfix: mark also last group for folder/category selection
+
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+
 *bookmarkdupes-3.0:
 	Martin Väth <martin at mvath.de>:
 	- Add new mark/unmark buttons for categories

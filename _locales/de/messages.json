@@ -68,7 +68,7 @@
     "description": "Button for marking all but newest"
   },
   "titleButtonMarkButNewest": {
-    "message": "Zusätzlich wird die Markierung des neuesten Lesezeichens jeder Gruppe entfernt.",
+    "message": "Zusätzlich wird die Markierung des jüngsten Lesezeichens jeder Gruppe entfernt.",
     "description": "Explain that additionally the newest bookmark in each group will be unmarked"
   },
   "buttonMarkAll": {
@@ -87,85 +87,65 @@
     "message": "Entfernt Markierungen von allen Lesezeichen.",
     "description": "Explain that all bookmarks will be unmarked"
   },
-  "buttonMarkCategory": {
-    "message": "Alle markieren aus „$TITLE$“",
-    "description": "Button for marking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "titleSelectFolder": {
+    "message": "Der ausgewählte Ordner bezieht sich auf die untenstehenden Markierungsknöpfe.",
+    "description": "Explain that the selected folder refers to marking buttons below"
   },
-  "titleButtonMarkCategory": {
-    "message": "Markiert alle Lesezeichen aus “$TITLE$”.",
-    "description": "Explain that all bookmarks of specified category will be marked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "buttonMarkFolder": {
+    "message": "Alle aus dem ausgewählten Ordner markieren",
+    "description": "Button for marking all of the selected folder"
   },
-  "buttonUnmarkCategory": {
-    "message": "Alle Markierungen entfernen aus „$TITLE$“",
-    "description": "Button for unmarking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "titleButtonMarkFolder": {
+    "message": "Alle Lesezeichen aus dem ausgewählten Ordner werden markiert.",
+    "description": "Explain that all bookmarks of selected folder will be marked"
   },
-  "titleButtonUnmarkCategory": {
-    "message": "Entfernt die Markierungen aller Lesezeichen aus “$TITLE$”.",
-    "description": "Explain that all bookmarks of specified category will be unmarked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "buttonUnmarkFolder": {
+    "message": "Alle Markierungen vom ausgewählten Ordner entfernen",
+    "description": "Button for unmarking all of selected folder"
   },
-  "buttonMarkOtherCategories": {
-    "message": "Markiere in Gruppen mit „$TITLE$“ alle außer diesen",
-    "description": "Button for marking all but specified categories in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "titleButtonUnmarkFolder": {
+    "message": "Alle Markierungen von Lesezeichen aus dem ausgewählten Ordner werden entfernt.",
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
   },
-  "titleButtonMarkOtherCategories": {
-    "message": "Zusätzlich werden die Markierungen aller Lesezeichen aus “$TITLE$” entfernt.",
-    "description": "Explain that additionally the bookmarks from specified category will be unmarked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "buttonMarkFolderOther": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesem markieren",
+    "description": "Button for marking all but selected folder in groups with it"
   },
-  "buttonUnmarkOtherCategories": {
-    "message": "Markiere in Gruppen mit „$TITLE$“ nur diese",
-    "description": "Button for marking only specified category in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "titleButtonMarkFolderOther": {
+    "message": "Zusätzlich werden die Lesezeichen aus dem ausgewählten Ordner entfernt.",
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
   },
-  "titleButtonUnmarkOtherCategories": {
-    "message": "Zusätzlich werden die Markierungen derjenigen Lesezeichen dieser Gruppen entfernt, die nicht aus “$TITLE$” sind.",
-    "description": "Explain that additionally the bookmarks not from specified category in these groups will be unmarked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "buttonMarkFolderButFirst": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesen oder ersten markieren",
+    "description": "Button for unmarking all but selected folder or first in groups with it"
+  },
+  "titleButtonMarkFolderButFirst": {
+    "message": "In Gruppen mit dem ausgewählten Ordner werden alle Lesezeichen aus diese Ordner markiert und die Markierungen anderer Lesezeichen entfernt; wenn es keine anderen gibt, wird die Markierung des ersten Lesezeichens der Gruppe entfernt.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the first is unmarked"
+  },
+  "buttonMarkFolderButLast": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesen oder letzten markieren",
+    "description": "Button for unmarking all but selected folder or last in groups with it"
+  },
+  "titleButtonMarkFolderButLast": {
+    "message": "In Gruppen mit dem ausgewählten Ordner werden alle Lesezeichen aus diese Ordner markiert und die Markierungen anderer Lesezeichen entfernt; wenn es keine anderen gibt, wird die Markierung des letzten Lesezeichens der Gruppe entfernt.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the last is unmarked"
+  },
+  "buttonMarkFolderButOldest": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesen oder ältesten markieren",
+    "description": "Button for unmarking all but selected folder or oldest in groups with it"
+  },
+  "titleButtonMarkFolderButOldest": {
+    "message": "In Gruppen mit dem ausgewählten Ordner werden alle Lesezeichen aus diese Ordner markiert und die Markierungen anderer Lesezeichen entfernt; wenn es keine anderen gibt, wird die Markierung des ältesten Lesezeichens der Gruppe entfernt.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the oldest is unmarked"
+  },
+  "buttonMarkFolderButNewest": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesen oder jüngsten markieren",
+    "description": "Button for unmarking all but selected folder or newest in groups with it"
+  },
+  "titleButtonMarkFolderButNewest": {
+    "message": "In Gruppen mit dem ausgewählten Ordner werden alle Lesezeichen aus diese Ordner markiert und die Markierungen anderer Lesezeichen entfernt; wenn es keine anderen gibt, wird die Markierung des jüngesten Lesezeichens der Gruppe entfernt.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
   "buttonRemoveMarked": {
     "message": "Markierte Lesezeichen löschen",

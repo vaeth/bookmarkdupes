@@ -87,85 +87,65 @@
     "message": "Unmark all bookmarks.", // new
     "description": "Explain that all bookmarks will be unmarked"
   },
-  "buttonMarkCategory": {
-    "message": "Mark all from “$TITLE$”", // new
-    "description": "Button for marking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "titleSelectFolder": {
+    "message": "Select the reference folder for marking buttons below.", // new
+    "description": "Explain that the selected folder refers to marking buttons below"
   },
-  "titleButtonMarkCategory": {
-    "message": "Mark all bookmarks from “$TITLE$”.", // new
-    "description": "Explain that all bookmarks of specified category will be marked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "buttonMarkFolder": {
+    "message": "Mark all from selected folder", // new
+    "description": "Button for marking all of the selected folder"
   },
-  "buttonUnmarkCategory": {
-    "message": "Unmark all from “$TITLE$”", // new
-    "description": "Button for unmarking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "titleButtonMarkFolder": {
+    "message": "Mark all bookmarks from the selected folder.", // new
+    "description": "Explain that all bookmarks of selected folder will be marked"
   },
-  "titleButtonUnmarkCategory": {
-    "message": "Unmark all bookmarks from “$TITLE$”.", // new
-    "description": "Explain that all bookmarks of specified category will be unmarked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "buttonUnmarkFolder": {
+    "message": "Unmark all from selected folder", // new
+    "description": "Button for unmarking all of selected folder"
   },
-  "buttonMarkOtherCategories": {
-    "message": "In groups containing “$TITLE$” mark all but these", // new
-    "description": "Button for marking all but specified categories in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "titleButtonUnmarkFolder": {
+    "message": "Unmark all bookmarks from selected folder.", // new
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
   },
-  "titleButtonMarkOtherCategories": {
-    "message": "Additionally the bookmarks from “$TITLE$” are unmarked.", // new
-    "description": "Explain that additionally the bookmarks from specified category will be unmarked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "buttonMarkFolderOther": {
+    "message": "In groups with selected folder mark all but these", // new
+    "description": "Button for marking all but selected folder in groups with it"
   },
-  "buttonUnmarkOtherCategories": {
-    "message": "In groups with “$TITLE$” mark only these", // new
-    "description": "Button for marking only specified category in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "titleButtonMarkFolderOther": {
+    "message": "Additionally the bookmarks from the selected folder will be unmarked.", // new
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
   },
-  "titleButtonUnmarkOtherCategories": {
-    "message": "Additionally the bookmarks not from “$TITLE$” in these groups are unmarked.", // new
-    "description": "Explain that additionally the bookmarks not from specified category in these groups will be unmarked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "buttonMarkFolderButFirst": {
+    "message": "In groups with selected folder unmark all others or first", // new
+    "description": "Button for unmarking all but selected folder or first in groups with it"
+  },
+  "titleButtonMarkFolderButFirst": {
+    "message": "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the first.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the first is unmarked"
+  },
+  "buttonMarkFolderButLast": {
+    "message": "In groups with selected folder unmark all others or last", // new
+    "description": "Button for unmarking all but selected folder or last in groups with it"
+  },
+  "titleButtonMarkFolderButLast": {
+    "message": "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the last.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the last is unmarked"
+  },
+  "buttonMarkFolderButOldest": {
+    "message": "In groups with selected folder unmark all others or oldest", // new
+    "description": "Button for unmarking all but selected folder or oldest in groups with it"
+  },
+  "titleButtonMarkFolderButOldest": {
+    "message": "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the oldest.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the oldest is unmarked"
+  },
+  "buttonMarkFolderButNewest": {
+    "message": "In groups with selected folder unmark all others or newest", // new
+    "description": "Button for unmarking all but selected folder or newest in groups with it"
+  },
+  "titleButtonMarkFolderButNewest": {
+    "message": "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the newest.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
   "buttonRemoveMarked": {
     "message": "移除选中的书签",

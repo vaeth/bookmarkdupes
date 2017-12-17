@@ -87,85 +87,65 @@
     "message": "Снять все отметки c закладок.",
     "description": "Explain that all bookmarks will be unmarked"
   },
-  "buttonMarkCategory": {
-    "message": "Отметить все из “$TITLE$”",
-    "description": "Button for marking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Панель Закладок"
-      }
-    }
+  "titleSelectFolder": {
+    "message": "Select the reference folder for marking buttons below.", // new
+    "description": "Explain that the selected folder refers to marking buttons below"
   },
-  "titleButtonMarkCategory": {
-    "message": "Отметить все закладки из “$TITLE$”.",
-    "description": "Explain that all bookmarks of specified category will be marked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Панель Закладок"
-      }
-    }
+  "buttonMarkFolder": {
+    "message": "Отметить все из selected folder", // changed to: "Mark all from selected folder", // new
+    "description": "Button for marking all of the selected folder"
   },
-  "buttonUnmarkCategory": {
-    "message": "Снять отметку со всех из “$TITLE$”",
-    "description": "Button for unmarking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Панель Закладок"
-      }
-    }
+  "titleButtonMarkFolder": {
+    "message":  "Отметить все закладки из selected folder.", // changed to: "Mark all bookmarks from the selected folder.", // new
+    "description": "Explain that all bookmarks of selected folder will be marked"
   },
-  "titleButtonUnmarkCategory": {
-    "message": "Снять отметку со всех закладок из “$TITLE$”.",
-    "description": "Explain that all bookmarks of specified category will be unmarked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Панель Закладок"
-      }
-    }
+  "buttonUnmarkFolder": {
+    "message": "Снять отметку со всех из selected folder", // changed to: "Unmark all from selected folder", // new
+    "description": "Button for unmarking all of selected folder"
   },
-  "buttonMarkOtherCategories": {
-    "message": "Где есть закладки с “$TITLE$” - выбрать всё кроме них.",
-    "description": "Button for marking all but specified categories in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Панель Закладок"
-      }
-    }
+  "titleButtonUnmarkFolder": {
+    "message": "Снять отметку со всех закладок из selected folder.", // changed to: "Unmark all bookmarks from selected folder.", // new
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
   },
-  "titleButtonMarkOtherCategories": {
-    "message": "В группах дублей где есть закладки из “$TITLE$” будет выбрано всё, кроме них.",
-    "description": "Explain that additionally the bookmarks from specified category will be unmarked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Панель Закладок"
-      }
-    }
+  "buttonMarkFolderOther": {
+    "message": "Где есть закладки с selected folder - выбрать всё кроме них.", // changed to "In groups with selected folder mark all but these", // new
+    "description": "Button for marking all but selected folder in groups with it"
   },
-  "buttonUnmarkOtherCategories": {
-    "message": "Где есть закладки с “$TITLE$” - отметить только их",
-    "description": "Button for marking only specified category in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Панель Закладок"
-      }
-    }
+  "titleButtonMarkFolderOther": {
+    "message": "В группах дублей где есть закладки из selected folder будет выбрано всё, кроме них.", // changed to "Additionally the bookmarks from the selected folder will be unmarked.",, // new
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
   },
-  "titleButtonUnmarkOtherCategories": {
-    "message": "В группах дублей, где есть закладки с “$TITLE$”, будут выбраны только они.",
-    "description": "Explain that additionally the bookmarks not from specified category in these groups will be unmarked",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Панель Закладок"
-      }
-    }
+  "buttonMarkFolderButFirst": {
+    "message": "Где есть закладки с selected folder - отметить только их (or exclude first)", // changed to: "In groups with selected folder unmark all others or first", // new
+    "description": "Button for unmarking all but selected folder or first in groups with it"
+  },
+  "titleButtonMarkFolderButFirst": {
+    "message": "В группах дублей, где есть закладки с selected folder, будут выбраны только они (or exclude first).", // changed to: "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the first.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the first is unmarked"
+  },
+  "buttonMarkFolderButLast": {
+    "message": "Где есть закладки с selected folder - отметить только их (or exclude last)", // changed to: "In groups with selected folder unmark all others or last", // new
+    "description": "Button for unmarking all but selected folder or last in groups with it"
+  },
+  "titleButtonMarkFolderButLast": {
+    "message": "В группах дублей, где есть закладки с selected folder, будут выбраны только они (or exclude last).", // changed to: "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the last.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the last is unmarked"
+  },
+  "buttonMarkFolderButOldest": {
+    "message": "Где есть закладки с selected folder - отметить только их (or exclude oldest)", // changed to: "In groups with selected folder unmark all others or oldest", // new
+    "description": "Button for unmarking all but selected folder or oldest in groups with it"
+  },
+  "titleButtonMarkFolderButOldest": {
+    "message": "В группах дублей, где есть закладки с selected folder, будут выбраны только они (or exclude oldest).", // changed to: "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the oldest.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the oldest is unmarked"
+  },
+  "buttonMarkFolderButNewest": {
+    "message": "Где есть закладки с selected folder - отметить только их (or exclude newest)", // changed to: "In groups with selected folder unmark all others or newest", // new
+    "description": "Button for unmarking all but selected folder or newest in groups with it"
+  },
+  "titleButtonMarkFolderButNewest": {
+    "message": "В группах дублей, где есть закладки с selected folder, будут выбраны только они (or exclude newest).", // changed to: "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the newest.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
   "buttonRemoveMarked": {
     "message": "Удалить отмеченные закладки",

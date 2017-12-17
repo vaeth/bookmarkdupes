@@ -20,8 +20,8 @@ function getButtonsMark() {
   return document.getElementById("buttonsMark");
 }
 
-function getButtonsCategories() {
-  return document.getElementById("buttonsCategories");
+function getButtonsFolders() {
+  return document.getElementById("buttonsFolders");
 }
 
 function getButtonStop() {
@@ -48,6 +48,10 @@ function getCheckboxExtra() {
   return document.getElementById("checkboxExtra");
 }
 
+function getSelectedFolder() {
+  return document.getElementById("selectedFolder").value;
+}
+
 function displayCount(text) {
   document.getElementById("textCount").textContent = text;
 }
@@ -60,6 +64,15 @@ function displayMessage(text, title) {
     return;
   }
   message.removeAttribute("TITLE");
+}
+
+function getName(folders, parent, name) {
+  while (parent || (parent === 0)) {
+    let folder = folders[parent];
+    name = folder.name + ' | ' + name;
+    parent = folder.parent;
+  }
+  return name;
 }
 
 function appendTextNodeCol(row, text) {
@@ -108,6 +121,12 @@ function appendButtonCol(row, id, titleId, text, titleText, enabled) {
   row.appendChild(col);
 }
 
+function appendButtonRow(parent, id, titleId, text, titleText, enabled) {
+  let row = document.createElement("TR");
+  appendButtonCol(row, id, titleId, text, titleText, enabled);
+  parent.appendChild(row);
+}
+
 function addButtonsBase() {
   let parent = getButtonsBase();
   if (parent.hasChildNodes()) {  // Already done
@@ -133,29 +152,46 @@ function addButtonRemove(buttonId, titleId) {
   parent.appendChild(row);
 }
 
-function addButtonsCategories(mode, categoryTitles) {
-  if ((!categoryTitles) || !(categoryTitles.length)) {
+function addButtonsFolders(mode, result) {
+  if (!result.foldersDisplay) {
     return;
   }
-  let parent = (mode ? getButtonsMark() : getButtonsCategories());
-  for (let i = 0; i < categoryTitles.length; ++i) {
-    let title = categoryTitles[i];
-    let row =  document.createElement("TR");
-    appendButtonCol(row, "markCategory?id=" + String(i), null,
-      browser.i18n.getMessage("buttonMarkCategory", title),
-      browser.i18n.getMessage("titleButtonMarkCategory", title));
-    appendButtonCol(row, "unmarkCategory?id=" + String(i), null,
-      browser.i18n.getMessage("buttonUnmarkCategory", title),
-      browser.i18n.getMessage("titleButtonUnmarkCategory", title));
-    if (!mode) {
-      appendButtonCol(row, "markOtherCategories?id=" + String(i), null,
-        browser.i18n.getMessage("buttonMarkOtherCategories", title),
-        browser.i18n.getMessage("titleButtonMarkOtherCategories", title));
-      appendButtonCol(row, "unmarkOtherCategories?id=" + String(i), null,
-        browser.i18n.getMessage("buttonUnmarkOtherCategories", title),
-        browser.i18n.getMessage("titleButtonUnmarkOtherCategories", title));
+  let select = document.createElement("SELECT");
+  select.title = browser.i18n.getMessage("titleSelectFolder");
+  select.id = "selectedFolder";
+  let folders = result.folders;
+  for (let i = 0; i < folders.length; ++i) {
+    if (!folders[i]) {
+      continue;
     }
-    parent.appendChild(row);
+    let folder = folders[i];
+    if (!folder.ids) {
+      continue;
+    }
+    let option = document.createElement("OPTION");
+    option.value = String(i);
+    option.textContent = getName(folders, folder.parent, folder.name);
+    select.appendChild(option);
+  }
+  let col = document.createElement("TD");
+  col.appendChild(select);
+  let row = document.createElement("TR");
+  row.appendChild(col);
+  let parent = getButtonsFolders();
+  parent.appendChild(row);
+  appendButtonRow(parent, "buttonMarkFolder", "titleButtonMarkFolder");
+  appendButtonRow(parent, "buttonUnmarkFolder", "titleButtonUnmarkFolder");
+  if (!mode) {
+    appendButtonRow(parent, "buttonMarkFolderOther",
+      "titleButtonMarkFolderOther");
+    appendButtonRow(parent, "buttonMarkFolderButFirst",
+      "titleButtonMarkFolderButFirst");
+    appendButtonRow(parent, "buttonMarkFolderButLast",
+      "titleButtonMarkFolderButLast");
+    appendButtonRow(parent, "buttonMarkFolderButOldest",
+      "titleButtonMarkFolderButOldest");
+    appendButtonRow(parent, "buttonMarkFolderButNewest",
+      "titleButtonMarkFolderButNewest");
   }
 }
 
@@ -177,14 +213,14 @@ function addButtonsMark(mode) {
   parent.appendChild(row);
 }
 
-function addButtonsMode(mode, categoryTitles) {
+function addButtonsMode(mode, result) {
   if (mode == 2) {
     addButtonRemove("buttonStripMarked", "titleButtonStripMarked");
   } else {
     addButtonRemove("buttonRemoveMarked", "titleButtonRemoveMarked");
   }
   addButtonsMark(mode);
-  addButtonsCategories(mode, categoryTitles);
+  addButtonsFolders(mode, result);
 }
 
 function addProgressButton(textId, percentage) {
@@ -238,7 +274,7 @@ function enableButtons(enabled) {
   enableButtonsBase(enabled);
   enableButtonsOf(getButtonsRemove(), enabled);
   enableButtonsOf(getButtonsMark(), enabled);
-  enableButtonsOf(getButtonsCategories(), enabled);
+  enableButtonsOf(getButtonsFolders(), enabled);
   enableButtonsOf(getCheckboxOptions(), enabled);
 }
 
@@ -256,7 +292,7 @@ function clearProgressButton() {
 function clearButtonsMode() {
   clearItem(getButtonsRemove());
   clearItem(getButtonsMark());
-  clearItem(getButtonsCategories());
+  clearItem(getButtonsFolders());
   clearItem(getCheckboxOptions());
 }
 
@@ -291,7 +327,7 @@ function addBookmark(bookmark, result) {
     let col = document.createElement("TD");
     row.appendChild(col);
   }
-  let text = bookmark.text;
+  let text = getName(result.folders, bookmark.parent, bookmark.text);
   let url;
   if (bookmark.url) {
     url = row.title = bookmark.url;
@@ -341,7 +377,7 @@ function markButFirst() {
   }
   let mark = false;
   for (let node of top.childNodes) {
-    if (!isCheckbox(node)) {
+    if (!isCheckbox(node)) {  // separator
       mark = false;
       continue;
     }
@@ -357,7 +393,7 @@ function markButLast() {
   }
   let previousNode = null;
   for (let node of top.childNodes) {
-    if (!isCheckbox(node)) {
+    if (!isCheckbox(node)) {  // separator
       if (previousNode !== null) {
         setCheck(previousNode, false);
         previousNode = null;
@@ -394,7 +430,7 @@ function markButNewest() {
   let largestSeen = 1;
   let largestNode = null;
   for (let node of top.childNodes) {
-    if (!isCheckbox(node)) {
+    if (!isCheckbox(node)) {  // separator
       if (largestNode !== null) {
         setCheck(largestNode, false);
         largestNode = null;
@@ -425,7 +461,20 @@ function SplitNumber(text, begin) {
   return Number(text.substring(begin.length));
 }
 
-function markCategory(category, checked) {
+function getSelectedIds(folders) {
+  let value = getSelectedFolder();
+  if (!value) {
+    return null;
+  }
+  let ids = new Set(folders[Number(value)]);
+  return ids;
+}
+
+function markFolder(folders, checked) {
+  let ids = getSelectedIds(folders);
+  if (!ids) {
+    return;
+  }
   let top = getTop();
   if (!top.hasChildNodes()) {
     return;
@@ -435,72 +484,98 @@ function markCategory(category, checked) {
       continue;
     }
     let checkbox = getCheckbox(node);
-    if (!category.has(checkbox.id)) {
+    if (!ids.has(checkbox.id)) {
       continue;
     }
     checkbox.checked = checked;
   }
 }
 
-function markOtherCategories(category, checked) {
+function markFolderGroup(folders, mode) {
+  let ids = getSelectedIds(folders);
+  if (!ids) {
+    return;
+  }
   let top = getTop();
   if (!top.hasChildNodes()) {
     return;
   }
+  let checkTime = 0;
+  let checkedOthers = false;
+  if (mode == "oldest") {
+    checkTime = -1;
+  } else if (mode == "newest") {
+    checkTime = 1;
+  } else if (mode == "other") {
+    checkedOthers = true;
+  }
+  let checkedMe = !checkedOthers;
+  let checkboxesOthers = new Array();
+  let checkboxesMe = new Array();
   let groupMatches = false;
-  let previousCheckboxes = new Array();
-  let unchecked = !checked;
-  for (let node of top.childNodes) {
-    if (!isCheckbox(node)) {
-      groupMatches = false;
-      if (previousCheckboxes.length > 0) {  // test for speed reasons
-        previousCheckboxes = new Array();
+  let dateMatch;
+  let dateSeen = 0;
+  function MarkGroup() {
+    if (!groupMatches) {
+      return;
+    }
+    for (let checkbox of checkboxesOthers) {
+      checkbox.checked = checkedOthers;
+    }
+    let exclude = null;
+    if (!checkboxesOthers.length) {
+      if (mode == "first") {
+        exclude = 1;
+      } else if (mode == "last") {
+        exclude = checkboxesMe.length;
+      } else if (checkTime) {
+        exclude = dateMatch;
       }
+    }
+    let i = 0;
+    for (let checkbox of checkboxesMe) {
+      ++i;
+      checkbox.checked = ((i !== exclude) ? checkedMe : checkedOthers);
+    }
+  }
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {  // separator
+      MarkGroup();
+      if (checkboxesOthers.length) {  // test for speed reasons
+        checkboxesOthers = new Array();
+      }
+      if (checkboxesMe.length) {  // test for speed reasons
+        checkboxesMe = new Array();
+      }
+      groupMatches = false;
+      dateSeen = 0;
       continue;
     }
     let checkbox = getCheckbox(node);
-    if (!category.has(checkbox.id)) {
-      if (groupMatches) {
-        checkbox.checked = checked;
+    if (!ids.has(checkbox.id)) {
+      checkboxesOthers.push(checkbox);
+      continue;
+    }
+    groupMatches = true;
+    checkboxesMe.push(checkbox);
+    if (!checkTime) {
+      continue;
+    }
+    let current = getOrder(node);
+    if (dateSeen) {
+      if (checkTime > 0) {
+        if (current < dateSeen) {
+          continue;
+        }
+      } else if (current >= dateSeen) {
         continue;
       }
-      previousCheckboxes.push(checkbox);
-      continue;
     }
-    checkbox.checked = unchecked;
-    groupMatches = true;
-    if (!previousCheckboxes.length) {
-      continue;
-    }
-    for (let previous of previousCheckboxes) {
-      previous.checked = checked;
-    }
-    previousCheckboxes = new Array();
+    dateSeen = current;
+    dateMatch = checkboxesMe.length;
   }
-}
-
-function markCategories(buttonId, categories) {
-  let id = SplitNumber(buttonId, "markCategory?id=");
-  if (id >= 0) {
-    markCategory(categories[id], true);
-    return true;
-  }
-  id = SplitNumber(buttonId, "unmarkCategory?id=");
-  if (id >= 0) {
-    markCategory(categories[id], false);
-    return true;
-  }
-  id = SplitNumber(buttonId, "markOtherCategories?id=");
-  if (id >= 0) {
-    markOtherCategories(categories[id], true);
-    return true;
-  }
-  id = SplitNumber(buttonId, "unmarkOtherCategories?id=");
-  if (id >= 0) {
-    markOtherCategories(categories[id], false);
-    return true;
-  }
-  return false;
+  MarkGroup();
+  checkboxesOthers = checkboxesMe = null;  // free closures
 }
 
 function checkboxesToSet(result) {
@@ -514,15 +589,15 @@ function displayDupes(exact, result) {
   let total = 0;
   let groups = result.list.length;
   let returnValue = false;
-  let addButtonsOrRuler = function (categoryTitles) {
-    returnValue = true;
-    addButtonsOrRuler = addRuler;
-    addButtonsMode(0, categoryTitles);
-    addCheckboxOptions(result.options, !exact);
-    checkboxesToSet(result);
-  };
   for (let group of result.list) {
-    addButtonsOrRuler(result.categoryTitles);
+    if (returnValue) {
+      addRuler();
+    } else {
+      returnValue = true;
+      addButtonsMode(0, result);
+      addCheckboxOptions(result.options, !exact);
+      checkboxesToSet(result);
+    }
     total += group.length;
     for (let bookmark of group) {
       addBookmark(bookmark, result);
@@ -544,7 +619,7 @@ function displayEmpty(result) {
   if (!total) {
     return false;
   }
-  addButtonsMode(1, result.categoryTitles);
+  addButtonsMode(1, result);
   checkboxesToSet(result);
   for (let bookmark of result.list) {
     addBookmark(bookmark, result);
@@ -560,7 +635,7 @@ function displayAll(result) {
   if (!total) {
     return false;
   }
-  addButtonsMode(2, result.categoryTitles);
+  addButtonsMode(2, result);
   addCheckboxOptions(result.options);
   checkboxesToSet(result);
   for (let bookmark of result.list) {
@@ -640,7 +715,7 @@ function displayFinish(textId, state) {
   let firstcall = true;
   let lock = true;
   let count = null;
-  let categories;
+  let folders;
 
   function startLock() {
     lock = true;
@@ -765,14 +840,30 @@ function displayFinish(textId, state) {
       case "buttonUnmarkAll":
         mark(false);
         break;
+      case "buttonMarkFolder":
+        markFolder(folders, true);
+        break;
+      case "buttonUnmarkFolder":
+        markFolder(folders, false);
+        break;
+      case "buttonMarkFolderOther":
+        markFolderGroup(folders, "other");
+        break;
+      case "buttonMarkFolderButFirst":
+        markFolderGroup(folders, "first");
+        break;
+      case "buttonMarkFolderButLast":
+        markFolderGroup(folders, "last");
+        break;
+      case "buttonMarkFolderButOldest":
+        markFolderGroup(folders, "oldest");
+        break;
+      case "buttonMarkFolderButNewest":
+        markFolderGroup(folders, "newest");
+        break;
       case "checkboxFullUrl":
         endLock();
         return;
-      default:
-        if (!markCategories(event.target.id, categories)) {
-          endLock();
-          return;
-        }
     }
     countMarked(true);
     endLock();
@@ -786,7 +877,7 @@ function displayFinish(textId, state) {
       addButtonsBase();
     }
     let state = message.state;
-    categories = count = null;
+    folders = count = null;
     let selectMode;
     switch (state.mode) {
       case "virgin":
@@ -838,8 +929,15 @@ function displayFinish(textId, state) {
     }
     count = -1;
     countMarked(false);
-    if (state.result && state.result.categories) {
-      categories = state.result.categories;
+    if (state.result && state.result.foldersDisplay) {
+      folders = new Array();
+      for (let folder of state.result.folders) {
+        if (folder && folder.ids) {
+          folders.push(folder.ids);
+        } else {
+          folders.push(null);
+        }
+      }
     }
     endLock();
   }
