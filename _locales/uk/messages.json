@@ -44,7 +44,7 @@
     "description": "Button for marking all but first"
   },
   "titleButtonMarkButFirst": {
-    "message": "Також, буде знято позначення з верхньої закладки в кожній групі.",
+    "message": "В кожній групі дублів буде позначено всі закладки крім верхньої.",
     "description": "Explain that additionally the first bookmark in each group will be unmarked"
   },
   "buttonMarkButLast": {
@@ -52,7 +52,7 @@
     "description": "Button for marking all but last"
   },
   "titleButtonMarkButLast": {
-    "message": "Також, буде знято позначення з нижньої закладки в кожній групі.",
+    "message": "В кожній групі дублів буде позначено всі закладки крім нижньої.",
     "description": "Explain that additionally the last bookmark in each group will be unmarked"
   },
   "buttonMarkButOldest": {
@@ -60,7 +60,7 @@
     "description": "Button for marking all but oldest"
   },
   "titleButtonMarkButOldest": {
-    "message": "Також, буде знято позначення з найстарішої закладки в кожній групі.",
+    "message": "В кожній групі дублів буде позначено всі закладки крім найстарішої.",
     "description": "Explain that additionally the oldest bookmark in each group will be unmarked"
   },
   "buttonMarkButNewest": {
@@ -68,7 +68,7 @@
     "description": "Button for marking all but newest"
   },
   "titleButtonMarkButNewest": {
-    "message": "Також, буде знято позначення з найновішої закладки в кожній групі.",
+    "message": "В кожній групі дублів буде позначено всі закладки крім найновішої.",
     "description": "Explain that additionally the newest bookmark in each group will be unmarked"
   },
   "buttonMarkAll": {
@@ -128,7 +128,7 @@
     }
   },
   "buttonMarkOtherCategories": {
-    "message": "У групах, що містять “$TITLE$” позначити все, крім цих",
+    "message": "Де є закладки з “$TITLE$” - обрати все крім них.",
     "description": "Button for marking all but specified categories in groups with it",
     "placeholders": {
       "title": {
@@ -138,7 +138,7 @@
     }
   },
   "titleButtonMarkOtherCategories": {
-    "message": "Також, закладки з “$TITLE$” не буде позначено.",
+    "message": "В тих групах дублів, де є закладки з “$TITLE$”, буде позначено все, крім них.",
     "description": "Explain that additionally the bookmarks from specified category will be unmarked",
     "placeholders": {
       "title": {
@@ -148,7 +148,7 @@
     }
   },
   "buttonUnmarkOtherCategories": {
-    "message": "У групах, що містять “$TITLE$” позначити тільки ці",
+    "message": "Де є закладки з “$TITLE$” - обрати лише їх.",
     "description": "Button for marking only specified category in groups with it",
     "placeholders": {
       "title": {
@@ -158,7 +158,7 @@
     }
   },
   "titleButtonUnmarkOtherCategories": {
-    "message": "Також, закладки, що не з “$TITLE$” у цих групах не буде позначено.",
+    "message": "В тих групах дублів, де є закладки з “$TITLE$”, буде позначено лише їх.",
     "description": "Explain that additionally the bookmarks not from specified category in these groups will be unmarked",
     "placeholders": {
       "title": {
