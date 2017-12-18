@@ -11,7 +11,8 @@ let state;
 let stop;
 let bookmarkIds;
 let options = {
-  fullUrl: false
+  fullUrl: false,
+  extra: true
 };
 
 function setVirginState() {
@@ -25,13 +26,8 @@ function sendState() {
   let message = {
     command: "state",
     state: state,
-    options: options
   };
   browser.runtime.sendMessage(message);
-}
-
-function setOptionFullUrl(value) {
-  options.fullUrl = value;
 }
 
 function removeFolder(id, callback, errorCallback) {
@@ -130,24 +126,58 @@ function normalizeGroup(group) {
   }
 }
 
-function calculate(command) {
-  let exact, folder, handleFunction, result, urlMap;
-
-  function pushCategory() {
-    if (result.categoryTitle && result.category.size) {
-      result.categoryTitles.push(result.categoryTitle);
-      result.categories.push(result.category);
+function normalizeFolders(folders) {
+  for (let i = 0; i < folders.length; ++i) {
+    let folder = folders[i];
+    if ((!folder.used) || (!folder.used.size)) {
+      delete folders[i];
+      continue;
     }
+    parent = folder.parent;
+    if ((!parent) && (parent !== 0)) {
+      continue;
+    }
+    let used = folder.used.size;
+    folder = folders[parent];
+    if (folder.usedByChilds) {
+       folder.usedByChilds += used;
+    } else {
+      folder.usedByChilds = used;
+    }
+    if (!folder.childs) {
+      folder.childs = new Set();
+    }
+    folder.childs.add(i);
   }
+  let display = 0;
+  for (let folder of folders) {
+    if (!folder) {
+      continue;
+    }
+    if ((folder.childs && (folder.childs.size > 1)) ||
+        (folder.used && folder.used.size && ((!folder.usedByChilds)
+        || (folder.used.size > folder.usedByChilds)))) {
+      folder.ids = Array.from(folder.used);  // transfer arrays instead of sets
+      ++display;
+    }
+    delete folder.childs;
+    delete folder.used;
+    delete folder.usedByChilds;
+  }
+  return display;
+}
+
+function calculate(command) {
+  let exact, folderMode, handleFunction, result, urlMap;
 
   function calculateFinish(mode) {
-    pushCategory();
-    delete result.category;
-    delete result.categoryTitle;
-    if (result.categories.length <= 1) {
-      delete result.categories;
-      delete result.categoryTitles;
+    let display = normalizeFolders(result.folders);
+    if (!display) {
+      delete result.folders;
+    } else if (display > 1) {
+      result.foldersDisplay = true;
     }
+    result.options = options;
     state = {
       mode: mode,
       result: result
@@ -165,17 +195,40 @@ function calculate(command) {
     sendState();
   }
 
+  function parentUsed(parent, id) {
+    while (parent || (parent === 0)) {
+      let folder = result.folders[parent];
+      if (!folder.used) {
+        folder.used = new Set();
+      }
+      folder.used.add(id);
+      parent = folder.parent;
+    }
+  }
+
+  function parentUnused(parent, id) {
+    while (parent || (parent === 0)) {
+      let folder = result.folders[parent];
+      if (folder.used) {
+        folder.used.delete(id);
+        if (!folder.used.size) {
+          delete folder.used;
+        }
+      }
+      parent = folder.parent;
+    }
+  }
+
   function handleDupe(node, parent) {
     ++(result.all);
-    let groupIndex = node.url;
+    let url = node.url;
+    let groupIndex = url;
     let extra;
-    if (options.fullUrl) {
-      extra = node.url;
-    } else if (!exact) {
+    if (!exact) {
       let index = groupIndex.indexOf("?");
       if (index > 0) {
         groupIndex = groupIndex.substring(0, index);
-        extra = node.url.substring(index);
+        extra = url.substring(index);
       }
     }
     let id = node.id;
@@ -191,11 +244,13 @@ function calculate(command) {
       return;  // it is a bug if we get here
     }
     group.ids.add(id);
-    result.category.add(id);
+    parentUsed(parent, id);
     let bookmark = {
       id: id,
       order: ((node.dateAdded !== undefined) ? node.dateAdded : (-1)),
-      text: parent + node.title
+      parent: parent,
+      text: node.title,
+      url: url
     };
     if (extra !== undefined) {
       bookmark.extra = extra;
@@ -208,24 +263,24 @@ function calculate(command) {
       return;
     }
     let id = node.id;
-    result.category.add(id);
+    parentUsed(parent, id);
     let bookmark = {
       id: id,
-      text: parent + node.title
+      parent: parent,
+      text: node.title
     };
     result.list.push(bookmark);
   }
 
   function handleAll(node, parent, index) {
     let id = node.id;
-    result.category.add(id);
+    parentUsed(parent, id);
     let bookmark = {
       id: id,
-      text: parent + node.title
+      parent: parent,
+      text: node.title,
+      url: node.url
     };
-    if (options.fullUrl) {
-      bookmark.extra = node.url;
-    }
     result.list.push(bookmark);
     bookmark = {
       parentId: node.parentId,
@@ -239,39 +294,40 @@ function calculate(command) {
     bookmarkIds.set(id, bookmark);
   }
 
-  function prepareCategory(title) {
-    pushCategory();
-    result.categoryTitle = title;
-    result.category = new Set()
-  }
-
   function recurse(node) {
     function recurseMain(node, parent, index) {
       if ((!node.children) || (!node.children.length)) {
-        if (parent && !node.unmodifable) {
-          if (folder) {
+        if ((parent !== null) && !node.unmodifable) {
+          if (folderMode) {
             handleFunction(node, parent);
             return;
-          } else if (node.url && ((!node.type) || (node.type == "bookmark"))) {
+          } else if (node.url && ((!node.type) || (node.type == "bookmark")) &&
+              (node.url.substr(0, 6) !== "place:")) {
             handleFunction(node, parent, index);
-            return;
           }
         }
         return;
       }
+      let folder = {
+        name: node.title
+      };
       if (node.title) {
-        if (!parent) {
-          prepareCategory(node.title);
+        if (parent !== null) {
+          folder.parent = parent;
         }
-        parent += node.title + " | ";
+        parent = result.folders.length;
+        result.folders.push(folder);
       }
       index = 0;
       for (let child of node.children) {
         recurseMain(child, parent, ++index);
       }
+      if (node.title && !folder.used) {
+        result.folders.pop();
+      }
     }
 
-    recurseMain(node, "", 0);
+    recurseMain(node, null, 0);
   }
 
   function calculateDupes(nodes) {
@@ -282,6 +338,10 @@ function calculate(command) {
     let normalizeResult = new Array();
     for (let group of result.list) {
       if (group.data.length < 2) {
+        if (group.data.length) {
+          let bookmark = group.data[0];
+          parentUnused(bookmark.parent, bookmark.id);
+        }
         continue;
       }
       normalizeGroup(group.data);
@@ -305,7 +365,7 @@ function calculate(command) {
   bookmarkIds = null;
   let mainFunction;
   exact = false;
-  folder = false;
+  folderMode = false;
   switch (command) {
     case "calculateExactDupes":
       exact = true;
@@ -315,7 +375,7 @@ function calculate(command) {
       handleFunction = handleDupe;
       break;
     case "calculateEmptyFolder":
-      folder = true;
+      folderMode = true;
       mainFunction = calculateEmpty;
       handleFunction = handleEmpty;
       break;
@@ -328,8 +388,7 @@ function calculate(command) {
   }
   result = {
     list: new Array(),
-    categories: new Array(),
-    categoryTitles: new Array()
+    folders: new Array()
   }
   state = {
     mode: "calculatingProgress"
@@ -349,6 +408,15 @@ function setCheckboxes(checkboxes) {
   delete state.result.checkboxes;  // send only nonempty arrays
 }
 
+function setOptions(message) {
+  options.fullUrl = message.fullUrl;
+  if (message.hasOwnProperty("extra")) {
+    options.extra = message.extra;
+  }
+  setCheckboxes(message.checkboxes);
+  sendState();
+}
+
 function messageListener(message) {
   if (!message.command) {
     return;
@@ -366,8 +434,8 @@ function messageListener(message) {
     case "sendState":
       sendState();
       return;
-    case "setOptionFullUrl":
-      setOptionFullUrl(message.value);
+    case "setOptions":
+      setOptions(message);
       return;
     case "remove":
       processMarked(true, message.removeList);

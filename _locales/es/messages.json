@@ -11,89 +11,161 @@
     "message": "Duplicados exactos",
     "description": "Button for listing exact dupes"
   },
+  "titleButtonListExactDupes": {
+    "message": "(Re)calculate the list of exact bookmark dupes. Two bookmarks are considered to be exact dupes if their URLs is identical.", // new
+    "description": "Explain that the list of exact bookmark dupes will be (re)calculated, and that exact dupes are those with identical URLs"
+  },
   "buttonListSimilarDupes": {
     "message": "Duplicados parecidos",
     "description": "Button for listing similar dupes"
+  },
+  "titleButtonListSimilarDupes": {
+    "message": "(Re)calculate the list of similar bookmark dupes. Two bookmarks are considered to be similar dupes if their URLs match up to the first “?”.", // new
+    "description": "Explain that the list of similar bookmasrk dupes will be (re)calculated, and that dupes are similar if their URLs match up to the first “?”"
   },
   "buttonListEmpty": {
     "message": "Carpetas vacías",
     "description": "Button for listing empty folders"
   },
+  "titleButtonListEmpty": {
+    "message": "(Re)calculate the list of empty folders. The result might falsely contain live bookmarks.", // new
+    "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
+  },
   "buttonListAll": {
     "message": "Todos los marcadores",
     "description": "Button for listing all bookmarks"
+  },
+  "titleButtonListAll": {
+    "message": "(Re)calculate the list of all bookmarks for stripping descriptions. The list consists of those bookmarks with a nonempty URL.", // new
+    "description": "Explain that the list of all bookmarks will be (re)calculated for stripping descriptions and that it consists of those bookmarks with a nonempty URL"
   },
   "buttonMarkButFirst": {
     "message": "Seleccionar todos los primeros de cada grupo",
     "description": "Button for marking all but first"
   },
+  "titleButtonMarkButFirst": {
+    "message": "Additionally the first bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the first bookmark in each group will be unmarked"
+  },
   "buttonMarkButLast": {
     "message": "Seleccionar todos los últimos de cada grupo",
     "description": "Button for marking all but last"
+  },
+  "titleButtonMarkButLast": {
+    "message": "Additionally the last bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the last bookmark in each group will be unmarked"
   },
   "buttonMarkButOldest": {
     "message": "Seleccionar todos los más viejos de cada grupo",
     "description": "Button for marking all but oldest"
   },
+  "titleButtonMarkButOldest": {
+    "message": "Additionally the oldest bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the oldest bookmark in each group will be unmarked"
+  },
   "buttonMarkButNewest": {
     "message": "Seleccionar todos los más nuevos de cada grupo",
     "description": "Button for marking all but newest"
+  },
+  "titleButtonMarkButNewest": {
+    "message": "Additionally the newest bookmark in each group will be unmarked.", // new
+    "description": "Explain that additionally the newest bookmark in each group will be unmarked"
   },
   "buttonMarkAll": {
     "message": "Seleccionar todos",
     "description": "Button for marking all"
   },
+  "titleButtonMarkAll": {
+    "message": "Mark all bookmarks.", // new
+    "description": "Explain that all bookmarks will be marked"
+  },
   "buttonUnmarkAll": {
     "message": "Deseleccionar todos",
     "description": "Button for unmarking all"
   },
-  "buttonMarkCategory": {
-    "message": "Marcar todos de “$TITLE$”", // new
-    "description": "Button for marking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "titleButtonUnmarkAll": {
+    "message": "Unmark all bookmarks.", // new
+    "description": "Explain that all bookmarks will be unmarked"
   },
-  "buttonUnmarkCategory": {
-    "message": "Desmarcar todos de “$TITLE$”", // new
-    "description": "Button for unmarking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "optionNonFolder": {
+    "message": "-- Select a folder to get corresponding buttons for marking --", // new
+    "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
   },
-  "buttonMarkOtherCategories": {
-    "message": "Marcar todos, menos los que contengan el grupo “$TITLE$”", // new
-    "description": "Button for marking all but specified categories in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "titleSelectFolder": {
+    "message": "If a folder is selected corresponding buttons will appear for marking.", // new
+    "description": "Explain that selecting a folder will provide corresponding buttons for marking"
   },
-  "buttonUnmarkOtherCategories": {
-    "message": "Marcar sólo los del grupo “$TITLE$”", // new
-    "description": "Button for marking only specified category in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Bookmarks Toolbar" // new
-      }
-    }
+  "buttonMarkFolder": {
+    "message": "Marcar todos de selected folder", // changed to: "Mark all from selected folder", // new
+    "description": "Button for marking all of the selected folder"
+  },
+  "titleButtonMarkFolder": {
+    "message": "Mark all bookmarks from the selected folder.", // new
+    "description": "Explain that all bookmarks of selected folder will be marked"
+  },
+  "buttonUnmarkFolder": {
+    "message": "Desmarcar todos de selected folder", // changed to: "Unmark all from selected folder", // new
+    "description": "Button for unmarking all of selected folder"
+  },
+  "titleButtonUnmarkFolder": {
+    "message": "Unmark all bookmarks from selected folder.", // new
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
+  },
+  "buttonMarkFolderOther": {
+    "message": "Marcar todos, menos los que contengan el grupo selected folder", // changed to: "In groups with selected folder mark all but these", // new
+    "description": "Button for marking all but selected folder in groups with it"
+  },
+  "titleButtonMarkFolderOther": {
+    "message": "Additionally the bookmarks from the selected folder will be unmarked.", // new
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
+  },
+  "buttonMarkFolderButFirst": {
+    "message": "Marcar sólo los del grupo selected folder (excluding first)", // changed to: "In groups with selected folder unmark all others or first", // new
+    "description": "Button for unmarking all but selected folder or first in groups with it"
+  },
+  "titleButtonMarkFolderButFirst": {
+    "message": "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the first.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the first is unmarked"
+  },
+  "buttonMarkFolderButLast": {
+    "message": "Marcar sólo los del grupo selected folder (excluding last)", // changed to: "In groups with selected folder unmark all others or last", // new
+    "description": "Button for unmarking all but selected folder or last in groups with it"
+  },
+  "titleButtonMarkFolderButLast": {
+    "message": "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the last.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the last is unmarked"
+  },
+  "buttonMarkFolderButOldest": {
+    "message": "Marcar sólo los del grupo selected folder (excluding oldest)", // changed to: "In groups with selected folder unmark all others or oldest", // new
+    "description": "Button for unmarking all but selected folder or oldest in groups with it"
+  },
+  "titleButtonMarkFolderButOldest": {
+    "message": "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the oldest.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the oldest is unmarked"
+  },
+  "buttonMarkFolderButNewest": {
+    "message": "Marcar sólo los del grupo selected folder (excluding newest)", // changed to: "In groups with selected folder unmark all others or newest", // new
+    "description": "Button for unmarking all but selected folder or newest in groups with it"
+  },
+  "titleButtonMarkFolderButNewest": {
+    "message": "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the newest.", // new
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
   "buttonRemoveMarked": {
     "message": "Eliminar marcadores seleccionados",
     "description": "Button for removing marked bookmarks"
   },
+  "titleButtonRemoveMarked": {
+    "message": "Los marcadores seleccionados se refieren a los obtenidos la última vez que se pulsó el botón para obtener la lista.",
+    "description": "Explain that bookmarks refer to those of last update of the list"
+  },
   "buttonStripMarked": {
     "message": "Eliminar las descripciones de los marcadores seleccionados",
     "description": "Button for stripping descriptions of marked bookmarks"
+  },
+  "titleButtonStripMarked": {
+    "message": "La eliminación de descripciones actualizará la fecha de generación de marcador interno. Además, moverá el marcador a la ubicación donde estaba la última vez que se presionó el botón para obtener esta lista.",
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "buttonStopRemoving": {
     "message": "Parar de eliminar!",
@@ -104,11 +176,15 @@
     "description": "Button for emergency stop of description stripping"
   },
   "checkboxFullUrl": {
-    "message": "Mostrar las URL en las listas", // new
-    "description": "Checkbox for displaying URL in listings"
+    "message": "Display URL in listing. In any case the URL will appear if you hover over the bookmark.", // new
+    "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
+  },
+  "checkboxExtra": {
+    "message": "Display URL tail (following “?”) in listing", // new
+    "description": "Checkbox for displaying the URL tail (following “?”) in the similar matching listing"
   },
   "messageCount": {
-    "message": "$TOTAL$ marcadores seleccionados", // new
+    "message": "$TOTAL$ marcadores seleccionados",
     "description": "Report specified number of marked bookmarks",
     "placeholders": {
       "total": {
@@ -135,6 +211,10 @@
       }
     }
   },
+  "titleMessageExactMatchesGroups": {
+    "message": "Two bookmarks are considered to be exact dupes if their URLs is identical.", // new
+    "description": "Explain that exact dupes are those with identical URLs"
+  },
   "messageSimilarMatchesGroups": {
     "message": "$TOTAL$ (de $ALL$) duplicados parecidos dentro de $GROUPS$ grupos",
     "description": "Report specified numbers of similar matches and groups of all",
@@ -153,6 +233,10 @@
       }
     }
   },
+  "titleMessageSimilarMatchesGroups": {
+    "message": "Two bookmarks are considered to be similar dupes if their URLs match up to the first “?”.", // new
+    "description": "Explain that similar dupes are those whose URLs match up to the first “?”"
+  },
   "messageEmpty": {
     "message": "$TOTAL$ carpetas vacías encontradas",
     "description": "Report specified number of empty folders",
@@ -163,6 +247,10 @@
       }
     }
   },
+  "titleMessageEmpty": {
+    "message": "The list might falsely contain live bookmarks.", // new
+    "description": "Explain that the list might falsely contain live bookmarks"
+  },
   "messageAll": {
     "message": "$TOTAL$ marcadores encontrados",
     "description": "Report specified number of bookmarks",
@@ -172,6 +260,10 @@
         "example": "0"
       }
     }
+  },
+  "titleMessageAll": {
+    "message": "The list consists of those bookmarks with a nonempty URL.", // new
+    "description": "Explain that the list consists of those bookmarks with a nonempty URL"
   },
   "messageCalculating": {
     "message": "Buscando",
@@ -186,10 +278,6 @@
         "example": "error description" // new
       }
     }
-  },
-  "messageRemoveInfo": {
-    "message": "Los marcadores seleccionados se refieren a los obtenidos la última vez que se pulsó el botón para obtener la lista.", // new
-    "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "messageRemoveMarked": {
     "message": "Eliminando marcadores seleccionados",
@@ -236,10 +324,6 @@
         "example": "0"
       }
     }
-  },
-  "messageStripInfo": {
-    "message": "La eliminación de descripciones actualizará la fecha de generación de marcador interno. Además, moverá el marcador a la ubicación donde estaba la última vez que se presionó el botón para obtener esta lista.", // new
-    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "Eliminando descripciones de marcadores seleccionados",

@@ -1,14 +1,38 @@
 # ChangeLog for squashmount
 
-*bookmarkdupes-2.5:
+*bookmarkdupes-4.0:
+	Martin Väth <martin at mvath.de>:
+	- Support folder selection (instead of only 2 categories)
+	- Provide buttons for not marking first/last/oldest/newest for folders
+	- Let buttons for marking folders appear only optionally.
+	  Thanks to perdolka for the idea:
+	  https://github.com/vaeth/bookmarkdupes/issues/32
+	- bugfix: mark also last group for folder/category selection
+
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+*bookmarkdupes-3.0:
 	Martin Väth <martin at mvath.de>:
 	- Add new mark/unmark buttons for categories
-	- Add checkbox to display URL in listings
+	- Use titles (tooltips) where possible
+	- Show bookmark URLs as titles (tooltips)
+	- Add checkbox to display URL in listing
+	- Add checkbox to display URL tail for similar bookmarks optionally
 	- Remember marked bookmarks when panel is closed
 	- Display 0 matches only once
 	- Rearrange placement of buttons
 	- Fix display of group separators
+	- Ignore bookmarks whose URL starts with "place:"
 	- internal: Use boolean tests for zero (presumably quicker)
+
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
 
 *bookmarkdupes-2.4:
 	Martin Väth <martin at mvath.de>:

@@ -11,93 +11,161 @@
     "message": "Exakte Lesezeichenduplikate",
     "description": "Button for listing exact dupes"
   },
+  "titleButtonListExactDupes": {
+    "message": "Berechne (erneut) die Liste exakter Lesezeichenduplikate. Zwei Lesezeichen gelten als exakte Duplikate, wenn ihre URL identisch ist.",
+    "description": "Explain that the list of exact bookmark dupes will be (re)calculated, and that exact dupes are those with identical URLs"
+  },
   "buttonListSimilarDupes": {
     "message": "Ähnliche Lesezeichenduplikate",
     "description": "Button for listing similar dupes"
+  },
+  "titleButtonListSimilarDupes": {
+    "message": "Berechne (erneut) die Liste ähnlicher Lesezeichenduplikate. Zwei Lesezeichen gelten als ähnliche Duplikate, wenn ihre URL bis zum ersten „?“ übereinstimmt.",
+    "description": "Explain that the list of similar bookmasrk dupes will be (re)calculated, and that dupes are similar if their URLs match up to the first “?”"
   },
   "buttonListEmpty": {
     "message": "Leere Ordner",
     "description": "Button for listing empty folders"
   },
+  "titleButtonListEmpty": {
+    "message": "Berechne (erneut) die Liste leerer Ordner. Das Ergebnis kann fälschlicherweise auch Live-Lesezeichen enthalten.",
+    "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
+  },
   "buttonListAll": {
     "message": "Alle Lesezeichen",
     "description": "Button for listing all bookmarks"
+  },
+  "titleButtonListAll": {
+    "message": "Berechne (erneut) die Liste aller Lesezeichen zum Entfernen von Beschreibungen. Die Liste besteht aus allen Lesezeichen mit einer nichtleeren URL.",
+    "description": "Explain that the list of all bookmarks will be (re)calculated for stripping descriptions and that it consists of those bookmarks with a nonempty URL"
   },
   "buttonMarkButFirst": {
     "message": "Alle außer Gruppenersten markieren",
     "description": "Button for marking all but first"
   },
+  "titleButtonMarkButFirst": {
+    "message": "Zusätzlich wird die Markierung des ersten Lesezeichens jeder Gruppe entfernt.",
+    "description": "Explain that additionally the first bookmark in each group will be unmarked"
+  },
   "buttonMarkButLast": {
     "message": "Alle außer Gruppenletzten markieren",
     "description": "Button for marking all but last"
+  },
+  "titleButtonMarkButLast": {
+    "message": "Zusätzlich wird die Markierung des letzten Lesezeichens jeder Gruppe entfernt.",
+    "description": "Explain that additionally the last bookmark in each group will be unmarked"
   },
   "buttonMarkButOldest": {
     "message": "Alle außer Gruppenältesten markieren",
     "description": "Button for marking all but oldest"
   },
+  "titleButtonMarkButOldest": {
+    "message": "Zusätzlich wird die Markierung des ältesten Lesezeichens jeder Gruppe entfernt.",
+    "description": "Explain that additionally the oldest bookmark in each group will be unmarked"
+  },
   "buttonMarkButNewest": {
     "message": "Alle außer Grupenjüngsten markieren",
     "description": "Button for marking all but newest"
+  },
+  "titleButtonMarkButNewest": {
+    "message": "Zusätzlich wird die Markierung des jüngsten Lesezeichens jeder Gruppe entfernt.",
+    "description": "Explain that additionally the newest bookmark in each group will be unmarked"
   },
   "buttonMarkAll": {
     "message": "Alle markieren",
     "description": "Button for marking all"
   },
+  "titleButtonMarkAll": {
+    "message": "Markiert alle Lesezeichen.",
+    "description": "Explain that all bookmarks will be marked"
+  },
   "buttonUnmarkAll": {
     "message": "Alle Markierungen entfernen",
     "description": "Button for unmarking all"
   },
-  "buttonMarkCategory": {
-    "message": "Alle markieren aus „$TITLE$“",
-    "description": "Button for marking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "titleButtonUnmarkAll": {
+    "message": "Entfernt Markierungen von allen Lesezeichen.",
+    "description": "Explain that all bookmarks will be unmarked"
   },
-  "buttonUnmarkCategory": {
-    "message": "Alle Markierungen entfernen aus „$TITLE$“",
-    "description": "Button for unmarking all of specified category",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "optionNonFolder": {
+    "message": "-- Ordnerwahl für zugehörige Markierungsknöpfe --",
+    "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
   },
-  "buttonMarkOtherCategories": {
-    "message": "Markiere in Gruppen mit “$TITLE$” alle außer diesen",
-    "description": "Button for marking all but specified categories in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "titleSelectFolder": {
+    "message": "Bei Auswahl eines Ordner erscheinen entsprechende Knöpfe zur Markierung.",
+    "description": "Explain that selecting a folder will provide corresponding buttons for marking"
   },
-  "buttonUnmarkOtherCategories": {
-    "message": "Markiere in Gruppen mit “$TITLE$” nur diese",
-    "description": "Button for marking only specified category in groups with it",
-    "placeholders": {
-      "title": {
-        "content": "$1",
-        "example": "Lesezeichen-Menü"
-      }
-    }
+  "buttonMarkFolder": {
+    "message": "Alle aus dem ausgewählten Ordner markieren",
+    "description": "Button for marking all of the selected folder"
   },
-  "messageRemoveInfo": {
-    "message": "Markierte Lesezeichen beziehen sich auf diejenigen seit dem letzten Drücken des Knopfes zur Berechnung der Liste.",
-    "description": "Explain that bookmarks refer to those of last update of the list"
+  "titleButtonMarkFolder": {
+    "message": "Alle Lesezeichen aus dem ausgewählten Ordner werden markiert.",
+    "description": "Explain that all bookmarks of selected folder will be marked"
+  },
+  "buttonUnmarkFolder": {
+    "message": "Alle Markierungen vom ausgewählten Ordner entfernen",
+    "description": "Button for unmarking all of selected folder"
+  },
+  "titleButtonUnmarkFolder": {
+    "message": "Alle Markierungen von Lesezeichen aus dem ausgewählten Ordner werden entfernt.",
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
+  },
+  "buttonMarkFolderOther": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesem markieren",
+    "description": "Button for marking all but selected folder in groups with it"
+  },
+  "titleButtonMarkFolderOther": {
+    "message": "Zusätzlich werden die Lesezeichen aus dem ausgewählten Ordner entfernt.",
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
+  },
+  "buttonMarkFolderButFirst": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesen oder ersten markieren",
+    "description": "Button for unmarking all but selected folder or first in groups with it"
+  },
+  "titleButtonMarkFolderButFirst": {
+    "message": "In Gruppen mit dem ausgewählten Ordner werden alle Lesezeichen aus diese Ordner markiert und die Markierungen anderer Lesezeichen entfernt; wenn es keine anderen gibt, wird die Markierung des ersten Lesezeichens der Gruppe entfernt.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the first is unmarked"
+  },
+  "buttonMarkFolderButLast": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesen oder letzten markieren",
+    "description": "Button for unmarking all but selected folder or last in groups with it"
+  },
+  "titleButtonMarkFolderButLast": {
+    "message": "In Gruppen mit dem ausgewählten Ordner werden alle Lesezeichen aus diese Ordner markiert und die Markierungen anderer Lesezeichen entfernt; wenn es keine anderen gibt, wird die Markierung des letzten Lesezeichens der Gruppe entfernt.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the last is unmarked"
+  },
+  "buttonMarkFolderButOldest": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesen oder ältesten markieren",
+    "description": "Button for unmarking all but selected folder or oldest in groups with it"
+  },
+  "titleButtonMarkFolderButOldest": {
+    "message": "In Gruppen mit dem ausgewählten Ordner werden alle Lesezeichen aus diese Ordner markiert und die Markierungen anderer Lesezeichen entfernt; wenn es keine anderen gibt, wird die Markierung des ältesten Lesezeichens der Gruppe entfernt.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the oldest is unmarked"
+  },
+  "buttonMarkFolderButNewest": {
+    "message": "In Gruppen mit ausgewähltem Ordner alle außer diesen oder jüngsten markieren",
+    "description": "Button for unmarking all but selected folder or newest in groups with it"
+  },
+  "titleButtonMarkFolderButNewest": {
+    "message": "In Gruppen mit dem ausgewählten Ordner werden alle Lesezeichen aus diese Ordner markiert und die Markierungen anderer Lesezeichen entfernt; wenn es keine anderen gibt, wird die Markierung des jüngesten Lesezeichens der Gruppe entfernt.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
   "buttonRemoveMarked": {
     "message": "Markierte Lesezeichen löschen",
     "description": "Button for removing marked bookmarks"
   },
+  "titleButtonRemoveMarked": {
+    "message": "Markierte Lesezeichen beziehen sich auf diejenigen seit dem letzten Drücken des Knopfes zur Berechnung der Liste.",
+    "description": "Explain that bookmarks refer to those of last update of the list"
+  },
   "buttonStripMarked": {
     "message": "Beschreibungen markierter Lesezeichen entfernen",
     "description": "Button for stripping descriptions of marked bookmarks"
+  },
+  "titleButtonStripMarked": {
+    "message": "Entfernung von Beschreibungen aktualisiert das intern gespeicherte Erzeugungsdatum des Lesezeichens. Außerdem verschiebt es das Lesezeichen an die Stelle, an der es beim Drücken des Knopfes zur Berechnung dieser Liste war.",
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "buttonStopRemoving": {
     "message": "Löschen abbrechen!",
@@ -108,8 +176,12 @@
     "description": "Button for emergency stop of description stripping"
   },
   "checkboxFullUrl": {
-    "message": "URL in Listen anzeigen",
-    "description": "Checkbox for displaying URL in listings"
+    "message": "URL anzeigen. Die URL wird in jedem Fall sichtbar, wenn die Maus über dem Lesezeichen steht.",
+    "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
+  },
+  "checkboxExtra": {
+    "message": "URL-Ergänzung (nach „?“) anzeigen",
+    "description": "Checkbox for displaying the URL tail (following “?”) in the similar matching listing"
   },
   "messageCount": {
     "message": "$TOTAL$ Lesezeichen markiert",
@@ -139,6 +211,10 @@
       }
     }
   },
+  "titleMessageExactMatchesGroups": {
+    "message": "Zwei Lesezeichen gelten als exakte Duplikate, wenn ihre URL identisch ist.",
+    "description": "Explain that exact dupes are those with identical URLs"
+  },
   "messageSimilarMatchesGroups": {
     "message": "$TOTAL$ (von $ALL$) ähnliche Duplikate in $GROUPS$ Gruppen",
     "description": "Report specified numbers of similar matches and groups of all",
@@ -157,6 +233,10 @@
       }
     }
   },
+  "titleMessageSimilarMatchesGroups": {
+    "message": "Zwei Lesezeichen gelten als ähnliche Duplikate, wenn ihre URL bis zum ersten „?“ übereinstimmt.",
+    "description": "Explain that similar dupes are those whose URLs match up to the first “?”"
+  },
   "messageEmpty": {
     "message": "$TOTAL$ leere Ordner gefunden",
     "description": "Report specified number of empty folders",
@@ -167,6 +247,10 @@
       }
     }
   },
+  "titleMessageEmpty": {
+    "message": "Die Liste kann fälschlicherweise auch Live-Lesezeichen enthalten.",
+    "description": "Explain that the list might falsely contain live bookmarks"
+  },
   "messageAll": {
     "message": "$TOTAL$ Lesezeichen gefunden",
     "description": "Report specified number of bookmarks",
@@ -176,6 +260,10 @@
         "example": "0"
       }
     }
+  },
+  "titleMessageAll": {
+    "message": "Die Liste besteht aus allen Lesezeichen mit einer nichtleeren URL.",
+    "description": "Explain that the list consists of those bookmarks with a nonempty URL"
   },
   "messageCalculating": {
     "message": "Suche",
@@ -236,10 +324,6 @@
         "example": "0"
       }
     }
-  },
-  "messageStripInfo": {
-    "message": "Entfernung von Beschreibungen aktualisiert das intern gespeicherte Erzeugungsdatum des Lesezeichens. Außerdem verschiebt es das Lesezeichen an die Stelle, an der es beim Drücken des Knopfes zur Berechnung dieser Liste war.",
-    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
   },
   "messageStripMarked": {
     "message": "Beschreibungen markierter Lesezeichen werden entfernt.",
