@@ -88,67 +88,67 @@
     "description": "Explain that all bookmarks will be unmarked"
   },
   "optionNonFolder": {
-    "message": "-- Select a folder to get corresponding buttons for marking --", // new
+    "message": "-- Выберите папку чтобы увидеть кнопки маркировки её закладок --", 
     "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
   },
   "titleSelectFolder": {
-    "message": "If a folder is selected corresponding buttons will appear for marking.", // new
+    "message": "Если папка выбрана, отображаются кнопки для маркировки её закладок.",
     "description": "Explain that selecting a folder will provide corresponding buttons for marking"
   },
   "buttonMarkFolder": {
-    "message": "Отметить все из selected folder", // changed to: "Mark all from selected folder", // new
+    "message": "Отметить все из выбраной папки",
     "description": "Button for marking all of the selected folder"
   },
   "titleButtonMarkFolder": {
-    "message":  "Отметить все закладки из selected folder.", // changed to: "Mark all bookmarks from the selected folder.", // new
+    "message":  "Отметить все закладки из выбраной папки.",
     "description": "Explain that all bookmarks of selected folder will be marked"
   },
   "buttonUnmarkFolder": {
-    "message": "Снять отметку со всех из selected folder", // changed to: "Unmark all from selected folder", // new
+    "message": "Снять отметку со всех из выбраной папки",
     "description": "Button for unmarking all of selected folder"
   },
   "titleButtonUnmarkFolder": {
-    "message": "Снять отметку со всех закладок из selected folder.", // changed to: "Unmark all bookmarks from selected folder.", // new
+    "message": "Снять отметку со всех закладок из выбраной папки.",
     "description": "Explain that all bookmarks of selected folder will be unmarked"
   },
   "buttonMarkFolderOther": {
-    "message": "Где есть закладки с selected folder - выбрать всё кроме них.", // changed to "In groups with selected folder mark all but these", // new
+    "message": "Где есть закладки из выбраной папки - выбрать всё кроме них.",
     "description": "Button for marking all but selected folder in groups with it"
   },
   "titleButtonMarkFolderOther": {
-    "message": "В группах дублей где есть закладки из selected folder будет выбрано всё, кроме них.", // changed to "Additionally the bookmarks from the selected folder will be unmarked.",, // new
+    "message": "В группах дублей где есть закладки из выбраной папки будет выбрано всё, кроме них.",
     "description": "Explain that all bookmarks of selected folder will be unmarked"
   },
   "buttonMarkFolderButFirst": {
-    "message": "Где есть закладки с selected folder - отметить только их (or exclude first)", // changed to: "In groups with selected folder unmark all others or first", // new
+    "message": "Где есть закладки из выбраной папки - отметить только их (или искл. верхнюю)",
     "description": "Button for unmarking all but selected folder or first in groups with it"
   },
   "titleButtonMarkFolderButFirst": {
-    "message": "В группах дублей, где есть закладки с selected folder, будут выбраны только они (or exclude first).", // changed to: "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the first.", // new
+    "message": "В группах дублей, где есть закладки из выбраной папки, будут выбраны только они (или исключена верхняя, если других нет).", 
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the first is unmarked"
   },
   "buttonMarkFolderButLast": {
-    "message": "Где есть закладки с selected folder - отметить только их (or exclude last)", // changed to: "In groups with selected folder unmark all others or last", // new
+    "message": "Где есть закладки из выбраной папки - отметить только их (или искл. нижнюю)",
     "description": "Button for unmarking all but selected folder or last in groups with it"
   },
   "titleButtonMarkFolderButLast": {
-    "message": "В группах дублей, где есть закладки с selected folder, будут выбраны только они (or exclude last).", // changed to: "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the last.", // new
+    "message": "В группах дублей, где есть закладки из выбраной папки, будут выбраны только они (или исключена нижняя, если других нет).",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the last is unmarked"
   },
   "buttonMarkFolderButOldest": {
-    "message": "Где есть закладки с selected folder - отметить только их (or exclude oldest)", // changed to: "In groups with selected folder unmark all others or oldest", // new
+    "message": "Где есть закладки из выбраной папки - отметить только их (или искл. старейшую)",
     "description": "Button for unmarking all but selected folder or oldest in groups with it"
   },
   "titleButtonMarkFolderButOldest": {
-    "message": "В группах дублей, где есть закладки с selected folder, будут выбраны только они (or exclude oldest).", // changed to: "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the oldest.", // new
+    "message": "В группах дублей, где есть закладки из выбраной папки, будут выбраны только они (или исключена старейшая, если других нет).",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the oldest is unmarked"
   },
   "buttonMarkFolderButNewest": {
-    "message": "Где есть закладки с selected folder - отметить только их (or exclude newest)", // changed to: "In groups with selected folder unmark all others or newest", // new
+    "message": "Где есть закладки из выбраной папки - отметить только их (или искл. новейшую)",
     "description": "Button for unmarking all but selected folder or newest in groups with it"
   },
   "titleButtonMarkFolderButNewest": {
-    "message": "В группах дублей, где есть закладки с selected folder, будут выбраны только они (or exclude newest).", // changed to: "In groups with selected folder mark all bookmarks from that folder and unmark all others. If there are no others, unmark the newest.", // new
+    "message": "В группах дублей, где есть закладки из выбраной папки, будут выбраны только они (или исключена новейшая, если других нет).",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
   "buttonRemoveMarked": {
