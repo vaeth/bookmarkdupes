@@ -61,7 +61,7 @@ function displayCount(text) {
 }
 
 function displayMessage(text, title) {
-  let message = getMessageNode();
+  const message = getMessageNode();
   message.textContent = text;
   if (title) {
     message.title = title;
@@ -72,7 +72,7 @@ function displayMessage(text, title) {
 
 function getName(folders, parent, name) {
   while (parent || (parent === 0)) {
-    let folder = folders[parent];
+    const folder = folders[parent];
     name = folder.name + ' | ' + name;
     parent = folder.parent;
   }
@@ -80,14 +80,14 @@ function getName(folders, parent, name) {
 }
 
 function appendTextNodeCol(row, text) {
-  let col = document.createElement("TD");
-  let textNode = document.createTextNode(text);
+  const col = document.createElement("TD");
+  const textNode = document.createTextNode(text);
   col.appendChild(textNode);
   row.appendChild(col);
 }
 
 function appendCheckbox(parent, id, checked, disabled) {
-  let checkbox = document.createElement("INPUT");
+  const checkbox = document.createElement("INPUT");
   checkbox.type = "checkbox";
   checkbox.checked = checked;
   checkbox.id = id;
@@ -98,13 +98,13 @@ function appendCheckbox(parent, id, checked, disabled) {
 }
 
 function appendCheckboxCol(row, id, checked, disabled) {
-  let col = document.createElement("TD");
+  const col = document.createElement("TD");
   appendCheckbox(col, id, checked, disabled);
   row.appendChild(col);
 }
 
 function appendButton(parent, id, titleId, text, titleText, enabled) {
-  let button = document.createElement("BUTTON");
+  const button = document.createElement("BUTTON");
   button.type = "button";
   button.id = id;
   button.textContent = (text ? text : browser.i18n.getMessage(id));
@@ -120,23 +120,23 @@ function appendButton(parent, id, titleId, text, titleText, enabled) {
 }
 
 function appendButtonCol(row, id, titleId, text, titleText, enabled) {
-  let col = document.createElement("TD");
+  const col = document.createElement("TD");
   appendButton(col, id, titleId, text, titleText, enabled);
   row.appendChild(col);
 }
 
 function appendButtonRow(parent, id, titleId, text, titleText, enabled) {
-  let row = document.createElement("TR");
+  const row = document.createElement("TR");
   appendButtonCol(row, id, titleId, text, titleText, enabled);
   parent.appendChild(row);
 }
 
 function addButtonsBase() {
-  let parent = getButtonsBase();
+  const parent = getButtonsBase();
   if (parent.hasChildNodes()) {  // Already done
     return;
   }
-  let row = document.createElement("TR");
+  const row = document.createElement("TR");
   appendButtonCol(row, "buttonListExactDupes", "titleButtonListExactDupes");
   appendButtonCol(row, "buttonListSimilarDupes",
     "titleButtonListSimilarDupes");
@@ -146,18 +146,18 @@ function addButtonsBase() {
 }
 
 function addButtonRemove(buttonId, titleId) {
-  let row = document.createElement("TR");
-  let col = document.createElement("TD");
+  const row = document.createElement("TR");
+  const col = document.createElement("TD");
   col.width = "50pt";
   col.style.height = "50pt";
   row.append(col);
   appendButtonCol(row, buttonId, titleId);
-  let parent = getButtonsRemove();
+  const parent = getButtonsRemove();
   parent.appendChild(row);
 }
 
 function addButtonsFolders(mode, enabled) {
-  let parent = getButtonsFolders();
+  const parent = getButtonsFolders();
   if (parent.hasChildNodes()) {  // Already done
     return;
   }
@@ -181,7 +181,7 @@ function addButtonsFolders(mode, enabled) {
 }
 
 function addSelectOption(select, content, value) {
-  let option = document.createElement("OPTION");
+  const option = document.createElement("OPTION");
   if (content) {
     option.textContent = content;
   }
@@ -195,41 +195,41 @@ function addSelectFolder(result) {
   if (!result.foldersDisplay) {
     return;
   }
-  let select = document.createElement("SELECT");
+  const select = document.createElement("SELECT");
   select.title = browser.i18n.getMessage("titleSelectFolder");
   select.id = "selectedFolder";
   addSelectOption(select, browser.i18n.getMessage("OptionNonFolder"), "'");
-  let folders = result.folders;
+  const folders = result.folders;
   for (let i = 0; i < folders.length; ++i) {
     if (!folders[i]) {
       continue;
     }
-    let folder = folders[i];
+    const folder = folders[i];
     if (!folder.ids) {
       continue;
     }
     addSelectOption(select, getName(folders, folder.parent, folder.name),
       String(i));
   }
-  let col = document.createElement("TD");
+  const col = document.createElement("TD");
   col.appendChild(select);
-  let row = document.createElement("TR");
+  const row = document.createElement("TR");
   row.appendChild(col);
-  let parent = getSelectFolder();
+  const parent = getSelectFolder();
   parent.appendChild(row);
 }
 
 function addButtonsMark(mode) {
-  let parent = getButtonsMark();
+  const parent = getButtonsMark();
   if (!mode) {
-    let row = document.createElement("TR");
-    appendButtonCol(row, "buttonMarkButFirst", "titleButtonMarkButFirst");
-    appendButtonCol(row, "buttonMarkButLast", "titleButtonMarkButLast");
-    parent.appendChild(row);
-    row = document.createElement("TR");
-    appendButtonCol(row, "buttonMarkButOldest", "titleButtonMarkButOldest");
-    appendButtonCol(row, "buttonMarkButNewest", "titleButtonMarkButNewest");
-    parent.appendChild(row);
+    const row1 = document.createElement("TR");
+    appendButtonCol(row1, "buttonMarkButFirst", "titleButtonMarkButFirst");
+    appendButtonCol(row1, "buttonMarkButLast", "titleButtonMarkButLast");
+    parent.appendChild(row1);
+    const row2 = document.createElement("TR");
+    appendButtonCol(row2, "buttonMarkButOldest", "titleButtonMarkButOldest");
+    appendButtonCol(row2, "buttonMarkButNewest", "titleButtonMarkButNewest");
+    parent.appendChild(row2);
   }
   let row = document.createElement("TR");
   appendButtonCol(row, "buttonMarkAll", "titleButtonMarkAll");
@@ -248,31 +248,31 @@ function addButtonsMode(mode, result) {
 }
 
 function addProgressButton(textId, percentage) {
-  let parent = getProgressBar();
-  if (parent.firstChild) {
-    parent.firstChild.value = percentage;
+  const bar = getProgressBar();
+  if (bar.firstChild) {
+    bar.firstChild.value = percentage;
     return;
   }
-  let progress = document.createElement("PROGRESS");
+  const progress = document.createElement("PROGRESS");
   progress.max = 100;
   progress.value = percentage;
-  parent.appendChild(progress);
-  parent = getButtonStop();
-  appendButton(parent, "buttonStop", null,
+  bar.appendChild(progress);
+  const stop = getButtonStop();
+  appendButton(stop, "buttonStop", null,
     browser.i18n.getMessage(textId), null, true);
 }
 
 function addCheckboxOptions(options, extra) {
-  let row = document.createElement("TR");
+  const row = document.createElement("TR");
   appendCheckboxCol(row, "checkboxFullUrl", options.fullUrl);
   appendTextNodeCol(row, browser.i18n.getMessage("checkboxFullUrl"));
-  let parent = getCheckboxOptions();
+  const parent = getCheckboxOptions();
   parent.appendChild(row);
   if (extra) {
-    row = document.createElement("TR");
-    appendCheckboxCol(row, "checkboxExtra", options.extra);
-    appendTextNodeCol(row, browser.i18n.getMessage("checkboxExtra"));
-    parent.appendChild(row);
+    const rowExtra = document.createElement("TR");
+    appendCheckboxCol(rowExtra, "checkboxExtra", options.extra);
+    appendTextNodeCol(rowExtra, browser.i18n.getMessage("checkboxExtra"));
+    parent.appendChild(rowExtra);
   }
 }
 
@@ -280,7 +280,7 @@ function enableButtonsOf(top, enabled) {
   if (!top.hasChildNodes()) {
     return;
   }
-  let disabled = ((enabled !== undefined) && !enabled);
+  const disabled = ((enabled !== undefined) && !enabled);
   for (let child of top.childNodes) {
     if ((child.nodeName == "BUTTON") || (child.nodeName == "INPUT")
       || (child.nodeName == "SELECT")) {
@@ -339,37 +339,51 @@ function clearWindow() {
 }
 
 function addRuler() {
-  let ruler = document.createElement("HR");
-  let col = document.createElement("TD");
+  const ruler = document.createElement("HR");
+  const col = document.createElement("TD");
   col.colSpan = 4;
   col.appendChild(ruler);
-  let row =  document.createElement("TR");
+  const row =  document.createElement("TR");
   row.appendChild(col);
-  let top = getTop();
+  const top = getTop();
   top.appendChild(row);
 }
 
 function addBookmark(bookmark, result) {
-  let row = document.createElement("TR");
+  const row = document.createElement("TR");
   appendCheckboxCol(row, bookmark.id,
     (result.checkboxes && (result.checkboxes.has(bookmark.id))));
   if (bookmark.order !== undefined) {
     appendTextNodeCol(row, String(bookmark.order));
-    let col = document.createElement("TD");
-    row.appendChild(col);
+    const dummy = document.createElement("TD");  // A dummy column for space
+    row.appendChild(dummy);
   }
-  let text = getName(result.folders, bookmark.parent, bookmark.text);
-  let url;
+  const name = getName(result.folders, bookmark.parent, bookmark.text);
+  const col = document.createElement("TD");
   if (bookmark.url) {
-    url = row.title = bookmark.url;
+    const url = bookmark.url;
+    row.title = url;
+    const link = document.createElement("A");
+    link.href = url;
+    link.target = "_blank";
+    link.textContent = name;
+    link.referrerpolicy = 'no-referrer';
+    col.appendChild(link);
+    let add;
+    if (result.options.fullUrl) {
+      add = " " + url;
+    } else if (result.options.extra && bookmark.extra) {
+      add = " (" + bookmark.extra + ")";
+    }
+    if (add) {
+      const textNode = document.createTextNode(add);
+      col.appendChild(textNode);
+    }
+    row.appendChild(col);
+  } else {
+    appendTextNodeCol(row, text);
   }
-  if (result.options.fullUrl && url) {
-    text += " (" + url + ")";
-  } else if (result.options.extra && bookmark.extra) {
-    text += " (" + bookmark.extra + ")";
-  }
-  appendTextNodeCol(row, text);
-  let top = getTop();
+  const top = getTop();
   top.appendChild(row);
 }
 
@@ -390,7 +404,7 @@ function getOrder(node) {
 }
 
 function mark(mode) {
-  let top = getTop();
+  const top = getTop();
   if (!top.hasChildNodes()) {
     return;
   }
@@ -402,7 +416,7 @@ function mark(mode) {
 }
 
 function markButFirst() {
-  let top = getTop();
+  const top = getTop();
   if (!top.hasChildNodes()) {
     return;
   }
@@ -418,7 +432,7 @@ function markButFirst() {
 }
 
 function markButLast() {
-  let top = getTop();
+  const top = getTop();
   if (!top.hasChildNodes()) {
     return;
   }
@@ -442,7 +456,7 @@ function markButLast() {
 }
 
 function markButOldest() {
-  let top = getTop();
+  const top = getTop();
   if (!top.hasChildNodes()) {
     return;
   }
@@ -454,7 +468,7 @@ function markButOldest() {
 }
 
 function markButNewest() {
-  let top = getTop();
+  const top = getTop();
   if (!top.hasChildNodes()) {
     return;
   }
@@ -469,7 +483,7 @@ function markButNewest() {
       largestSeen = 1;
       continue;
     }
-    let current = getOrder(node);
+    const current = getOrder(node);
     if (current <= largestSeen) {
       setCheck(node, true);
       continue;
@@ -493,20 +507,20 @@ function SplitNumber(text, begin) {
 }
 
 function getSelectedIds(folders) {
-  let value = getSelectedFolder();
+  const value = getSelectedFolder();
   if (!value) {
     return null;
   }
-  let ids = new Set(folders[Number(value)]);
+  const ids = new Set(folders[Number(value)]);
   return ids;
 }
 
 function markFolder(folders, checked) {
-  let ids = getSelectedIds(folders);
+  const ids = getSelectedIds(folders);
   if (!ids) {
     return;
   }
-  let top = getTop();
+  const top = getTop();
   if (!top.hasChildNodes()) {
     return;
   }
@@ -514,7 +528,7 @@ function markFolder(folders, checked) {
     if (!isCheckbox(node)) {
       continue;
     }
-    let checkbox = getCheckbox(node);
+    const checkbox = getCheckbox(node);
     if (!ids.has(checkbox.id)) {
       continue;
     }
@@ -523,11 +537,11 @@ function markFolder(folders, checked) {
 }
 
 function markFolderGroup(folders, mode) {
-  let ids = getSelectedIds(folders);
+  const ids = getSelectedIds(folders);
   if (!ids) {
     return;
   }
-  let top = getTop();
+  const top = getTop();
   if (!top.hasChildNodes()) {
     return;
   }
@@ -540,7 +554,7 @@ function markFolderGroup(folders, mode) {
   } else if (mode == "other") {
     checkedOthers = true;
   }
-  let checkedMe = !checkedOthers;
+  const checkedMe = !checkedOthers;
   let checkboxesOthers = new Array();
   let checkboxesMe = new Array();
   let groupMatches = false;
@@ -582,7 +596,7 @@ function markFolderGroup(folders, mode) {
       dateSeen = 0;
       continue;
     }
-    let checkbox = getCheckbox(node);
+    const checkbox = getCheckbox(node);
     if (!ids.has(checkbox.id)) {
       checkboxesOthers.push(checkbox);
       continue;
@@ -592,7 +606,7 @@ function markFolderGroup(folders, mode) {
     if (!checkTime) {
       continue;
     }
-    let current = getOrder(node);
+    const current = getOrder(node);
     if (dateSeen) {
       if (checkTime > 0) {
         if (current < dateSeen) {
@@ -618,7 +632,7 @@ function checkboxesToSet(result) {
 function displayDupes(exact, result) {
   clearProgressButton();
   let total = 0;
-  let groups = result.list.length;
+  const groups = result.list.length;
   let returnValue = false;
   for (let group of result.list) {
     if (returnValue) {
@@ -644,7 +658,7 @@ function displayDupes(exact, result) {
 
 function displayEmpty(result) {
   clearProgressButton();
-  let total = result.list.length;
+  const total = result.list.length;
   displayMessage(browser.i18n.getMessage("messageEmpty", String(total)),
     browser.i18n.getMessage("titleMessageEmpty"));
   if (!total) {
@@ -660,7 +674,7 @@ function displayEmpty(result) {
 
 function displayAll(result) {
   clearProgressButton();
-  let total = result.list.length;
+  const total = result.list.length;
   displayMessage(browser.i18n.getMessage("messageAll", String(total)),
     browser.i18n.getMessage("titleMessageAll"));
   if (!total) {
@@ -676,7 +690,7 @@ function displayAll(result) {
 }
 
 function sendMessageCommand(command) {
-  let message = {
+  const message = {
     command: command
   };
   browser.runtime.sendMessage(message);
@@ -688,7 +702,7 @@ function calculating(command) {
 }
 
 function pushMarked(idList) {
-  let top = getTop();
+  const top = getTop();
   if (!top.hasChildNodes()) {
     return 0;
   }
@@ -697,7 +711,7 @@ function pushMarked(idList) {
     if (!isCheckbox(node)) {
       continue;
     }
-    let checkbox = getCheckbox(node);
+    const checkbox = getCheckbox(node);
     if (!checkbox.checked) {
       continue;
     }
@@ -713,10 +727,10 @@ function pushMarked(idList) {
 function processMarked(remove) {
   displayMessage(browser.i18n.getMessage(remove ?
   "messageRemoveMarked" : "messageStripMarked"));
-  let removeList = new Array();
+  const removeList = new Array();
   pushMarked(removeList);
   clearWindow();
-  let message = {
+  const message = {
     command: (remove ? "remove" : "strip"),
     removeList: removeList
   };
@@ -724,9 +738,9 @@ function processMarked(remove) {
 }
 
 function displayProgress(textId, buttonTextId, state) {
-  let todo = state.todo;
-  let total = state.total;
-  let percentage = (100 * total) / todo;
+  const todo = state.todo;
+  const total = state.total;
+  const percentage = (100 * total) / todo;
   addProgressButton(buttonTextId, percentage);
   displayMessage(browser.i18n.getMessage(textId,
     [String(total), String(todo), String(Math.round(percentage))]))
@@ -761,9 +775,9 @@ function displayFinish(textId, state) {
 
   function addCheckboxes(message) {
       // We send an array, because a set has to be built by the client anyway
-      let checkboxes = new Array();
+      const checkboxes = new Array();
       pushMarked(checkboxes);
-      let count = checkboxes.length;
+      const count = checkboxes.length;
       if (count) {  // Send only nonempty arrays
         message.checkboxes = checkboxes;
       }
@@ -776,7 +790,7 @@ function displayFinish(textId, state) {
     }
     let currentCount;
     if (send) {
-      let message = {
+      const message = {
         command: "setCheckboxes"
       };
       currentCount = addCheckboxes(message);
@@ -796,11 +810,11 @@ function displayFinish(textId, state) {
       return;
     }
     startLock();
-    let message = {
+    const message = {
       command: "setOptions",
       fullUrl: getCheckboxFullUrl().checked
     };
-    let checkboxExtra = getCheckboxExtra();
+    const checkboxExtra = getCheckboxExtra();
     if (checkboxExtra) {
       message.extra = checkboxExtra.checked;
     }
@@ -823,9 +837,9 @@ function displayFinish(textId, state) {
   }
 
   function toggleButtonsFolders() {
-    let haveSelected = (markMode !== null);
+    const haveSelected = (markMode !== null);
     if (haveSelected) {
-      let name = getSelectedFolder();
+      const name = getSelectedFolder();
       if ((!name) || (name === "'")) {
         haveSelected = false;
       }
@@ -933,7 +947,7 @@ function displayFinish(textId, state) {
     if (firstcall) {
       addButtonsBase();
     }
-    let state = message.state;
+    const state = message.state;
     folders = count = markMode = null;
     let selectMode;
     let newMarkMode = null;

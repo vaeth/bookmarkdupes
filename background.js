@@ -23,7 +23,7 @@ function setVirginState() {
 }
 
 function sendState() {
-  let message = {
+  const message = {
     command: "state",
     state: state,
   };
@@ -44,7 +44,7 @@ function processMarked(remove, removeList) {
 
   function processFinish() {
     removeList = null;
-    let total = state.total;
+    const total = state.total;
     state = {
       mode: (remove ? "removeSuccess" : "stripSuccess"),
       total: total
@@ -54,7 +54,7 @@ function processMarked(remove, removeList) {
 
   function processError(error) {
     removeList = null;
-    let total = state.total;
+    const total = state.total;
     state = {
       mode: (remove ? "removeError" : "stripError"),
       total: total,
@@ -82,7 +82,7 @@ function processMarked(remove, removeList) {
   }
 
   function processRecurse() {
-    let current = state.total;
+    const current = state.total;
     if (current == state.todo) {
       processFinish();
       return;
@@ -100,11 +100,11 @@ function processMarked(remove, removeList) {
 }
 
 function normalizeGroup(group) {
-  let indices = new Array();
+  const indices = new Array();
   {
     let i = 0;
     for (let bookmark of group) {
-      let index = {
+      const index = {
         index: (i++),
         order: bookmark.order
       };
@@ -128,7 +128,7 @@ function normalizeGroup(group) {
 
 function normalizeFolders(folders) {
   for (let i = 0; i < folders.length; ++i) {
-    let folder = folders[i];
+    const folder = folders[i];
     if ((!folder.used) || (!folder.used.size)) {
       delete folders[i];
       continue;
@@ -137,17 +137,17 @@ function normalizeFolders(folders) {
     if ((!parent) && (parent !== 0)) {
       continue;
     }
-    let used = folder.used.size;
-    folder = folders[parent];
-    if (folder.usedByChilds) {
-       folder.usedByChilds += used;
+    const used = folder.used.size;
+    const parentFolder = folders[parent];
+    if (parentFolder.usedByChilds) {
+       parentFolder.usedByChilds += used;
     } else {
-      folder.usedByChilds = used;
+      parentFolder.usedByChilds = used;
     }
-    if (!folder.childs) {
-      folder.childs = new Set();
+    if (!parentFolder.childs) {
+      parentFolder.childs = new Set();
     }
-    folder.childs.add(i);
+    parentFolder.childs.add(i);
   }
   let display = 0;
   for (let folder of folders) {
@@ -171,7 +171,7 @@ function calculate(command) {
   let exact, folderMode, handleFunction, result, urlMap;
 
   function calculateFinish(mode) {
-    let display = normalizeFolders(result.folders);
+    const display = normalizeFolders(result.folders);
     if (!display) {
       delete result.folders;
     } else if (display > 1) {
@@ -197,7 +197,7 @@ function calculate(command) {
 
   function parentUsed(parent, id) {
     while (parent || (parent === 0)) {
-      let folder = result.folders[parent];
+      const folder = result.folders[parent];
       if (!folder.used) {
         folder.used = new Set();
       }
@@ -208,7 +208,7 @@ function calculate(command) {
 
   function parentUnused(parent, id) {
     while (parent || (parent === 0)) {
-      let folder = result.folders[parent];
+      const folder = result.folders[parent];
       if (folder.used) {
         folder.used.delete(id);
         if (!folder.used.size) {
@@ -221,7 +221,7 @@ function calculate(command) {
 
   function handleDupe(node, parent) {
     ++(result.all);
-    let url = node.url;
+    const url = node.url;
     let groupIndex = url;
     let extra;
     if (!exact) {
@@ -231,7 +231,7 @@ function calculate(command) {
         extra = url.substring(index);
       }
     }
-    let id = node.id;
+    const id = node.id;
     let group = urlMap.get(groupIndex);
     if (!group) {
       group = {
@@ -245,7 +245,7 @@ function calculate(command) {
     }
     group.ids.add(id);
     parentUsed(parent, id);
-    let bookmark = {
+    const bookmark = {
       id: id,
       order: ((node.dateAdded !== undefined) ? node.dateAdded : (-1)),
       parent: parent,
@@ -262,9 +262,9 @@ function calculate(command) {
     if (node.url || (node.type && (node.type != "folder"))) {
       return;
     }
-    let id = node.id;
+    const id = node.id;
     parentUsed(parent, id);
-    let bookmark = {
+    const bookmark = {
       id: id,
       parent: parent,
       text: node.title
@@ -273,16 +273,16 @@ function calculate(command) {
   }
 
   function handleAll(node, parent, index) {
-    let id = node.id;
+    const id = node.id;
     parentUsed(parent, id);
-    let bookmark = {
+    const bookmarkResult = {
       id: id,
       parent: parent,
       text: node.title,
       url: node.url
     };
-    result.list.push(bookmark);
-    bookmark = {
+    result.list.push(bookmarkResult);
+    const bookmark = {
       parentId: node.parentId,
       title: node.title,
       url: node.url,
@@ -308,7 +308,7 @@ function calculate(command) {
         }
         return;
       }
-      let folder = {
+      const folder = {
         name: node.title
       };
       if (node.title) {
@@ -335,11 +335,11 @@ function calculate(command) {
     result.all = 0;
     recurse(nodes[0]);
     urlMap = null;
-    let normalizeResult = new Array();
+    const normalizeResult = new Array();
     for (let group of result.list) {
       if (group.data.length < 2) {
         if (group.data.length) {
-          let bookmark = group.data[0];
+          const bookmark = group.data[0];
           parentUnused(bookmark.parent, bookmark.id);
         }
         continue;
@@ -450,3 +450,29 @@ function messageListener(message) {
 
 setVirginState();
 browser.runtime.onMessage.addListener(messageListener);
+
+function bookmarkdupesTab() {
+  const url = browser.extension.getURL("data/tab/index.html")
+
+  function selectOrCreate(tabs) {
+    for (let tab of tabs) {
+      const updateProperties = {
+        active: true
+      };
+      browser.tabs.update(tab.id, updateProperties);
+      return;
+    }
+    const createProperties = {
+      url: url,
+      active: true
+    }
+    browser.tabs.create(createProperties);
+  }
+
+  const queryInfo = {
+    url: url
+  };
+  browser.tabs.query(queryInfo).then(selectOrCreate);
+}
+
+browser.browserAction.onClicked.addListener(bookmarkdupesTab);

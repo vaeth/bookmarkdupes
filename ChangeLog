@@ -2,12 +2,15 @@
 
 *bookmarkdupes-4.0:
 	Martin Väth <martin at mvath.de>:
+	- Use tab instead of panel
+	- Display bookmarks as links
 	- Support folder selection (instead of only 2 categories)
 	- Provide buttons for not marking first/last/oldest/newest for folders
 	- Let buttons for marking folders appear only optionally.
 	  Thanks to perdolka for the idea:
 	  https://github.com/vaeth/bookmarkdupes/issues/32
 	- bugfix: mark also last group for folder/category selection
+	- internal: prefer const over let if possible
 
 	Henaro aka Ironwool:
 	- Update uk locales
