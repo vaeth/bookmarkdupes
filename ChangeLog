@@ -3,6 +3,8 @@
 *bookmarkdupes-4.0:
 	Martin Väth <martin at mvath.de>:
 	- Use tab instead of panel
+	- Speed up a lot and save memory by almost complete rewriting:
+	  In a tab there is no need to save state in a background process.
 	- Display bookmarks as links
 	- Support folder selection (instead of only 2 categories)
 	- Provide buttons for not marking first/last/oldest/newest for folders
@@ -10,6 +12,7 @@
 	  Thanks to perdolka for the idea:
 	  https://github.com/vaeth/bookmarkdupes/issues/32
 	- bugfix: mark also last group for folder/category selection
+	- fix spelling/grammar
 	- internal: prefer const over let if possible
 
 	Henaro aka Ironwool:

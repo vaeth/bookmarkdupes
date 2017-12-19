@@ -2,6 +2,9 @@
  * This project is under the GNU public license 2.0
 */
 
+// For documentation on the bookmark API see e.g.
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/
+
 "use strict";
 
 function getButtonsBase() {
@@ -53,7 +56,8 @@ function getCheckboxExtra() {
 }
 
 function getSelectedFolder() {
-  return document.getElementById("selectedFolder").value;
+  let value = document.getElementById("selectedFolder").value;
+  return (((!value) || (value === "'")) ? null : value);
 }
 
 function displayCount(text) {
@@ -191,25 +195,22 @@ function addSelectOption(select, content, value) {
   select.appendChild(option);
 }
 
-function addSelectFolder(result) {
-  if (!result.foldersDisplay) {
-    return;
-  }
+function addSelectFolder(folders) {
   const select = document.createElement("SELECT");
   select.title = browser.i18n.getMessage("titleSelectFolder");
   select.id = "selectedFolder";
   addSelectOption(select, browser.i18n.getMessage("OptionNonFolder"), "'");
-  const folders = result.folders;
-  for (let i = 0; i < folders.length; ++i) {
-    if (!folders[i]) {
+  let folderIds = new Array();
+  for (let folder of folders) {
+    if (!folder) {
       continue;
     }
-    const folder = folders[i];
-    if (!folder.ids) {
+    if (!folder.used) {
       continue;
     }
     addSelectOption(select, getName(folders, folder.parent, folder.name),
-      String(i));
+      String(folderIds.length));
+    folderIds.push(folder.used);
   }
   const col = document.createElement("TD");
   col.appendChild(select);
@@ -217,6 +218,7 @@ function addSelectFolder(result) {
   row.appendChild(col);
   const parent = getSelectFolder();
   parent.appendChild(row);
+  return folderIds;
 }
 
 function addButtonsMark(mode) {
@@ -237,14 +239,13 @@ function addButtonsMark(mode) {
   parent.appendChild(row);
 }
 
-function addButtonsMode(mode, result) {
+function addButtonsMode(mode, folders) {
   if (mode == 2) {
     addButtonRemove("buttonStripMarked", "titleButtonStripMarked");
   } else {
     addButtonRemove("buttonRemoveMarked", "titleButtonRemoveMarked");
   }
   addButtonsMark(mode);
-  addSelectFolder(result);
 }
 
 function addProgressButton(textId, percentage) {
@@ -262,15 +263,15 @@ function addProgressButton(textId, percentage) {
     browser.i18n.getMessage(textId), null, true);
 }
 
-function addCheckboxOptions(options, extra) {
+function addCheckboxOptions(extra) {
   const row = document.createElement("TR");
-  appendCheckboxCol(row, "checkboxFullUrl", options.fullUrl);
+  appendCheckboxCol(row, "checkboxFullUrl");
   appendTextNodeCol(row, browser.i18n.getMessage("checkboxFullUrl"));
   const parent = getCheckboxOptions();
   parent.appendChild(row);
   if (extra) {
     const rowExtra = document.createElement("TR");
-    appendCheckboxCol(rowExtra, "checkboxExtra", options.extra);
+    appendCheckboxCol(rowExtra, "checkboxExtra", true);
     appendTextNodeCol(rowExtra, browser.i18n.getMessage("checkboxExtra"));
     parent.appendChild(rowExtra);
   }
@@ -349,16 +350,31 @@ function addRuler() {
   top.appendChild(row);
 }
 
-function addBookmark(bookmark, result) {
+function bookmarkExtra(col, text) {
+  if (!text) {
+    if (col.children.length > 1) {
+      col.removeChild(col.lastChild);
+    }
+    return;
+  }
+  if (col.children.length > 1) {
+    col.lastChild.textContent = text;
+    return;
+  }
+  const paragraph = document.createElement("P");
+  paragraph.textContent = text;
+  col.appendChild(paragraph);
+}
+
+function addBookmark(bookmark, folders, urlList) {
   const row = document.createElement("TR");
-  appendCheckboxCol(row, bookmark.id,
-    (result.checkboxes && (result.checkboxes.has(bookmark.id))));
+  appendCheckboxCol(row, bookmark.id);
   if (bookmark.order !== undefined) {
     appendTextNodeCol(row, String(bookmark.order));
     const dummy = document.createElement("TD");  // A dummy column for space
     row.appendChild(dummy);
   }
-  const name = getName(result.folders, bookmark.parent, bookmark.text);
+  const name = getName(folders, bookmark.parent, bookmark.text);
   const col = document.createElement("TD");
   if (bookmark.url) {
     const url = bookmark.url;
@@ -369,22 +385,50 @@ function addBookmark(bookmark, result) {
     link.textContent = name;
     link.referrerpolicy = 'no-referrer';
     col.appendChild(link);
-    let add;
-    if (result.options.fullUrl) {
-      add = " " + url;
-    } else if (result.options.extra && bookmark.extra) {
-      add = " (" + bookmark.extra + ")";
-    }
-    if (add) {
-      const textNode = document.createTextNode(add);
-      col.appendChild(textNode);
+    if (urlList) {
+      col.id = "bookmarkUrl" + String(urlList.length);
+      const urlListEntry = {
+        url: url
+      };
+      if (bookmark.extra) {
+        const extra = bookmark.extra;
+        urlListEntry.extra = extra;
+        bookmarkExtra(col, extra);
+      }
+      urlList.push(urlListEntry);
     }
     row.appendChild(col);
   } else {
-    appendTextNodeCol(row, text);
+    appendTextNodeCol(row, name);
   }
   const top = getTop();
   top.appendChild(row);
+}
+
+function addExtraText(urlList) {
+  if (!urlList) {
+    return;
+  }
+  const checkboxFullUrl = getCheckboxFullUrl();
+  const fullUrl = (checkboxFullUrl && checkboxFullUrl.checked);
+  let extra;
+  if (!fullUrl) {
+    const checkboxExtra = getCheckboxExtra();
+    extra = (checkboxExtra && checkboxExtra.checked);
+  }
+  for (let i = 0; i < urlList.length; ++i) {
+    const col = document.getElementById("bookmarkUrl" + String(i))
+    let text;
+    if (fullUrl || extra) {
+      const urlListEntry = urlList[i];
+      if (fullUrl) {
+        text = (urlListEntry.url ? urlListEntry.url : null);
+      } else {
+        text = (urlListEntry.extra ? urlListEntry.extra : null);
+      }
+    }
+    bookmarkExtra(col, text);
+  }
 }
 
 function getCheckbox(node) {
@@ -506,17 +550,16 @@ function SplitNumber(text, begin) {
   return Number(text.substring(begin.length));
 }
 
-function getSelectedIds(folders) {
+function getSelectedIds(folderIds) {
   const value = getSelectedFolder();
   if (!value) {
     return null;
   }
-  const ids = new Set(folders[Number(value)]);
-  return ids;
+  return folderIds[Number(value)];
 }
 
-function markFolder(folders, checked) {
-  const ids = getSelectedIds(folders);
+function markFolder(folderIds, checked) {
+  const ids = getSelectedIds(folderIds);
   if (!ids) {
     return;
   }
@@ -536,8 +579,8 @@ function markFolder(folders, checked) {
   }
 }
 
-function markFolderGroup(folders, mode) {
-  const ids = getSelectedIds(folders);
+function markFolderGroup(folderIds, mode) {
+  const ids = getSelectedIds(folderIds);
   if (!ids) {
     return;
   }
@@ -620,93 +663,14 @@ function markFolderGroup(folders, mode) {
     dateMatch = checkboxesMe.length;
   }
   MarkGroup();
-  checkboxesOthers = checkboxesMe = null;  // free closures
 }
 
-function checkboxesToSet(result) {
-  if (result.checkboxes) {
-    result.checkboxes = new Set(result.checkboxes);
-  }
-}
-
-function displayDupes(exact, result) {
-  clearProgressButton();
-  let total = 0;
-  const groups = result.list.length;
-  let returnValue = false;
-  for (let group of result.list) {
-    if (returnValue) {
-      addRuler();
-    } else {
-      returnValue = true;
-      addButtonsMode(0, result);
-      addCheckboxOptions(result.options, !exact);
-      checkboxesToSet(result);
-    }
-    total += group.length;
-    for (let bookmark of group) {
-      addBookmark(bookmark, result);
-    }
-  }
-  displayMessage(browser.i18n.getMessage((exact ?
-      "messageExactMatchesGroups" : "messageSimilarMatchesGroups"),
-      [String(total), String(groups), String(result.all)]),
-    browser.i18n.getMessage((exact ?
-      "titleMessageExactMatchesGroups" : "titleMessageSimilarMatchesGroups")));
-  return returnValue;
-}
-
-function displayEmpty(result) {
-  clearProgressButton();
-  const total = result.list.length;
-  displayMessage(browser.i18n.getMessage("messageEmpty", String(total)),
-    browser.i18n.getMessage("titleMessageEmpty"));
-  if (!total) {
-    return false;
-  }
-  addButtonsMode(1, result);
-  checkboxesToSet(result);
-  for (let bookmark of result.list) {
-    addBookmark(bookmark, result);
-  }
-  return true;
-}
-
-function displayAll(result) {
-  clearProgressButton();
-  const total = result.list.length;
-  displayMessage(browser.i18n.getMessage("messageAll", String(total)),
-    browser.i18n.getMessage("titleMessageAll"));
-  if (!total) {
-    return false;
-  }
-  addButtonsMode(2, result);
-  addCheckboxOptions(result.options);
-  checkboxesToSet(result);
-  for (let bookmark of result.list) {
-    addBookmark(bookmark, result);
-  }
-  return true;
-}
-
-function sendMessageCommand(command) {
-  const message = {
-    command: command
-  };
-  browser.runtime.sendMessage(message);
-}
-
-function calculating(command) {
-  clearWindow();
-  sendMessageCommand(command);
-}
-
-function pushMarked(idList) {
+function getMarked(countOnly) {
+  let marked = (countOnly ? 0 : new Array());
   const top = getTop();
   if (!top.hasChildNodes()) {
-    return 0;
+    return marked;
   }
-  let count = 0;
   for (let node of top.childNodes) {
     if (!isCheckbox(node)) {
       continue;
@@ -715,53 +679,443 @@ function pushMarked(idList) {
     if (!checkbox.checked) {
       continue;
     }
-    if (idList) {
-      idList.push(checkbox.id);
+    if (countOnly) {
+      ++marked;
     } else {
-      ++count;
+      marked.push(checkbox.id);
     }
   }
-  return count;
+  return marked;
 }
 
-function processMarked(remove) {
-  displayMessage(browser.i18n.getMessage(remove ?
-  "messageRemoveMarked" : "messageStripMarked"));
-  const removeList = new Array();
-  pushMarked(removeList);
-  clearWindow();
-  const message = {
-    command: (remove ? "remove" : "strip"),
-    removeList: removeList
-  };
-  browser.runtime.sendMessage(message);
-}
-
-function displayProgress(textId, buttonTextId, state) {
-  const todo = state.todo;
-  const total = state.total;
+function displayProgress(textId, buttonTextId, total, todo) {
   const percentage = (100 * total) / todo;
   addProgressButton(buttonTextId, percentage);
   displayMessage(browser.i18n.getMessage(textId,
     [String(total), String(todo), String(Math.round(percentage))]))
 }
 
-function displayFinish(textId, state) {
-  clearProgressButton();
-  if (state.error) {
+function displayEndProgress(textId, total, error) {
+  clearWindow();
+  if (error) {
     displayMessage(browser.i18n.getMessage(textId,
-      [state.error, String(state.total)]));
+      [error, String(total)]));
   } else {
-    displayMessage(browser.i18n.getMessage(textId, String(state.total)));
+    displayMessage(browser.i18n.getMessage(textId, String(total)));
   }
 }
 
-{
-  let firstcall = true;
-  let lock = true;
-  let count = null;
-  let markMode = null;
+function normalizeGroup(group) {
+  const indices = new Array();
+  let i = 0;
+  for (let bookmark of group) {
+    const index = {
+      index: (i++),
+      order: bookmark.order
+    };
+    indices.push(index);
+  }
+  indices.sort(function (a, b) {
+    if (a.order > b.order) {
+      return 1;
+    }
+    if (a.order < b.order) {
+      return -1;
+    }
+    return ((a.index > b.index) ? 1 : -1);
+  });
+  let order = 0;
+  for (let index of indices) {
+    group[index.index].order = ++order;
+  }
+}
+
+function normalizeFolders(folders) {
+  for (let i = 0; i < folders.length; ++i) {
+    const folder = folders[i];
+    if ((!folder.used) || (!folder.used.size)) {
+      delete folders[i];
+      continue;
+    }
+    parent = folder.parent;
+    if ((!parent) && (parent !== 0)) {
+      continue;
+    }
+    const used = folder.used.size;
+    const parentFolder = folders[parent];
+    if (parentFolder.usedByChilds) {
+       parentFolder.usedByChilds += used;
+    } else {
+      parentFolder.usedByChilds = used;
+    }
+    if (!parentFolder.childs) {
+      parentFolder.childs = new Set();
+    }
+    parentFolder.childs.add(i);
+  }
+  let display = 0;
+  for (let folder of folders) {
+    if (!folder) {
+      continue;
+    }
+    if ((folder.childs && (folder.childs.size > 1)) ||
+        (folder.used && folder.used.size && ((!folder.usedByChilds)
+        || (folder.used.size > folder.usedByChilds)))) {
+      ++display;
+    }
+    delete folder.childs;
+    delete folder.usedByChilds;
+  }
+  return display;
+}
+
+function calculate(command, state, callback) {
+  let similar;
+  let folderMode;
+  let handleFunction;
+  let urlMap;
+  let result;
   let folders;
+  let allCount;
+  let urlList;
+
+  function calculateError(error) {
+    displayMessage("messageCalculateError", error);
+    callback();
+  }
+
+  function calculateFinish() {
+    if (urlList && urlList.length) {
+      state.urlList = urlList;
+    }
+    callback();
+  }
+
+  function parentUsed(parent, id) {
+    while (parent || (parent === 0)) {
+      const folder = folders[parent];
+      if (!folder.used) {
+        folder.used = new Set();
+      }
+      folder.used.add(id);
+      parent = folder.parent;
+    }
+  }
+
+  function parentUnused(parent, id) {
+    while (parent || (parent === 0)) {
+      const folder = folders[parent];
+      if (folder.used) {
+        folder.used.delete(id);
+        if (!folder.used.size) {
+          delete folder.used;
+        }
+      }
+      parent = folder.parent;
+    }
+  }
+
+  function handleDupe(node, parent) {
+    ++allCount;
+    const url = node.url;
+    let groupIndex = url;
+    let extra;
+    if (similar) {
+      let index = groupIndex.indexOf("?");
+      if (index > 0) {
+        groupIndex = groupIndex.substring(0, index);
+        extra = url.substring(index);
+      }
+    }
+    const id = node.id;
+    let group = urlMap.get(groupIndex);
+    if (!group) {
+      group = new Array();
+      result.push(group);
+      urlMap.set(groupIndex, group);
+    }
+    parentUsed(parent, id);
+    const bookmark = {
+      id: id,
+      order: ((node.dateAdded !== undefined) ? node.dateAdded : (-1)),
+      parent: parent,
+      text: node.title,
+      url: url
+    };
+    if (extra !== undefined) {
+      bookmark.extra = extra;
+    }
+    group.push(bookmark);
+  }
+
+  function handleEmpty(node, parent) {
+    if (node.url || (node.type && (node.type != "folder"))) {
+      return;
+    }
+    const id = node.id;
+    parentUsed(parent, id);
+    const bookmark = {
+      id: id,
+      parent: parent,
+      text: node.title
+    };
+    result.push(bookmark);
+  }
+
+  function handleAll(node, parent, index) {
+    const id = node.id;
+    parentUsed(parent, id);
+    const bookmarkResult = {
+      id: id,
+      parent: parent,
+      text: node.title,
+      url: node.url
+    };
+    result.push(bookmarkResult);
+    const bookmark = {
+      parentId: node.parentId,
+      title: node.title,
+      url: node.url,
+      index: ((node.index !== undefined) ? node.index : index)
+    };
+    if (node.type !== undefined) {
+      bookmark.type = node.type;
+    }
+    state.bookmarkMap.set(id, bookmark);
+  }
+
+  function recurse(node) {
+    function recurseMain(node, parent, index) {
+      if ((!node.children) || (!node.children.length)) {
+        if ((parent !== null) && !node.unmodifable) {
+          if (folderMode) {
+            handleFunction(node, parent);
+            return;
+          } else if (node.url && ((!node.type) || (node.type == "bookmark")) &&
+              (node.url.substr(0, 6) !== "place:")) {
+            handleFunction(node, parent, index);
+          }
+        }
+        return;
+      }
+      const folder = {
+        name: node.title
+      };
+      if (node.title) {
+        if (parent !== null) {
+          folder.parent = parent;
+        }
+        parent = folders.length;
+        folders.push(folder);
+      }
+      index = 0;
+      for (let child of node.children) {
+        recurseMain(child, parent, ++index);
+      }
+      if (node.title && !folder.used) {
+        folders.pop();
+      }
+    }
+
+    recurseMain(node, null, 0);
+  }
+
+  function addButtons(mode) {
+    urlList = new Array();
+    state.count = true;
+    addButtonsMode(mode);
+    const display = normalizeFolders(folders);
+    if (display > 1) {
+      state.folderIds = addSelectFolder(folders);
+      state.markFolders = mode;
+    }
+  }
+
+  function addBookmarks(bookmarkList) {
+    for (let bookmark of bookmarkList) {
+      addBookmark(bookmark, folders, urlList);
+    }
+  }
+
+  function calculateDupes(nodes) {
+    urlMap = new Map();
+    allCount = 0;
+    recurse(nodes[0]);
+    let groupNumber = 0;
+    let total = 0;
+    for (let i = 0; i < result.length; ++i) {
+      const group = result[i];
+      if (group.length < 2) {
+        if (group.length) {
+          const bookmark = group[0];
+          parentUnused(bookmark.parent, bookmark.id);
+        }
+        delete result[i];
+        continue;
+      }
+      normalizeGroup(group);
+      ++groupNumber;
+      total += group.length;
+    }
+    let message, title;
+    if (similar) {
+      message = "messageSimilarMatchesGroups";
+      title = "titleMessageSimilarMatchesGroups"
+    } else {
+      message = "messageExactMatchesGroups";
+      title = "titleMessageExactMatchesGroups"
+    }
+    displayMessage(browser.i18n.getMessage(message,
+      [String(total), String(groupNumber), String(allCount)]),
+      browser.i18n.getMessage(title));
+    if (groupNumber) {
+      addButtons(0);
+      addCheckboxOptions(similar);
+    }
+    let ruler = false;
+    for (let group of result) {
+      if (!group) {
+        continue;
+      }
+      if (ruler) {
+        addRuler();
+      } else {
+        ruler = true;
+      }
+      addBookmarks(group);
+    }
+    calculateFinish();
+  }
+
+  function calculateEmpty(nodes) {
+    recurse(nodes[0]);
+    const total = result.length;
+    displayMessage(browser.i18n.getMessage("messageEmpty", String(total)),
+      browser.i18n.getMessage("titleMessageEmpty"));
+    if (total) {
+      addButtons(1);
+      addBookmarks(result);
+    }
+    calculateFinish();
+  }
+
+  function calculateAll(nodes) {
+    state.bookmarkMap = new Map();
+    recurse(nodes[0]);
+    const total = result.length;
+    displayMessage(browser.i18n.getMessage("messageAll", String(total)),
+      browser.i18n.getMessage("titleMessageAll"));
+    if (total) {
+      addButtons(2);
+      addCheckboxOptions();
+      addBookmarks(result);
+    }
+    calculateFinish();
+  }
+
+  clearWindow();
+  displayMessage(browser.i18n.getMessage("messageCalculating"));
+  let mainFunction;
+  folderMode = false;
+  switch (command) {
+    case "similar":
+      similar = true;
+      // fallthrough
+    case "exact":
+      mainFunction = calculateDupes;
+      handleFunction = handleDupe;
+      break;
+    case "empty":
+      folderMode = true;
+      mainFunction = calculateEmpty;
+      handleFunction = handleEmpty;
+      break;
+    case "all":
+      mainFunction = calculateAll;
+      handleFunction = handleAll;
+      break;
+    default:  // should not happen
+      return;  // it is a bug if we get here
+  }
+  folders = new Array();
+  result = new Array();
+  browser.bookmarks.getTree().then(mainFunction, calculateError);
+}
+
+function removeFolder(id, callback, errorCallback) {
+  return browser.bookmarks.remove(id).then(callback, errorCallback);
+}
+
+function stripBookmark(id, bookmarkData, callback, errorCallback) {
+  return browser.bookmarks.create(bookmarkData).then(function () {
+    browser.bookmarks.remove(id).then(callback, errorCallback);
+  }, errorCallback);
+}
+
+function processMarked(stopPressed, callback, bookmarkMap) {
+  const marked = getMarked();
+  const todo = marked.length;
+  let total = 0;
+
+  let finishId;
+  let progress;
+  let process;
+
+  if (bookmarkMap) {
+    displayMessage(browser.i18n.getMessage("messageStripMarked"));
+    finishId = "messageStripSuccess";
+    progress = function () {
+      displayProgress("messageStripProgress", "buttonStopStripping",
+        total, todo);
+      return stopPressed();
+    };
+    process = function (id, next) {
+      stripBookmark(id, bookmarkMap.get(id), next, function (error) {
+        displayEndProgress("messageStripError", total);
+        callback();
+      });
+    };
+  } else {
+    displayMessage(browser.i18n.getMessage("messageRemoveMarked"));
+    finishId = "messageRemoveSuccess";
+    progress = function () {
+      displayProgress("messageRemoveProgress", "buttonStopRemoving",
+        total, todo);
+      return stopPressed();
+    };
+    process = function (id, next) {
+      removeFolder(id, next, function (error) {
+        displayEndProgress("messageRemoveError", total);
+        callback();
+      });
+    };
+  }
+
+  function finish() {
+    displayEndProgress(finishId, total);
+    callback();
+  }
+
+  function recurse() {
+    if ((total == todo) || progress()) {
+      finish();
+      return;
+    }
+    const id = marked[total++];  // store first to avoid ambiguous ++
+    process(id, recurse);
+  }
+
+  if (!marked.length) {
+    finish();
+    return;
+  }
+  recurse();
+}
+
+{
+  // state variables
+  let lock = true;
+  let state = {};
 
   function startLock() {
     lock = true;
@@ -773,54 +1127,30 @@ function displayFinish(textId, state) {
     enableButtons();
   }
 
-  function addCheckboxes(message) {
-      // We send an array, because a set has to be built by the client anyway
-      const checkboxes = new Array();
-      pushMarked(checkboxes);
-      const count = checkboxes.length;
-      if (count) {  // Send only nonempty arrays
-        message.checkboxes = checkboxes;
-      }
-      return count;
+  function stopPressed() {
+    return (state.stop ? true : false);
   }
 
-  function countMarked(send) {
-    if (count === null) {
+  function endLockReset() {
+    state = {};
+    endLock();
+  }
+
+  function count() {
+    if (!state.count) {
       return;
     }
-    let currentCount;
-    if (send) {
-      const message = {
-        command: "setCheckboxes"
-      };
-      currentCount = addCheckboxes(message);
-      browser.runtime.sendMessage(message);
-    } else {
-      currentCount = pushMarked();
-    }
-    if (currentCount == count) {
+    const currentCount = getMarked(true);
+    if (currentCount === state.lastcount) {
       return;
     }
-    count = currentCount;
+    state.lastcount = currentCount;
     displayCount(browser.i18n.getMessage("messageCount", currentCount));
   }
 
-  function setCheckboxOptions() {
-    if (lock) {
-      return;
-    }
-    startLock();
-    const message = {
-      command: "setOptions",
-      fullUrl: getCheckboxFullUrl().checked
-    };
-    const checkboxExtra = getCheckboxExtra();
-    if (checkboxExtra) {
-      message.extra = checkboxExtra.checked;
-    }
-    addCheckboxes(message);
-    clearWindow();
-    browser.runtime.sendMessage(message);
+  function endLockCount() {
+    count();
+    endLock();
   }
 
   function checkboxListener(event) {
@@ -830,17 +1160,17 @@ function displayFinish(textId, state) {
     switch (event.target.id) {
       case "checkboxFullUrl":
       case "checkboxExtra":
-        setCheckboxOptions();
+        addExtraText(state.urlList);
         return;
     }
-    countMarked(true);
+    count();
   }
 
   function toggleButtonsFolders() {
-    const haveSelected = (markMode !== null);
+    let haveSelected = state.hasOwnProperty("markFolders");
     if (haveSelected) {
       const name = getSelectedFolder();
-      if ((!name) || (name === "'")) {
+      if (!name) {
         haveSelected = false;
       }
     }
@@ -848,7 +1178,7 @@ function displayFinish(textId, state) {
       clearButtonsFolders();
       return;
     }
-    addButtonsFolders(markMode, !lock);
+    addButtonsFolders(state.markFolders, !lock);
   }
 
   function selectListener(event) {
@@ -866,158 +1196,103 @@ function displayFinish(textId, state) {
       return;
     }
     if (event.target.id == "buttonStop") {
-      sendMessageCommand("stop");
+      state.stop = true;
       return;
     }
     if (lock || (event.button && (event.button != 1)) ||
       (event.buttons && (event.buttons != 1))) {
       return;
     }
-    startLock();
     switch (event.target.id) {
       case "buttonListExactDupes":
-        calculating("calculateExactDupes");
+        startLock();
+        state = {};
+        calculate("exact", state, endLockCount);
         return;
       case "buttonListSimilarDupes":
-        calculating("calculateSimilarDupes");
+        startLock();
+        state = {};
+        calculate("similar", state, endLockCount);
         return;
       case "buttonListEmpty":
-        calculating("calculateEmptyFolder");
+        startLock();
+        state = {};
+        calculate("empty", state, endLockCount);
         return;
       case "buttonListAll":
-        calculating("calculateAll");
+        startLock();
+        state = {};
+        calculate("all", state, endLockCount);
         return;
       case "buttonRemoveMarked":
-        processMarked(true);
+        startLock();
+        processMarked(stopPressed, endLockReset);
         return;
       case "buttonStripMarked":
-        processMarked(false);
+        startLock();
+        processMarked(stopPressed, endLockReset, state.bookmarkMap);
         return;
       case "buttonMarkAll":
+        startLock();
         mark(true);
         break;
       case "buttonMarkButFirst":
+        startLock();
         markButFirst();
         break;
       case "buttonMarkButLast":
+        startLock();
         markButLast();
         break;
       case "buttonMarkButOldest":
+        startLock();
         markButOldest();
         break;
       case "buttonMarkButNewest":
+        startLock();
         markButNewest();
         break;
       case "buttonUnmarkAll":
+        startLock();
         mark(false);
         break;
       case "buttonMarkFolder":
-        markFolder(folders, true);
+        startLock();
+        markFolder(state.folderIds, true);
         break;
       case "buttonUnmarkFolder":
-        markFolder(folders, false);
+        startLock();
+        markFolder(state.folderIds, false);
         break;
       case "buttonMarkFolderOther":
-        markFolderGroup(folders, "other");
+        startLock();
+        markFolderGroup(state.folderIds, "other");
         break;
       case "buttonMarkFolderButFirst":
-        markFolderGroup(folders, "first");
+        startLock();
+        markFolderGroup(state.folderIds, "first");
         break;
       case "buttonMarkFolderButLast":
-        markFolderGroup(folders, "last");
+        startLock();
+        markFolderGroup(state.folderIds, "last");
         break;
       case "buttonMarkFolderButOldest":
-        markFolderGroup(folders, "oldest");
+        startLock();
+        markFolderGroup(state.folderIds, "oldest");
         break;
       case "buttonMarkFolderButNewest":
-        markFolderGroup(folders, "newest");
+        startLock();
+        markFolderGroup(state.folderIds, "newest");
         break;
-      case "checkboxFullUrl":
-        endLock();
+      default:  // checkboxes: handled by checkboxListener()
         return;
     }
-    countMarked(true);
-    endLock();
+    endLockCount();
   }
 
-  function messageListener(message) {
-    if (message.command !== "state") {
-      return;
-    }
-    if (firstcall) {
-      addButtonsBase();
-    }
-    const state = message.state;
-    folders = count = markMode = null;
-    let selectMode;
-    let newMarkMode = null;
-    switch (state.mode) {
-      case "virgin":
-        endLock();
-        return;
-      case "removeProgress":
-        displayProgress("messageRemoveProgress", "buttonStopRemoving", state);
-        return;
-      case "stripProgress":
-        displayProgress("messageStripProgress", "buttonStopStripping", state);
-        return;
-      case "calculatingProgress":
-        displayMessage(browser.i18n.getMessage("messageCalculating"));
-        return;
-      case "calculatedDupesExact":
-        newMarkMode = 0;
-        selectMode = displayDupes(true, state.result);
-        break;
-      case "calculatedDupesSimilar":
-        newMarkMode = 0;
-        selectMode = displayDupes(false, state.result);
-        break;
-      case "calculatedEmptyFolder":
-        newMarkMode = 1;
-        selectMode = displayEmpty(state.result);
-        break;
-      case "calculatedAll":
-        newMarkMode = 1;
-        selectMode = displayAll(state.result);
-        break;
-      case "removeSuccess":
-        displayFinish("messageRemoveSuccess", state);
-        break;
-      case "stripSuccess":
-        displayFinish("messageStripSuccess", state);
-        break;
-      case "removeError":
-        displayFinish("messageRemoveError", state);
-        break;
-      case "stripError":
-        displayFinish("messageStripError", state);
-        break;
-      case "calculateError":
-        displayFinish("messageCalculateError", state);
-        break;
-      default:  // should not happen
-        displayMessage(state.mode);  // it is a bug if we get here
-        return;
-    }
-    if (!selectMode) {
-      sendMessageCommand("finish");
-      return;
-    }
-    markMode = newMarkMode;
-    count = -1;
-    countMarked(false);
-    if (state.result && state.result.foldersDisplay) {
-      folders = new Array();
-      for (let folder of state.result.folders) {
-        folders.push((folder && folder.ids) ? folder.ids : null);
-      }
-    }
-    endLock();
-  }
-
+  addButtonsBase();
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);
   document.addEventListener("change", selectListener);
-  browser.runtime.onMessage.addListener(messageListener);
+  endLock();
 }
-sendMessageCommand("sendState");
