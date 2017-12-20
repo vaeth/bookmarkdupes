@@ -11,6 +11,7 @@
 	- Let buttons for marking folders appear only optionally.
 	  Thanks to perdolka for the idea:
 	  https://github.com/vaeth/bookmarkdupes/issues/32
+	- Display list titles in more places
 	- bugfix: mark also last group for folder/category selection
 	- fix spelling/grammar
 	- internal: prefer const over let if possible

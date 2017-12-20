@@ -60,8 +60,20 @@ function getSelectedFolder() {
   return (((!value) || (value === "'")) ? null : value);
 }
 
-function displayCount(text) {
-  document.getElementById("textCount").textContent = text;
+function getTextCount() {
+  return document.getElementById("textCount");
+}
+
+function displayCount(text, title) {
+  let count = getTextCount();
+  count.textContent = text;
+  if (title) {
+    count.title = title;
+    return;
+  }
+  if (title !== undefined) {
+    count.removeAttribute("TITLE");
+  }
 }
 
 function displayMessage(text, title) {
@@ -83,17 +95,25 @@ function getName(folders, parent, name) {
   return name;
 }
 
-function appendTextNodeCol(row, text) {
+function appendTextNodeCol(row, text, title) {
   const col = document.createElement("TD");
   const textNode = document.createTextNode(text);
   col.appendChild(textNode);
+  if (title) {
+    col.title = title;
+  }
   row.appendChild(col);
 }
 
-function appendCheckbox(parent, id, checked, disabled) {
+function appendCheckbox(parent, id, title, checked, disabled) {
   const checkbox = document.createElement("INPUT");
   checkbox.type = "checkbox";
-  checkbox.checked = checked;
+  if (title) {
+    checkbox.title = title;
+  }
+  if (checked) {
+    checkbox.checked = checked;
+  }
   checkbox.id = id;
   if (disabled === true) {
     checkbox.disabled = true;
@@ -101,9 +121,9 @@ function appendCheckbox(parent, id, checked, disabled) {
   parent.appendChild(checkbox);
 }
 
-function appendCheckboxCol(row, id, checked, disabled) {
+function appendCheckboxCol(row, id, title, checked, disabled) {
   const col = document.createElement("TD");
-  appendCheckbox(col, id, checked, disabled);
+  appendCheckbox(col, id, title, checked, disabled);
   row.appendChild(col);
 }
 
@@ -263,16 +283,17 @@ function addProgressButton(textId, percentage) {
     browser.i18n.getMessage(textId), null, true);
 }
 
-function addCheckboxOptions(extra) {
+function addCheckboxExtra(title, extra) {
   const row = document.createElement("TR");
-  appendCheckboxCol(row, "checkboxFullUrl");
-  appendTextNodeCol(row, browser.i18n.getMessage("checkboxFullUrl"));
+  appendCheckboxCol(row, "checkboxFullUrl", title, false, true);
+  appendTextNodeCol(row, browser.i18n.getMessage("checkboxFullUrl"), title);
   const parent = getCheckboxOptions();
   parent.appendChild(row);
   if (extra) {
     const rowExtra = document.createElement("TR");
-    appendCheckboxCol(rowExtra, "checkboxExtra", true);
-    appendTextNodeCol(rowExtra, browser.i18n.getMessage("checkboxExtra"));
+    appendCheckboxCol(rowExtra, "checkboxExtra", title, true, true);
+    appendTextNodeCol(rowExtra, browser.i18n.getMessage("checkboxExtra"),
+      title);
     parent.appendChild(rowExtra);
   }
 }
@@ -329,7 +350,7 @@ function clearButtonsMode() {
 }
 
 function clearBookmarks() {
-  displayCount("");
+  displayCount("", null);
   clearItem(getTop());
 }
 
@@ -965,12 +986,15 @@ function calculate(command, state, callback) {
       message = "messageExactMatchesGroups";
       title = "titleMessageExactMatchesGroups"
     }
-    displayMessage(browser.i18n.getMessage(message,
-      [String(total), String(groupNumber), String(allCount)]),
-      browser.i18n.getMessage(title));
+    title = browser.i18n.getMessage(title);
     if (groupNumber) {
       addButtons(0);
-      addCheckboxOptions(similar);
+      addCheckboxExtra(title, similar);
+    }
+    displayMessage(browser.i18n.getMessage(message,
+      [String(total), String(groupNumber), String(allCount)]), title);
+    if (groupNumber) {
+      displayCount(" ", title);
     }
     let ruler = false;
     for (let group of result) {
@@ -990,10 +1014,13 @@ function calculate(command, state, callback) {
   function calculateEmpty(nodes) {
     recurse(nodes[0]);
     const total = result.length;
-    displayMessage(browser.i18n.getMessage("messageEmpty", String(total)),
-      browser.i18n.getMessage("titleMessageEmpty"));
+    const title = browser.i18n.getMessage("titleMessageEmpty");
     if (total) {
       addButtons(1);
+    }
+    displayMessage(browser.i18n.getMessage("messageEmpty", String(total)),
+      title);
+    if (total) {
       addBookmarks(result);
     }
     calculateFinish();
@@ -1003,11 +1030,15 @@ function calculate(command, state, callback) {
     state.bookmarkMap = new Map();
     recurse(nodes[0]);
     const total = result.length;
-    displayMessage(browser.i18n.getMessage("messageAll", String(total)),
-      browser.i18n.getMessage("titleMessageAll"));
+    const title = browser.i18n.getMessage("titleMessageAll");
     if (total) {
       addButtons(2);
-      addCheckboxOptions();
+      addCheckboxExtra(title);
+    }
+    displayMessage(browser.i18n.getMessage("messageAll", String(total)),
+      title);
+    if (total) {
+      displayCount(" ", title);
       addBookmarks(result);
     }
     calculateFinish();
