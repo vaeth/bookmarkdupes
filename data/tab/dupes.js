@@ -686,8 +686,25 @@ function markFolderGroup(folderIds, mode) {
   MarkGroup();
 }
 
-function getMarked(countOnly) {
-  let marked = (countOnly ? 0 : new Array());
+function isMarked(id) {
+  const checkbox = document.getElementById(id);
+  return (checkbox && checkbox.checked);
+}
+
+function getMarked(returnSet) {
+  let marked;
+  let adding;
+  if (returnSet) {
+    marked = new Set();
+    adding = function (id) {
+      marked.add(id);
+    }
+  } else {
+    marked = new Array();
+    adding = function (id) {
+      marked.push(id);
+    }
+  }
   const top = getTop();
   if (!top.hasChildNodes()) {
     return marked;
@@ -697,13 +714,8 @@ function getMarked(countOnly) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    if (!checkbox.checked) {
-      continue;
-    }
-    if (countOnly) {
-      ++marked;
-    } else {
-      marked.push(checkbox.id);
+    if (checkbox.checked) {
+      adding(checkbox.id);
     }
   }
   return marked;
@@ -943,7 +955,7 @@ function calculate(command, state, callback) {
 
   function addButtons(mode) {
     urlList = new Array();
-    state.count = true;
+    state.marked = new Set();
     addButtonsMode(mode);
     const display = normalizeFolders(folders);
     if (display > 1) {
@@ -1145,16 +1157,15 @@ function processMarked(stopPressed, callback, bookmarkMap) {
 
 {
   // state variables
-  let lock = true;
   let state = {};
 
   function startLock() {
-    lock = true;
+    state.lock = true;
     enableButtons(false);
   }
 
   function endLock() {
-    lock = false;
+    state.lock = false;
     enableButtons();
   }
 
@@ -1162,25 +1173,39 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     return (state.stop ? true : false);
   }
 
+  function startLockReset() {
+    state = {};
+    startLock();
+  }
+
   function endLockReset() {
     state = {};
     endLock();
   }
 
-  function count() {
-    if (!state.count) {
+  function marked(id) {
+    if (!state.marked) {
       return;
     }
-    const currentCount = getMarked(true);
-    if (currentCount === state.lastcount) {
+    if (id) {
+      if (isMarked(id)) {
+        state.marked.add(id);
+      } else {
+        state.marked.delete(id);
+      }
+    } else {
+      state.marked = getMarked(true);
+    }
+    const count = state.marked.size;
+    if (count === state.lastCount) {
       return;
     }
-    state.lastcount = currentCount;
-    displayCount(browser.i18n.getMessage("messageCount", currentCount));
+    state.lastCount = count;
+    displayCount(browser.i18n.getMessage("messageCount", count));
   }
 
-  function endLockCount() {
-    count();
+  function endLockMarked() {
+    marked();
     endLock();
   }
 
@@ -1193,8 +1218,10 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       case "checkboxExtra":
         addExtraText(state.urlList);
         return;
+      default:  // bookmark checkbox id
+        marked(event.target.id);
+        return;
     }
-    count();
   }
 
   function toggleButtonsFolders() {
@@ -1209,7 +1236,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       clearButtonsFolders();
       return;
     }
-    addButtonsFolders(state.markFolders, !lock);
+    addButtonsFolders(state.markFolders, !state.lock);
   }
 
   function selectListener(event) {
@@ -1230,30 +1257,26 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       state.stop = true;
       return;
     }
-    if (lock || (event.button && (event.button != 1)) ||
+    if (state.lock || (event.button && (event.button != 1)) ||
       (event.buttons && (event.buttons != 1))) {
       return;
     }
     switch (event.target.id) {
       case "buttonListExactDupes":
-        startLock();
-        state = {};
-        calculate("exact", state, endLockCount);
+        startLockReset();
+        calculate("exact", state, endLockMarked);
         return;
       case "buttonListSimilarDupes":
-        startLock();
-        state = {};
-        calculate("similar", state, endLockCount);
+        startLockReset();
+        calculate("similar", state, endLockMarked);
         return;
       case "buttonListEmpty":
-        startLock();
-        state = {};
-        calculate("empty", state, endLockCount);
+        startLockReset();
+        calculate("empty", state, endLockMarked);
         return;
       case "buttonListAll":
-        startLock();
-        state = {};
-        calculate("all", state, endLockCount);
+        startLockReset();
+        calculate("all", state, endLockMarked);
         return;
       case "buttonRemoveMarked":
         startLock();
@@ -1318,7 +1341,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       default:  // checkboxes: handled by checkboxListener()
         return;
     }
-    endLockCount();
+    endLockMarked();
   }
 
   addButtonsBase();

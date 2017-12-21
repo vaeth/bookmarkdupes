@@ -5,6 +5,7 @@
 	- Use tab instead of panel
 	- Speed up a lot and save memory by almost complete rewriting:
 	  In a tab there is no need to save state in a background process.
+	- Speed up counting of marks
 	- Display bookmarks as links
 	- Support folder selection (instead of only 2 categories)
 	- Provide buttons for not marking first/last/oldest/newest for folders
