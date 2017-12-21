@@ -48,11 +48,13 @@ function getMessageNode() {
 }
 
 function getCheckboxFullUrl() {
-  return document.getElementById("checkboxFullUrl");
+  const checkboxFullUrl = document.getElementById("checkboxFullUrl");
+  return (checkboxFullUrl && checkboxFullUrl.checked);
 }
 
 function getCheckboxExtra() {
-  return document.getElementById("checkboxExtra");
+  const checkboxExtra = document.getElementById("checkboxExtra");
+  return (checkboxExtra && checkboxExtra.checked);
 }
 
 function getSelectedFolder() {
@@ -360,18 +362,7 @@ function clearWindow() {
   clearBookmarks();
 }
 
-function addRuler() {
-  const ruler = document.createElement("HR");
-  const col = document.createElement("TD");
-  col.colSpan = 4;
-  col.appendChild(ruler);
-  const row =  document.createElement("TR");
-  row.appendChild(col);
-  const top = getTop();
-  top.appendChild(row);
-}
-
-function bookmarkExtra(col, text) {
+function rulerExtra(col, text) {
   if (!text) {
     if (col.children.length > 1) {
       col.removeChild(col.lastChild);
@@ -387,7 +378,25 @@ function bookmarkExtra(col, text) {
   col.appendChild(paragraph);
 }
 
-function addBookmark(bookmark, folders, urlList) {
+function addRuler(id) {
+  const ruler = document.createElement("HR");
+  const col = document.createElement("TD");
+  col.colSpan = 4;
+  col.appendChild(ruler);
+  if (id) {
+    col.id = id;
+  }
+  const row =  document.createElement("TR");
+  row.appendChild(col);
+  const top = getTop();
+  top.appendChild(row);
+}
+
+function entryExtra(col, text) {
+  rulerExtra(col, text);  // by accident the same mechanism works
+}
+
+function addBookmark(bookmark, folders, id) {
   const row = document.createElement("TR");
   appendCheckboxCol(row, bookmark.id);
   if (bookmark.order !== undefined) {
@@ -406,17 +415,11 @@ function addBookmark(bookmark, folders, urlList) {
     link.textContent = name;
     link.referrerpolicy = 'no-referrer';
     col.appendChild(link);
-    if (urlList) {
-      col.id = "bookmarkUrl" + String(urlList.length);
-      const urlListEntry = {
-        url: url
-      };
+    if (id) {
+      col.id = id;
       if (bookmark.extra) {
-        const extra = bookmark.extra;
-        urlListEntry.extra = extra;
-        bookmarkExtra(col, extra);
+        entryExtra(col, bookmark.extra);
       }
-      urlList.push(urlListEntry);
     }
     row.appendChild(col);
   } else {
@@ -426,29 +429,31 @@ function addBookmark(bookmark, folders, urlList) {
   top.appendChild(row);
 }
 
-function addExtraText(urlList) {
-  if (!urlList) {
+function toggleExtra(entryList, rulerList) {
+  if ((!entryList) && !rulerList) {
     return;
   }
-  const checkboxFullUrl = getCheckboxFullUrl();
-  const fullUrl = (checkboxFullUrl && checkboxFullUrl.checked);
-  let extra;
-  if (!fullUrl) {
-    const checkboxExtra = getCheckboxExtra();
-    extra = (checkboxExtra && checkboxExtra.checked);
-  }
-  for (let i = 0; i < urlList.length; ++i) {
-    const col = document.getElementById("bookmarkUrl" + String(i))
-    let text;
-    if (fullUrl || extra) {
-      const urlListEntry = urlList[i];
-      if (fullUrl) {
-        text = (urlListEntry.url ? urlListEntry.url : null);
-      } else {
-        text = (urlListEntry.extra ? urlListEntry.extra : null);
-      }
+  const fullUrl = getCheckboxFullUrl();
+  if (rulerList) {
+    for (let i = 0; i < rulerList.length; ++i) {
+      const col = document.getElementById("rulerExtra" + String(i));
+      rulerExtra(col, (fullUrl ? rulerList[i] : null));
     }
-    bookmarkExtra(col, text);
+  }
+  if (!entryList) {
+    return;
+  }
+  let extra = getCheckboxExtra();
+  for (let i = 0; i < entryList.length; ++i) {
+    const col = document.getElementById("entryExtra" + String(i));
+    const entry = entryList[i];
+    let text;
+    if (fullUrl && entry.url) {
+      text = entry.url;
+    } else if (extra && entry.extra) {
+      text = entry.extra;
+    }
+    entryExtra(col, text);
   }
 }
 
@@ -487,7 +492,7 @@ function markButFirst() {
   }
   let mark = false;
   for (let node of top.childNodes) {
-    if (!isCheckbox(node)) {  // separator
+    if (!isCheckbox(node)) {  // ruler
       mark = false;
       continue;
     }
@@ -503,7 +508,7 @@ function markButLast() {
   }
   let previousNode = null;
   for (let node of top.childNodes) {
-    if (!isCheckbox(node)) {  // separator
+    if (!isCheckbox(node)) {  // ruler
       if (previousNode !== null) {
         setCheck(previousNode, false);
         previousNode = null;
@@ -540,7 +545,7 @@ function markButNewest() {
   let largestSeen = 1;
   let largestNode = null;
   for (let node of top.childNodes) {
-    if (!isCheckbox(node)) {  // separator
+    if (!isCheckbox(node)) {  // ruler
       if (largestNode !== null) {
         setCheck(largestNode, false);
         largestNode = null;
@@ -648,7 +653,7 @@ function markFolderGroup(folderIds, mode) {
     }
   }
   for (let node of top.childNodes) {
-    if (!isCheckbox(node)) {  // separator
+    if (!isCheckbox(node)) {  // ruler
       MarkGroup();
       if (checkboxesOthers.length) {  // test for speed reasons
         checkboxesOthers = new Array();
@@ -802,6 +807,15 @@ function normalizeFolders(folders) {
   return display;
 }
 
+function coincidingUrl(bookmarkList, url) {
+  for (let bookmark of bookmarkList) {
+    if (url !== bookmark.url) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function calculate(command, state, callback) {
   let similar;
   let folderMode;
@@ -810,7 +824,7 @@ function calculate(command, state, callback) {
   let result;
   let folders;
   let allCount;
-  let urlList;
+  let entryList;
 
   function calculateError(error) {
     displayMessage("messageCalculateError", error);
@@ -818,8 +832,8 @@ function calculate(command, state, callback) {
   }
 
   function calculateFinish() {
-    if (urlList && urlList.length) {
-      state.urlList = urlList;
+    if (entryList && entryList.length) {
+      state.entryList = entryList;
     }
     callback();
   }
@@ -954,7 +968,6 @@ function calculate(command, state, callback) {
   }
 
   function addButtons(mode) {
-    urlList = new Array();
     state.marked = new Set();
     addButtonsMode(mode);
     const display = normalizeFolders(folders);
@@ -964,9 +977,26 @@ function calculate(command, state, callback) {
     }
   }
 
-  function addBookmarks(bookmarkList) {
+  function addBookmarks(bookmarkList, addUrl) {
     for (let bookmark of bookmarkList) {
-      addBookmark(bookmark, folders, urlList);
+      let id;
+      let entry;
+      if (addUrl) {
+        entry = {
+          url: bookmark.url
+        };
+      }
+      if (bookmark.extra) {
+        if (!entry) {
+          entry = {};
+        }
+        entry.extra = bookmark.extra;
+      }
+      if (entry) {
+        id = "entryExtra" + String(entryList.length);
+        entryList.push(entry);
+      }
+      addBookmark(bookmark, folders, id);
     }
   }
 
@@ -1005,20 +1035,30 @@ function calculate(command, state, callback) {
     }
     displayMessage(browser.i18n.getMessage(message,
       [String(total), String(groupNumber), String(allCount)]), title);
-    if (groupNumber) {
-      displayCount(" ", title);
+    if (!groupNumber) {
+      calculateFinish();
+      return;
     }
-    let ruler = false;
+    displayCount(" ", title);
+    entryList = new Array();
+    const rulerList = new Array();
     for (let group of result) {
       if (!group) {
         continue;
       }
-      if (ruler) {
-        addRuler();
+      const url = group[0].url;
+      if ((!similar) || coincidingUrl(group, url)) {
+        const id = "rulerExtra" + String(rulerList.length);
+        rulerList.push(url);
+        addRuler(id);
+        addBookmarks(group);
       } else {
-        ruler = true;
+        addRuler();
+        addBookmarks(group, true);
       }
-      addBookmarks(group);
+    }
+    if (rulerList && rulerList.length) {
+      state.rulerList = rulerList;
     }
     calculateFinish();
   }
@@ -1051,7 +1091,8 @@ function calculate(command, state, callback) {
       title);
     if (total) {
       displayCount(" ", title);
-      addBookmarks(result);
+      entryList = new Array();
+      addBookmarks(result, true);
     }
     calculateFinish();
   }
@@ -1216,7 +1257,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     switch (event.target.id) {
       case "checkboxFullUrl":
       case "checkboxExtra":
-        addExtraText(state.urlList);
+        toggleExtra(state.entryList, state.rulerList);
         return;
       default:  // bookmark checkbox id
         marked(event.target.id);
