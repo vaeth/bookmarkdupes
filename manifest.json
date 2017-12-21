@@ -9,7 +9,8 @@
   "default_locale": "en",
 
   "permissions": [
-    "bookmarks"
+    "bookmarks",
+    "tabs"
   ],
 
   "background": {
@@ -21,8 +22,7 @@
   "browser_action": {
     "default_icon": {
       "48": "data/icons/48.png"
-    },
-    "default_popup": "data/panel/index.html"
+    }
   },
 
   "icons": {

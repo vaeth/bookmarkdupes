@@ -12,7 +12,7 @@
     "description": "Button for listing exact dupes"
   },
   "titleButtonListExactDupes": {
-    "message": "(Re)calculate the list of exact bookmark dupes. Two bookmarks are considered to be exact dupes if their URLs is identical.",
+    "message": "(Re)calculate the list of exact bookmark dupes. Two bookmarks are considered to be exact dupes if their URLs are identical.",
     "description": "Explain that the list of exact bookmark dupes will be (re)calculated, and that exact dupes are those with identical URLs"
   },
   "buttonListSimilarDupes": {
@@ -212,7 +212,7 @@
     }
   },
   "titleMessageExactMatchesGroups": {
-    "message": "Two bookmarks are considered to be exact dupes if their URLs is identical.",
+    "message": "Two bookmarks are considered to be exact dupes if their URLs are identical.",
     "description": "Explain that exact dupes are those with identical URLs"
   },
   "messageSimilarMatchesGroups": {
