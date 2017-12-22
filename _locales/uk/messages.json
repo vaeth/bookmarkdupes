@@ -193,6 +193,10 @@
       }
     }
   },
+  "messageNoCount": {
+    "message": "Number of marked bookmarks not displayed for speed reasons", // new
+    "description": "Report that marks are not counted for speed reasons"
+  },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (із $ALL$) точних дублів у $GROUPS$ групах",
     "description": "Report specified numbers of exact matches and groups of all",

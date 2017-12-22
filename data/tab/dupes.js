@@ -58,24 +58,24 @@ function getCheckboxExtra() {
 }
 
 function getSelectedFolder() {
-  let value = document.getElementById("selectedFolder").value;
+  const value = document.getElementById("selectedFolder").value;
   return (((!value) || (value === "'")) ? null : value);
+}
+
+function getTableCount() {
+  return document.getElementById("tableCount");
 }
 
 function getTextCount() {
   return document.getElementById("textCount");
 }
 
-function displayCount(text, title) {
-  let count = getTextCount();
-  count.textContent = text;
-  if (title) {
-    count.title = title;
-    return;
-  }
-  if (title !== undefined) {
-    count.removeAttribute("TITLE");
-  }
+function getCheckboxCount() {
+  return document.getElementById("checkboxCount");
+}
+
+function displayCount(text) {
+  document.getElementById("textCount").textContent = text;
 }
 
 function displayMessage(text, title) {
@@ -97,9 +97,12 @@ function getName(folders, parent, name) {
   return name;
 }
 
-function appendTextNodeCol(row, text, title) {
+function appendTextNodeCol(row, text, title, id) {
   const col = document.createElement("TD");
   const textNode = document.createTextNode(text);
+  if (id) {
+    col.id = id;
+  }
   col.appendChild(textNode);
   if (title) {
     col.title = title;
@@ -107,7 +110,7 @@ function appendTextNodeCol(row, text, title) {
   row.appendChild(col);
 }
 
-function appendCheckbox(parent, id, title, checked, disabled) {
+function appendCheckbox(parent, id, title, checked) {
   const checkbox = document.createElement("INPUT");
   checkbox.type = "checkbox";
   if (title) {
@@ -117,16 +120,25 @@ function appendCheckbox(parent, id, title, checked, disabled) {
     checkbox.checked = checked;
   }
   checkbox.id = id;
-  if (disabled === true) {
-    checkbox.disabled = true;
-  }
+  checkbox.disabled = true;
   parent.appendChild(checkbox);
 }
 
-function appendCheckboxCol(row, id, title, checked, disabled) {
+function appendCheckboxCol(row, id, title, checked) {
   const col = document.createElement("TD");
-  appendCheckbox(col, id, title, checked, disabled);
+  appendCheckbox(col, id, title, checked);
   row.appendChild(col);
+}
+
+function createCount(title) {
+  const row = document.createElement("TR");
+  if (title) {
+    row.title = title;
+  }
+  appendCheckboxCol(row, "checkboxCount", null, true);
+  appendTextNodeCol(row, " ", null, "textCount");
+  const parent = getTableCount();
+  parent.appendChild(row);
 }
 
 function appendButton(parent, id, titleId, text, titleText, enabled) {
@@ -222,7 +234,7 @@ function addSelectFolder(folders) {
   select.title = browser.i18n.getMessage("titleSelectFolder");
   select.id = "selectedFolder";
   addSelectOption(select, browser.i18n.getMessage("OptionNonFolder"), "'");
-  let folderIds = new Array();
+  let folderIds = [];
   for (let folder of folders) {
     if (!folder) {
       continue;
@@ -287,13 +299,13 @@ function addProgressButton(textId, percentage) {
 
 function addCheckboxExtra(title, extra) {
   const row = document.createElement("TR");
-  appendCheckboxCol(row, "checkboxFullUrl", title, false, true);
+  appendCheckboxCol(row, "checkboxFullUrl", title);
   appendTextNodeCol(row, browser.i18n.getMessage("checkboxFullUrl"), title);
   const parent = getCheckboxOptions();
   parent.appendChild(row);
   if (extra) {
     const rowExtra = document.createElement("TR");
-    appendCheckboxCol(rowExtra, "checkboxExtra", title, true, true);
+    appendCheckboxCol(rowExtra, "checkboxExtra", title, true);
     appendTextNodeCol(rowExtra, browser.i18n.getMessage("checkboxExtra"),
       title);
     parent.appendChild(rowExtra);
@@ -328,6 +340,11 @@ function enableButtons(enabled) {
   enableButtonsOf(getCheckboxOptions(), enabled);
 }
 
+function enableBookmarks(enabled) {
+  enableButtonsOf(getTableCount(), enabled);
+  enableButtonsOf(getTop(), enabled);
+}
+
 function clearItem(top) {
   while (top.lastChild) {
     top.removeChild(top.lastChild);
@@ -352,7 +369,7 @@ function clearButtonsMode() {
 }
 
 function clearBookmarks() {
-  displayCount("", null);
+  clearItem(getTableCount());
   clearItem(getTop());
 }
 
@@ -624,8 +641,8 @@ function markFolderGroup(folderIds, mode) {
     checkedOthers = true;
   }
   const checkedMe = !checkedOthers;
-  let checkboxesOthers = new Array();
-  let checkboxesMe = new Array();
+  let checkboxesOthers = [];
+  let checkboxesMe = [];
   let groupMatches = false;
   let dateMatch;
   let dateSeen = 0;
@@ -656,10 +673,10 @@ function markFolderGroup(folderIds, mode) {
     if (!isCheckbox(node)) {  // ruler
       MarkGroup();
       if (checkboxesOthers.length) {  // test for speed reasons
-        checkboxesOthers = new Array();
+        checkboxesOthers = [];
       }
       if (checkboxesMe.length) {  // test for speed reasons
-        checkboxesMe = new Array();
+        checkboxesMe = [];
       }
       groupMatches = false;
       dateSeen = 0;
@@ -705,7 +722,7 @@ function getMarked(returnSet) {
       marked.add(id);
     }
   } else {
-    marked = new Array();
+    marked = [];
     adding = function (id) {
       marked.push(id);
     }
@@ -744,7 +761,7 @@ function displayEndProgress(textId, total, error) {
 }
 
 function normalizeGroup(group) {
-  const indices = new Array();
+  const indices = [];
   let i = 0;
   for (let bookmark of group) {
     const index = {
@@ -877,7 +894,7 @@ function calculate(command, state, callback) {
     const id = node.id;
     let group = urlMap.get(groupIndex);
     if (!group) {
-      group = new Array();
+      group = [];
       result.push(group);
       urlMap.set(groupIndex, group);
     }
@@ -1039,9 +1056,9 @@ function calculate(command, state, callback) {
       calculateFinish();
       return;
     }
-    displayCount(" ", title);
-    entryList = new Array();
-    const rulerList = new Array();
+    createCount(title);
+    entryList = [];
+    const rulerList = [];
     for (let group of result) {
       if (!group) {
         continue;
@@ -1073,6 +1090,7 @@ function calculate(command, state, callback) {
     displayMessage(browser.i18n.getMessage("messageEmpty", String(total)),
       title);
     if (total) {
+      createCount(title);
       addBookmarks(result);
     }
     calculateFinish();
@@ -1090,8 +1108,8 @@ function calculate(command, state, callback) {
     displayMessage(browser.i18n.getMessage("messageAll", String(total)),
       title);
     if (total) {
-      displayCount(" ", title);
-      entryList = new Array();
+      createCount(title);
+      entryList = [];
       addBookmarks(result, true);
     }
     calculateFinish();
@@ -1121,8 +1139,8 @@ function calculate(command, state, callback) {
     default:  // should not happen
       return;  // it is a bug if we get here
   }
-  folders = new Array();
-  result = new Array();
+  folders = [];
+  result = [];
   browser.bookmarks.getTree().then(mainFunction, calculateError);
 }
 
@@ -1229,12 +1247,22 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       return;
     }
     if (id) {
+      if (!getCheckboxCount().checked) {
+        return;
+      }
       if (isMarked(id)) {
         state.marked.add(id);
       } else {
         state.marked.delete(id);
       }
     } else {
+      if (!getCheckboxCount().checked) {
+        if (state.hasOwnProperty("lastCount")) {
+          delete state.lastCount;
+          displayCount(browser.i18n.getMessage("messageNoCount"));
+        }
+        return;
+      }
       state.marked = getMarked(true);
     }
     const count = state.marked.size;
@@ -1245,8 +1273,9 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     displayCount(browser.i18n.getMessage("messageCount", count));
   }
 
-  function endLockMarked() {
+  function endLockAll() {
     marked();
+    enableBookmarks();
     endLock();
   }
 
@@ -1258,6 +1287,9 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       case "checkboxFullUrl":
       case "checkboxExtra":
         toggleExtra(state.entryList, state.rulerList);
+        return;
+      case "checkboxCount":
+        marked();
         return;
       default:  // bookmark checkbox id
         marked(event.target.id);
@@ -1290,6 +1322,33 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     }
   }
 
+  function calculateWrapper(command) {
+    state = {};
+    startLock();
+    setTimeout(function () {
+      calculate(command, state, endLockAll);
+    });
+  }
+
+  function processWrapper(bookmarkMap) {
+    startLock();
+    setTimeout(function () {
+      processMarked(stopPressed, endLockReset, bookmarkMap);
+    })
+  }
+
+  function markWrapper(func, funcargs) {
+    startLock();
+    enableBookmarks(false);
+    const thisArg = this;
+    const args = Array.prototype.slice.call(arguments);
+    args.splice(0, 1);
+    setTimeout(function () {
+      func.apply(thisArg, args);
+      endLockAll();
+    })
+  }
+
   function clickListener(event) {
     if ((!event.target) || (!event.target.id)) {
       return;
@@ -1304,85 +1363,65 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     }
     switch (event.target.id) {
       case "buttonListExactDupes":
-        startLockReset();
-        calculate("exact", state, endLockMarked);
+        calculateWrapper("exact");
         return;
       case "buttonListSimilarDupes":
-        startLockReset();
-        calculate("similar", state, endLockMarked);
+        calculateWrapper("similar");
         return;
       case "buttonListEmpty":
-        startLockReset();
-        calculate("empty", state, endLockMarked);
+        calculateWrapper("empty");
         return;
       case "buttonListAll":
-        startLockReset();
-        calculate("all", state, endLockMarked);
+        calculateWrapper("all");
         return;
       case "buttonRemoveMarked":
-        startLock();
-        processMarked(stopPressed, endLockReset);
+        processWrapper();
         return;
       case "buttonStripMarked":
-        startLock();
-        processMarked(stopPressed, endLockReset, state.bookmarkMap);
+        processWrapper(state.bookmarkMap);
         return;
       case "buttonMarkAll":
-        startLock();
-        mark(true);
-        break;
-      case "buttonMarkButFirst":
-        startLock();
-        markButFirst();
-        break;
-      case "buttonMarkButLast":
-        startLock();
-        markButLast();
-        break;
-      case "buttonMarkButOldest":
-        startLock();
-        markButOldest();
-        break;
-      case "buttonMarkButNewest":
-        startLock();
-        markButNewest();
-        break;
-      case "buttonUnmarkAll":
-        startLock();
-        mark(false);
-        break;
-      case "buttonMarkFolder":
-        startLock();
-        markFolder(state.folderIds, true);
-        break;
-      case "buttonUnmarkFolder":
-        startLock();
-        markFolder(state.folderIds, false);
-        break;
-      case "buttonMarkFolderOther":
-        startLock();
-        markFolderGroup(state.folderIds, "other");
-        break;
-      case "buttonMarkFolderButFirst":
-        startLock();
-        markFolderGroup(state.folderIds, "first");
-        break;
-      case "buttonMarkFolderButLast":
-        startLock();
-        markFolderGroup(state.folderIds, "last");
-        break;
-      case "buttonMarkFolderButOldest":
-        startLock();
-        markFolderGroup(state.folderIds, "oldest");
-        break;
-      case "buttonMarkFolderButNewest":
-        startLock();
-        markFolderGroup(state.folderIds, "newest");
-        break;
-      default:  // checkboxes: handled by checkboxListener()
+        markWrapper(mark, true);
         return;
+      case "buttonUnmarkAll":
+        markWrapper(mark, false);
+        return;
+      case "buttonMarkButFirst":
+        markWrapper(markButFirst);
+        return;
+      case "buttonMarkButLast":
+        markWrapper(markButLast);
+        return;
+      case "buttonMarkButOldest":
+        markWrapper(markButOldest);
+        return;
+      case "buttonMarkButNewest":
+        markWrapper(markButNewest);
+        return;
+      case "buttonMarkFolder":
+        markWrapper(markFolder, state.folderIds, true);
+        return;
+      case "buttonUnmarkFolder":
+        markWrapper(markFolder, state.folderIds, false);
+        return;
+      case "buttonMarkFolderOther":
+        markWrapper(markFolderGroup, state.folderIds, "other");
+        return;
+      case "buttonMarkFolderButFirst":
+        markWrapper(markFolderGroup, state.folderIds, "first");
+        return;
+      case "buttonMarkFolderButLast":
+        markWrapper(markFolderGroup, state.folderIds, "last");
+        return;
+      case "buttonMarkFolderButOldest":
+        markWrapper(markFolderGroup, state.folderIds, "oldest");
+        return;
+      case "buttonMarkFolderButNewest":
+        markWrapper(markFolderGroup, state.folderIds, "newest");
+        return;
+      // default:  // checkboxes: handled by checkboxListener()
+      //   return;
     }
-    endLockMarked();
   }
 
   addButtonsBase();

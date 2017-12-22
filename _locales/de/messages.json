@@ -193,6 +193,10 @@
       }
     }
   },
+  "messageNoCount": {
+    "message": "Anzahl markierter Lesezeichen wird aus Geschwindigkeitsgründen nicht angezeigt",
+    "description": "Report that marks are not counted for speed reasons"
+  },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (von $ALL$) exakte Duplikate in $GROUPS$ Gruppen",
     "description": "Report specified numbers of exact matches and groups of all",

@@ -14,9 +14,13 @@
 	  Thanks to perdolka for the idea:
 	  https://github.com/vaeth/bookmarkdupes/issues/32
 	- Display list titles in more places
+	- Try to force display syncing with setTimeout
+	- Disable checkboxes while updating them
+	- Add a checkbox to disable counting
 	- bugfix: mark also last group for folder/category selection
 	- fix spelling/grammar
 	- internal: prefer const over let if possible
+	- internal: avoid new Array()
 
 	Henaro aka Ironwool:
 	- Update uk locales
