@@ -194,7 +194,7 @@
     }
   },
   "messageNoCount": {
-    "message": "Number of marked bookmarks not displayed for speed reasons", // new
+    "message": "Для прискорення додатку число позначених закладок не відображається",
     "description": "Report that marks are not counted for speed reasons"
   },
   "messageExactMatchesGroups": {
