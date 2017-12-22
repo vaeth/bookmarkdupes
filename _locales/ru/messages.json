@@ -194,7 +194,7 @@
     }
   },
   "messageNoCount": {
-    "message": "Number of marked bookmarks not displayed for speed reasons", // new
+    "message": "Для ускорения работы аддона число отмеченных закладок не отображается",
     "description": "Report that marks are not counted for speed reasons"
   },
   "messageExactMatchesGroups": {
