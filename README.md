@@ -45,10 +45,14 @@ the corresponding bookmarks to their previous location in the bookmark menu!
    https://github.com/vaeth/bookmarkdupes/issues/4
 2. Stripping of descriptions works by replacing the bookmark by a freshly
    created one. In particular, it updates the bookmark creation date.
-3. Stripping of description creates bookmarks in the place where it was when
+3. Stripping of descriptions creates bookmarks in the place where it was when
    the displayed list was calculated, see
    https://github.com/vaeth/bookmarkdupes/issues/11 and the second part of
    https://github.com/vaeth/bookmarkdupes/issues/8
+4. In some firefox versions (e.g. 55.0.3) it has been reported that pressing
+   the duplicate stars does not open a new tab. For a discussion of this
+   problem and of possible workarounds, see
+   https://github.com/vaeth/bookmarkdupes/issues/38
 
 ## Contributions
 
