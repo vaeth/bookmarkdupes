@@ -63,7 +63,7 @@ function getCheckboxExtra() {
 
 function getSelectedFolder() {
   const value = document.getElementById("selectedFolder").value;
-  return (((!value) || (value === "@")) ? null : value);
+  return ((!value || (value === "@")) ? null : value);
 }
 
 function getTableCount() {
@@ -473,7 +473,7 @@ function addBookmark(bookmark, folders, id) {
 }
 
 function toggleExtra(entryList, rulerList) {
-  if ((!entryList) && !rulerList) {
+  if (!entryList && !rulerList) {
     return;
   }
   const fullUrl = getCheckboxFullUrl();
@@ -808,7 +808,7 @@ function markSameGroup(folders, mode) {
     };
     items.push(item);
     if (!checkTime) {
-      if ((!first) || !folderData.match) {
+      if (!first || !folderData.match) {
         folderData.match = items.length;
       }
       continue;
@@ -909,12 +909,12 @@ function normalizeGroup(group) {
 function normalizeFolders(folders) {
   for (let i = 0; i < folders.length; ++i) {
     const folder = folders[i];
-    if ((!folder.used) || (!folder.used.size)) {
+    if (!folder.used || !folder.used.size) {
       delete folders[i];
       continue;
     }
     parent = folder.parent;
-    if ((!parent) && (parent !== 0)) {
+    if (!parent && (parent !== 0)) {
       continue;
     }
     const used = folder.used.size;
@@ -935,7 +935,7 @@ function normalizeFolders(folders) {
       continue;
     }
     if ((folder.childs && (folder.childs.size > 1)) ||
-        (folder.used && folder.used.size && ((!folder.usedByChilds)
+        (folder.used && folder.used.size && (!folder.usedByChilds
         || (folder.used.size > folder.usedByChilds)))) {
       ++display;
     }
@@ -1071,12 +1071,12 @@ function calculate(command, state, callback) {
 
   function recurse(node) {
     function recurseMain(node, parent, index) {
-      if ((!node.children) || (!node.children.length)) {
+      if (!node.children || !node.children.length) {
         if ((parent !== null) && !node.unmodifable) {
           if (folderMode) {
             handleFunction(node, parent);
             return;
-          } else if (node.url && ((!node.type) || (node.type == "bookmark")) &&
+          } else if (node.url && (!node.type || (node.type == "bookmark")) &&
               (node.url.substr(0, 6) !== "place:")) {
             handleFunction(node, parent, index);
           }
@@ -1136,7 +1136,7 @@ function calculate(command, state, callback) {
   function sameFoldersParents(bookmarkList) {
     const folders = new Map();
     for (let bookmark of bookmarkList) {
-      if ((!bookmark.parent) && (bookmark.parent !== 0)) {
+      if (!bookmark.parent && (bookmark.parent !== 0)) {
         continue;
       }
       const folder = bookmark.parent;
@@ -1193,7 +1193,7 @@ function calculate(command, state, callback) {
         delete result[i];
         continue;
       }
-      if ((!sameFolders) && haveSameParents(group)) {
+      if (!sameFolders && haveSameParents(group)) {
         sameFolders = true;
       }
       normalizeGroup(group);
@@ -1230,7 +1230,7 @@ function calculate(command, state, callback) {
         continue;
       }
       const url = group[0].url;
-      if ((!similar) || coincidingUrl(group, url)) {
+      if (!similar || coincidingUrl(group, url)) {
         const id = "rulerExtra" + String(rulerList.length);
         rulerList.push(url);
         addRuler(id);
@@ -1449,7 +1449,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   }
 
   function checkboxListener(event) {
-    if ((!event.target) || (!event.target.id)) {
+    if (!event.target || !event.target.id) {
       return;
     }
     switch (event.target.id) {
@@ -1499,7 +1499,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   }
 
   function selectListener(event) {
-    if ((!event.target) || (!event.target.id)) {
+    if (!event.target || !event.target.id) {
       return;
     }
     switch (event.target.id) {
@@ -1536,7 +1536,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   }
 
   function clickListener(event) {
-    if ((!event.target) || (!event.target.id)) {
+    if (!event.target || !event.target.id) {
       return;
     }
     if (event.target.id == "buttonStop") {

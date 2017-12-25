@@ -3,6 +3,7 @@
 *bookmarkdupes-4.1:
 	Martin Väth <martin at mvath.de>:
 	- Add buttons for marking from identical folders in the same group
+	- internal: avoid redundant braces for Boolean negation
 
 	Henaro aka Ironwool:
 	- Set a reasonable page title
