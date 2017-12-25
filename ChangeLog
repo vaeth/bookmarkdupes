@@ -1,5 +1,9 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-4.1:
+	Henaro aka Ironwool:
+	- Set a reasonable page title
+
 *bookmarkdupes-4.0:
 	Martin Väth <martin at mvath.de>:
 	- Use tab instead of panel

@@ -7,6 +7,10 @@
 
 "use strict";
 
+function setTitle(title) {
+  document.getElementById("pageTitle").textContent = title;
+}
+
 function getButtonsBase() {
   return document.getElementById("buttonsBase");
 }
@@ -1424,6 +1428,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     }
   }
 
+  setTitle(browser.i18n.getMessage("extensionName"));
   addButtonsBase();
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);
