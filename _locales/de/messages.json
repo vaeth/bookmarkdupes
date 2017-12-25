@@ -91,6 +91,10 @@
     "message": "-- Ordnerwahl für zugehörige Markierungsknöpfe --",
     "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
   },
+  "optionSameFolder": {
+    "message": "-- Identische Ordner in der gleichen Gruppe --",
+    "description": "Name of a special folder selection: Identical folders in the same group"
+  },
   "titleSelectFolder": {
     "message": "Bei Auswahl eines Ordner erscheinen entsprechende Knöpfe zur Markierung.",
     "description": "Explain that selecting a folder will provide corresponding buttons for marking"
@@ -151,6 +155,54 @@
     "message": "In Gruppen mit dem ausgewählten Ordner werden alle Lesezeichen aus diese Ordner markiert und die Markierungen anderer Lesezeichen entfernt; wenn es keine anderen gibt, wird die Markierung des jüngesten Lesezeichens der Gruppe entfernt.",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
+  "buttonMarkSame": {
+    "message": "Markiere alle mit identischen Ordnern aus gleicher Gruppe",
+    "description": "Button for marking all of the same folders in the same group"
+  },
+  "titleButtonMarkSame": {
+    "message": "Alle Lesezeichen mit identischen Ordnern aus der gleichen Gruppe werden markiert.",
+    "description": "Explain that all bookmarks of identical folders in the same group will be marked"
+  },
+  "buttonUnmarkSame": {
+    "message": "Lösche Markierungen für identische Ordner aus gleicher Gruppe",
+    "description": "Button for unmarking all of the same folders in the same group"
+  },
+  "titleButtonUnmarkSame": {
+    "message": "Die Markierungen aller Lesezeichen mit identischen Ordnern aus der gleichen Gruppe werden entfernt.",
+    "description": "Explain that all bookmarks of identical folders in the same group will be unmarked"
+  },
+  "buttonMarkSameButFirst": {
+    "message": "Markiere alle außer ersten von identischen Ordnern aus gleicher Gruppe",
+    "description": "Button for marking all but the first of identical folders in the same group"
+  },
+  "titleButtonMarkSameButFirst": {
+    "message": "Zusätzlich wird die Markierung des jeweils ersten Lesezeichens von identischen Ordnern aus der gleichen Gruppe entfernt.",
+    "description": "Explain that additionally for identical folders in the same group the first will be unmarked"
+  },
+  "buttonMarkSameButLast": {
+    "message": "Markiere alle außer letzten von identischen Ordnern aus gleicher Gruppe",
+    "description": "Button for marking all but the first of identical folders in the same group"
+  },
+  "titleButtonMarkSameButLast": {
+    "message": "Zusätzlich wird die Markierung des jeweils letzten Lesezeichens von identischen Ordnern aus der gleichen Gruppe entfernt.",
+    "description": "Explain that additionally for identical folders in the same group the last will be unmarked"
+  },
+  "buttonMarkSameButOldest": {
+    "message": "Markiere alle außer ältesten von identischen Ordnern aus gleicher Gruppe",
+    "description": "Button for marking all but the last of identical folders in the same group"
+  },
+  "titleButtonMarkSameButOldest": {
+    "message": "Zusätzlich wird die Markierung des jeweils ältesten Lesezeichens von identischen Ordnern aus der gleichen Gruppe entfernt.",
+    "description": "Explain that additionally for identical folders in the same group the oldest will be unmarked"
+  },
+  "buttonMarkSameButNewest": {
+    "message": "Markiere alle außer neuesten von identischen Ordnern aus gleicher Gruppe",
+    "description": "Button for marking all but the oldest of identical folders in the same group"
+  },
+  "titleButtonMarkSameButNewest": {
+    "message": "Zusätzlich wird die Markierung des jeweils neuesten Lesezeichens von identischen Ordnern aus der gleichen Gruppe entfernt.",
+    "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
+  },
   "buttonRemoveMarked": {
     "message": "Markierte Lesezeichen löschen",
     "description": "Button for removing marked bookmarks"
@@ -194,7 +246,7 @@
     }
   },
   "messageNoCount": {
-    "message": "Anzahl markierter Lesezeichen wird aus Geschwindigkeitsgründen nicht angezeigt",
+    "message": "Die Anzahl markierter Lesezeichen wird aus Geschwindigkeitsgründen nicht angezeigt.",
     "description": "Report that marks are not counted for speed reasons"
   },
   "messageExactMatchesGroups": {

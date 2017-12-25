@@ -63,7 +63,7 @@ function getCheckboxExtra() {
 
 function getSelectedFolder() {
   const value = document.getElementById("selectedFolder").value;
-  return (((!value) || (value === "'")) ? null : value);
+  return (((!value) || (value === "@")) ? null : value);
 }
 
 function getTableCount() {
@@ -198,6 +198,25 @@ function addButtonRemove(buttonId, titleId) {
   parent.appendChild(row);
 }
 
+function addButtonsSame(enabled) {
+  const parent = getButtonsFolders();
+  if (parent.hasChildNodes()) {  // Already done
+    return;
+  }
+  appendButtonRow(parent, "buttonMarkSame", "titleButtonMarkFolder",
+    null, null, enabled);
+  appendButtonRow(parent, "buttonUnmarkSame", "titleButtonUnmarkFolder",
+    null, null, enabled);
+  appendButtonRow(parent, "buttonMarkSameButFirst",
+    "titleButtonMarkSameButFirst", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkSameButLast",
+    "titleButtonMarkSameButLast", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkSameButOldest",
+    "titleButtonMarkSameButOldest", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkSameButNewest",
+    "titleButtonMarkSameButNewest", null, null, enabled);
+}
+
 function addButtonsFolders(mode, enabled) {
   const parent = getButtonsFolders();
   if (parent.hasChildNodes()) {  // Already done
@@ -233,22 +252,26 @@ function addSelectOption(select, content, value) {
   select.appendChild(option);
 }
 
-function addSelectFolder(folders) {
+function addSelectFolder(sameFolders, folderIds, folders) {
   const select = document.createElement("SELECT");
   select.title = browser.i18n.getMessage("titleSelectFolder");
   select.id = "selectedFolder";
-  addSelectOption(select, browser.i18n.getMessage("OptionNonFolder"), "'");
-  let folderIds = [];
-  for (let folder of folders) {
-    if (!folder) {
-      continue;
+  addSelectOption(select, browser.i18n.getMessage("optionNonFolder"), "@");
+  if (sameFolders) {
+    addSelectOption(select, browser.i18n.getMessage("optionSameFolder"), "=");
+  }
+  if (folderIds) {
+    for (let folder of folders) {
+      if (!folder) {
+        continue;
+      }
+      if (!folder.used) {
+        continue;
+      }
+      addSelectOption(select, getName(folders, folder.parent, folder.name),
+        String(folderIds.length));
+      folderIds.push(folder.used);
     }
-    if (!folder.used) {
-      continue;
-    }
-    addSelectOption(select, getName(folders, folder.parent, folder.name),
-      String(folderIds.length));
-    folderIds.push(folder.used);
   }
   const col = document.createElement("TD");
   col.appendChild(select);
@@ -256,7 +279,6 @@ function addSelectFolder(folders) {
   row.appendChild(col);
   const parent = getSelectFolder();
   parent.appendChild(row);
-  return folderIds;
 }
 
 function addButtonsMark(mode) {
@@ -599,7 +621,7 @@ function SplitNumber(text, begin) {
 
 function getSelectedIds(folderIds) {
   const value = getSelectedFolder();
-  if (!value) {
+  if ((!value) || (value === "=")) {
     return null;
   }
   return folderIds[Number(value)];
@@ -650,7 +672,7 @@ function markFolderGroup(folderIds, mode) {
   let groupMatches = false;
   let dateMatch;
   let dateSeen = 0;
-  function MarkGroup() {
+  function markGroup() {
     if (!groupMatches) {
       return;
     }
@@ -675,7 +697,7 @@ function markFolderGroup(folderIds, mode) {
   }
   for (let node of top.childNodes) {
     if (!isCheckbox(node)) {  // ruler
-      MarkGroup();
+      markGroup();
       if (checkboxesOthers.length) {  // test for speed reasons
         checkboxesOthers = [];
       }
@@ -709,7 +731,102 @@ function markFolderGroup(folderIds, mode) {
     dateSeen = current;
     dateMatch = checkboxesMe.length;
   }
-  MarkGroup();
+  markGroup();
+}
+
+function markSame(folders, checked) {
+  const top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      continue;
+    }
+    const checkbox = getCheckbox(node);
+    const folder = folders.get(checkbox.id);
+    if (folder === undefined) {
+      continue;
+    }
+    checkbox.checked = checked;
+  }
+}
+
+function markSameGroup(folders, mode) {
+  const top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  let items = null;
+  function markGroup() {
+    if (!items) {
+      return;
+    }
+    let i = 0;
+    for (let item of items) {
+      ++i;
+      item.checkbox.checked = (i != item.folderData.match);
+    }
+  }
+  let folderMap = null;
+  let checkTime = 0;
+  let first = false;
+  if (mode == "oldest") {
+    checkTime = -1;
+  } else if (mode == "newest") {
+    checkTime = 1;
+  } else if (mode == "first") {
+    first = true;
+  }
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {  // ruler
+      markGroup();
+      items = null;
+      folderMap = null;
+      continue;
+    }
+    const checkbox = getCheckbox(node);
+    const id = checkbox.id;
+    let folder = folders.get(id);
+    if (folder === undefined) {
+      continue;
+    }
+    let folderData;
+    if (items) {
+      folderData = folderMap.get(folder);
+    } else {
+      items = [];
+      folderMap = new Map();
+    }
+    if (!folderData) {
+      folderData = {};
+      folderMap.set(folder, folderData);
+    }
+    const item = {
+      checkbox: checkbox,
+      folderData: folderData
+    };
+    items.push(item);
+    if (!checkTime) {
+      if ((!first) || !folderData.match) {
+        folderData.match = items.length;
+      }
+      continue;
+    }
+    const current = getOrder(node);
+    if (folderData.dateSeen) {
+      if (checkTime > 0) {
+        if (current < folderData.dateSeen) {
+          continue;
+        }
+      } else if (current >= folderData.dateSeen) {
+        continue;
+      }
+    }
+    folderData.dateSeen = current;
+    folderData.match = items.length;
+  }
+  markGroup();
 }
 
 function isMarked(id) {
@@ -988,13 +1105,51 @@ function calculate(command, state, callback) {
     recurseMain(node, null, 0);
   }
 
-  function addButtons(mode) {
+  function addButtons(mode, sameFolders) {
     state.marked = new Set();
     addButtonsMode(mode);
     const display = normalizeFolders(folders);
     if (display > 1) {
-      state.folderIds = addSelectFolder(folders);
+      state.folderIds = [];
+    }
+    if (sameFolders || state.folderIds) {
+      addSelectFolder(sameFolders, state.folderIds, folders);
       state.markFolders = mode;
+    }
+  }
+
+  function haveSameParents(bookmarkList) {
+    const parents = new Set();
+    for (let bookmark of bookmarkList) {
+      const parent = bookmark.parent;
+      if (parent === null) {
+        continue;
+      }
+      if (parents.has(parent)) {
+        return true;
+      }
+      parents.add(parent);
+    }
+    return false;
+  }
+
+  function sameFoldersParents(bookmarkList) {
+    const folders = new Map();
+    for (let bookmark of bookmarkList) {
+      if ((!bookmark.parent) && (bookmark.parent !== 0)) {
+        continue;
+      }
+      const folder = bookmark.parent;
+      const folderEntry = folders.get(folder);
+      if (folderEntry === undefined) {
+        folders.set(folder, bookmark.id);
+        continue;
+      }
+      if (folderEntry) {
+        state.folders.set(folderEntry, folder);
+        folders.set(folder, null);
+      }
+      state.folders.set(bookmark.id, folder);
     }
   }
 
@@ -1027,6 +1182,7 @@ function calculate(command, state, callback) {
     recurse(nodes[0]);
     let groupNumber = 0;
     let total = 0;
+    let sameFolders = false;
     for (let i = 0; i < result.length; ++i) {
       const group = result[i];
       if (group.length < 2) {
@@ -1036,6 +1192,9 @@ function calculate(command, state, callback) {
         }
         delete result[i];
         continue;
+      }
+      if ((!sameFolders) && haveSameParents(group)) {
+        sameFolders = true;
       }
       normalizeGroup(group);
       ++groupNumber;
@@ -1051,7 +1210,7 @@ function calculate(command, state, callback) {
     }
     title = browser.i18n.getMessage(title);
     if (groupNumber) {
-      addButtons(0);
+      addButtons(0, sameFolders);
       addCheckboxExtra(title, similar);
     }
     displayMessage(browser.i18n.getMessage(message,
@@ -1063,6 +1222,9 @@ function calculate(command, state, callback) {
     createCount(title);
     entryList = [];
     const rulerList = [];
+    if (sameFolders) {
+      state.folders = new Map();
+    }
     for (let group of result) {
       if (!group) {
         continue;
@@ -1076,6 +1238,9 @@ function calculate(command, state, callback) {
       } else {
         addRuler();
         addBookmarks(group, true);
+      }
+      if (sameFolders) {
+        sameFoldersParents(group);
       }
     }
     if (rulerList && rulerList.length) {
@@ -1303,17 +1468,34 @@ function processMarked(stopPressed, callback, bookmarkMap) {
 
   function toggleButtonsFolders() {
     let haveSelected = state.hasOwnProperty("markFolders");
+    let sameFolders = false;
     if (haveSelected) {
       const name = getSelectedFolder();
-      if (!name) {
+      if (name) {
+        if (name === "=") {
+          sameFolders = true;
+        }
+      } else {
         haveSelected = false;
       }
     }
     if (!haveSelected) {
+      delete state.folderButtons;
       clearButtonsFolders();
       return;
     }
-    addButtonsFolders(state.markFolders, !state.lock);
+    if (state.hasOwnProperty("folderButtons")) {
+      if (state.folderButtons === sameFolders) {  // display is up-to-date
+        return;
+      }
+      clearButtonsFolders();
+    }
+    state.folderButtons = sameFolders;
+    if (sameFolders) {
+      addButtonsSame(!state.lock);
+    } else {
+      addButtonsFolders(state.markFolders, !state.lock);
+    }
   }
 
   function selectListener(event) {
@@ -1422,6 +1604,24 @@ function processMarked(stopPressed, callback, bookmarkMap) {
         return;
       case "buttonMarkFolderButNewest":
         markWrapper(markFolderGroup, state.folderIds, "newest");
+        return;
+      case "buttonMarkSame":
+        markWrapper(markSame, state.folders, true);
+        return;
+      case "buttonUnmarkSame":
+        markWrapper(markSame, state.folders, false);
+        return;
+      case "buttonMarkSameButFirst":
+        markWrapper(markSameGroup, state.folders, "first");
+        return;
+      case "buttonMarkSameButLast":
+        markWrapper(markSameGroup, state.folders, "last");
+        return;
+      case "buttonMarkSameButOldest":
+        markWrapper(markSameGroup, state.folders, "oldest");
+        return;
+      case "buttonMarkSameButNewest":
+        markWrapper(markSameGroup, state.folders, "newest");
         return;
       // default:  // checkboxes: handled by checkboxListener()
       //   return;
