@@ -92,7 +92,7 @@
     "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
   },
   "optionSameFolder": {
-    "message": "-- Identical folders in the same group --", // new
+    "message": "-- Идентичные папки в одной группе --",
     "description": "Name of a special folder selection: Identical folders in the same group"
   },
   "titleSelectFolder": {
@@ -156,51 +156,51 @@
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
   "buttonMarkSame": {
-    "message": "Mark all identical folders in same group", // new
+    "message": "Отметить все идентичные папки в одной группе",
     "description": "Button for marking all of the same folders in the same group"
   },
   "titleButtonMarkSame": {
-    "message": "Mark all bookmarks from identical folders in the same group.", // new
+    "message": "Отметить все закладки из идентичных папок в одной группе",
     "description": "Explain that all bookmarks of identical folders in the same group will be marked"
   },
   "buttonUnmarkSame": {
-    "message": "Unmark all identical folders in same group", // new
+    "message": "Снять отметку со всех идентичных папок в одной группе",
     "description": "Button for unmarking all of the same folders in the same group"
   },
   "titleButtonUnmarkSame": {
-    "message": "Unmark all bookmarks from identical folders in the same group.", // new
+    "message": "Снять отметку со всех закладок из идентичных папок в одной группе.",
     "description": "Explain that all bookmarks of identical folders in the same group will be unmarked"
   },
   "buttonMarkSameButFirst": {
-    "message": "Mark all but first of identical folders in same group", // new
+    "message": "Отметить все идентичные папки в одной группе, кроме верхних",
     "description": "Button for marking all but the first of identical folders in the same group"
   },
   "titleButtonMarkSameButFirst": {
-    "message": "Additionally the first of identical folders in the same group will be unmarked.", // new
+    "message": "Будут отмечены все идентичные папки в одной группе, кроме самых верхних.",
     "description": "Explain that additionally for identical folders in the same group the first will be unmarked"
   },
   "buttonMarkSameButLast": {
-    "message": "Mark all but first of identical folders in same group", // new
-    "description": "Button for marking all but the first of identical folders in the same group"
+    "message": "Отметить все идентичные папки в одной группе, кроме нижних",
+    "description": "Button for marking all but the Last of identical folders in the same group"
   },
   "titleButtonMarkSameButLast": {
-    "message": "Additionally the last of identical folders in the same group will be unmarked.", // new
+    "message": "Будут отмечены все идентичные папки в одной группе, кроме самых нижних.",
     "description": "Explain that additionally for identical folders in the same group the last will be unmarked"
   },
   "buttonMarkSameButOldest": {
-    "message": "Mark all but last of identical folders in same group", // new
-    "description": "Button for marking all but the last of identical folders in the same group"
+    "message": "Отметить все идентичные папки в одной группе, кроме старейших",
+    "description": "Button for marking all but the Oldest of identical folders in the same group"
   },
   "titleButtonMarkSameButOldest": {
-    "message": "Additionally the oldest of identical folders in the same group will be unmarked.", // new
+    "message": "Будут отмечены все идентичные папки в одной группе, кроме самых старых.",
     "description": "Explain that additionally for identical folders in the same group the oldest will be unmarked"
   },
   "buttonMarkSameButNewest": {
-    "message": "Mark all but oldest of identical folders in same group", // new
-    "description": "Button for marking all but the oldest of identical folders in the same group"
+    "message": "Отметить все идентичные папки в одной группе, кроме новейших",
+    "description": "Button for marking all but the newest of identical folders in the same group"
   },
   "titleButtonMarkSameButNewest": {
-    "message": "Additionally the newest of identical folders in the same group will be unmarked.", // new
+    "message": "Будут отмечены все идентичные папки в одной группе, кроме самых новых.",
     "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
   },
   "buttonRemoveMarked": {
