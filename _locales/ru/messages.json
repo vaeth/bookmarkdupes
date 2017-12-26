@@ -88,7 +88,7 @@
     "description": "Explain that all bookmarks will be unmarked"
   },
   "optionNonFolder": {
-    "message": "-- Выберите папку чтобы увидеть кнопки маркировки её закладок --", 
+    "message": "-- Выберите папку чтобы увидеть кнопки маркировки её закладок --",
     "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
   },
   "optionSameFolder": {
@@ -104,7 +104,7 @@
     "description": "Button for marking all of the selected folder"
   },
   "titleButtonMarkFolder": {
-    "message":  "Отметить все закладки из выбраной папки.",
+    "message": "Отметить все закладки из выбраной папки.",
     "description": "Explain that all bookmarks of selected folder will be marked"
   },
   "buttonUnmarkFolder": {
@@ -128,7 +128,7 @@
     "description": "Button for unmarking all but selected folder or first in groups with it"
   },
   "titleButtonMarkFolderButFirst": {
-    "message": "В группах дублей, где есть закладки из выбраной папки, будут выбраны только они (или исключена верхняя, если других нет).", 
+    "message": "В группах дублей, где есть закладки из выбраной папки, будут выбраны только они (или исключена верхняя, если других нет).",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the first is unmarked"
   },
   "buttonMarkFolderButLast": {
@@ -181,7 +181,7 @@
   },
   "buttonMarkSameButLast": {
     "message": "Отметить все идентичные папки в одной группе, кроме нижних",
-    "description": "Button for marking all but the Last of identical folders in the same group"
+    "description": "Button for marking all but the last of identical folders in the same group"
   },
   "titleButtonMarkSameButLast": {
     "message": "Будут отмечены все идентичные папки в одной группе, кроме самых нижних.",
@@ -189,7 +189,7 @@
   },
   "buttonMarkSameButOldest": {
     "message": "Отметить все идентичные папки в одной группе, кроме старейших",
-    "description": "Button for marking all but the Oldest of identical folders in the same group"
+    "description": "Button for marking all but the oldest of identical folders in the same group"
   },
   "titleButtonMarkSameButOldest": {
     "message": "Будут отмечены все идентичные папки в одной группе, кроме самых старых.",

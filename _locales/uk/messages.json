@@ -100,7 +100,7 @@
     "description": "Explain that selecting a folder will provide corresponding buttons for marking"
   },
   "buttonMarkFolder": {
-    "message":  "Позначити все з обраної папки",
+    "message": "Позначити все з обраної папки",
     "description": "Button for marking all of the selected folder"
   },
   "titleButtonMarkFolder": {
@@ -128,7 +128,7 @@
     "description": "Button for unmarking all but selected folder or first in groups with it"
   },
   "titleButtonMarkFolderButFirst": {
-    "message":  "В тих групах дублів, де є закладки з обраної папки, буде позначено лише їх (або виключено верхню, якщо інших немає).",
+    "message": "В тих групах дублів, де є закладки з обраної папки, буде позначено лише їх (або виключено верхню, якщо інших немає).",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the first is unmarked"
   },
   "buttonMarkFolderButLast": {
@@ -136,7 +136,7 @@
     "description": "Button for unmarking all but selected folder or last in groups with it"
   },
   "titleButtonMarkFolderButLast": {
-    "message":  "В тих групах дублів, де є закладки з обраної папки, буде позначено лише їх (або виключено нижню, якщо інших немає).", 
+    "message": "В тих групах дублів, де є закладки з обраної папки, буде позначено лише їх (або виключено нижню, якщо інших немає).",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the last is unmarked"
   },
   "buttonMarkFolderButOldest": {
@@ -144,7 +144,7 @@
     "description": "Button for unmarking all but selected folder or oldest in groups with it"
   },
   "titleButtonMarkFolderButOldest": {
-    "message":  "В тих групах дублів, де є закладки з обраної папки, буде позначено лише їх (або виключено найстарішу, якщо інших немає).", 
+    "message": "В тих групах дублів, де є закладки з обраної папки, буде позначено лише їх (або виключено найстарішу, якщо інших немає).",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the oldest is unmarked"
   },
   "buttonMarkFolderButNewest": {
@@ -152,7 +152,7 @@
     "description": "Button for unmarking all but selected folder or newest in groups with it"
   },
   "titleButtonMarkFolderButNewest": {
-    "message":  "В тих групах дублів, де є закладки з обраної папки, буде позначено лише їх (або виключено найновішу, якщо інших немає).",
+    "message": "В тих групах дублів, де є закладки з обраної папки, буде позначено лише їх (або виключено найновішу, якщо інших немає).",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
   "buttonMarkSame": {
