@@ -4,22 +4,23 @@
 
 "use strict";
 
+// For documentation on the tab API see e.g.
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs
+
 function bookmarkdupesTab() {
   const url = browser.extension.getURL("data/tab/index.html")
 
   function selectOrCreate(tabs) {
-    for (let tab of tabs) {
-      const updateProperties = {
-        active: true
-      };
-      browser.tabs.update(tab.id, updateProperties);
+    const properties = {
+      active: true
+    };
+    if (tabs.length) {  // switch to tab
+      const tab = tabs[0];
+      browser.tabs.update(tab.id, properties);
       return;
     }
-    const createProperties = {
-      url: url,
-      active: true
-    }
-    browser.tabs.create(createProperties);
+    properties.url = url;
+    browser.tabs.create(properties);
   }
 
   const queryInfo = {

@@ -1,24 +1,41 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-4.1:
+	Martin Väth <martin at mvath.de>:
+	- Add buttons for marking from identical folders in the same group
+	- internal: avoid redundant braces for Boolean negation
+
+	Henaro aka Ironwool:
+	- Set a reasonable page title
+
 *bookmarkdupes-4.0:
 	Martin Väth <martin at mvath.de>:
 	- Use tab instead of panel
 	- Speed up a lot and save memory by almost complete rewriting:
 	  In a tab there is no need to save state in a background process.
+	- Speed up counting of marks
 	- Display bookmarks as links
+	- Display URLs common to groups only once
 	- Support folder selection (instead of only 2 categories)
 	- Provide buttons for not marking first/last/oldest/newest for folders
 	- Let buttons for marking folders appear only optionally.
 	  Thanks to perdolka for the idea:
 	  https://github.com/vaeth/bookmarkdupes/issues/32
 	- Display list titles in more places
+	- Try to force display syncing with setTimeout
+	- Disable checkboxes while updating them
+	- Add a checkbox to disable counting
 	- bugfix: mark also last group for folder/category selection
 	- fix spelling/grammar
 	- internal: prefer const over let if possible
+	- internal: avoid new Array()
 
 	Henaro aka Ironwool:
 	- Update uk locales
 	- Update ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
 
 *bookmarkdupes-3.0:
 	Martin Väth <martin at mvath.de>:

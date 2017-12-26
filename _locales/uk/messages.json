@@ -91,6 +91,10 @@
     "message": "-- Оберіть папку щоб побачити кнопки позначення її закладок --",
     "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
   },
+  "optionSameFolder": {
+    "message": "-- Identical folders in the same group --", // new
+    "description": "Name of a special folder selection: Identical folders in the same group"
+  },
   "titleSelectFolder": {
     "message": "Якщо папку обрано, відображатимуться кнопки для позначення її закладок.",
     "description": "Explain that selecting a folder will provide corresponding buttons for marking"
@@ -151,6 +155,54 @@
     "message":  "В тих групах дублів, де є закладки з обраної папки, буде позначено лише їх (або виключено найновішу, якщо інших немає).",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
+  "buttonMarkSame": {
+    "message": "Mark all identical folders in same group", // new
+    "description": "Button for marking all of the same folders in the same group"
+  },
+  "titleButtonMarkSame": {
+    "message": "Mark all bookmarks from identical folders in the same group.", // new
+    "description": "Explain that all bookmarks of identical folders in the same group will be marked"
+  },
+  "buttonUnmarkSame": {
+    "message": "Unmark all identical folders in same group", // new
+    "description": "Button for unmarking all of the same folders in the same group"
+  },
+  "titleButtonUnmarkSame": {
+    "message": "Unmark all bookmarks from identical folders in the same group.", // new
+    "description": "Explain that all bookmarks of identical folders in the same group will be unmarked"
+  },
+  "buttonMarkSameButFirst": {
+    "message": "Mark all but first of identical folders in same group", // new
+    "description": "Button for marking all but the first of identical folders in the same group"
+  },
+  "titleButtonMarkSameButFirst": {
+    "message": "Additionally the first of identical folders in the same group will be unmarked.", // new
+    "description": "Explain that additionally for identical folders in the same group the first will be unmarked"
+  },
+  "buttonMarkSameButLast": {
+    "message": "Mark all but first of identical folders in same group", // new
+    "description": "Button for marking all but the first of identical folders in the same group"
+  },
+  "titleButtonMarkSameButLast": {
+    "message": "Additionally the last of identical folders in the same group will be unmarked.", // new
+    "description": "Explain that additionally for identical folders in the same group the last will be unmarked"
+  },
+  "buttonMarkSameButOldest": {
+    "message": "Mark all but last of identical folders in same group", // new
+    "description": "Button for marking all but the last of identical folders in the same group"
+  },
+  "titleButtonMarkSameButOldest": {
+    "message": "Additionally the oldest of identical folders in the same group will be unmarked.", // new
+    "description": "Explain that additionally for identical folders in the same group the oldest will be unmarked"
+  },
+  "buttonMarkSameButNewest": {
+    "message": "Mark all but oldest of identical folders in same group", // new
+    "description": "Button for marking all but the oldest of identical folders in the same group"
+  },
+  "titleButtonMarkSameButNewest": {
+    "message": "Additionally the newest of identical folders in the same group will be unmarked.", // new
+    "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
+  },
   "buttonRemoveMarked": {
     "message": "Видалити позначені закладки",
     "description": "Button for removing marked bookmarks"
@@ -192,6 +244,10 @@
         "example": "0"
       }
     }
+  },
+  "messageNoCount": {
+    "message": "Для прискорення додатку число позначених закладок не відображається",
+    "description": "Report that marks are not counted for speed reasons"
   },
   "messageExactMatchesGroups": {
     "message": "$TOTAL$ (із $ALL$) точних дублів у $GROUPS$ групах",
