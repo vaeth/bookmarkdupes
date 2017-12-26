@@ -180,24 +180,24 @@
     "description": "Explain that additionally for identical folders in the same group the first will be unmarked"
   },
   "buttonMarkSameButLast": {
-    "message": "Mark all but first of identical folders in same group",
-    "description": "Button for marking all but the first of identical folders in the same group"
+    "message": "Mark all but last of identical folders in same group",
+    "description": "Button for marking all but the last of identical folders in the same group"
   },
   "titleButtonMarkSameButLast": {
     "message": "Additionally the last of identical folders in the same group will be unmarked.",
     "description": "Explain that additionally for identical folders in the same group the last will be unmarked"
   },
   "buttonMarkSameButOldest": {
-    "message": "Mark all but last of identical folders in same group",
-    "description": "Button for marking all but the last of identical folders in the same group"
+    "message": "Mark all but oldest of identical folders in same group",
+    "description": "Button for marking all but the oldest of identical folders in the same group"
   },
   "titleButtonMarkSameButOldest": {
     "message": "Additionally the oldest of identical folders in the same group will be unmarked.",
     "description": "Explain that additionally for identical folders in the same group the oldest will be unmarked"
   },
   "buttonMarkSameButNewest": {
-    "message": "Mark all but oldest of identical folders in same group",
-    "description": "Button for marking all but the oldest of identical folders in the same group"
+    "message": "Mark all but newest of identical folders in same group",
+    "description": "Button for marking all but the newest of identical folders in the same group"
   },
   "titleButtonMarkSameButNewest": {
     "message": "Additionally the newest of identical folders in the same group will be unmarked.",

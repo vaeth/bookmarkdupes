@@ -181,7 +181,7 @@
   },
   "buttonMarkSameButLast": {
     "message": "Markiere alle außer letzten von identischen Ordnern aus gleicher Gruppe",
-    "description": "Button for marking all but the first of identical folders in the same group"
+    "description": "Button for marking all but the last of identical folders in the same group"
   },
   "titleButtonMarkSameButLast": {
     "message": "Zusätzlich wird die Markierung des jeweils letzten Lesezeichens von identischen Ordnern aus der gleichen Gruppe entfernt.",
@@ -189,7 +189,7 @@
   },
   "buttonMarkSameButOldest": {
     "message": "Markiere alle außer ältesten von identischen Ordnern aus gleicher Gruppe",
-    "description": "Button for marking all but the last of identical folders in the same group"
+    "description": "Button for marking all but the oldest of identical folders in the same group"
   },
   "titleButtonMarkSameButOldest": {
     "message": "Zusätzlich wird die Markierung des jeweils ältesten Lesezeichens von identischen Ordnern aus der gleichen Gruppe entfernt.",
@@ -197,7 +197,7 @@
   },
   "buttonMarkSameButNewest": {
     "message": "Markiere alle außer neuesten von identischen Ordnern aus gleicher Gruppe",
-    "description": "Button for marking all but the oldest of identical folders in the same group"
+    "description": "Button for marking all but the newest of identical folders in the same group"
   },
   "titleButtonMarkSameButNewest": {
     "message": "Zusätzlich wird die Markierung des jeweils neuesten Lesezeichens von identischen Ordnern aus der gleichen Gruppe entfernt.",
