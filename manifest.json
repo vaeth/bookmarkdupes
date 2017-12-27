@@ -3,7 +3,7 @@
   "short_name": "bookmarkdupes",
   "description": "__MSG_extensionDescription__",
   "author": "Martin Väth",
-  "version": "4.1.1",
+  "version": "4.2",
   "manifest_version": 2,
   "homepage_url": "https://addons.mozilla.org/en-US/firefox/addon/bookmark-dupes/",
   "default_locale": "en",
@@ -23,6 +23,11 @@
     "default_icon": {
       "48": "data/icons/48.png"
     }
+  },
+
+  "options_ui": {
+    "page": "data/options/index.html",
+    "browser_style": true
   },
 
   "icons": {

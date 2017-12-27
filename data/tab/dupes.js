@@ -456,7 +456,7 @@ function addBookmark(bookmark, folders, id) {
     link.href = url;
     link.target = "_blank";
     link.textContent = name;
-    link.referrerpolicy = 'no-referrer';
+    link.referrerpolicy = "no-referrer";
     col.appendChild(link);
     if (id) {
       col.id = id;
