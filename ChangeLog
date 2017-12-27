@@ -1,5 +1,9 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-4.1.1:
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-4.1:
 	Martin Väth <martin at mvath.de>:
 	- Add buttons for marking from identical folders in the same group
