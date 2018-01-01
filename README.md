@@ -8,8 +8,9 @@ A WebExtension which can display/remove duplicate bookmarks, empty folders, or d
 
 After installing bookmarkdupes, the usage is rather simple:
 
-Click on bookmardupes' symbol (duplicate stars) and then
-select in the new tab what you want to display:
+To open bookmarkdupes, click the extension symbol (duplicate stars) or
+use the link in the options page of the extension.
+Then select what you want to display:
 
 1. Bookmark duplicates (exact)
 2. Bookmark duplicates (similar)
@@ -50,8 +51,9 @@ the corresponding bookmarks to their previous location in the bookmark menu!
    https://github.com/vaeth/bookmarkdupes/issues/11 and the second part of
    https://github.com/vaeth/bookmarkdupes/issues/8
 4. In some firefox versions (e.g. 55.0.3) it has been reported that pressing
-   the duplicate stars does not open a new tab. For a discussion of this
-   problem and of possible workarounds, see
+   the duplicate stars does not open a new tab. You can try to use the link
+   in the options page of the extension instead if you have this problem.
+   The reason for the problem is still unknown, see
    https://github.com/vaeth/bookmarkdupes/issues/38
 
 ## Contributions

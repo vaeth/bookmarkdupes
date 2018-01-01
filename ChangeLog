@@ -1,5 +1,14 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-4.2:
+	Martin Väth <martin at mvath.de>:
+	- Add an options page with a link as an alternative way to open the
+	  extension. This is mainly meant as a workaround for
+	  https://github.com/vaeth/bookmarkdupes/issues/38
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-4.1:
 	Martin Väth <martin at mvath.de>:
 	- Add buttons for marking from identical folders in the same group
