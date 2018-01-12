@@ -439,9 +439,13 @@ function entryExtra(col, text) {
   rulerExtra(col, text);  // by accident the same mechanism works
 }
 
+function getBookmarkId(id) {
+  return id.substr(9);  // 9 = "bookmark=".length
+}
+
 function addBookmark(bookmark, folders, id) {
   const row = document.createElement("TR");
-  appendCheckboxCol(row, bookmark.id);
+  appendCheckboxCol(row, "bookmark=" + bookmark.id);
   if (bookmark.order !== undefined) {
     appendTextNodeCol(row, String(bookmark.order));
     const dummy = document.createElement("TD");  // A dummy column for space
@@ -479,7 +483,7 @@ function toggleExtra(entryList, rulerList) {
   const fullUrl = getCheckboxFullUrl();
   if (rulerList) {
     for (let i = 0; i < rulerList.length; ++i) {
-      const col = document.getElementById("rulerExtra" + String(i));
+      const col = document.getElementById("rulerExtra=" + String(i));
       rulerExtra(col, (fullUrl ? rulerList[i] : null));
     }
   }
@@ -488,7 +492,7 @@ function toggleExtra(entryList, rulerList) {
   }
   let extra = getCheckboxExtra();
   for (let i = 0; i < entryList.length; ++i) {
-    const col = document.getElementById("entryExtra" + String(i));
+    const col = document.getElementById("entryExtra=" + String(i));
     const entry = entryList[i];
     let text;
     if (fullUrl && entry.url) {
@@ -612,13 +616,6 @@ function markButNewest() {
   }
 }
 
-function SplitNumber(text, begin) {
-  if (text.substring(0, begin.length) !== begin) {
-    return -1;
-  }
-  return Number(text.substring(begin.length));
-}
-
 function getSelectedIds(folderIds) {
   const value = getSelectedFolder();
   if ((!value) || (value === "=")) {
@@ -641,7 +638,7 @@ function markFolder(folderIds, checked) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    if (!ids.has(checkbox.id)) {
+    if (!ids.has(getBookmarkId(checkbox.id))) {
       continue;
     }
     checkbox.checked = checked;
@@ -709,7 +706,7 @@ function markFolderGroup(folderIds, mode) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    if (!ids.has(checkbox.id)) {
+    if (!ids.has(getBookmarkId(checkbox.id))) {
       checkboxesOthers.push(checkbox);
       continue;
     }
@@ -744,7 +741,7 @@ function markSame(folders, checked) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    const folder = folders.get(checkbox.id);
+    const folder = folders.get(getBookmarkId(checkbox.id));
     if (folder === undefined) {
       continue;
     }
@@ -786,7 +783,7 @@ function markSameGroup(folders, mode) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    const id = checkbox.id;
+    const id = getBookmarkId(checkbox.id);
     let folder = folders.get(id);
     if (folder === undefined) {
       continue;
@@ -858,7 +855,7 @@ function getMarked(returnSet) {
     }
     const checkbox = getCheckbox(node);
     if (checkbox.checked) {
-      adding(checkbox.id);
+      adding(getBookmarkId(checkbox.id));
     }
   }
   return marked;
@@ -1077,7 +1074,7 @@ function calculate(command, state, callback) {
             handleFunction(node, parent);
             return;
           } else if (node.url && (!node.type || (node.type == "bookmark")) &&
-              (node.url.substr(0, 6) !== "place:")) {
+              !node.url.startsWith("place:")) {
             handleFunction(node, parent, index);
           }
         }
@@ -1169,7 +1166,7 @@ function calculate(command, state, callback) {
         entry.extra = bookmark.extra;
       }
       if (entry) {
-        id = "entryExtra" + String(entryList.length);
+        id = "entryExtra=" + String(entryList.length);
         entryList.push(entry);
       }
       addBookmark(bookmark, folders, id);
@@ -1231,7 +1228,7 @@ function calculate(command, state, callback) {
       }
       const url = group[0].url;
       if (!similar || coincidingUrl(group, url)) {
-        const id = "rulerExtra" + String(rulerList.length);
+        const id = "rulerExtra=" + String(rulerList.length);
         rulerList.push(url);
         addRuler(id);
         addBookmarks(group);
@@ -1420,9 +1417,9 @@ function processMarked(stopPressed, callback, bookmarkMap) {
         return;
       }
       if (isMarked(id)) {
-        state.marked.add(id);
+        state.marked.add(getBookmarkId(id));
       } else {
-        state.marked.delete(id);
+        state.marked.delete(getBookmarkId(id));
       }
     } else {
       if (!getCheckboxCount().checked) {
@@ -1460,9 +1457,12 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       case "checkboxCount":
         marked();
         return;
-      default:  // bookmark checkbox id
-        marked(event.target.id);
-        return;
+      default:
+        const id = event.target.id;
+        if (id.startsWith("bookmark=")) {  // bookmark checkbox id
+          marked(id);
+          return;
+      }
     }
   }
 

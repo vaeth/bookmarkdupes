@@ -1,5 +1,13 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-5.0:
+	Martin Väth <martin at mvath.de>:
+	- bugfix: increase minimal gecko version to 48.0 to reflect that
+	  manifest.json itself apparently requires that version, see
+	  https://github.com/vaeth/bookmarkdupes/issues/44
+	- bugfix: use safe ids for bookmarks
+	- internal: remove redundant SplitNumber
+
 *bookmarkdupes-4.2:
 	Martin Väth <martin at mvath.de>:
 	- Add an options page with a link as an alternative way to open the
