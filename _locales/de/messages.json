@@ -7,21 +7,113 @@
     "message": "Anzeige/Entfernung doppelter Lesezeichen, leerer Ordner oder Beschreibungen",
     "description": "Description of the extension"
   },
-  "buttonListExactDupes": {
-    "message": "Exakte Lesezeichenduplikate",
-    "description": "Button for listing exact dupes"
+  "checkboxRules": {
+    "message": "Experten-Modus: anpassbare Regeln zum Finden ähnlicher Lesezeichen oder Ignorieren von Lesezeichen",
+    "description": "Checkbox text for switching on/off regexp rules"
   },
-  "titleButtonListExactDupes": {
-    "message": "Berechne (erneut) die Liste exakter Lesezeichenduplikate. Zwei Lesezeichen gelten als exakte Duplikate, wenn ihre URL identisch ist.",
-    "description": "Explain that the list of exact bookmark dupes will be (re)calculated, and that exact dupes are those with identical URLs"
+  "titleCheckboxRules": {
+    "message": "Mit dieser Option können Lesezeichen ignoriert oder ähnliche Lesezeichen gefunden werde. Die Details werden mit Hilfe regulärer Ausdrücke festgelegt.",
+    "description": "Explain what regular expresssions are used for"
   },
-  "buttonListSimilarDupes": {
-    "message": "Ähnliche Lesezeichenduplikate",
-    "description": "Button for listing similar dupes"
+  "radioFilter": {
+    "message": "Ignorieren",
+    "description": "Radio button for filtering a bookmark. The text should be short"
   },
-  "titleButtonListSimilarDupes": {
-    "message": "Berechne (erneut) die Liste ähnlicher Lesezeichenduplikate. Zwei Lesezeichen gelten als ähnliche Duplikate, wenn ihre URL bis zum ersten „?“ übereinstimmt.",
-    "description": "Explain that the list of similar bookmasrk dupes will be (re)calculated, and that dupes are similar if their URLs match up to the first “?”"
+  "titleRadioFilter": {
+    "message": "Lesezeichen ignorieren, die auf die Kriterien passen",
+    "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
+  },
+  "radioUrl": {
+    "message": "Modifizieren",
+    "description": "Radio button for preprocessing a URL. The text should be short"
+  },
+  "titleRadioUrl": {
+    "message": "Vor der Überprüfung von URLs zum Feststellen von Lesezeichenduplikaten wird die URL passender Lesezeichen entsprechend der Regel modifiziert.",
+    "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
+  },
+  "radioOff": {
+    "message": "Aus",
+    "description": "Radio button for ignoring the rule. The text should be short"
+  },
+  "titleRadioOff": {
+    "message": "Diese Regel hat keine Auswirkungen.",
+    "description": "Explain that by choosing that button the rule has no effect"
+  },
+  "ruleName": {
+    "message": "Name passt",
+    "description": "Input field for matching the name. The text should be short"
+  },
+  "titleRuleName": {
+    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen Pfad (Ordner + Name) auf den regulären Ausdruck passt. Der Trenner für Ordner ist \\0 oder \\x00.",
+    "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
+  },
+  "ruleNameNegation": {
+    "message": "Name passt nicht",
+    "description": "Input field for not matching the name. The text should be short"
+  },
+  "titleRuleNameNegation": {
+    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen Pfad (Ordner + Name) auf den regulären Ausdruck passt. Der Trenner für Ordner ist \\0 oder \\x00.",
+    "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
+  },
+  "ruleUrl": {
+    "message": "URL passt",
+    "description": "Input field for matching the URL. The text should be short"
+  },
+  "titleRuleUrl": {
+    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL (Protokoll und Domainname kleingeschrieben) auf den regulären Ausdruck passt.",
+    "description": "Explain that bookmarks whose URL matches the regular expression"
+  },
+  "ruleUrlNegation": {
+    "message": "URL passt nicht",
+    "description": "Input field for matching the URL. The text should be short"
+  },
+  "titleRuleUrlNegation": {
+    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL (Protokoll und Domainname kleingeschrieben) nicht auf den regulären Ausdruck passt.",
+    "description": "Explain that bookmarks whose URL does not match the regular expression"
+  },
+  "ruleSearch": {
+    "message": "Ersetze URL-Teil",
+    "description": "Input field for the search part of the URL. The text should be short"
+  },
+  "titleRuleSearch": {
+    "message": "Beim Vergleich von URLs (Protokoll und Domainname kleingeschrieben) werden die Teile, die auf den regulären Ausdruck passen durch den nachfolgenden Text ersetzt.",
+    "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
+  },
+  "ruleReplace": {
+    "message": "durch",
+    "description": "Input field for the replacement text for the regular expression matches. The text should be short"
+  },
+  "titleRuleReplace": {
+    "message": "Der Ersetzungstext für den passenden Teil des regulären Ausdrucks",
+    "description": "Explain that the text will be used as replacement text for the regular expression matches"
+  },
+  "buttonRuleAdd": {
+    "message": "Neu",
+    "description": "Button for inserting a new rule. The text should be short"
+  },
+  "titleButtonRuleAdd": {
+    "message": "Einfügen einer neuen Regel.",
+    "description": "Explain that a new rule will be inserted"
+  },
+  "buttonRuleSub": {
+    "message": "Löschen",
+    "description": "Button for removing a rule. The text should be short"
+  },
+  "titleButtonRuleSub": {
+    "message": "Löschen dieser Regel.",
+    "description": "Explain that the rule will be removed"
+  },
+  "regExpFrequent": {
+    "message": "[hH]äufig.*|[oO]ft|[dD]uplikate",
+    "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
+  },
+  "buttonListDupes": {
+    "message": "Lesezeichenduplikate",
+    "description": "Button for listing dupes"
+  },
+  "titleButtonListDupes": {
+    "message": "Berechne (erneut) die Liste der Lesezeichenduplikate. Zwei Lesezeichen gelten als exakte Duplikate, wenn ihre URL identisch ist.",
+    "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
     "message": "Leere Ordner",
@@ -232,8 +324,8 @@
     "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
   },
   "checkboxExtra": {
-    "message": "URL-Ergänzung (nach „?“) anzeigen",
-    "description": "Checkbox for displaying the URL tail (following “?”) in the similar matching listing"
+    "message": "Ersetzte URL-Teile im Listing anzeigen",
+    "description": "Checkbox for displaying the replaced URL content in listing"
   },
   "messageCount": {
     "message": "$TOTAL$ Lesezeichen markiert",
@@ -249,9 +341,9 @@
     "message": "Die Anzahl markierter Lesezeichen wird aus Geschwindigkeitsgründen nicht angezeigt.",
     "description": "Report that marks are not counted for speed reasons"
   },
-  "messageExactMatchesGroups": {
-    "message": "$TOTAL$ (von $ALL$) exakte Duplikate in $GROUPS$ Gruppen",
-    "description": "Report specified numbers of exact matches and groups of all",
+  "messageMatches": {
+    "message": "$TOTAL$ (von $ALL$) Duplikate in $GROUPS$ Gruppen",
+    "description": "Report specified numbers of matches and groups of all",
     "placeholders": {
       "total": {
         "content": "$1",
@@ -267,31 +359,9 @@
       }
     }
   },
-  "titleMessageExactMatchesGroups": {
-    "message": "Zwei Lesezeichen gelten als exakte Duplikate, wenn ihre URL identisch ist.",
-    "description": "Explain that exact dupes are those with identical URLs"
-  },
-  "messageSimilarMatchesGroups": {
-    "message": "$TOTAL$ (von $ALL$) ähnliche Duplikate in $GROUPS$ Gruppen",
-    "description": "Report specified numbers of similar matches and groups of all",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "2"
-      },
-      "groups": {
-        "content": "$2",
-        "example": "1"
-      },
-      "all": {
-        "content": "$3",
-        "example": "1"
-      }
-    }
-  },
-  "titleMessageSimilarMatchesGroups": {
-    "message": "Zwei Lesezeichen gelten als ähnliche Duplikate, wenn ihre URL bis zum ersten „?“ übereinstimmt.",
-    "description": "Explain that similar dupes are those whose URLs match up to the first “?”"
+  "titleMessageMatches": {
+    "message": "Zwei Lesezeichen werden als Duplikate betrachtet, wenn ihre URL übereinstimmt. Für den Vergleich der URLs werden Protokoll und Domainname kleingeschrieben und die anpassbaren Ersetzungsregeln angewandt.",
+    "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {
     "message": "$TOTAL$ leere Ordner gefunden",

@@ -7,21 +7,117 @@
     "message": "Поиск, отображение и удаление дублей закладок, пустых папок, описаний",
     "description": "Description of the extension"
   },
-  "buttonListExactDupes": {
-    "message": "Точные дубли",
-    "description": "Button for listing exact dupes"
+  "checkboxRules": {
+    "message": "Expert mode: use customized rules to match similar bookmarks or to ignore bookmarks when searching.", // new
+    "description": "Checkbox text for switching on/off regexp rules"
   },
-  "titleButtonListExactDupes": {
-    "message": "(Пере)определить список точных дублей. Закладки считаются точными дублями, если их URL-ы идентичны.",
-    "description": "Explain that the list of exact bookmark dupes will be (re)calculated, and that exact dupes are those with identical URLs"
+  "titleCheckboxRules": {
+    "message": "With this option bookmarks can be ignored or similar bookmarks can be found. The details are specified in terms of regular expressions.", // new
+    "description": "Explain what regular expresssions are used for"
   },
-  "buttonListSimilarDupes": {
-    "message": "Подобные дубли",
-    "description": "Button for listing similar dupes"
+  "radioFilter": {
+    "message": "Filter", // new
+    "description": "Radio button for filtering a bookmark. The text should be short"
   },
-  "titleButtonListSimilarDupes": {
-    "message": "(Пере)определить список подобных дублей. Закладки считаются подобными дублями, если их URL-ы совпадают до первого знака “?”.",
-    "description": "Explain that the list of similar bookmasrk dupes will be (re)calculated, and that dupes are similar if their URLs match up to the first “?”"
+  "titleRadioFilter": {
+    "message": "Bookmarks matching the criteria will be ignored.", // new
+    "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
+  },
+  "radioUrl": {
+    "message": "Modify", // new
+    "description": "Radio button for preprocessing a URL. The text should be short"
+  },
+  "titleRadioUrl": {
+    "message": "Before checking URLs to find bookmark dupes, the URL of matching bookmarks will be preprocessed according to the specified rule.", // new
+    "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
+  },
+  "radioOff": {
+    "message": "Off", // new
+    "description": "Radio button for ignoring the rule. The text should be short"
+  },
+  "titleRadioOff": {
+    "message": "This rule has no effect.", // new
+    "description": "Explain that by choosing that button the rule has no effect"
+  },
+  "ruleName": {
+    "message": "Name matches", // new
+    "description": "Input field for matching the name. The text should be short"
+  },
+  "titleRuleName": {
+    "message": "The rule applies to a bookmark if the bookmark path (folders + name) matches the regular expression. The separator for folders is \\0 or \\x00.", // new
+    "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
+  },
+  "ruleNameNegation": {
+    "message": "Name does not match", // new
+    "description": "Input field for not matching the name. The text should be short"
+  },
+  "titleRuleNameNegation": {
+    "message": "The rule applies to a bookmark if the bookmark path (folders + name) does not match the regular expression. The separator for folders is \\0 or \\x00.", // new
+    "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
+  },
+  "ruleUrl": {
+    "message": "URL matches", // new
+    "description": "Input field for matching the URL. The text should be short"
+  },
+  "titleRuleUrl": {
+    "message": "The rule applies to a bookmark if its URL (protocol and domain name in lower case) matches the regular expression.", // new
+    "description": "Explain that bookmarks whose URL matches the regular expression"
+  },
+  "ruleUrlNegation": {
+    "message": "URL does not match", // new
+    "description": "Input field for matching the URL. The text should be short"
+  },
+  "titleRuleUrlNegation": {
+    "message": "The rule applies to a bookmark if its URL (protocol and domain name in lower case) does not match the regular expression.", // new
+    "description": "Explain that bookmarks whose URL does not match the regular expression"
+  },
+  "ruleSearch": {
+    "message": "Replace URL matches", // new
+    "description": "Input field for the search part of the URL. The text should be short"
+  },
+  "titleRuleSearch": {
+    "message": "When comparing URLs (protocol and domain name in lower case) the parts matching the regular expression will be replaced by the subsequent text.", // new
+    "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
+  },
+  "ruleReplace": {
+    "message": "by", // new
+    "description": "Input field for the replacement text for the regular expression matches. The text should be short"
+  },
+  "titleRuleReplace": {
+    "message": "The replacement text for the regular expresssion matches", // new
+    "description": "Explain that the text will be used as replacement text for the regular expression matches"
+  },
+  "buttonRuleAdd": {
+    "message": "New", // new
+    "description": "Button for inserting a new rule. The text should be short"
+  },
+  "titleButtonRuleAdd": {
+    "message": "Insert a new rule.", // new
+    "description": "Explain that a new rule will be inserted"
+  },
+  "buttonRuleSub": {
+    "message": "Remove", // new
+    "description": "Button for removing a rule. The text should be short"
+  },
+  "titleButtonRuleSub": {
+    "message": "Remove this rule.", // new
+    "description": "Explain that the rule will be removed"
+  },
+  "regExpFrequent": {
+    "message": "[fF]requent.*|[oO]ften|[dD]upes", // new
+    "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
+  },
+  "buttonListDupes": {
+    "message": "Dupes", // new
+// changed     "Exact dupes"
+//  "message": "Точные дубли",
+    "description": "Button for listing dupes"
+  },
+  "titleButtonListDupes": {
+    "message": "(Re)calculate the list of bookmark dupes. Two bookmarks are considered to be dupes if their URLs match. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.", // new
+// changed     "(Re)calculate the list of exact bookmark dupes. Two bookmarks are considered to be exact dupes if their URLs are identical."
+//  "message": "(Пере)определить список точных дублей. Закладки считаются точными дублями, если их URL-ы идентичны.",
+    "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
     "message": "Пустые папки",
@@ -232,8 +328,10 @@
     "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
   },
   "checkboxExtra": {
-    "message": "Отображать концовку URL-адреса (всё после “?”) в списке",
-    "description": "Checkbox for displaying the URL tail (following “?”) in the similar matching listing"
+    "message": "Display replaced URL content in listing", // new
+// changed     "Display URL tail (following “?”) in listing"
+//  "message": "Отображать концовку URL-адреса (всё после “?”) в списке",
+    "description": "Checkbox for displaying the replaced URL content in listing"
   },
   "messageCount": {
     "message": "$TOTAL$ закладок отмечено",
@@ -249,9 +347,11 @@
     "message": "Для ускорения аддона число отмеченных закладок не отображается",
     "description": "Report that marks are not counted for speed reasons"
   },
-  "messageExactMatchesGroups": {
-    "message": "$TOTAL$ (из $ALL$) точных дублей в $GROUPS$ группах",
-    "description": "Report specified numbers of exact matches and groups of all",
+  "messageMatches": {
+    "message": "$TOTAL$ (of $ALL$) dupes in $GROUPS$ groups", // new
+// changed     "$TOTAL$ (of $ALL$) exact dupes in $GROUPS$ groups"
+//  "message": "$TOTAL$ (из $ALL$) точных дублей в $GROUPS$ группах",
+    "description": "Report specified numbers of matches and groups of all",
     "placeholders": {
       "total": {
         "content": "$1",
@@ -267,31 +367,11 @@
       }
     }
   },
-  "titleMessageExactMatchesGroups": {
-    "message": "Две закладки считаются точными дублями, если их URL-ы одинаковы.",
-    "description": "Explain that exact dupes are those with identical URLs"
-  },
-  "messageSimilarMatchesGroups": {
-    "message": "$TOTAL$ (из $ALL$) подобных дублей в $GROUPS$ группах",
-    "description": "Report specified numbers of similar matches and groups of all",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "2"
-      },
-      "groups": {
-        "content": "$2",
-        "example": "1"
-      },
-      "all": {
-        "content": "$3",
-        "example": "1"
-      }
-    }
-  },
-  "titleMessageSimilarMatchesGroups": {
-    "message": "Две закладки считаются подобными дублями, если их URL-ы одинаковы до знака“?”.",
-    "description": "Explain that similar dupes are those whose URLs match up to the first “?”"
+  "titleMessageMatches": {
+    "message": "Two bookmarks are considered to be dupes if their URLs match. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.", // new
+// changed     "Two bookmarks are considered to be exact dupes if their URLs are identical."
+//  "message": "Две закладки считаются точными дублями, если их URL-ы одинаковы.",
+    "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {
     "message": "$TOTAL$ пустых папок найдено",
