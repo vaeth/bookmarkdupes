@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 Nartin Väth <martin@mvath.de>
+/* Copyright (C) 2017-2018 Nartin Väth <martin@mvath.de>
  * This project is under the GNU public license 2.0
 */
 
@@ -6,6 +6,11 @@
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/
 
 "use strict";
+
+function isChecked(id) {
+  const checkbox = document.getElementById(id);
+  return (checkbox && checkbox.checked);
+}
 
 function setTitle(title) {
   document.getElementById("pageTitle").textContent = title;
@@ -51,14 +56,28 @@ function getMessageNode() {
   return document.getElementById("textMessage");
 }
 
+function getTableRules() {
+  return document.getElementById("tableRules");
+}
+
+function getCheckboxRules() {
+  return isChecked("checkboxRules");
+}
+
+function setCheckboxRulesTitle(title) {
+  document.getElementById("titleCheckboxRules").title = title;
+}
+
+function setCheckboxRulesText(text) {
+  document.getElementById("checkboxRulesText").textContent = text;
+}
+
 function getCheckboxFullUrl() {
-  const checkboxFullUrl = document.getElementById("checkboxFullUrl");
-  return (checkboxFullUrl && checkboxFullUrl.checked);
+  return isChecked("checkboxFullUrl");
 }
 
 function getCheckboxExtra() {
-  const checkboxExtra = document.getElementById("checkboxExtra");
-  return (checkboxExtra && checkboxExtra.checked);
+  return isChecked("checkboxExtra");
 }
 
 function getSelectedFolder() {
@@ -75,7 +94,7 @@ function getTextCount() {
 }
 
 function getCheckboxCount() {
-  return document.getElementById("checkboxCount");
+  return isChecked("checkboxCount");
 }
 
 function displayCount(text) {
@@ -92,10 +111,13 @@ function displayMessage(text, title) {
   message.removeAttribute("TITLE");
 }
 
-function getName(folders, parent, name) {
+function getName(folders, parent, name, separator) {
+  if (!separator) {
+    separator = " | ";
+  }
   while (parent || (parent === 0)) {
     const folder = folders[parent];
-    name = folder.name + ' | ' + name;
+    name = folder.name + separator + name;
     parent = folder.parent;
   }
   return name;
@@ -114,7 +136,49 @@ function appendTextNodeCol(row, text, title, id) {
   row.appendChild(col);
 }
 
-function appendCheckbox(parent, id, title, checked) {
+function appendRadio(parent, id, name, title, checked) {
+  const radiobox = document.createElement("INPUT");
+  radiobox.type = "radio";
+  radiobox.id = id;
+  radiobox.name = name;
+  if (title) {
+    radiobox.title = browser.i18n.getMessage(title);
+  }
+  if (checked) {
+    radiobox.checked = checked;
+  }
+  parent.appendChild(radiobox);
+}
+
+function appendRadioCol(row, id, name, title, checked) {
+  const col = document.createElement("TD");
+  appendRadio(col, id, name, title, checked)
+  row.appendChild(col);
+}
+
+function appendInput(parent, title, content, disabled) {
+  const input = document.createElement("INPUT");
+  input.type = "text";
+  if (title) {
+    input.title = browser.i18n.getMessage(title);
+  }
+  if (content) {
+    input.value = content;
+  }
+  input.size = 15;
+  if (disabled) {
+    input.disabled = true;
+  }
+  parent.appendChild(input);
+}
+
+function appendInputCol(row, title, content, disabled) {
+  const col = document.createElement("TD");
+  appendInput(col, title, content, disabled);
+  row.appendChild(col);
+}
+
+function appendCheckbox(parent, id, title, checked, enabled) {
   const checkbox = document.createElement("INPUT");
   checkbox.type = "checkbox";
   if (title) {
@@ -124,11 +188,13 @@ function appendCheckbox(parent, id, title, checked) {
     checkbox.checked = checked;
   }
   checkbox.id = id;
-  checkbox.disabled = true;
+  if (!enabled) {
+    checkbox.disabled = true;
+  }
   parent.appendChild(checkbox);
 }
 
-function appendCheckboxCol(row, id, title, checked) {
+function appendCheckboxCol(row, id, title, checked, enabled) {
   const col = document.createElement("TD");
   appendCheckbox(col, id, title, checked);
   row.appendChild(col);
@@ -149,7 +215,7 @@ function appendButton(parent, id, titleId, text, titleText, enabled) {
   const button = document.createElement("BUTTON");
   button.type = "button";
   button.id = id;
-  button.textContent = (text ? text : browser.i18n.getMessage(id));
+  button.textContent = (text || browser.i18n.getMessage(id));
   if (titleId) {
     button.title = browser.i18n.getMessage(titleId);
   } else if (titleText) {
@@ -173,15 +239,132 @@ function appendButtonRow(parent, id, titleId, text, titleText, enabled) {
   parent.appendChild(row);
 }
 
+function getRule(row) {
+  const radio = row.children[1].firstChild;
+  if (radio.nodeName != "INPUT") {
+    return null;
+  }
+  const rule = {};
+  if (radio.checked) {
+    rule.radio = "filter";
+  } else if (row.children[2].firstChild.checked) {
+    rule.radio = "url";
+  }
+  if (row.children[4].firstChild.value) {
+    rule.name = row.children[4].firstChild.value;
+  }
+  if (row.children[5].firstChild.value) {
+    rule.nameNegation = row.children[5].firstChild.value;
+  }
+  if (row.children[6].firstChild.value) {
+    rule.url = row.children[6].firstChild.value;
+  }
+  if (row.children[7].firstChild.value) {
+    rule.urlNegation = row.children[7].firstChild.value;
+  }
+  if (row.children[8].firstChild.value) {
+    rule.search = row.children[8].firstChild.value;
+  }
+  if (row.children[9].firstChild.value) {
+    rule.replace = row.children[9].firstChild.value;
+  }
+  return rule;
+}
+
+function addRule(parent, count, rule) {
+  if (!rule) {
+    rule = {};
+  }
+  const row = document.createElement("TR");
+  const stringCount = String(count);
+  appendTextNodeCol(row, stringCount);
+  const prefix = "regexpRule=" + stringCount;
+  const filter = (rule.radio === "filter");
+  const off = (!rule.radio || (rule.radio === "off"));
+  const filterOrOff = (filter || off);
+  appendRadioCol(row, prefix + "Filter", prefix + "Radio", "titleRadioFilter",
+    filter);
+  appendRadioCol(row, prefix + "Url", prefix + "Radio", "titleRadioUrl",
+    rule.radio === "url");
+  appendRadioCol(row, prefix + "Off", prefix + "Radio", "titleRadioOff", off);
+  appendInputCol(row, "titleRuleName", rule.name, off);
+  appendInputCol(row, "titleRuleNameNegation", rule.nameNegation, off);
+  appendInputCol(row, "titleRuleUrl", rule.url, off);
+  appendInputCol(row, "titleRuleUrlNegation", rule.urlNegation, off);
+  appendInputCol(row, "titleRuleSearch", rule.search, filterOrOff);
+  appendInputCol(row, "titleRuleReplace", rule.replace, filterOrOff);
+  appendButtonCol(row, "regexpButton=sub" + stringCount, "titleButtonRuleSub",
+    browser.i18n.getMessage("buttonRuleSub"), null, true);
+  appendButtonCol(row, "regexpButton=add" + stringCount, "titleButtonRuleAdd",
+    browser.i18n.getMessage("buttonRuleAdd"), null, true);
+  parent.appendChild(row);
+}
+
+function changeRule(id) {
+  const child = document.getElementById(id);
+  if (!child) {
+    return;
+  }
+  const row = child.parentNode.parentNode;
+  const rule = getRule(row);
+  if (!rule) {
+    return;
+  }
+  const filter = (rule.radio === "filter");
+  const off = (!rule.radio || (rule.radio === "off"));
+  const filterOrOff = (filter || off);
+  row.children[4].firstChild.disabled = off;
+  row.children[5].firstChild.disabled = off;
+  row.children[6].firstChild.disabled = off;
+  row.children[7].firstChild.disabled = off;
+  row.children[8].firstChild.disabled = filterOrOff;
+  row.children[9].firstChild.disabled = filterOrOff;
+}
+
+function addRules(rules) {
+  const parent = getTableRules();
+  if (parent.hasChildNodes()) {  // Already done
+    return;
+  }
+  const row = document.createElement("TR");
+  row.appendChild(document.createElement("TD"));
+  appendTextNodeCol(row, browser.i18n.getMessage("radioFilter"),
+    browser.i18n.getMessage("titleRadioFilter"));
+  appendTextNodeCol(row, browser.i18n.getMessage("radioUrl"),
+    browser.i18n.getMessage("titleRadioUrl"));
+  appendTextNodeCol(row, browser.i18n.getMessage("radioOff"),
+    browser.i18n.getMessage("titleRadioOff"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleName"),
+    browser.i18n.getMessage("titleRuleName"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleNameNegation"),
+    browser.i18n.getMessage("titleRuleNameNegation"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleUrl"),
+    browser.i18n.getMessage("titleRuleUrl"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleUrlNegation"),
+    browser.i18n.getMessage("titleRuleUrlNegation"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleSearch"),
+    browser.i18n.getMessage("titleRuleSearch"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleReplace"),
+    browser.i18n.getMessage("titleRuleReplace"));
+  row.appendChild(document.createElement("TD"));
+  appendButtonCol(row, "regexpButton=add0", "titleButtonRuleAdd",
+    browser.i18n.getMessage("buttonRuleAdd"), null, true);
+  parent.appendChild(row);
+  let count = 0;
+  for (let rule of rules) {
+    addRule(parent, ++count, rule);
+  }
+}
+
 function addButtonsBase() {
   const parent = getButtonsBase();
   if (parent.hasChildNodes()) {  // Already done
     return;
   }
+  setCheckboxRulesTitle(browser.i18n.getMessage("titleCheckboxRules"));
+  setCheckboxRulesText(browser.i18n.getMessage("checkboxRules"));
   const row = document.createElement("TR");
-  appendButtonCol(row, "buttonListExactDupes", "titleButtonListExactDupes");
-  appendButtonCol(row, "buttonListSimilarDupes",
-    "titleButtonListSimilarDupes");
+  appendButtonCol(row, "buttonListDupes", "titleButtonListDupes");
   appendButtonCol(row, "buttonListEmpty", "titleButtonListEmpty");
   appendButtonCol(row, "buttonListAll", "titleButtonListAll");
   parent.appendChild(row);
@@ -439,9 +622,13 @@ function entryExtra(col, text) {
   rulerExtra(col, text);  // by accident the same mechanism works
 }
 
+function getBookmarkId(id) {
+  return id.substr(9);  // 9 = "bookmark=".length
+}
+
 function addBookmark(bookmark, folders, id) {
   const row = document.createElement("TR");
-  appendCheckboxCol(row, bookmark.id);
+  appendCheckboxCol(row, "bookmark=" + bookmark.id);
   if (bookmark.order !== undefined) {
     appendTextNodeCol(row, String(bookmark.order));
     const dummy = document.createElement("TD");  // A dummy column for space
@@ -472,6 +659,47 @@ function addBookmark(bookmark, folders, id) {
   top.appendChild(row);
 }
 
+function getRules() {
+  const parent = getTableRules();
+  const rules = [];
+  if (!parent.hasChildNodes()) {
+    return rules;
+  }
+  for (let row of parent.children) {
+    const rule = getRule(row);
+    if (rule) {
+      rules.push(rule);
+    }
+  }
+  return rules;
+}
+
+function buttonRule(action) {
+  const rules = getRules();
+  const number = Number(action.substr(3)); // 3 = "add".length = "sub".length
+  if (action.startsWith("add")) {
+    const rule = {};
+    rules.splice(number, 0, rule);
+  } else {
+    rules.splice(number - 1, 1);
+  }
+  clearItem(getTableRules());
+  addRules(rules);
+}
+
+function toggleRules(rules) {
+  if (getCheckboxRules()) {
+    addRules(rules);
+    return null;
+  }
+  if (rules) {  // checkboxRules was already unchecked
+    return rules;
+  }
+  const newRules = getRules();
+  clearItem(getTableRules());
+  return newRules;
+}
+
 function toggleExtra(entryList, rulerList) {
   if (!entryList && !rulerList) {
     return;
@@ -479,7 +707,7 @@ function toggleExtra(entryList, rulerList) {
   const fullUrl = getCheckboxFullUrl();
   if (rulerList) {
     for (let i = 0; i < rulerList.length; ++i) {
-      const col = document.getElementById("rulerExtra" + String(i));
+      const col = document.getElementById("rulerExtra=" + String(i));
       rulerExtra(col, (fullUrl ? rulerList[i] : null));
     }
   }
@@ -488,7 +716,7 @@ function toggleExtra(entryList, rulerList) {
   }
   let extra = getCheckboxExtra();
   for (let i = 0; i < entryList.length; ++i) {
-    const col = document.getElementById("entryExtra" + String(i));
+    const col = document.getElementById("entryExtra=" + String(i));
     const entry = entryList[i];
     let text;
     if (fullUrl && entry.url) {
@@ -612,13 +840,6 @@ function markButNewest() {
   }
 }
 
-function SplitNumber(text, begin) {
-  if (text.substring(0, begin.length) !== begin) {
-    return -1;
-  }
-  return Number(text.substring(begin.length));
-}
-
 function getSelectedIds(folderIds) {
   const value = getSelectedFolder();
   if ((!value) || (value === "=")) {
@@ -641,7 +862,7 @@ function markFolder(folderIds, checked) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    if (!ids.has(checkbox.id)) {
+    if (!ids.has(getBookmarkId(checkbox.id))) {
       continue;
     }
     checkbox.checked = checked;
@@ -709,7 +930,7 @@ function markFolderGroup(folderIds, mode) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    if (!ids.has(checkbox.id)) {
+    if (!ids.has(getBookmarkId(checkbox.id))) {
       checkboxesOthers.push(checkbox);
       continue;
     }
@@ -744,7 +965,7 @@ function markSame(folders, checked) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    const folder = folders.get(checkbox.id);
+    const folder = folders.get(getBookmarkId(checkbox.id));
     if (folder === undefined) {
       continue;
     }
@@ -786,7 +1007,7 @@ function markSameGroup(folders, mode) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    const id = checkbox.id;
+    const id = getBookmarkId(checkbox.id);
     let folder = folders.get(id);
     if (folder === undefined) {
       continue;
@@ -829,11 +1050,6 @@ function markSameGroup(folders, mode) {
   markGroup();
 }
 
-function isMarked(id) {
-  const checkbox = document.getElementById(id);
-  return (checkbox && checkbox.checked);
-}
-
 function getMarked(returnSet) {
   let marked;
   let adding;
@@ -858,7 +1074,7 @@ function getMarked(returnSet) {
     }
     const checkbox = getCheckbox(node);
     if (checkbox.checked) {
-      adding(checkbox.id);
+      adding(getBookmarkId(checkbox.id));
     }
   }
   return marked;
@@ -945,6 +1161,139 @@ function normalizeFolders(folders) {
   return display;
 }
 
+function compileRules(mode) {
+  const compiledRules = {};
+  if (!getCheckboxRules()) {
+    return compiledRules;
+  }
+  const rules = getRules();
+  const compiled = [];
+  let count = 0;
+  for (let rule of rules) {
+    ++count;
+    const replaceRule = ((mode > 0) && rule.search && (rule.radio === "url"));
+    if (!replaceRule && (rule.radio !== "filter")) {
+      continue;
+    }
+    let name, url;
+    const compiledRule = {};
+    try {
+      if (rule.name) {
+        name = true;
+        compiledRule.name = new RegExp(rule.name);
+      }
+      if (rule.nameNegation) {
+        name = true;
+        compiledRule.nameNegation = new RegExp(rule.nameNegation);
+      }
+      if (mode) {
+        if (rule.url) {
+          url = true;
+          compiledRule.url = new RegExp(rule.url);
+        }
+        if (rule.urlNegation) {
+          url = true;
+          compiledRule.urlNegation = new RegExp(rule.urlNegation);
+        }
+        if (replaceRule) {
+          compiledRule.search = new RegExp(rule.search, "g");
+          compiledRule.replace = (rule.replace || "");
+        }
+      }
+    }
+    catch(error) {
+      compiledRules.error = error;
+      return compiledRules;
+    }
+    if (name || url) {
+      compiledRule.conditional = true;
+      if (name) {
+        compiledRules.conditionalName = true;
+      }
+      if (url) {
+        compiledRules.conditionalUrl = true;
+      }
+    } else if(!replaceRule) {
+      continue;
+    }
+    compiledRule.prefix = String(count) + ": ";
+    compiled.push(compiledRule);
+  }
+  if (compiled.length) {
+    compiledRules.compiled = compiled;
+  }
+  return compiledRules;
+}
+
+function rulesFilter(compiledRules, folders, parent, title, url, processed) {
+  if (processed || compiledRules.conditionalUrl) {
+    url = url.replace(
+      // Transform protocol and domain name to lower case (RFC 4343).
+      // Do not rely on [a-zA-Z] due to possible locale sorting:
+      /^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]+:\/\/[^\/]*\//,
+      function (match) {
+        return match.toLowerCase();
+      });
+  }
+  const compiled = (compiledRules.compiled || false);
+  if (!compiled) {  // shortcut most likely case
+    if (processed) {
+      processed.url = url;
+    }
+    return false;
+  }
+  const name = (compiledRules.conditionalName &&
+    getName(folders, parent, title, "\0"));
+  let extra;
+  for (let compiledRule of compiled) {
+    if (compiledRule.conditional) {
+      if (compiledRule.name && !compiledRule.name.exec(name)) {
+        continue;
+      }
+      if (compiledRule.nameNegation && compiledRule.nameNegation.exec(name)) {
+        continue;
+      }
+      if (compiledRule.url && !compiledRule.url.exec(url)) {
+        continue;
+      }
+      if (compiledRule.urlNegation && compiledRule.urlNegation.exec(url)) {
+        continue;
+      }
+    }
+    const search = (compiledRule.search || false);
+    if (!search) {
+      return true;
+    }
+    const matches = url.match(search);
+    if (!matches) {
+      continue;
+    }
+    if (extra) {
+      extra += " ";
+    } else {
+      extra = "";
+    }
+    extra += compiledRule.prefix + matches.join(" ");
+    let replacedUrl;
+    try {
+      replacedUrl = url.replace(search, compiledRule.replace);
+    }
+    catch(error) {
+      replacedUrl = false;
+    }
+    if (replacedUrl) {
+      url = replacedUrl;
+    }
+  }
+  if (processed) {
+    processed.url = url;
+    if (extra) {
+      processed.extra = extra;
+    }
+  }
+  return false;
+}
+
 function coincidingUrl(bookmarkList, url) {
   for (let bookmark of bookmarkList) {
     if (url !== bookmark.url) {
@@ -955,7 +1304,8 @@ function coincidingUrl(bookmarkList, url) {
 }
 
 function calculate(command, state, callback) {
-  let similar;
+  let extra;
+  let compiledRules;
   let folderMode;
   let handleFunction;
   let urlMap;
@@ -965,7 +1315,7 @@ function calculate(command, state, callback) {
   let entryList;
 
   function calculateError(error) {
-    displayMessage("messageCalculateError", error);
+    displayMessage(browser.i18n.getMessage("messageCalculateError", error));
     callback();
   }
 
@@ -1002,16 +1352,13 @@ function calculate(command, state, callback) {
 
   function handleDupe(node, parent) {
     ++allCount;
+    const title = node.title;
     const url = node.url;
-    let groupIndex = url;
-    let extra;
-    if (similar) {
-      let index = groupIndex.indexOf("?");
-      if (index > 0) {
-        groupIndex = groupIndex.substring(0, index);
-        extra = url.substring(index);
-      }
+    const processed = {};
+    if (rulesFilter(compiledRules, folders, parent, title, url, processed)) {
+      return;
     }
+    const groupIndex = processed.url;
     const id = node.id;
     let group = urlMap.get(groupIndex);
     if (!group) {
@@ -1024,11 +1371,12 @@ function calculate(command, state, callback) {
       id: id,
       order: ((node.dateAdded !== undefined) ? node.dateAdded : (-1)),
       parent: parent,
-      text: node.title,
+      text: title,
       url: url
     };
-    if (extra !== undefined) {
-      bookmark.extra = extra;
+    if (processed.extra) {
+      extra = true;
+      bookmark.extra = processed.extra;
     }
     group.push(bookmark);
   }
@@ -1037,30 +1385,39 @@ function calculate(command, state, callback) {
     if (node.url || (node.type && (node.type != "folder"))) {
       return;
     }
+    const title = node.title;
+    if (rulesFilter(compiledRules, folders, parent, title)) {
+      return;
+    }
     const id = node.id;
     parentUsed(parent, id);
     const bookmark = {
       id: id,
       parent: parent,
-      text: node.title
+      text: title
     };
     result.push(bookmark);
   }
 
   function handleAll(node, parent, index) {
+    const title = node.title;
+    const url = node.url
+    if (rulesFilter(compiledRules, folders, parent, title, url)) {
+      return;
+    }
     const id = node.id;
     parentUsed(parent, id);
     const bookmarkResult = {
       id: id,
       parent: parent,
-      text: node.title,
-      url: node.url
+      text: title,
+      url: url
     };
     result.push(bookmarkResult);
     const bookmark = {
       parentId: node.parentId,
-      title: node.title,
-      url: node.url,
+      title: title,
+      url: url,
       index: ((node.index !== undefined) ? node.index : index)
     };
     if (node.type !== undefined) {
@@ -1077,7 +1434,7 @@ function calculate(command, state, callback) {
             handleFunction(node, parent);
             return;
           } else if (node.url && (!node.type || (node.type == "bookmark")) &&
-              (node.url.substr(0, 6) !== "place:")) {
+              !node.url.startsWith("place:")) {
             handleFunction(node, parent, index);
           }
         }
@@ -1169,7 +1526,7 @@ function calculate(command, state, callback) {
         entry.extra = bookmark.extra;
       }
       if (entry) {
-        id = "entryExtra" + String(entryList.length);
+        id = "entryExtra=" + String(entryList.length);
         entryList.push(entry);
       }
       addBookmark(bookmark, folders, id);
@@ -1200,20 +1557,12 @@ function calculate(command, state, callback) {
       ++groupNumber;
       total += group.length;
     }
-    let message, title;
-    if (similar) {
-      message = "messageSimilarMatchesGroups";
-      title = "titleMessageSimilarMatchesGroups"
-    } else {
-      message = "messageExactMatchesGroups";
-      title = "titleMessageExactMatchesGroups"
-    }
-    title = browser.i18n.getMessage(title);
+    const title = browser.i18n.getMessage("titleMessageMatches");
     if (groupNumber) {
       addButtons(0, sameFolders);
-      addCheckboxExtra(title, similar);
+      addCheckboxExtra(title, extra);
     }
-    displayMessage(browser.i18n.getMessage(message,
+    displayMessage(browser.i18n.getMessage("messageMatches",
       [String(total), String(groupNumber), String(allCount)]), title);
     if (!groupNumber) {
       calculateFinish();
@@ -1230,8 +1579,8 @@ function calculate(command, state, callback) {
         continue;
       }
       const url = group[0].url;
-      if (!similar || coincidingUrl(group, url)) {
-        const id = "rulerExtra" + String(rulerList.length);
+      if (!extra || coincidingUrl(group, url)) {
+        const id = "rulerExtra=" + String(rulerList.length);
         rulerList.push(url);
         addRuler(id);
         addBookmarks(group);
@@ -1289,24 +1638,28 @@ function calculate(command, state, callback) {
   let mainFunction;
   folderMode = false;
   switch (command) {
-    case "similar":
-      similar = true;
-      // fallthrough
-    case "exact":
+    case "dupes":
+      compiledRules = compileRules(1);
       mainFunction = calculateDupes;
       handleFunction = handleDupe;
       break;
     case "empty":
       folderMode = true;
+      compiledRules = compileRules(0);
       mainFunction = calculateEmpty;
       handleFunction = handleEmpty;
       break;
     case "all":
+      compiledRules = compileRules(-1);
       mainFunction = calculateAll;
       handleFunction = handleAll;
       break;
     default:  // should not happen
       return;  // it is a bug if we get here
+  }
+  if (compiledRules.error) {
+    calculateError(compiledRules.error);
+    return;
   }
   folders = [];
   result = [];
@@ -1386,6 +1739,17 @@ function processMarked(stopPressed, callback, bookmarkMap) {
 {
   // state variables
   let state = {};
+  let rules = [
+    { radio: "url", urlNegation: "\\b(e?mail|bugs|youtube|translate)\\b",
+      search: "\\?.*" },
+    { radio: "off", search: "^http:", replace: "https:" },
+    { radio: "filter",
+      name: "\\0(" + browser.i18n.getMessage("regExpFrequent") + ")\\0" },
+    { radio: "url", search: "/+(index.html)?$" },
+    { radio: "url", search: "^([^:]*://)www?\\d*\.", replace: "$1" },
+    { radio: "url", search: "\.htm$", replace: ".html" },
+    { radio: "off", search: "/[^/]*$" }
+  ];
 
   function startLock() {
     state.lock = true;
@@ -1398,7 +1762,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   }
 
   function stopPressed() {
-    return (state.stop ? true : false);
+    return (state.stop || false);
   }
 
   function startLockReset() {
@@ -1416,16 +1780,16 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       return;
     }
     if (id) {
-      if (!getCheckboxCount().checked) {
+      if (!getCheckboxCount()) {
         return;
       }
-      if (isMarked(id)) {
-        state.marked.add(id);
+      if (isChecked(id)) {
+        state.marked.add(getBookmarkId(id));
       } else {
-        state.marked.delete(id);
+        state.marked.delete(getBookmarkId(id));
       }
     } else {
-      if (!getCheckboxCount().checked) {
+      if (!getCheckboxCount()) {
         if (state.hasOwnProperty("lastCount")) {
           delete state.lastCount;
           displayCount(browser.i18n.getMessage("messageNoCount"));
@@ -1460,9 +1824,15 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       case "checkboxCount":
         marked();
         return;
-      default:  // bookmark checkbox id
-        marked(event.target.id);
+      case "checkboxRules":
+        rules = toggleRules(rules);
         return;
+      default:
+        const id = event.target.id;
+        if (id.startsWith("bookmark=")) {  // bookmark checkbox id
+          marked(id);
+          return;
+      }
     }
   }
 
@@ -1498,13 +1868,20 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     }
   }
 
-  function selectListener(event) {
+  function changeListener(event) {
     if (!event.target || !event.target.id) {
       return;
     }
-    switch (event.target.id) {
+    const id = event.target.id
+    switch (id) {
       case "selectedFolder":
         toggleButtonsFolders();
+        return;
+      default:
+        if (id.startsWith("regexpRule=")) {  // rule radio button
+          changeRule(id);
+          return;
+        }
     }
   }
 
@@ -1547,12 +1924,10 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       (event.buttons && (event.buttons != 1))) {
       return;
     }
-    switch (event.target.id) {
-      case "buttonListExactDupes":
-        calculateWrapper("exact");
-        return;
-      case "buttonListSimilarDupes":
-        calculateWrapper("similar");
+    const id = event.target.id;
+    switch (id) {
+      case "buttonListDupes":
+        calculateWrapper("dupes");
         return;
       case "buttonListEmpty":
         calculateWrapper("empty");
@@ -1623,8 +1998,13 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       case "buttonMarkSameButNewest":
         markWrapper(markSameGroup, state.folders, "newest");
         return;
-      // default:  // checkboxes: handled by checkboxListener()
-      //   return;
+      default:
+        if (id.startsWith("regexpButton=")) {
+          buttonRule(id.substring(13)); // 13 = "regexpButton=".length
+          return;
+        }
+        // checkboxes: handled by checkboxListener()
+        // radioButtons, select: handled by changeListener()
     }
   }
 
@@ -1632,6 +2012,6 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   addButtonsBase();
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);
-  document.addEventListener("change", selectListener);
+  document.addEventListener("change", changeListener);
   endLock();
 }

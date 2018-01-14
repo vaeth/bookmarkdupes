@@ -1,5 +1,20 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-5.0:
+	Martin Väth <martin at mvath.de>:
+	- Add expert rules to ignore certain bookmarks
+	- Use expert rules to define when bookmarks are considered to be dupes.
+	  This replaces the previous unsatisfactory "Similar Dupes" button and
+	  implements also https://github.com/vaeth/bookmarkdupes/issues/45
+	- Treat protocol and domain names case insensitively
+	- Default regexp rules deal with much more than \? tails
+	- bugfix: increase minimal gecko version to 48.0 to reflect that
+	  manifest.json itself apparently requires that version, see
+	  https://github.com/vaeth/bookmarkdupes/issues/44
+	- bugfix: calculation error messages are now displayed correctly
+	- bugfix: use safe ids for bookmarks
+	- internal: remove redundant SplitNumber
+
 *bookmarkdupes-4.2:
 	Martin Väth <martin at mvath.de>:
 	- Add an options page with a link as an alternative way to open the
