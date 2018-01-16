@@ -9,137 +9,110 @@
   },
   "checkboxRules": {
     "message": "Modo experto: use reglas personalizadas para hacer coincidir marcadores similares o ignorar los marcadores al buscar.",
-    // "message": "Expert mode: use customized rules to match similar bookmarks or to ignore bookmarks when searching.",
     "description": "Checkbox text for switching on/off regexp rules"
   },
   "titleCheckboxRules": {
     "message": "Con esta opción, se pueden ignorar los marcadores o se pueden encontrar marcadores similares. Los detalles se especifican en términos de expresiones regulares.",
-    // "message": "With this option bookmarks can be ignored or similar bookmarks can be found. The details are specified in terms of regular expressions.",
     "description": "Explain what regular expresssions are used for"
   },
   "radioFilter": {
     "message": "Filtro",
-    // "message": "Filter",
     "description": "Radio button for filtering a bookmark. The text should be short"
   },
   "titleRadioFilter": {
     "message": "Los marcadores que coincidan con los criterios serán ignorados.",
-    // "message": "Bookmarks matching the criteria will be ignored.",
     "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
   },
   "radioUrl": {
     "message": "Modificar",
-    // "message": "Modify",
     "description": "Radio button for preprocessing a URL. The text should be short"
   },
   "titleRadioUrl": {
     "message": "Antes de comprobar las direcciones URL para encontrar duplicados de marcador, la dirección URL del juego marcadores se preprocesará de acuerdo con la regla especificada.",
-    // "message": "Before checking URLs to find bookmark dupes, the URL of matching bookmarks will be preprocessed according to the specified rule.",
     "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
   },
   "radioOff": {
     "message": "Apagado",
-    // "message": "Off",
     "description": "Radio button for ignoring the rule. The text should be short"
   },
   "titleRadioOff": {
     "message": "Esta regla no tiene efecto.",
-    // "message": "This rule has no effect.",
     "description": "Explain that by choosing that button the rule has no effect"
   },
   "ruleName": {
     "message": "El nombre coincide",
-    // "message": "Name matches",
     "description": "Input field for matching the name. The text should be short"
   },
   "titleRuleName": {
     "message": "La regla se aplica a un marcador si la ruta del marcador (carpetas + nombre) coincide con la expresión regular. El separador de carpetas es \\0 o \\x00.",
-    // "message": "The rule applies to a bookmark if the bookmark path (folders + name) matches the regular expression. The separator for folders is \\0 or \\x00.",
     "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleNameNegation": {
     "message": "El nombre no coincide",
-    // "message": "Name does not match",
     "description": "Input field for not matching the name. The text should be short"
   },
   "titleRuleNameNegation": {
     "message": "La regla se aplica a un marcador si la ruta del marcador (carpetas + nombre) no coincide con la expresión regular. El separador de carpetas es \\0 o \\x00.",
-    // "message": "The rule applies to a bookmark if the bookmark path (folders + name) does not match the regular expression. The separator for folders is \\0 or \\x00.",
     "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleUrl": {
     "message": "La URL coincide",
-    // "message": "URL matches",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
     "message": "La regla se aplica a un marcador si su URL (protocolo y nombre de dominio en minúsculas) coincide con la expresión regular.",
-    // "message": "The rule applies to a bookmark if its URL (protocol and domain name in lower case) matches the regular expression.",
     "description": "Explain that bookmarks whose URL matches the regular expression"
   },
   "ruleUrlNegation": {
     "message": "La URL no coincide",
-    // "message": "URL does not match",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
     "message": "La regla se aplica a un marcador si su URL (protocolo y nombre de dominio en minúsculas) no coincide con la expresión regular.",
-    // "message": "The rule applies to a bookmark if its URL (protocol and domain name in lower case) does not match the regular expression.",
     "description": "Explain that bookmarks whose URL does not match the regular expression"
   },
   "ruleSearch": {
     "message": "Reemplazo de coincidencias de URL",
-    // "message": "Replace URL matches",
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
     "message": "Al comparar las URL (protocolo y nombre de dominio en minúsculas), las partes que coincidan con la expresión regular serán reemplazadas por el texto posterior.",
-    // "message": "When comparing URLs (protocol and domain name in lower case) the parts matching the regular expression will be replaced by the subsequent text.",
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
     "message": "por",
-    // "message": "by",
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
     "message": "El texto de reemplazo para la expresión regular coincide",
-    // "message": "The replacement text for the regular expresssion matches",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleAdd": {
     "message": "Nuevo",
-    // "message": "New",
     "description": "Button for inserting a new rule. The text should be short"
   },
   "titleButtonRuleAdd": {
     "message": "Intertar una nueva regla.",
-    // "message": "Insert a new rule.",
     "description": "Explain that a new rule will be inserted"
   },
   "buttonRuleSub": {
     "message": "Eliminar",
-    // "message": "Remove",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
     "message": "Eliminar esta regla.",
-    // "message": "Remove this rule.",
     "description": "Explain that the rule will be removed"
   },
   "regExpFrequent": {
     "message": "[fF]recuente. * | [oO] a menudo | [dD]uplicado",
-    // "message": "[fF]requent.*|[oO]ften|[dD]upes",
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonListDupes": {
     "message": "Duplicados",
-    // "message": "Dupes",
     "description": "Button for listing dupes"
   },
   "titleButtonListDupes": {
     "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. Para los protocolos de comparación de URL y los nombres de dominio se transforman en minúsculas, y se aplican las reglas de preprocesamiento (sustitución) de URL de expresión regular seleccionadas.",
-    // "message": "(Re)calculate the list of bookmark dupes. Two bookmarks are considered to be dupes if their URLs match. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -352,7 +325,6 @@
   },
   "checkboxExtra": {
     "message": "Mostrar contenido de URL reemplazado en la lista",
-    // "message": "Display replaced URL content in listing",
     "description": "Checkbox for displaying the replaced URL content in listing"
   },
   "messageCount": {
@@ -371,7 +343,6 @@
   },
   "messageMatches": {
     "message": "$TOTAL$ (de $ALL$) duplicados dentro de $GROUPS$ grupos",
-    // "message": "$TOTAL$ (of $ALL$) dupes in $GROUPS$ groups",
     "description": "Report specified numbers of matches and groups of all",
     "placeholders": {
       "total": {
@@ -390,7 +361,6 @@
   },
   "titleMessageMatches": {
     "message": "Dos marcadores se consideran duplicados si sus URL coinciden. Para los protocolos de comparación de URL y los nombres de dominio se transforman en minúsculas, y se aplican las reglas de preprocesamiento (sustitución) de URL de expresión regular seleccionadas.",
-    // "message": "Two bookmarks are considered to be dupes if their URLs match. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.",
     "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {

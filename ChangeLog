@@ -15,6 +15,9 @@
 	- bugfix: use safe ids for bookmarks
 	- internal: remove redundant SplitNumber
 
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-4.2:
 	Martin Väth <martin at mvath.de>:
 	- Add an options page with a link as an alternative way to open the
