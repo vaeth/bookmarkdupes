@@ -33,16 +33,15 @@ bookmarks or stripping descriptions!
 In particular, stripping descriptions with an outdated list will move
 the corresponding bookmarks to their previous location in the bookmark menu!
 
-## Expert option
+## Expert Mode
 
-When selecting the checkbox for expert options, you can configure details to
+When selecting the checkbox for expert mode, details can be configured to
 ignore certain bookmarks when calculating the list or under which cases
 bookmarks are considered to be dupes of each other.
 
-Two bookmarks are considered to be duplicates of each other if their URL
-(protocol and domain name being transformed to lower case) matches.
-By using custom rules, the URL which is actually used for comparison can
-be preprocessed. The details are as follows.
+Normally two bookmarks are considered to be duplicates of each other if their
+URL coincides. By using custom rules, the URL which is actually used for
+comparison can be preprocessed. The details are as follows.
 
 For every bookmark the rules are applied in the given order.
 There are 2 types of rules: Filter rules and URL modification rules
@@ -66,11 +65,10 @@ and the regular expressions must either match or not match, respectively.
   browser with folder names separated by the null character.
   For instance, if you have in "Bookmark Menu" a folder "Collection"
   which contains your bookmark "Example", the bookmark's name becomes
-  "BookmarkMenu\0Collection\0Example" (where \0 denotes the null character
+  "Bookmark Menu\0Collection\0Example" (where \0 denotes the null character
   which can be matched by the regular expression with \0 or \x00).
-- The bookmark's url refers to the bookmark url (protocol and domain name
-  being transformed to lower case) after possible modifications by previous
-  modifier rules.
+- The bookmark's url refers to the bookmark url after possible modifications
+  by previous modifier rules.
 
 If a filter rule applies, the corresponding bookmark is ignored, i.e.,
 it will not be considered as a duplicate and will neither appear in the
@@ -85,9 +83,12 @@ https://wiki.selfhtml.org/wiki/JavaScript/Objekte/String/replace
 or
 https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace
 
-In particular, the replacement text can contain the symbols like
+In particular, the replacement text can contain symbols like
 ```$&``` or ```$1``` to refer to the whole matched text or to the
 match of the first brace in the regular expression, respectively.
+
+The replacement texts ```\L$&``` and ```\U$&``` have a special meaning:
+They put the matches into lower or upper case, respectively.
 
 ## Known Bugs
 

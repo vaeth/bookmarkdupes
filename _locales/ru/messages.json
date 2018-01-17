@@ -60,23 +60,23 @@
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
-    "message": "The rule applies to a bookmark if its URL (protocol and domain name in lower case) matches the regular expression.", // new
-    "description": "Explain that bookmarks whose URL matches the regular expression"
+    "message": "The rule applies to a bookmark if its URL matches the regular expression.", // new
+    "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
   },
   "ruleUrlNegation": {
     "message": "URL does not match", // new
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
-    "message": "The rule applies to a bookmark if its URL (protocol and domain name in lower case) does not match the regular expression.", // new
-    "description": "Explain that bookmarks whose URL does not match the regular expression"
+    "message": "The rule applies to a bookmark if its URL does not match the regular expression.", // new
+    "description": "Explain that bookmarks whose URL does not matche the regular expression will be selected"
   },
   "ruleSearch": {
     "message": "Replace URL matches", // new
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
-    "message": "When comparing URLs (protocol and domain name in lower case) the parts matching the regular expression will be replaced by the subsequent text.", // new
+    "message": "When comparing URLs the parts matching the regular expression will be replaced by the subsequent text.", // new
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
@@ -84,7 +84,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "The replacement text for the regular expresssion matches", // new
+    "message": "The replacement text for the regular expresssion matches. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.", // new
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleAdd": {
@@ -114,7 +114,7 @@
     "description": "Button for listing dupes"
   },
   "titleButtonListDupes": {
-    "message": "(Re)calculate the list of bookmark dupes. Two bookmarks are considered to be dupes if their URLs match. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.", // new
+    "message": "(Re)calculate the list of bookmark dupes. Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
 // changed     "(Re)calculate the list of exact bookmark dupes. Two bookmarks are considered to be exact dupes if their URLs are identical."
 //  "message": "(Пере)определить список точных дублей. Закладки считаются точными дублями, если их URL-ы идентичны.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
@@ -368,7 +368,7 @@
     }
   },
   "titleMessageMatches": {
-    "message": "Two bookmarks are considered to be dupes if their URLs match. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.", // new
+    "message": "Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
 // changed     "Two bookmarks are considered to be exact dupes if their URLs are identical."
 //  "message": "Две закладки считаются точными дублями, если их URL-ы одинаковы.",
     "description": "Explain how bookmark dupes are defined"

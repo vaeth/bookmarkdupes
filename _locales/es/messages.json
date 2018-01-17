@@ -60,23 +60,26 @@
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
-    "message": "La regla se aplica a un marcador si su URL (protocolo y nombre de dominio en minúsculas) coincide con la expresión regular.",
-    "description": "Explain that bookmarks whose URL matches the regular expression"
+    "message": "La regla se aplica a un marcador si su URL coincide con la expresión regular.", // new
+// changed     "La regla se aplica a un marcador si su URL (protocolo y nombre de dominio en minúsculas) coincide con la expresión regular.",
+    "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
   },
   "ruleUrlNegation": {
     "message": "La URL no coincide",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
-    "message": "La regla se aplica a un marcador si su URL (protocolo y nombre de dominio en minúsculas) no coincide con la expresión regular.",
-    "description": "Explain that bookmarks whose URL does not match the regular expression"
+    "message": "La regla se aplica a un marcador si su URL no coincide con la expresión regular.", // new
+// changed     "La regla se aplica a un marcador si su URL (protocolo y nombre de dominio en minúsculas) no coincide con la expresión regular.",
+    "description": "Explain that bookmarks whose URL does not matche the regular expression will be selected"
   },
   "ruleSearch": {
     "message": "Reemplazo de coincidencias de URL",
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
-    "message": "Al comparar las URL (protocolo y nombre de dominio en minúsculas), las partes que coincidan con la expresión regular serán reemplazadas por el texto posterior.",
+    "message": "Al comparar las URL, las partes que coincidan con la expresión regular serán reemplazadas por el texto posterior.", // new
+// changed     "Al comparar las URL (protocolo y nombre de dominio en minúsculas), las partes que coincidan con la expresión regular serán reemplazadas por el texto posterior.",
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
@@ -84,7 +87,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "El texto de reemplazo para la expresión regular coincide",
+    "message": "El texto de reemplazo para la expresión regular coincide. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.", // new
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleAdd": {
@@ -112,7 +115,9 @@
     "description": "Button for listing dupes"
   },
   "titleButtonListDupes": {
-    "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. Para los protocolos de comparación de URL y los nombres de dominio se transforman en minúsculas, y se aplican las reglas de preprocesamiento (sustitución) de URL de expresión regular seleccionadas.",
+    "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
+// changed     "(Re)calculate the list of bookmark dupes. Two bookmarks are considered to be dupes if their URLs coincide. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.",
+//  "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. Para los protocolos de comparación de URL y los nombres de dominio se transforman en minúsculas, y se aplican las reglas de preprocesamiento (sustitución) de URL de expresión regular seleccionadas.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -360,7 +365,9 @@
     }
   },
   "titleMessageMatches": {
-    "message": "Dos marcadores se consideran duplicados si sus URL coinciden. Para los protocolos de comparación de URL y los nombres de dominio se transforman en minúsculas, y se aplican las reglas de preprocesamiento (sustitución) de URL de expresión regular seleccionadas.",
+    "message": "Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
+// changed     "Two bookmarks are considered to be dupes if their URLs coincide. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.",
+//  "message": "Dos marcadores se consideran duplicados si sus URL coinciden. Para los protocolos de comparación de URL y los nombres de dominio se transforman en minúsculas, y se aplican las reglas de preprocesamiento (sustitución) de URL de expresión regular seleccionadas.",
     "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {

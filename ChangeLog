@@ -6,7 +6,6 @@
 	- Use expert rules to define when bookmarks are considered to be dupes.
 	  This replaces the previous unsatisfactory "Similar Dupes" button and
 	  implements also https://github.com/vaeth/bookmarkdupes/issues/45
-	- Treat protocol and domain names case insensitively
 	- Default regexp rules deal with much more than \? tails
 	- bugfix: increase minimal gecko version to 48.0 to reflect that
 	  manifest.json itself apparently requires that version, see

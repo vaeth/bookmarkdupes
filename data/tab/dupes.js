@@ -1161,6 +1161,14 @@ function normalizeFolders(folders) {
   return display;
 }
 
+function textToLowerCase(text) {
+  return text.toLowerCase();
+}
+
+function textToUpperCase(text) {
+  return text.toUpperCase();
+}
+
 function compileRules(mode) {
   const compiledRules = {};
   if (!getCheckboxRules()) {
@@ -1197,13 +1205,23 @@ function compileRules(mode) {
         }
         if (replaceRule) {
           compiledRule.search = new RegExp(rule.search, "g");
-          compiledRule.replace = (rule.replace || "");
         }
       }
     }
     catch(error) {
       compiledRules.error = error;
       return compiledRules;
+    }
+    if (replaceRule) {
+      if (!rule.replace) {
+        compiledRule.replace = "";
+      } else if (rule.replace === "\\L$&") {
+        compiledRule.replace = textToLowerCase;
+      } else if (rule.replace === "\\U$&") {
+        compiledRule.replace = textToUpperCase;
+      } else {
+        compiledRule.replace = rule.replace;
+      }
     }
     if (name || url) {
       compiledRule.conditional = true;
@@ -1213,7 +1231,7 @@ function compileRules(mode) {
       if (url) {
         compiledRules.conditionalUrl = true;
       }
-    } else if(!replaceRule) {
+    } else if (!replaceRule) {
       continue;
     }
     compiledRule.prefix = String(count) + ": ";
@@ -1226,15 +1244,6 @@ function compileRules(mode) {
 }
 
 function rulesFilter(compiledRules, folders, parent, title, url, processed) {
-  if (processed || compiledRules.conditionalUrl) {
-    url = url.replace(
-      // Transform protocol and domain name to lower case (RFC 4343).
-      // Do not rely on [a-zA-Z] due to possible locale sorting:
-      /^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]+:\/\/[^\/]*\//,
-      function (match) {
-        return match.toLowerCase();
-      });
-  }
   const compiled = (compiledRules.compiled || false);
   if (!compiled) {  // shortcut most likely case
     if (processed) {
@@ -1268,12 +1277,6 @@ function rulesFilter(compiledRules, folders, parent, title, url, processed) {
     if (!matches) {
       continue;
     }
-    if (extra) {
-      extra += " ";
-    } else {
-      extra = "";
-    }
-    extra += compiledRule.prefix + matches.join(" ");
     let replacedUrl;
     try {
       replacedUrl = url.replace(search, compiledRule.replace);
@@ -1281,9 +1284,17 @@ function rulesFilter(compiledRules, folders, parent, title, url, processed) {
     catch(error) {
       replacedUrl = false;
     }
-    if (replacedUrl) {
-      url = replacedUrl;
+    if (!replacedUrl || (replacedUrl == url)) {
+      continue;
     }
+    url = replacedUrl;
+    if (extra) {
+      extra += " ";
+    } else {
+      extra = "";
+    }
+    extra += compiledRule.prefix + matches.join(" ");
+//  extra += " -> " + url;  // rules debugging
   }
   if (processed) {
     processed.url = url;
@@ -1740,6 +1751,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   // state variables
   let state = {};
   let rules = [
+    { radio: "url", search: "^\\w*://[^\/]*/", replace: "\\L$&" },
     { radio: "url", urlNegation: "\\b(e?mail|bugs|youtube|translate)\\b",
       search: "\\?.*" },
     { radio: "off", search: "^http:", replace: "https:" },

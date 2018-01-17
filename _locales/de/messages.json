@@ -8,7 +8,7 @@
     "description": "Description of the extension"
   },
   "checkboxRules": {
-    "message": "Experten-Modus: anpassbare Regeln zum Finden ähnlicher Lesezeichen oder Ignorieren von Lesezeichen",
+    "message": "Expertenmodus: anpassbare Regeln zum Finden ähnlicher Lesezeichen oder Ignorieren von Lesezeichen",
     "description": "Checkbox text for switching on/off regexp rules"
   },
   "titleCheckboxRules": {
@@ -60,7 +60,7 @@
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
-    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL (Protokoll und Domainname kleingeschrieben) auf den regulären Ausdruck passt.",
+    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL auf den regulären Ausdruck passt.",
     "description": "Explain that bookmarks whose URL matches the regular expression"
   },
   "ruleUrlNegation": {
@@ -68,7 +68,7 @@
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
-    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL (Protokoll und Domainname kleingeschrieben) nicht auf den regulären Ausdruck passt.",
+    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL nicht auf den regulären Ausdruck passt.",
     "description": "Explain that bookmarks whose URL does not match the regular expression"
   },
   "ruleSearch": {
@@ -76,7 +76,7 @@
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
-    "message": "Beim Vergleich von URLs (Protokoll und Domainname kleingeschrieben) werden die Teile, die auf den regulären Ausdruck passen durch den nachfolgenden Text ersetzt.",
+    "message": "Beim Vergleich von URLs werden die Teile, die auf den regulären Ausdruck passen, durch den nachfolgenden Text ersetzt.",
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
@@ -84,7 +84,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "Der Ersetzungstext für den passenden Teil des regulären Ausdrucks",
+    "message": "Der Ersetzungstext für den passenden Teil des regulären Ausdrucks. Symbole wie $$& oder $$1 können benutzt werden, um auf Treffer oder Klammern zu verweisen. Die speziellen Texte \\L$$& und \\U$$& bedeuten eine klein- bzw. großgeschriebene Version der Treffer.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleAdd": {
@@ -112,7 +112,7 @@
     "description": "Button for listing dupes"
   },
   "titleButtonListDupes": {
-    "message": "Berechne (erneut) die Liste der Lesezeichenduplikate. Zwei Lesezeichen gelten als exakte Duplikate, wenn ihre URL identisch ist.",
+    "message": "Berechne (erneut) die Liste der Lesezeichenduplikate. Zwei Lesezeichen werden als Duplikate betrachtet, wenn ihre URL übereinstimmt. Im Expertenmodus werden die ausgewählten URL-Ersetzungsregeln vor dem Vergleich der URLs angewandt.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -360,7 +360,7 @@
     }
   },
   "titleMessageMatches": {
-    "message": "Zwei Lesezeichen werden als Duplikate betrachtet, wenn ihre URL übereinstimmt. Für den Vergleich der URLs werden Protokoll und Domainname kleingeschrieben und die anpassbaren Ersetzungsregeln angewandt.",
+    "message": "Zwei Lesezeichen werden als Duplikate betrachtet, wenn ihre URL übereinstimmt. Im Expertenmodus werden die ausgewählten URL-Ersetzungsregeln vor dem Vergleich der URLs angewandt.",
     "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {
