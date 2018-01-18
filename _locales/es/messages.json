@@ -110,6 +110,38 @@
     "message": "[fF]recuente. * | [oO] a menudo | [dD]uplicado",
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
+  "buttonRulesDefault": {
+    "message": "Restore default rules", // new
+    "description": "Button for restoring default rules. The text should be short"
+  },
+  "titleButtonRulesDefault": {
+    "message": "Restore the default rules. Any changes will be lost", // new
+    "description": "Explain that default rules will be restored"
+  },
+  "buttonRulesStore": {
+    "message": "Store rules", // new
+    "description": "Button for putting current rules to local storage. The text should be short"
+  },
+  "titleButtonRulesStore": {
+    "message": "The current rules will be put to the browser's local storage area.", // new
+    "description": "Explain that current rules will be put to local storage"
+  },
+  "buttonRulesRestore": {
+    "message": "Restore rules", // new
+    "description": "Button for fetching rules from local storage. The text should be short"
+  },
+  "titleButtonRulesRestore": {
+    "message": "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost.", // new
+    "description": "Explain that rules will be fetched from local storage"
+  },
+  "buttonRulesClean": {
+    "message": "Cleanup storage", // new
+    "description": "Button for cleaning local storage from stored rules. The text should be short"
+  },
+  "titleButtonRulesClean": {
+    "message": "The browser's local storage area will be cleaned from stored rules. The stored rules will be lost.", // new
+    "description": "Explain that the local storage will be cleaned from stored rules"
+  },
   "buttonListDupes": {
     "message": "Duplicados",
     "description": "Button for listing dupes"

@@ -4,6 +4,8 @@
 
 // For documentation on the bookmark API see e.g.
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/
+// For documentation on the storage API see e.g.
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/
 
 "use strict";
 
@@ -54,6 +56,10 @@ function getTop() {
 
 function getMessageNode() {
   return document.getElementById("textMessage");
+}
+
+function getButtonsRules() {
+  return document.getElementById("buttonsRules");
 }
 
 function getTableRules() {
@@ -244,29 +250,30 @@ function getRule(row) {
   if (radio.nodeName != "INPUT") {
     return null;
   }
+  const children = row.children;
   const rule = {};
   if (radio.checked) {
     rule.radio = "filter";
-  } else if (row.children[2].firstChild.checked) {
+  } else if (children[2].firstChild.checked) {
     rule.radio = "url";
   }
-  if (row.children[4].firstChild.value) {
-    rule.name = row.children[4].firstChild.value;
+  if (children[4].firstChild.value) {
+    rule.name = children[4].firstChild.value;
   }
-  if (row.children[5].firstChild.value) {
-    rule.nameNegation = row.children[5].firstChild.value;
+  if (children[5].firstChild.value) {
+    rule.nameNegation = children[5].firstChild.value;
   }
-  if (row.children[6].firstChild.value) {
-    rule.url = row.children[6].firstChild.value;
+  if (children[6].firstChild.value) {
+    rule.url = children[6].firstChild.value;
   }
-  if (row.children[7].firstChild.value) {
-    rule.urlNegation = row.children[7].firstChild.value;
+  if (children[7].firstChild.value) {
+    rule.urlNegation = children[7].firstChild.value;
   }
-  if (row.children[8].firstChild.value) {
-    rule.search = row.children[8].firstChild.value;
+  if (children[8].firstChild.value) {
+    rule.search = children[8].firstChild.value;
   }
-  if (row.children[9].firstChild.value) {
-    rule.replace = row.children[9].firstChild.value;
+  if (children[9].firstChild.value) {
+    rule.replace = children[9].firstChild.value;
   }
   return rule;
 }
@@ -313,12 +320,33 @@ function changeRule(id) {
   const filter = (rule.radio === "filter");
   const off = (!rule.radio || (rule.radio === "off"));
   const filterOrOff = (filter || off);
-  row.children[4].firstChild.disabled = off;
-  row.children[5].firstChild.disabled = off;
-  row.children[6].firstChild.disabled = off;
-  row.children[7].firstChild.disabled = off;
-  row.children[8].firstChild.disabled = filterOrOff;
-  row.children[9].firstChild.disabled = filterOrOff;
+  const children = row.children;
+  children[4].firstChild.disabled = off;
+  children[5].firstChild.disabled = off;
+  children[6].firstChild.disabled = off;
+  children[7].firstChild.disabled = off;
+  children[8].firstChild.disabled = filterOrOff;
+  children[9].firstChild.disabled = filterOrOff;
+}
+
+function addButtonsRules(restore, clean) {
+  const parent = getButtonsRules();
+  if (parent.hasChildNodes()) {  // Already done
+    const children = parent.firstChild.children;
+    children[2].firstChild.disabled = !restore;
+    children[3].firstChild.disabled = !clean;
+    return;
+  }
+  const row = document.createElement("TR");
+  appendButtonCol(row, "buttonRulesDefault", "titleButtonRulesDefault",
+    null, null, true);
+  appendButtonCol(row, "buttonRulesStore", "titleButtonRulesStore",
+    null, null, true);
+  appendButtonCol(row, "buttonRulesRestore", "titleButtonRulesRestore",
+    null, null, restore);
+  appendButtonCol(row, "buttonRulesClean", "titleButtonRulesClean",
+    null, null, clean);
+  parent.appendChild(row);
 }
 
 function addRules(rules) {
@@ -674,22 +702,38 @@ function getRules() {
   return rules;
 }
 
+function redisplayRules(rules) {
+  clearItem(getTableRules());
+  if (getCheckboxRules()) {
+    addRules(rules);
+  }
+}
+
 function buttonRule(action) {
   const rules = getRules();
-  const number = Number(action.substr(3)); // 3 = "add".length = "sub".length
+  const number = Number(action.substr(3));  // 3 = "add".length = "sub".length
   if (action.startsWith("add")) {
     const rule = {};
     rules.splice(number, 0, rule);
   } else {
     rules.splice(number - 1, 1);
   }
-  clearItem(getTableRules());
-  addRules(rules);
+  redisplayRules(rules);
+}
+
+function buttonsRules() {
+  browser.storage.local.get().then(function (storage) {
+    const haveStorage = (storage && storage.rules);
+    addButtonsRules(haveStorage, haveStorage);
+  }, function () {
+    addButtonsRules(false, true);
+  });
 }
 
 function toggleRules(rules) {
   if (getCheckboxRules()) {
     addRules(rules);
+    buttonsRules();
     return null;
   }
   if (rules) {  // checkboxRules was already unchecked
@@ -697,6 +741,7 @@ function toggleRules(rules) {
   }
   const newRules = getRules();
   clearItem(getTableRules());
+  clearItem(getButtonsRules());
   return newRules;
 }
 
@@ -1705,7 +1750,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       return stopPressed();
     };
     process = function (id, next) {
-      stripBookmark(id, bookmarkMap.get(id), next, function (error) {
+      stripBookmark(id, bookmarkMap.get(id), next, function () {
         displayEndProgress("messageStripError", total);
         callback();
       });
@@ -1719,7 +1764,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       return stopPressed();
     };
     process = function (id, next) {
-      removeFolder(id, next, function (error) {
+      removeFolder(id, next, function () {
         displayEndProgress("messageRemoveError", total);
         callback();
       });
@@ -1747,10 +1792,35 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   recurse();
 }
 
+function rulesStore() {
+  const storage = {
+    rules: getRules()
+  };
+  browser.storage.local.set(storage).then(buttonsRules, buttonsRules);
+}
+
+function rulesClean() {
+  browser.storage.local.clear().then(buttonsRules, buttonsRules);
+}
+
+function rulesRestore() {
+  browser.storage.local.get().then(function (storage) {
+    if (storage && storage.rules) {
+      redisplayRules(storage.rules);
+      addButtonsRules(true, true);
+    } else {
+      addButtonsRules(false, false);
+    }
+  }, function () {
+    addButtonsRules(false, true);
+  });
+}
+
 {
   // state variables
   let state = {};
-  let rules = [
+  let rules;
+  const rulesDefault = [
     { radio: "url", search: "^\\w*://[^\/]*/", replace: "\\L$&" },
     { radio: "url", urlNegation: "\\b(e?mail|bugs|youtube|translate)\\b",
       search: "\\?.*" },
@@ -1824,6 +1894,24 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     endLock();
   }
 
+  function initRulesDefault() {
+    rules = toggleRules(rulesDefault);
+  }
+
+  function checkboxRules() {
+    if (rules !== undefined) {
+      rules = toggleRules(rules);
+      return;
+    }
+    browser.storage.local.get().then(function (storage) {
+      if (storage && storage.rules) {
+        rules = toggleRules(storage.rules);
+      } else {
+        initRulesDefault();
+      }
+    }, initRulesDefault);
+  }
+
   function checkboxListener(event) {
     if (!event.target || !event.target.id) {
       return;
@@ -1837,14 +1925,14 @@ function processMarked(stopPressed, callback, bookmarkMap) {
         marked();
         return;
       case "checkboxRules":
-        rules = toggleRules(rules);
+        checkboxRules();
         return;
       default:
         const id = event.target.id;
         if (id.startsWith("bookmark=")) {  // bookmark checkbox id
           marked(id);
           return;
-      }
+        }
     }
   }
 
@@ -2010,13 +2098,25 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       case "buttonMarkSameButNewest":
         markWrapper(markSameGroup, state.folders, "newest");
         return;
+      case "buttonRulesDefault":
+        redisplayRules(rulesDefault);
+        return;
+      case "buttonRulesStore":
+        rulesStore();
+        return;
+      case "buttonRulesRestore":
+        rulesRestore();
+        return;
+      case "buttonRulesClean":
+        rulesClean();
+        return;
       default:
         if (id.startsWith("regexpButton=")) {
-          buttonRule(id.substring(13)); // 13 = "regexpButton=".length
+          buttonRule(id.substring(13));  // 13 = "regexpButton=".length
           return;
         }
-        // checkboxes: handled by checkboxListener()
-        // radioButtons, select: handled by changeListener()
+      // checkboxes: handled by checkboxListener()
+      // radioButtons, select: handled by changeListener()
     }
   }
 

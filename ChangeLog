@@ -2,7 +2,8 @@
 
 *bookmarkdupes-5.0:
 	Martin Väth <martin at mvath.de>:
-	- Add expert rules to ignore certain bookmarks
+	- Add expert rules to ignore certain bookmarks.
+	  Storage permissions are required to store these expert rules locally.
 	- Use expert rules to define when bookmarks are considered to be dupes.
 	  This replaces the previous unsatisfactory "Similar Dupes" button and
 	  implements also https://github.com/vaeth/bookmarkdupes/issues/45

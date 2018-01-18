@@ -107,6 +107,38 @@
     "message": "[hH]äufig.*|[oO]ft|[dD]uplikate",
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
+  "buttonRulesDefault": {
+    "message": "Voreingestelle Regeln zurückholen",
+    "description": "Button for restoring default rules. The text should be short"
+  },
+  "titleButtonRulesDefault": {
+    "message": "Die voreingestellten Regeln werden wiederhergestellt. Alle Änderungen gehen verloren.",
+    "description": "Explain that default rules will be restored"
+  },
+  "buttonRulesStore": {
+    "message": "Regeln speichern",
+    "description": "Button for putting current rules to local storage. The text should be short"
+  },
+  "titleButtonRulesStore": {
+    "message": "Die aktuellen Regeln werden in den lokalen Speicher des Browsers übertragen.",
+    "description": "Explain that current rules will be put to local storage"
+  },
+  "buttonRulesRestore": {
+    "message": "Regeln wiederherstellen",
+    "description": "Button for fetching rules from local storage. The text should be short"
+  },
+  "titleButtonRulesRestore": {
+    "message": "Die Regeln werden durch die im lokalen Speicher des Browsers ersetzt. Alle Änderungen gehen verloren.",
+    "description": "Explain that rules will be fetched from local storage"
+  },
+  "buttonRulesClean": {
+    "message": "Speicher löschen",
+    "description": "Button for cleaning local storage from stored rules. The text should be short"
+  },
+  "titleButtonRulesClean": {
+    "message": "Der lokale Speicher des Browsers wird gelöscht. Die gespeicherten Regeln gehen dabei verloren.",
+    "description": "Explain that the local storage will be cleaned from stored rules"
+  },
   "buttonListDupes": {
     "message": "Lesezeichenduplikate",
     "description": "Button for listing dupes"
