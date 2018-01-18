@@ -8,7 +8,7 @@
     "description": "Description of the extension"
   },
   "checkboxRules": {
-    "message": "Experten-Modus: anpassbare Regeln zum Finden ähnlicher Lesezeichen oder Ignorieren von Lesezeichen",
+    "message": "Expertenmodus: anpassbare Regeln zum Finden ähnlicher Lesezeichen oder Ignorieren von Lesezeichen",
     "description": "Checkbox text for switching on/off regexp rules"
   },
   "titleCheckboxRules": {
@@ -60,7 +60,7 @@
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
-    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL (Protokoll und Domainname kleingeschrieben) auf den regulären Ausdruck passt.",
+    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL auf den regulären Ausdruck passt.",
     "description": "Explain that bookmarks whose URL matches the regular expression"
   },
   "ruleUrlNegation": {
@@ -68,7 +68,7 @@
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
-    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL (Protokoll und Domainname kleingeschrieben) nicht auf den regulären Ausdruck passt.",
+    "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL nicht auf den regulären Ausdruck passt.",
     "description": "Explain that bookmarks whose URL does not match the regular expression"
   },
   "ruleSearch": {
@@ -76,7 +76,7 @@
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
-    "message": "Beim Vergleich von URLs (Protokoll und Domainname kleingeschrieben) werden die Teile, die auf den regulären Ausdruck passen durch den nachfolgenden Text ersetzt.",
+    "message": "Beim Vergleich von URLs werden die Teile, die auf den regulären Ausdruck passen, durch den nachfolgenden Text ersetzt.",
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
@@ -84,7 +84,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "Der Ersetzungstext für den passenden Teil des regulären Ausdrucks",
+    "message": "Der Ersetzungstext für den passenden Teil des regulären Ausdrucks. Symbole wie $$& oder $$1 können benutzt werden, um auf Treffer oder Klammern zu verweisen. Die speziellen Texte \\L$$& und \\U$$& bedeuten eine klein- bzw. großgeschriebene Version der Treffer.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleAdd": {
@@ -107,12 +107,44 @@
     "message": "[hH]äufig.*|[oO]ft|[dD]uplikate",
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
+  "buttonRulesDefault": {
+    "message": "Voreingestelle Regeln zurückholen",
+    "description": "Button for restoring default rules. The text should be short"
+  },
+  "titleButtonRulesDefault": {
+    "message": "Die voreingestellten Regeln werden wiederhergestellt. Alle Änderungen gehen verloren.",
+    "description": "Explain that default rules will be restored"
+  },
+  "buttonRulesStore": {
+    "message": "Regeln speichern",
+    "description": "Button for putting current rules to local storage. The text should be short"
+  },
+  "titleButtonRulesStore": {
+    "message": "Die aktuellen Regeln werden in den lokalen Speicher des Browsers übertragen.",
+    "description": "Explain that current rules will be put to local storage"
+  },
+  "buttonRulesRestore": {
+    "message": "Regeln wiederherstellen",
+    "description": "Button for fetching rules from local storage. The text should be short"
+  },
+  "titleButtonRulesRestore": {
+    "message": "Die Regeln werden durch die im lokalen Speicher des Browsers ersetzt. Alle Änderungen gehen verloren.",
+    "description": "Explain that rules will be fetched from local storage"
+  },
+  "buttonRulesClean": {
+    "message": "Speicher löschen",
+    "description": "Button for cleaning local storage from stored rules. The text should be short"
+  },
+  "titleButtonRulesClean": {
+    "message": "Der lokale Speicher des Browsers wird gelöscht. Die gespeicherten Regeln gehen dabei verloren.",
+    "description": "Explain that the local storage will be cleaned from stored rules"
+  },
   "buttonListDupes": {
     "message": "Lesezeichenduplikate",
     "description": "Button for listing dupes"
   },
   "titleButtonListDupes": {
-    "message": "Berechne (erneut) die Liste der Lesezeichenduplikate. Zwei Lesezeichen gelten als exakte Duplikate, wenn ihre URL identisch ist.",
+    "message": "Berechne (erneut) die Liste der Lesezeichenduplikate. Zwei Lesezeichen werden als Duplikate betrachtet, wenn ihre URL übereinstimmt. Im Expertenmodus werden die ausgewählten URL-Ersetzungsregeln vor dem Vergleich der URLs angewandt.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -360,7 +392,7 @@
     }
   },
   "titleMessageMatches": {
-    "message": "Zwei Lesezeichen werden als Duplikate betrachtet, wenn ihre URL übereinstimmt. Für den Vergleich der URLs werden Protokoll und Domainname kleingeschrieben und die anpassbaren Ersetzungsregeln angewandt.",
+    "message": "Zwei Lesezeichen werden als Duplikate betrachtet, wenn ihre URL übereinstimmt. Im Expertenmodus werden die ausgewählten URL-Ersetzungsregeln vor dem Vergleich der URLs angewandt.",
     "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {

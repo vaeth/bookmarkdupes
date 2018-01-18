@@ -10,6 +10,7 @@
 
   "permissions": [
     "bookmarks",
+    "storage",
     "tabs"
   ],
 

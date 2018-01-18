@@ -60,23 +60,23 @@
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
-    "message": "The rule applies to a bookmark if its URL (protocol and domain name in lower case) matches the regular expression.", // new
-    "description": "Explain that bookmarks whose URL matches the regular expression"
+    "message": "The rule applies to a bookmark if its URL matches the regular expression.", // new
+    "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
   },
   "ruleUrlNegation": {
     "message": "URL does not match", // new
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
-    "message": "The rule applies to a bookmark if its URL (protocol and domain name in lower case) does not match the regular expression.", // new
-    "description": "Explain that bookmarks whose URL does not match the regular expression"
+    "message": "The rule applies to a bookmark if its URL does not match the regular expression.", // new
+    "description": "Explain that bookmarks whose URL does not matche the regular expression will be selected"
   },
   "ruleSearch": {
     "message": "Replace URL matches", // new
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
-    "message": "When comparing URLs (protocol and domain name in lower case) the parts matching the regular expression will be replaced by the subsequent text.", // new
+    "message": "When comparing URLs the parts matching the regular expression will be replaced by the subsequent text.", // new
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
@@ -84,7 +84,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "The replacement text for the regular expresssion matches", // new
+    "message": "The replacement text for the regular expresssion matches. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.", // new
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleAdd": {
@@ -107,6 +107,38 @@
     "message": "[fF]requent.*|[oO]ften|[dD]upes", // new
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
+  "buttonRulesDefault": {
+    "message": "Restore default rules", // new
+    "description": "Button for restoring default rules. The text should be short"
+  },
+  "titleButtonRulesDefault": {
+    "message": "Restore the default rules. Any changes will be lost", // new
+    "description": "Explain that default rules will be restored"
+  },
+  "buttonRulesStore": {
+    "message": "Store rules", // new
+    "description": "Button for putting current rules to local storage. The text should be short"
+  },
+  "titleButtonRulesStore": {
+    "message": "The current rules will be put to the browser's local storage area.", // new
+    "description": "Explain that current rules will be put to local storage"
+  },
+  "buttonRulesRestore": {
+    "message": "Restore rules", // new
+    "description": "Button for fetching rules from local storage. The text should be short"
+  },
+  "titleButtonRulesRestore": {
+    "message": "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost.", // new
+    "description": "Explain that rules will be fetched from local storage"
+  },
+  "buttonRulesClean": {
+    "message": "Cleanup storage", // new
+    "description": "Button for cleaning local storage from stored rules. The text should be short"
+  },
+  "titleButtonRulesClean": {
+    "message": "The browser's local storage area will be cleaned from stored rules. The stored rules will be lost.", // new
+    "description": "Explain that the local storage will be cleaned from stored rules"
+  },
   "buttonListDupes": {
     "message": "Dupes", // new
 // changed     "Exact dupes"
@@ -114,7 +146,7 @@
     "description": "Button for listing dupes"
   },
   "titleButtonListDupes": {
-    "message": "(Re)calculate the list of bookmark dupes. Two bookmarks are considered to be dupes if their URLs match. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.", // new
+    "message": "(Re)calculate the list of bookmark dupes. Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -364,7 +396,7 @@
     }
   },
   "titleMessageMatches": {
-    "message": "Two bookmarks are considered to be dupes if their URLs match. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.", // new
+    "message": "Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
     "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {
