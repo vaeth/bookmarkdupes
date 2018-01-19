@@ -38,8 +38,7 @@ the corresponding bookmarks to their previous location in the bookmark menu!
 The extension requires the following permissions for these reasons:
 
 1. "bookmarks" to read/modify bookmarks
-2. "tabs" to let the extension symbol activate the correct tab if it open.
-3. "storage" to store/restore the customized rules in expert mode.
+2. "storage" to store/restore the customized rules in expert mode.
    Unfortunately, "storage" is not one of the optional_permissions which might
    be required only if that feature is actually requested by the user, see
    https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json/optional_permissions

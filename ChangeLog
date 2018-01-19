@@ -8,6 +8,8 @@
 	  This replaces the previous unsatisfactory "Similar Dupes" button and
 	  implements also https://github.com/vaeth/bookmarkdupes/issues/45
 	- Default regexp rules deal with much more than \? tails
+	- Remove tabs permissions.
+	  The price is that several tabs open when clicked several times
 	- bugfix: increase minimal gecko version to 48.0 to reflect that
 	  manifest.json itself apparently requires that version, see
 	  https://github.com/vaeth/bookmarkdupes/issues/44
