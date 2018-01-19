@@ -69,7 +69,7 @@
   },
   "titleRuleUrlNegation": {
     "message": "The rule applies to a bookmark if its URL does not match the regular expression.",
-    "description": "Explain that bookmarks whose URL does not matche the regular expression will be selected"
+    "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
     "message": "Replace URL matches",
@@ -87,21 +87,37 @@
     "message": "The replacement text for the regular expresssion matches. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
-  "buttonRuleAdd": {
-    "message": "New",
-    "description": "Button for inserting a new rule. The text should be short"
+  "buttonRuleUp": {
+    "message": "⇧",
+    "description": "Button for moving a rule up. The text should be short"
   },
-  "titleButtonRuleAdd": {
-    "message": "Insert a new rule.",
-    "description": "Explain that a new rule will be inserted"
+  "titleButtonRuleUp": {
+    "message": "The rule will be moved up.",
+    "description": "Explain that the rule will be moved up"
+  },
+  "buttonRuleDown": {
+    "message": "⇩",
+    "description": "Button for moving a rule down. The text should be short"
+  },
+  "titleButtonRuleDown": {
+    "message": "The rule will be moved down.",
+    "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "Remove",
+    "message": "❌",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
     "message": "Remove this rule.",
     "description": "Explain that the rule will be removed"
+  },
+  "buttonRuleAdd": {
+    "message": "❎",
+    "description": "Button for inserting a new rule. The text should be short"
+  },
+  "titleButtonRuleAdd": {
+    "message": "Insert a new rule.",
+    "description": "Explain that a new rule will be inserted"
   },
   "regExpFrequent": {
     "message": "[fF]requent.*|[oO]ften|[dD]upes",

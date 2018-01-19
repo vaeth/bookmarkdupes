@@ -125,6 +125,11 @@ function getName(folders, parent, name, separator) {
   return name;
 }
 
+function appendCol(row) {
+  const col = document.createElement("TD");
+  row.appendChild(col);
+}
+
 function appendTextNodeCol(row, text, title, id) {
   const col = document.createElement("TD");
   const textNode = document.createTextNode(text);
@@ -274,7 +279,7 @@ function getRule(row) {
   return rule;
 }
 
-function addRule(parent, count, rule) {
+function addRule(parent, count, total, rule) {
   if (!rule) {
     rule = {};
   }
@@ -296,9 +301,22 @@ function addRule(parent, count, rule) {
   appendInputCol(row, "titleRuleUrlNegation", rule.urlNegation, off);
   appendInputCol(row, "titleRuleSearch", rule.search, filterOrOff);
   appendInputCol(row, "titleRuleReplace", rule.replace, filterOrOff);
-  appendButtonCol(row, "regexpButton=sub" + stringCount, "titleButtonRuleSub",
+  const colUp = document.createElement("TD");
+  if ((count > 1) && (total > 1)) {
+    appendButton(colUp, "regexpButton=/" + stringCount, "titleButtonRuleUp",
+      browser.i18n.getMessage("buttonRuleUp"), null, true);
+  }
+  row.appendChild(colUp);
+  const colDown = document.createElement("TD");
+  if (count < total) {
+    appendButton(colDown, "regexpButton=*" + stringCount,
+      "titleButtonRuleDown", browser.i18n.getMessage("buttonRuleDown"),
+      null, true);
+  }
+  row.appendChild(colDown);
+  appendButtonCol(row, "regexpButton=-" + stringCount, "titleButtonRuleSub",
     browser.i18n.getMessage("buttonRuleSub"), null, true);
-  appendButtonCol(row, "regexpButton=add" + stringCount, "titleButtonRuleAdd",
+  appendButtonCol(row, "regexpButton=+" + stringCount, "titleButtonRuleAdd",
     browser.i18n.getMessage("buttonRuleAdd"), null, true);
   parent.appendChild(row);
 }
@@ -370,13 +388,16 @@ function addRules(rules) {
     browser.i18n.getMessage("titleRuleSearch"));
   appendTextNodeCol(row, browser.i18n.getMessage("ruleReplace"),
     browser.i18n.getMessage("titleRuleReplace"));
-  row.appendChild(document.createElement("TD"));
-  appendButtonCol(row, "regexpButton=add0", "titleButtonRuleAdd",
+  for (let i = 0; i < 3; ++i) {
+    appendCol(row);
+  }
+  appendButtonCol(row, "regexpButton=+0", "titleButtonRuleAdd",
     browser.i18n.getMessage("buttonRuleAdd"), null, true);
   parent.appendChild(row);
+  const total = rules.length;
   let count = 0;
   for (let rule of rules) {
-    addRule(parent, ++count, rule);
+    addRule(parent, ++count, total, rule);
   }
 }
 
@@ -663,12 +684,11 @@ function addBookmark(bookmark, folders, id) {
   appendCheckboxCol(row, "bookmark=" + bookmark.id);
   if (bookmark.order !== undefined) {
     appendTextNodeCol(row, String(bookmark.order));
-    const dummy = document.createElement("TD");  // A dummy column for space
-    row.appendChild(dummy);
+    appendCol(row);
   }
   const name = getName(folders, bookmark.parent, bookmark.text);
-  const col = document.createElement("TD");
   if (bookmark.url) {
+    const col = document.createElement("TD");
     const url = bookmark.url;
     row.title = url;
     const link = document.createElement("A");
@@ -715,12 +735,27 @@ function redisplayRules(rules) {
 
 function buttonRule(action) {
   const rules = getRules();
-  const number = Number(action.substr(3));  // 3 = "add".length = "sub".length
-  if (action.startsWith("add")) {
-    const rule = {};
-    rules.splice(number, 0, rule);
-  } else {
-    rules.splice(number - 1, 1);
+  let number = Number(action.substr(1));
+  const type = action.substr(0, 1);
+  switch(type) {
+    case '+': {
+        const rule = {};
+        rules.splice(number, 0, rule);
+      }
+      break;
+    case '-':
+      rules.splice(number - 1, 1);
+      break;
+    case '/':
+      --number;
+    case '*': {
+        const rule = rules[number - 1];
+        rules[number - 1] = rules[number];
+        rules[number] = rule;
+      }
+      break;
+    default:  // should not happen
+      return;  // it is a bug if we get here
   }
   redisplayRules(rules);
 }

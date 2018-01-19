@@ -61,7 +61,7 @@
   },
   "titleRuleUrl": {
     "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL auf den regulären Ausdruck passt.",
-    "description": "Explain that bookmarks whose URL matches the regular expression"
+    "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
   },
   "ruleUrlNegation": {
     "message": "URL passt nicht",
@@ -69,7 +69,7 @@
   },
   "titleRuleUrlNegation": {
     "message": "Die Regel trifft auf ein Lesezeichen zu, wenn dessen URL nicht auf den regulären Ausdruck passt.",
-    "description": "Explain that bookmarks whose URL does not match the regular expression"
+    "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
     "message": "Ersetze URL-Teil",
@@ -87,21 +87,37 @@
     "message": "Der Ersetzungstext für den passenden Teil des regulären Ausdrucks. Symbole wie $$& oder $$1 können benutzt werden, um auf Treffer oder Klammern zu verweisen. Die speziellen Texte \\L$$& und \\U$$& bedeuten eine klein- bzw. großgeschriebene Version der Treffer.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
-  "buttonRuleAdd": {
-    "message": "Neu",
-    "description": "Button for inserting a new rule. The text should be short"
+  "buttonRuleUp": {
+    "message": "⇧",
+    "description": "Button for moving a rule up. The text should be short"
   },
-  "titleButtonRuleAdd": {
-    "message": "Einfügen einer neuen Regel.",
-    "description": "Explain that a new rule will be inserted"
+  "titleButtonRuleUp": {
+    "message": "Die Regel wird nach oben verschoben.",
+    "description": "Explain that the rule will be moved up"
+  },
+  "buttonRuleDown": {
+    "message": "⇩",
+    "description": "Button for moving a rule down. The text should be short"
+  },
+  "titleButtonRuleDown": {
+    "message": "Die Regel wird nach unten verschoben.",
+    "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "Löschen",
+    "message": "❌",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
     "message": "Löschen dieser Regel.",
     "description": "Explain that the rule will be removed"
+  },
+  "buttonRuleAdd": {
+    "message": "❎",
+    "description": "Button for inserting a new rule. The text should be short"
+  },
+  "titleButtonRuleAdd": {
+    "message": "Einfügen einer neuen Regel.",
+    "description": "Explain that a new rule will be inserted"
   },
   "regExpFrequent": {
     "message": "[hH]äufig.*|[oO]ft|[dD]uplikate",

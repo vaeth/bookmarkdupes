@@ -69,7 +69,7 @@
   },
   "titleRuleUrlNegation": {
     "message": "La regla se aplica a un marcador si su URL no coincide con la expresión regular.",
-    "description": "Explain that bookmarks whose URL does not matche the regular expression will be selected"
+    "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
     "message": "Reemplazo de coincidencias de URL",
@@ -87,24 +87,45 @@
     "message": "El texto de reemplazo para la expresión regular coincide. Se pueden usar símbolos como $$& o $$1 para referirse a la coincidencia o un contenido de corchete. Los textos especiales \\L$$& y \\U$$& significan una versión en mayúsculas y minúsculas de las coincidencias, respectivamente..",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
-  "buttonRuleAdd": {
-    "message": "Nuevo",
-    "description": "Button for inserting a new rule. The text should be short"
+  "buttonRuleUp": {
+    "message": "⇧", // new
+    "description": "Button for moving a rule up. The text should be short"
   },
-  "titleButtonRuleAdd": {
-    "message": "Intertar una nueva regla.",
-    "description": "Explain that a new rule will be inserted"
+  "titleButtonRuleUp": {
+    "message": "⇧", // new (until it is translated the symbol is perhaps better than English)
+//  "message": "The rule will be moved up.",
+    "description": "Explain that the rule will be moved up"
+  },
+  "buttonRuleDown": {
+    "message": "⇩", // new
+    "description": "Button for moving a rule down. The text should be short"
+  },
+  "titleButtonRuleDown": {
+    "message": "⇩", // new (until it is translated the symbol is perhaps better than English)
+//  "message": "The rule will be moved down.",
+    "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "Eliminar",
+    "message": "❌", // new
+// changed     "Eliminar",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
     "message": "Eliminar esta regla.",
     "description": "Explain that the rule will be removed"
   },
+  "buttonRuleAdd": {
+    "message": "❎", // new
+// changed     "Nuevo",
+    "description": "Button for inserting a new rule. The text should be short"
+  },
+  "titleButtonRuleAdd": {
+    "message": "Intertar una nueva regla.",
+    "description": "Explain that a new rule will be inserted"
+  },
   "regExpFrequent": {
-    "message": "[fF]recuente. * | [oO] a menudo | [dD]uplicado",
+    "message": "[fF]recuente.*|.*\\b[mM]enudo\\b.*|[dD]uplicado\\b.*", // new
+// changed     "[fF]recuente. * | [oO] a menudo | [dD]uplicado",
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {

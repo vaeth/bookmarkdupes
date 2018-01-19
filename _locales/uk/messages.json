@@ -69,7 +69,7 @@
   },
   "titleRuleUrlNegation": {
     "message": "The rule applies to a bookmark if its URL does not match the regular expression.", // new
-    "description": "Explain that bookmarks whose URL does not matche the regular expression will be selected"
+    "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
     "message": "Replace URL matches", // new
@@ -87,21 +87,39 @@
     "message": "The replacement text for the regular expresssion matches. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.", // new
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
-  "buttonRuleAdd": {
-    "message": "New", // new
-    "description": "Button for inserting a new rule. The text should be short"
+  "buttonRuleUp": {
+    "message": "⇧", // new
+    "description": "Button for moving a rule up. The text should be short"
   },
-  "titleButtonRuleAdd": {
-    "message": "Insert a new rule.", // new
-    "description": "Explain that a new rule will be inserted"
+  "titleButtonRuleUp": {
+    "message": "⇧", // new (until it is translated the symbol is perhaps better than English)
+//  "message": "The rule will be moved up.",
+    "description": "Explain that the rule will be moved up"
+  },
+  "buttonRuleDown": {
+    "message": "⇩", // new
+    "description": "Button for moving a rule down. The text should be short"
+  },
+  "titleButtonRuleDown": {
+    "message": "⇩", // new (until it is translated the symbol is perhaps better than English)
+//  "message": "The rule will be moved down.",
+    "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "Remove", // new
+    "message": "❌", // new
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
     "message": "Remove this rule.", // new
     "description": "Explain that the rule will be removed"
+  },
+  "buttonRuleAdd": {
+    "message": "❎", // new
+    "description": "Button for inserting a new rule. The text should be short"
+  },
+  "titleButtonRuleAdd": {
+    "message": "Insert a new rule.", // new
+    "description": "Explain that a new rule will be inserted"
   },
   "regExpFrequent": {
     "message": "[fF]requent.*|[oO]ften|[dD]upes", // new
