@@ -70,12 +70,8 @@ function getCheckboxRules() {
   return isChecked("checkboxRules");
 }
 
-function setCheckboxRulesTitle(title) {
-  document.getElementById("titleCheckboxRules").title = title;
-}
-
-function setCheckboxRulesText(text) {
-  document.getElementById("checkboxRulesText").textContent = text;
+function getTableCheckboxRules() {
+  return document.getElementById("tableCheckboxRules");
 }
 
 function getCheckboxFullUrl() {
@@ -202,7 +198,7 @@ function appendCheckbox(parent, id, title, checked, enabled) {
 
 function appendCheckboxCol(row, id, title, checked, enabled) {
   const col = document.createElement("TD");
-  appendCheckbox(col, id, title, checked);
+  appendCheckbox(col, id, title, checked, enabled);
   row.appendChild(col);
 }
 
@@ -384,13 +380,21 @@ function addRules(rules) {
   }
 }
 
+function addCheckboxRules() {
+  const row = document.createElement("TR");
+  appendCheckboxCol(row, "checkboxRules",
+    browser.i18n.getMessage("titleCheckboxRules"), false, true);
+  appendTextNodeCol(row, browser.i18n.getMessage("CheckboxRules"));
+  const parent = getTableCheckboxRules();
+  parent.appendChild(row);
+}
+
 function addButtonsBase() {
   const parent = getButtonsBase();
   if (parent.hasChildNodes()) {  // Already done
     return;
   }
-  setCheckboxRulesTitle(browser.i18n.getMessage("titleCheckboxRules"));
-  setCheckboxRulesText(browser.i18n.getMessage("checkboxRules"));
+  addCheckboxRules();
   const row = document.createElement("TR");
   appendButtonCol(row, "buttonListDupes", "titleButtonListDupes");
   appendButtonCol(row, "buttonListEmpty", "titleButtonListEmpty");
@@ -723,7 +727,7 @@ function buttonRule(action) {
 
 function buttonsRules() {
   browser.storage.local.get().then(function (storage) {
-    const haveStorage = (storage && storage.rules);
+    const haveStorage = (storage && storage.rulesV1);
     addButtonsRules(haveStorage, haveStorage);
   }, function () {
     addButtonsRules(false, true);
@@ -1794,7 +1798,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
 
 function rulesStore() {
   const storage = {
-    rules: getRules()
+    rulesV1: getRules()
   };
   browser.storage.local.set(storage).then(buttonsRules, buttonsRules);
 }
@@ -1805,8 +1809,8 @@ function rulesClean() {
 
 function rulesRestore() {
   browser.storage.local.get().then(function (storage) {
-    if (storage && storage.rules) {
-      redisplayRules(storage.rules);
+    if (storage && storage.rulesV1) {
+      redisplayRules(storage.rulesV1);
       addButtonsRules(true, true);
     } else {
       addButtonsRules(false, false);
@@ -1821,16 +1825,17 @@ function rulesRestore() {
   let state = {};
   let rules;
   const rulesDefault = [
-    { radio: "url", search: "^\\w*://[^\/]*/", replace: "\\L$&" },
-    { radio: "url", urlNegation: "\\b(e?mail|bugs|youtube|translate)\\b",
-      search: "\\?.*" },
-    { radio: "off", search: "^http:", replace: "https:" },
+    { radio: "url", search: "^\\w+://[^\/]*/", replace: "\\L$&" },
     { radio: "filter",
       name: "\\0(" + browser.i18n.getMessage("regExpFrequent") + ")\\0" },
+    { radio: "off", name: "^[^\\0]*\\0[^\\0]*$" },
+    { radio: "off", urlNegation: "\\b(e?mail|bugs|youtube|translat)\\b",
+      search: "\\?.*" },
+    { radio: "off", search: "/[^/]*$" },
     { radio: "url", search: "/+(index.html)?$" },
+    { radio: "url", search: "^http:", replace: "https:" },
     { radio: "url", search: "^([^:]*://)www?\\d*\.", replace: "$1" },
-    { radio: "url", search: "\.htm$", replace: ".html" },
-    { radio: "off", search: "/[^/]*$" }
+    { radio: "url", search: "\.htm$", replace: ".html" }
   ];
 
   function startLock() {
@@ -1904,11 +1909,18 @@ function rulesRestore() {
       return;
     }
     browser.storage.local.get().then(function (storage) {
-      if (storage && storage.rules) {
-        rules = toggleRules(storage.rules);
-      } else {
-        initRulesDefault();
+      if (storage) {
+        if (storage.rulesV1) {
+          rules = toggleRules(storage.rulesV1);
+          return;
+        }
+        for (let attribute in storage) {
+          browser.storage.local.clear().then(initRulesDefault,
+            initRulesDefault);
+          return;
+        }
       }
+      initRulesDefault();
     }, initRulesDefault);
   }
 
