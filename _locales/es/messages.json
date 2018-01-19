@@ -60,8 +60,7 @@
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
-    "message": "La regla se aplica a un marcador si su URL coincide con la expresión regular.", // new
-// changed     "La regla se aplica a un marcador si su URL (protocolo y nombre de dominio en minúsculas) coincide con la expresión regular.",
+    "message": "La regla se aplica a un marcador si su URL coincide con la expresión regular.",
     "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
   },
   "ruleUrlNegation": {
@@ -69,8 +68,7 @@
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
-    "message": "La regla se aplica a un marcador si su URL no coincide con la expresión regular.", // new
-// changed     "La regla se aplica a un marcador si su URL (protocolo y nombre de dominio en minúsculas) no coincide con la expresión regular.",
+    "message": "La regla se aplica a un marcador si su URL no coincide con la expresión regular.",
     "description": "Explain that bookmarks whose URL does not matche the regular expression will be selected"
   },
   "ruleSearch": {
@@ -78,8 +76,7 @@
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
-    "message": "Al comparar las URL, las partes que coincidan con la expresión regular serán reemplazadas por el texto posterior.", // new
-// changed     "Al comparar las URL (protocolo y nombre de dominio en minúsculas), las partes que coincidan con la expresión regular serán reemplazadas por el texto posterior.",
+    "message": "Al comparar las URL, las partes que coincidan con la expresión regular serán reemplazadas por el texto posterior.",
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
@@ -87,7 +84,8 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "El texto de reemplazo para la expresión regular coincide. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.", // new
+    "message": "El texto de reemplazo para la expresión regular coincide. Se pueden usar símbolos como $$& o $$1 para referirse a la coincidencia o un contenido de corchete. Los textos especiales \\L$$& y \\U$$& significan una versión en mayúsculas y minúsculas de las coincidencias, respectivamente..",
+    // "message": "El texto de reemplazo para la expresión regular coincide. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleAdd": {
@@ -111,35 +109,43 @@
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
-    "message": "Restore default rules", // new
+    "message": "Restaurar reglas por defecto",
+    //"message": "Restore default rules",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {
-    "message": "Restore the default rules. Any changes will be lost", // new
+    "message": "Restaurar las reglas por defecto. Cualquier cambio se perderá",
+    //"message": "Restore the default rules. Any changes will be lost",
     "description": "Explain that default rules will be restored"
   },
   "buttonRulesStore": {
-    "message": "Store rules", // new
+    "message": "Guardar reglas",
+    //"message": "Store rules",
     "description": "Button for putting current rules to local storage. The text should be short"
   },
   "titleButtonRulesStore": {
-    "message": "The current rules will be put to the browser's local storage area.", // new
+    "message": "Las reglas actuales se colocarán en el área de almacenamiento local del navegador.",
+    // "message": "The current rules will be put to the browser's local storage area.",
     "description": "Explain that current rules will be put to local storage"
   },
   "buttonRulesRestore": {
-    "message": "Restore rules", // new
+    "message": "Restaurar reglas",
+    // "message": "Restore rules",
     "description": "Button for fetching rules from local storage. The text should be short"
   },
   "titleButtonRulesRestore": {
-    "message": "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost.", // new
+    "message": "Las reglas serán reemplazadas por aquellas almacenadas en el área de almacenamiento local del navegador. Cualquier cambio se perderá.",
+    // "message": "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost.",
     "description": "Explain that rules will be fetched from local storage"
   },
   "buttonRulesClean": {
-    "message": "Cleanup storage", // new
+    "message": "Limpiar almacenamiento local",
+    // "message": "Cleanup storage",
     "description": "Button for cleaning local storage from stored rules. The text should be short"
   },
   "titleButtonRulesClean": {
-    "message": "The browser's local storage area will be cleaned from stored rules. The stored rules will be lost.", // new
+    "message": "Se limpiarán las reglas almacenadas dentro del área de almacenamiento local del navegador. Las reglas almacenadas se perderán.",
+    // "message": "The browser's local storage area will be cleaned from stored rules. The stored rules will be lost.",
     "description": "Explain that the local storage will be cleaned from stored rules"
   },
   "buttonListDupes": {
@@ -147,9 +153,8 @@
     "description": "Button for listing dupes"
   },
   "titleButtonListDupes": {
-    "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
-// changed     "(Re)calculate the list of bookmark dupes. Two bookmarks are considered to be dupes if their URLs coincide. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.",
-//  "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. Para los protocolos de comparación de URL y los nombres de dominio se transforman en minúsculas, y se aplican las reglas de preprocesamiento (sustitución) de URL de expresión regular seleccionadas.",
+    "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. En modo experto, las reglas de preprocesamiento (sustitución) de URL seleccionadas se aplican antes de comparar las URL.",
+    // "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -397,9 +402,8 @@
     }
   },
   "titleMessageMatches": {
-    "message": "Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
-// changed     "Two bookmarks are considered to be dupes if their URLs coincide. For the URL comparison protocols and domain names are transformed to lower case, and selected regexp URL preprocessing (substitution) rules are applied.",
-//  "message": "Dos marcadores se consideran duplicados si sus URL coinciden. Para los protocolos de comparación de URL y los nombres de dominio se transforman en minúsculas, y se aplican las reglas de preprocesamiento (sustitución) de URL de expresión regular seleccionadas.",
+    "message": "Dos marcadores se consideran duplicados si sus URL coinciden. En modo experto, las reglas de preprocesamiento (sustitución) de URL seleccionadas se aplican antes de comparar las URL.",
+    // "message": "Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.",
     "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {
