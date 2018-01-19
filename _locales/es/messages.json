@@ -85,7 +85,6 @@
   },
   "titleRuleReplace": {
     "message": "El texto de reemplazo para la expresión regular coincide. Se pueden usar símbolos como $$& o $$1 para referirse a la coincidencia o un contenido de corchete. Los textos especiales \\L$$& y \\U$$& significan una versión en mayúsculas y minúsculas de las coincidencias, respectivamente..",
-    // "message": "El texto de reemplazo para la expresión regular coincide. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleAdd": {
@@ -110,42 +109,34 @@
   },
   "buttonRulesDefault": {
     "message": "Restaurar reglas por defecto",
-    //"message": "Restore default rules",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {
     "message": "Restaurar las reglas por defecto. Cualquier cambio se perderá",
-    //"message": "Restore the default rules. Any changes will be lost",
     "description": "Explain that default rules will be restored"
   },
   "buttonRulesStore": {
     "message": "Guardar reglas",
-    //"message": "Store rules",
     "description": "Button for putting current rules to local storage. The text should be short"
   },
   "titleButtonRulesStore": {
     "message": "Las reglas actuales se colocarán en el área de almacenamiento local del navegador.",
-    // "message": "The current rules will be put to the browser's local storage area.",
     "description": "Explain that current rules will be put to local storage"
   },
   "buttonRulesRestore": {
     "message": "Restaurar reglas",
-    // "message": "Restore rules",
     "description": "Button for fetching rules from local storage. The text should be short"
   },
   "titleButtonRulesRestore": {
     "message": "Las reglas serán reemplazadas por aquellas almacenadas en el área de almacenamiento local del navegador. Cualquier cambio se perderá.",
-    // "message": "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost.",
     "description": "Explain that rules will be fetched from local storage"
   },
   "buttonRulesClean": {
     "message": "Limpiar almacenamiento local",
-    // "message": "Cleanup storage",
     "description": "Button for cleaning local storage from stored rules. The text should be short"
   },
   "titleButtonRulesClean": {
     "message": "Se limpiarán las reglas almacenadas dentro del área de almacenamiento local del navegador. Las reglas almacenadas se perderán.",
-    // "message": "The browser's local storage area will be cleaned from stored rules. The stored rules will be lost.",
     "description": "Explain that the local storage will be cleaned from stored rules"
   },
   "buttonListDupes": {
@@ -154,7 +145,6 @@
   },
   "titleButtonListDupes": {
     "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. En modo experto, las reglas de preprocesamiento (sustitución) de URL seleccionadas se aplican antes de comparar las URL.",
-    // "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -403,7 +393,6 @@
   },
   "titleMessageMatches": {
     "message": "Dos marcadores se consideran duplicados si sus URL coinciden. En modo experto, las reglas de preprocesamiento (sustitución) de URL seleccionadas se aplican antes de comparar las URL.",
-    // "message": "Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.",
     "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {
