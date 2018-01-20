@@ -14,8 +14,9 @@
 	  manifest.json itself apparently requires that version, see
 	  https://github.com/vaeth/bookmarkdupes/issues/44
 	- bugfix: calculation error messages are now displayed correctly
-	- bugfix: use safe ids for bookmarks
+	- bugfix: use safe (guaranteed non-duplicate) ids for bookmarks
 	- internal: remove redundant SplitNumber
+	- internal: avoid arguments array when simple args passing will do
 
 	Juan Salvador Aleixandre Talens:
 	- Update es locales

@@ -2047,14 +2047,11 @@ function rulesRestore() {
     })
   }
 
-  function markWrapper(func, funcargs) {
+  function markWrapper(mainFunction, arg1, arg2) {
     startLock();
     enableBookmarks(false);
-    const thisArg = this;
-    const args = Array.prototype.slice.call(arguments);
-    args.splice(0, 1);
     setTimeout(function () {
-      func.apply(thisArg, args);
+      mainFunction(arg1, arg2);
       endLockAll();
     })
   }
