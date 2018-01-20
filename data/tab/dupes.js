@@ -159,7 +159,7 @@ function appendRadio(parent, id, name, title, checked) {
 
 function appendRadioCol(row, id, name, title, checked) {
   const col = document.createElement("TD");
-  appendRadio(col, id, name, title, checked)
+  appendRadio(col, id, name, title, checked);
   row.appendChild(col);
 }
 
@@ -1168,7 +1168,7 @@ function displayProgress(textId, buttonTextId, total, todo) {
   const percentage = (100 * total) / todo;
   addProgressButton(buttonTextId, percentage);
   displayMessage(browser.i18n.getMessage(textId,
-    [String(total), String(todo), String(Math.round(percentage))]))
+    [String(total), String(todo), String(Math.round(percentage))]));
 }
 
 function displayEndProgress(textId, total, error) {
@@ -2044,7 +2044,7 @@ function rulesRestore() {
     startLock();
     setTimeout(function () {
       processMarked(stopPressed, endLockReset, bookmarkMap);
-    })
+    });
   }
 
   function markWrapper(mainFunction, arg1, arg2) {
@@ -2053,7 +2053,7 @@ function rulesRestore() {
     setTimeout(function () {
       mainFunction(arg1, arg2);
       endLockAll();
-    })
+    });
   }
 
   function clickListener(event) {

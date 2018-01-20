@@ -15,6 +15,7 @@
 	  https://github.com/vaeth/bookmarkdupes/issues/44
 	- bugfix: calculation error messages are now displayed correctly
 	- bugfix: use safe (guaranteed non-duplicate) ids for bookmarks
+	- bugfix: add some forgotten semicolons
 	- internal: remove redundant SplitNumber
 	- internal: avoid arguments array when simple args passing will do
 
