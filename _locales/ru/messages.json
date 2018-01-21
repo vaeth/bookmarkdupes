@@ -136,7 +136,7 @@
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
-    "message": "Текущие правила будут сохранены в локальном хранилище браузера, возможно перезапишутся ранее сохраненные правила.",
+    "message": "Текущие правила будут сохранены в локальном хранилище браузера, возможно перезапишутся ранее сохранённые правила.",
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
@@ -152,7 +152,7 @@
     "description": "Button for cleaning local storage. The text should be short"
   },
   "titleButtonRulesCleanLocal": {
-    "message": "Локальное хранилище браузера будет очищено от сохраненных правил. Сохранены правила будут утеряны.",
+    "message": "Локальное хранилище браузера будет очищено от сохраненных правил. Сохранённые правила будут утеряны.",
     "description": "Explain that the browser's local storage area will be cleaned from stored rules"
   },
   "buttonRulesStoreSync": {
@@ -160,7 +160,7 @@
     "description": "Button for putting rules to sync storage. The text should be short"
   },
   "titleButtonRulesStoreSync": {
-    "message": "Текущие правила будут сохранены в хранилище синхронизации браузера, возможно перезапишутся ранее сохраненные правила.",
+    "message": "Текущие правила будут сохранены в хранилище синхронизации браузера, возможно перезапишутся ранее сохранённые правила.",
     "description": "Explain that current rules will replace those in the browser's sync storage area"
   },
   "buttonRulesRestoreSync": {
@@ -176,7 +176,7 @@
     "description": "Button for cleaning sync storage. The text should be short"
   },
   "titleButtonRulesCleanSync": {
-    "message": "Хранилище синхронизации браузера будет очищено от сохранённых правил. Сохраненные правила будут утеряны.",
+    "message": "Хранилище синхронизации браузера будет очищено от сохранённых правил. Сохранённые правила будут утеряны.",
     "description": "Explain that the sync browser's storage area will be cleaned from stored rules"
   },
   "buttonListDupes": {
