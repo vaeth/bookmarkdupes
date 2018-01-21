@@ -124,6 +124,62 @@
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
+    "message": "⇇ voreingestellte Regeln",
+    "description": "Button for restoring default rules. The text should be short"
+  },
+  "titleButtonRulesDefault": {
+    "message": "Ersetzen der angezeigten Regeln durch die fest voreingestellten",
+    "description": "Explain that current rules will be replaced by default rules"
+  },
+  "buttonRulesStoreLocal": {
+    "message": "⇉ lokaler Speicher",
+    "description": "Button for putting rules to local storage. The text should be short"
+  },
+  "titleButtonRulesStoreLocal": {
+    "message": "Kopieren der angezeigten Regeln in die des lokalen Browser-Speichers. Frühere Speicherungen werden dabei ggf. verworfen.",
+    "description": "Explain that current rules will replace those in the browser's local storage area"
+  },
+  "buttonRulesRestoreLocal": {
+    "message": "⇇ lokaler Speicher",
+    "description": "Button for restoring rules from local storage. The text should be short"
+  },
+  "titleButtonRulesRestoreLocal": {
+    "message": "Ersetzen der angezeigten Regeln durch die des lokalen Browser-Speichers",
+    "description": "Explain that current rules will be replaced by those from the browser's local storage area"
+  },
+  "buttonRulesCleanLocal": {
+    "message": "❌ lokaler Speicher",
+    "description": "Button for cleaning local storage. The text should be short"
+  },
+  "titleButtonRulesCleanLocal": {
+    "message": "Der lokale Browser-Speicher wird von allen gespeicherten Regeln befreit",
+    "description": "Explain that the browser's local storage area will be cleaned from stored rules"
+  },
+  "buttonRulesStoreSync": {
+    "message": "⇉ Sync-Speicher",
+    "description": "Button for putting rules to sync storage. The text should be short"
+  },
+  "titleButtonRulesStoreSync": {
+    "message": "Kopieren der angezeigten Regeln in die des Sync-Speichers des Browsers. Frühere Speicherungen werden dabei ggf. verworfen.",
+    "description": "Explain that current rules will replace those in the browser's sync storage area"
+  },
+  "buttonRulesRestoreSync": {
+    "message": "⇇ Sync-Speicher",
+    "description": "Button for restoring rules from sync storage. The text should be short"
+  },
+  "titleButtonRulesRestoreSync": {
+    "message": "Ersetzen der angezeigten Regeln durch die des Sync-Speichers des Browsers",
+    "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
+  },
+  "buttonRulesCleanSync": {
+    "message": "❌ Sync-Speicher",
+    "description": "Button for cleaning sync storage. The text should be short"
+  },
+  "titleButtonRulesCleanSync": {
+    "message": "Der Sync-Speicher des Browsers wird von allen gespeicherten Regeln befreit",
+    "description": "Explain that the sync browser's storage area will be cleaned from stored rules"
+  },
+  "buttonRulesDefault": {
     "message": "Voreingestelle Regeln zurückholen",
     "description": "Button for restoring default rules. The text should be short"
   },
