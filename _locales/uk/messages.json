@@ -124,59 +124,59 @@
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
-    "message": "⇇ default rules", // new
+    "message": "Відн.стандарт.правила",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {
-    "message": "Replace the currently displayed rules by default rules.", // new
+    "message": "Замінити поточні правила правилами за замовчуванням.",
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "⇉ local storage", // new
+    "message": "Збер.правила",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
-    "message": "Put the current rules to the browser's local storage area, possibly replacing earlier stored rules.", // new
+    "message": "Поточні правила буде збережено в локальному сховищі браузера, можливо ця дія перезапише раніше збережені правила.",
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "⇇ local storage", // new
+    "message": "Відн.правила",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
-    "message": "Replace the currently displayed rules by those from the browser's local storage area.", // new
+    "message": "Правила буде замінено тими, що зберігаються в локальному сховищі браузера.",
     "description": "Explain that current rules will be replaced by those from the browser's local storage area"
   },
   "buttonRulesCleanLocal": {
-    "message": "❌ local storage", // new
+    "message": "Очищення сховища",
     "description": "Button for cleaning local storage. The text should be short"
   },
   "titleButtonRulesCleanLocal": {
-    "message": "The browser's local storage area will be cleaned from stored rules. The stored rules will be lost.", // new
+    "message": "Локальну пам'ять браузера буде очищено від збережених правил. Збережені правила буде втрачено.",
     "description": "Explain that the browser's local storage area will be cleaned from stored rules"
   },
   "buttonRulesStoreSync": {
-    "message": "⇉ sync storage", // new
+    "message": "Збер.синхр.сховище",
     "description": "Button for putting rules to sync storage. The text should be short"
   },
   "titleButtonRulesStoreSync": {
-    "message": "Put the current rules to the browser's sync storage area, possibly replacing earlier stored rules.", // new
+    "message": "Поточні правила буде збережено в сховище синхронізації браузера, можливо ця дія перезапише раніше збережені правила.",
     "description": "Explain that current rules will replace those in the browser's sync storage area"
   },
   "buttonRulesRestoreSync": {
-    "message": "⇇ sync storage", // new
+    "message": "Відн.синхр.сховище",
     "description": "Button for restoring rules from sync storage. The text should be short"
   },
   "titleButtonRulesRestoreSync": {
-    "message": "Replace the currently displayed rules by those from the browser's sync storage area.", // new
+    "message": "Замінити поточні правила тими, що знаходяться в сховищі синхронізації браузера.",
     "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
   },
   "buttonRulesCleanSync": {
-    "message": "❌ sync storage", // new
+    "message": "Оч.синхр.сховище",
     "description": "Button for cleaning sync storage. The text should be short"
   },
   "titleButtonRulesCleanSync": {
-    "message": "The browser's sync storage area will be cleaned from stored rules. The stored rules will be lost.", // new
+    "message": "Сховище синхронізації браузера буде очищено від збережених правил. Збережені правила буде втрачено.",
     "description": "Explain that the sync browser's storage area will be cleaned from stored rules"
   },
   "buttonListDupes": {
