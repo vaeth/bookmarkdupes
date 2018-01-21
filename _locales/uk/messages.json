@@ -84,7 +84,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "Текст заміни по відповідності регулярному виразу. Символи на зразок $$& чи $$1 can be used to refer to the match or a brace content. Спеціальні тексти \\L$$& та \\U$$& означають нижній та верхній регістр відповідно.", // new
+    "message": "Текст заміни по відповідності регулярному виразу. Символи типу $$& чи $$1 можуть використовуватися для позначення відповідностей чи вмісту дужок (). Спеціальні тексти \\L$$& та \\U$$& означають нижній та верхній регістр відповідно.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
@@ -120,7 +120,7 @@
     "description": "Explain that a new rule will be inserted"
   },
   "regExpFrequent": {
-    "message": "[fF]requent.*|[oO]ften|[dD]upes", // new
+    "message": "[чЧ]асто.*|[вВ]икористовувані|[зЗ]акладки",
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
