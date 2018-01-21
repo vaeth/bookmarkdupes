@@ -44,7 +44,7 @@
     "description": "Input field for matching the name. The text should be short"
   },
   "titleRuleName": {
-    "message": "Правило застосовується до закладок, якщо шлях до них (папки + ім'я) відповідають регулярному виразу. Роздільник для папок це \\0 чи \\x00.",
+    "message": "Правило застосовується до закладок, якщо шлях до них (папки + ім'я) відповідає регулярному виразу. Роздільник для папок це \\0 чи \\x00.",
     "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleNameNegation": {
@@ -52,7 +52,7 @@
     "description": "Input field for not matching the name. The text should be short"
   },
   "titleRuleNameNegation": {
-    "message": "Правило застосовується до закладок, якщо шлях до них (папки + ім'я) не відповідають регулярному виразу. Роздільник для папок це \\0 чи \\x00.",
+    "message": "Правило застосовується до закладок, якщо шлях до них (папки + ім'я) не відповідає регулярному виразу. Роздільник для папок це \\0 чи \\x00.",
     "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleUrl": {
