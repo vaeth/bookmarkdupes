@@ -1918,10 +1918,10 @@ function rulesRestore(storageArea) {
     { radio: "off", urlNegation: "\\b(e?mail|bugs|youtube|translat)\\b",
       search: "\\?.*" },
     { radio: "off", search: "/[^/]*$" },
-    { radio: "url", search: "/+(index.html)?$" },
+    { radio: "url", search: "/+(index\\.html)?$" },
     { radio: "url", search: "^http:", replace: "https:" },
-    { radio: "url", search: "^([^:]*://)www?\\d*\.", replace: "$1" },
-    { radio: "url", search: "\.htm$", replace: ".html" }
+    { radio: "url", search: "^([^:]*://)www?\\d*\\.", replace: "$1" },
+    { radio: "url", search: "\\.htm$", replace: ".html" }
   ];
 
   function startLock() {
