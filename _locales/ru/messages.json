@@ -84,7 +84,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "Текст замены по соответствию регулярному выражению. Символы вроде $$& или $$1 can be used to refer to the match or a brace content. Специальные тексты \\L$$& и \\U$$& означают нижний и верхний регистр соответствий.", // new
+    "message": "Текст замены по соответствию регулярному выражению. Символы типа $$& или $$1 могут использоваться для обозначения соответствий или содержимого скобок (). Специальные тексты \\L$$& и \\U$$& означают нижний и верхний регистр соответствий.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
@@ -120,7 +120,7 @@
     "description": "Explain that a new rule will be inserted"
   },
   "regExpFrequent": {
-    "message": "[fF]requent.*|[oO]ften|[dD]upes", // new
+    "message": "[чЧ]асто.*|[иИ]спользуемые|[зЗ]акладки",
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
@@ -185,8 +185,6 @@
   },
   "titleButtonListDupes": {
     "message": "(Пере)определить список дублей. Две закладки считаются дублями, если их URL-ы одинаковы. В Экспертном режиме, выбранные правила предварительной обработки (замены) применяются перед сравнением URL-ов.",
-// changed     "(Re)calculate the list of exact bookmark dupes. Two bookmarks are considered to be exact dupes if their URLs are identical."
-//  "message": "(Пере)определить список точных дублей. Закладки считаются точными дублями, если их URL-ы идентичны.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -398,9 +396,7 @@
     "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
   },
   "checkboxExtra": {
-    "message": "Отображать заменённое содержание URL-ов в списке",
-// changed     "Display URL tail (following “?”) in listing"
-//  "message": "Отображать концовку URL-адреса (всё после “?”) в списке",
+    "message": "Отображать заменённое содержимое URL-ов в списке",
     "description": "Checkbox for displaying the replaced URL content in listing"
   },
   "messageCount": {
