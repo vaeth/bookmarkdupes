@@ -70,7 +70,7 @@ function getTableRules() {
   return document.getElementById("tableRules");
 }
 
-function getCheckboxRules() {
+function isCheckedRules() {
   return isChecked("checkboxRules");
 }
 
@@ -78,15 +78,15 @@ function getTableCheckboxRules() {
   return document.getElementById("tableCheckboxRules");
 }
 
-function getCheckboxFullUrl() {
+function isCheckedFullUrl() {
   return isChecked("checkboxFullUrl");
 }
 
-function getCheckboxExtra() {
+function isCheckedExtra() {
   return isChecked("checkboxExtra");
 }
 
-function getSelectedFolder() {
+function getValueSelectedFolder() {
   const value = document.getElementById("selectedFolder").value;
   return ((!value || (value === "@")) ? null : value);
 }
@@ -99,7 +99,7 @@ function getTextCount() {
   return document.getElementById("textCount");
 }
 
-function getCheckboxCount() {
+function isCheckedCount() {
   return isChecked("checkboxCount");
 }
 
@@ -747,7 +747,7 @@ function getRules() {
 
 function redisplayRules(rules) {
   clearItem(getTableRules());
-  if (getCheckboxRules()) {
+  if (isCheckedRules()) {
     addRules(rules);
   }
 }
@@ -795,7 +795,7 @@ function buttonsRulesQuick(storageArea, restoreRules) {
   const addButtonsRules = ((storageArea === "sync") ?
     addButtonsRulesSync : addButtonsRulesLocal);
   browser.storage[storageArea].get().then(function (storage) {
-    if (!getCheckboxRules()) {  // async race: user might have changed
+    if (!isCheckedRules()) {  // async race: user might have changed
       return;
     }
     if (!storage) {
@@ -812,7 +812,7 @@ function buttonsRulesQuick(storageArea, restoreRules) {
     }
     addButtonsRules(true, clean);
   }, function () {
-    if (!getCheckboxRules()) {  // async race: user might have changed
+    if (!isCheckedRules()) {  // async race: user might have changed
       return;
     }
     addButtonsRules(false, true);
@@ -820,13 +820,13 @@ function buttonsRulesQuick(storageArea, restoreRules) {
 }
 
 function buttonsRules(storageArea, restoreRules) {
-  if (getCheckboxRules()) {
+  if (isCheckedRules()) {
     buttonsRulesQuick(storageArea, restoreRules);
   }
 }
 
 function toggleRules(rules) {
-  if (getCheckboxRules()) {
+  if (isCheckedRules()) {
     addRules(rules);
     buttonsRulesQuick("local");
     if (haveStorageSync()) {
@@ -848,7 +848,7 @@ function toggleExtra(entryList, rulerList) {
   if (!entryList && !rulerList) {
     return;
   }
-  const fullUrl = getCheckboxFullUrl();
+  const fullUrl = isCheckedFullUrl();
   if (rulerList) {
     for (let i = 0; i < rulerList.length; ++i) {
       const col = document.getElementById("rulerExtra=" + String(i));
@@ -858,7 +858,7 @@ function toggleExtra(entryList, rulerList) {
   if (!entryList) {
     return;
   }
-  let extra = getCheckboxExtra();
+  let extra = isCheckedExtra();
   for (let i = 0; i < entryList.length; ++i) {
     const col = document.getElementById("entryExtra=" + String(i));
     const entry = entryList[i];
@@ -985,7 +985,7 @@ function markButNewest() {
 }
 
 function getSelectedIds(folderIds) {
-  const value = getSelectedFolder();
+  const value = getValueSelectedFolder();
   if ((!value) || (value === "=")) {
     return null;
   }
@@ -1315,7 +1315,7 @@ function textToUpperCase(text) {
 
 function compileRules(mode) {
   const compiledRules = {};
-  if (!getCheckboxRules()) {
+  if (!isCheckedRules()) {
     return compiledRules;
   }
   const rules = getRules();
@@ -1953,7 +1953,7 @@ function rulesRestore(storageArea) {
       return;
     }
     if (id) {
-      if (!getCheckboxCount()) {
+      if (!isCheckedCount()) {
         return;
       }
       if (isChecked(id)) {
@@ -1962,7 +1962,7 @@ function rulesRestore(storageArea) {
         state.marked.delete(getBookmarkId(id));
       }
     } else {
-      if (!getCheckboxCount()) {
+      if (!isCheckedCount()) {
         if (state.hasOwnProperty("lastCount")) {
           delete state.lastCount;
           displayCount(browser.i18n.getMessage("messageNoCount"));
@@ -2063,7 +2063,7 @@ function rulesRestore(storageArea) {
     let haveSelected = state.hasOwnProperty("markFolders");
     let sameFolders = false;
     if (haveSelected) {
-      const name = getSelectedFolder();
+      const name = getValueSelectedFolder();
       if (name) {
         if (name === "=") {
           sameFolders = true;

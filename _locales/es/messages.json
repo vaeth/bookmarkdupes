@@ -124,7 +124,7 @@
     "description": "Explain that a new rule will be inserted"
   },
   "regExpFrequent": {
-    "message": "[fF]recuente.*|.*\\b[mM]enudo\\b.*|[dD]uplicado\\b.*", // new (translation attempt; remove the comments if you agree)
+    "message": "[fF]recuente.*|.*\\b[mM]enudo|[dD]uplicado", // new (translation attempt; remove the comments if you agree)
 // changed     "[fF]recuente. * | [oO] a menudo | [dD]uplicado",
 // reason for the change: I suppose spaces are not meant. Also " *" means to match an arbitrary number of spaces; better use \\b if you mean end of the word (likely) or \\s+ (if you really mean that a space _must_ follow)
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
