@@ -8,189 +8,183 @@
     "description": "Description of the extension"
   },
   "checkboxRules": {
-    "message": "Expert mode: use customized rules to match similar bookmarks or to ignore bookmarks when searching.", // new
+    "message": "Експертний режим: використовуйте власні правила, щоб знаходити або ігнорувати закладки під час пошуку.",
     "description": "Checkbox text for switching on/off regexp rules"
   },
   "titleCheckboxRules": {
-    "message": "With this option bookmarks can be ignored or similar bookmarks can be found. The details are specified in terms of regular expressions.", // new
+    "message": "З допомогою цієї опції закладки можна ігнорувати чи знаходити подібні, відповідно до правил. Подробиці вказано у термінах регулярних виразів.",
     "description": "Explain what regular expresssions are used for"
   },
   "radioFilter": {
-    "message": "Filter", // new
+    "message": "Фільтр",
     "description": "Radio button for filtering a bookmark. The text should be short"
   },
   "titleRadioFilter": {
-    "message": "Bookmarks matching the criteria will be ignored.", // new
+    "message": "Закладки, що відповідають критеріям будуть ігноруватися.",
     "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
   },
   "radioUrl": {
-    "message": "Modify", // new
+    "message": "Змінити",
     "description": "Radio button for preprocessing a URL. The text should be short"
   },
   "titleRadioUrl": {
-    "message": "Before checking URLs to find bookmark dupes, the URL of matching bookmarks will be preprocessed according to the specified rule.", // new
+    "message": "Перед перевіркою URL, щоб знайти дублі закладок, URL-адреси відповідних закладок будуть попередньо оброблені згідно із зазначеним правилом.",
     "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
   },
   "radioOff": {
-    "message": "Off", // new
+    "message": "Вимк.",
     "description": "Radio button for ignoring the rule. The text should be short"
   },
   "titleRadioOff": {
-    "message": "This rule has no effect.", // new
+    "message": "Це правило не діє.",
     "description": "Explain that by choosing that button the rule has no effect"
   },
   "ruleName": {
-    "message": "Name matches", // new
+    "message": "Відповідність імен",
     "description": "Input field for matching the name. The text should be short"
   },
   "titleRuleName": {
-    "message": "The rule applies to a bookmark if the bookmark path (folders + name) matches the regular expression. The separator for folders is \\0 or \\x00.", // new
+    "message": "Правило застосовується до закладок, якщо шлях до них (папки + ім'я) відповідає регулярному виразу. Роздільник для папок це \\0 чи \\x00.",
     "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleNameNegation": {
-    "message": "Name does not match", // new
+    "message": "Невідповідність імен",
     "description": "Input field for not matching the name. The text should be short"
   },
   "titleRuleNameNegation": {
-    "message": "The rule applies to a bookmark if the bookmark path (folders + name) does not match the regular expression. The separator for folders is \\0 or \\x00.", // new
+    "message": "Правило застосовується до закладок, якщо шлях до них (папки + ім'я) не відповідає регулярному виразу. Роздільник для папок це \\0 чи \\x00.",
     "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleUrl": {
-    "message": "URL matches", // new
+    "message": "Відповідність URL-ів",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
-    "message": "The rule applies to a bookmark if its URL matches the regular expression.", // new
+    "message": "Правило застосовується до закладок, якщо їх адреси збігаються з регулярним виразом.",
     "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
   },
   "ruleUrlNegation": {
-    "message": "URL does not match", // new
+    "message": "Невідповідність URL-ів",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
-    "message": "The rule applies to a bookmark if its URL does not match the regular expression.", // new
+    "message": "Правило застосовується до закладок, якщо їх адреси не збігаються з регулярним виразом.",
     "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
-    "message": "Replace URL matches", // new
+    "message": "Замін.URL-відповідн.",
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
-    "message": "When comparing URLs the parts matching the regular expression will be replaced by the subsequent text.", // new
+    "message": "Якщо порівнювані URL-и містять частини, відповідні до регулярного виразу, їх буде замінено вказаним у правилі текстом.",
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
-    "message": "by", // new
+    "message": "на",
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "The replacement text for the regular expresssion matches. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.", // new
+    "message": "Текст заміни по відповідності регулярному виразу. Символи типу $$& чи $$1 можуть використовуватися для позначення відповідностей чи вмісту дужок (). Спеціальні тексти \\L$$& та \\U$$& означають нижній та верхній регістр відповідно.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
-    "message": "⇧", // new
+    "message": "Правило вгору",
     "description": "Button for moving a rule up. The text should be short"
   },
   "titleButtonRuleUp": {
-    "message": "⇧", // new (until it is translated the symbol is perhaps better than English)
-//  "message": "The rule will be moved up.",
+    "message": "Правило буде переміщено вгору.",
     "description": "Explain that the rule will be moved up"
   },
   "buttonRuleDown": {
-    "message": "⇩", // new
+    "message": "Правило вниз",
     "description": "Button for moving a rule down. The text should be short"
   },
   "titleButtonRuleDown": {
-    "message": "⇩", // new (until it is translated the symbol is perhaps better than English)
-//  "message": "The rule will be moved down.",
+    "message": "Правило буде переміщено вниз.",
     "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "❌", // new
+    "message": "Видал.правило",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
-    "message": "Remove this rule.", // new
+    "message": "Видалити це правило.",
     "description": "Explain that the rule will be removed"
   },
   "buttonRuleAdd": {
-    "message": "❎", // new
+    "message": "Дод.правило",
     "description": "Button for inserting a new rule. The text should be short"
   },
   "titleButtonRuleAdd": {
-    "message": "Insert a new rule.", // new
+    "message": "Додати нове правило.",
     "description": "Explain that a new rule will be inserted"
   },
   "regExpFrequent": {
-    "message": "[fF]requent.*|[oO]ften|[dD]upes", // new
+    "message": "[чЧ]асто.*|[вВ]икористовувані|[зЗ]акладки",
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
-    "message": "⇇ default rules", // new
+    "message": "Відн.стандарт.правила",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {
-    "message": "Replace the currently displayed rules by default rules.", // new
+    "message": "Замінити поточні правила правилами за замовчуванням.",
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "⇉ local storage", // new
+    "message": "Збер.правила",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
-    "message": "Put the current rules to the browser's local storage area, possibly replacing earlier stored rules.", // new
+    "message": "Поточні правила буде збережено в локальному сховищі браузера, можливо ця дія перезапише раніше збережені правила.",
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "⇇ local storage", // new
+    "message": "Відн.правила",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
-    "message": "Replace the currently displayed rules by those from the browser's local storage area.", // new
+    "message": "Правила буде замінено тими, що зберігаються в локальному сховищі браузера.",
     "description": "Explain that current rules will be replaced by those from the browser's local storage area"
   },
   "buttonRulesCleanLocal": {
-    "message": "❌ local storage", // new
+    "message": "Очищення сховища",
     "description": "Button for cleaning local storage. The text should be short"
   },
   "titleButtonRulesCleanLocal": {
-    "message": "The browser's local storage area will be cleaned from stored rules. The stored rules will be lost.", // new
+    "message": "Локальну пам'ять браузера буде очищено від збережених правил. Збережені правила буде втрачено.",
     "description": "Explain that the browser's local storage area will be cleaned from stored rules"
   },
   "buttonRulesStoreSync": {
-    "message": "⇉ sync storage", // new
+    "message": "Збер.синхр.сховище",
     "description": "Button for putting rules to sync storage. The text should be short"
   },
   "titleButtonRulesStoreSync": {
-    "message": "Put the current rules to the browser's sync storage area, possibly replacing earlier stored rules.", // new
+    "message": "Поточні правила буде збережено в сховище синхронізації браузера, можливо ця дія перезапише раніше збережені правила.",
     "description": "Explain that current rules will replace those in the browser's sync storage area"
   },
   "buttonRulesRestoreSync": {
-    "message": "⇇ sync storage", // new
+    "message": "Відн.синхр.сховище",
     "description": "Button for restoring rules from sync storage. The text should be short"
   },
   "titleButtonRulesRestoreSync": {
-    "message": "Replace the currently displayed rules by those from the browser's sync storage area.", // new
+    "message": "Замінити поточні правила тими, що знаходяться в сховищі синхронізації браузера.",
     "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
   },
   "buttonRulesCleanSync": {
-    "message": "❌ sync storage", // new
+    "message": "Оч.синхр.сховище",
     "description": "Button for cleaning sync storage. The text should be short"
   },
   "titleButtonRulesCleanSync": {
-    "message": "The browser's sync storage area will be cleaned from stored rules. The stored rules will be lost.", // new
+    "message": "Сховище синхронізації браузера буде очищено від збережених правил. Збережені правила буде втрачено.",
     "description": "Explain that the sync browser's storage area will be cleaned from stored rules"
   },
   "buttonListDupes": {
-    "message": "Dupes", // new
-// changed     "Exact dupes"
-//  "message": "Точні дублі",
+    "message": "Дублі",
     "description": "Button for listing dupes"
   },
   "titleButtonListDupes": {
-    "message": "(Re)calculate the list of bookmark dupes. Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
-// changed     "(Re)calculate the list of exact bookmark dupes. Two bookmarks are considered to be exact dupes if their URLs are identical."
-//  "message": "(Пере)визначити список точних дублів. Дві закладки вважаються точними дублями, якщо їх URL-и однакові.",
+    "message": "(Пере)визначити список дублів. Дві закладки вважаються дублями, якщо їх URL-и однакові. В Експертному режимі, обрані правила попередньої обробки (заміни) застосовуються перед порівнянням URL-ів .",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -402,9 +396,7 @@
     "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
   },
   "checkboxExtra": {
-    "message": "Display replaced URL content in listing", // new
-// changed     "Display URL tail (following “?”) in listing"
-//  "message": "Відображати кінцівку URL-адреси (все після “?”) у списку",
+    "message": "Відображати замінений URL-вміст у списку",
     "description": "Checkbox for displaying the replaced URL content in listing"
   },
   "messageCount": {
@@ -422,9 +414,7 @@
     "description": "Report that marks are not counted for speed reasons"
   },
   "messageMatches": {
-    "message": "$TOTAL$ (of $ALL$) dupes in $GROUPS$ groups", // new
-// changed     "$TOTAL$ (of $ALL$) exact dupes in $GROUPS$ groups"
-//  "message": "$TOTAL$ (із $ALL$) точних дублів у $GROUPS$ групах",
+    "message": "$TOTAL$ (із $ALL$) дублів у $GROUPS$ групах",
     "description": "Report specified numbers of matches and groups of all",
     "placeholders": {
       "total": {
@@ -442,9 +432,7 @@
     }
   },
   "titleMessageMatches": {
-    "message": "Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
-// changed     "Two bookmarks are considered to be exact dupes if their URLs are identical."
-//  "message": "Дві закладки вважаються точними дублями, якщо їх URL-и однакові.",
+    "message": "Дві закладки вважаються дублями, якщо їх URL-и однакові. У Експертному режимі, правила попередньої обробки (заміни) застосовуються до URL-ів ще до їх порівняння.",
     "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {
