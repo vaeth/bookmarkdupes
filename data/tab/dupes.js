@@ -1914,7 +1914,7 @@ function rulesRestore(storageArea) {
     { radio: "url", search: "^\\w+://[^\/]*/", replace: "\\L$&" },
     { radio: "filter",
       name: "\\0(" + browser.i18n.getMessage("regExpFrequent") + ")\\0" },
-    { radio: "off", name: "^[^\\0]*\\0[^\\0]*$" },
+    { radio: "off", nameNegation: "\\0.*\\0" },
     { radio: "off", urlNegation: "\\b(e?mail|bugs|youtube|translat)\\b",
       search: "\\?.*" },
     { radio: "off", search: "/[^/]*$" },
