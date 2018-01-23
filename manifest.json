@@ -10,8 +10,7 @@
 
   "permissions": [
     "bookmarks",
-    "storage",
-    "tabs"
+    "storage"
   ],
 
   "background": {

@@ -58,35 +58,35 @@ function getMessageNode() {
   return document.getElementById("textMessage");
 }
 
-function getButtonsRules() {
-  return document.getElementById("buttonsRules");
+function getButtonsRulesLocal() {
+  return document.getElementById("buttonsRulesLocal");
+}
+
+function getButtonsRulesSync() {
+  return document.getElementById("buttonsRulesSync");
 }
 
 function getTableRules() {
   return document.getElementById("tableRules");
 }
 
-function getCheckboxRules() {
+function isCheckedRules() {
   return isChecked("checkboxRules");
 }
 
-function setCheckboxRulesTitle(title) {
-  document.getElementById("titleCheckboxRules").title = title;
+function getTableCheckboxRules() {
+  return document.getElementById("tableCheckboxRules");
 }
 
-function setCheckboxRulesText(text) {
-  document.getElementById("checkboxRulesText").textContent = text;
-}
-
-function getCheckboxFullUrl() {
+function isCheckedFullUrl() {
   return isChecked("checkboxFullUrl");
 }
 
-function getCheckboxExtra() {
+function isCheckedExtra() {
   return isChecked("checkboxExtra");
 }
 
-function getSelectedFolder() {
+function getValueSelectedFolder() {
   const value = document.getElementById("selectedFolder").value;
   return ((!value || (value === "@")) ? null : value);
 }
@@ -99,7 +99,7 @@ function getTextCount() {
   return document.getElementById("textCount");
 }
 
-function getCheckboxCount() {
+function isCheckedCount() {
   return isChecked("checkboxCount");
 }
 
@@ -127,6 +127,11 @@ function getName(folders, parent, name, separator) {
     parent = folder.parent;
   }
   return name;
+}
+
+function appendCol(row) {
+  const col = document.createElement("TD");
+  row.appendChild(col);
 }
 
 function appendTextNodeCol(row, text, title, id) {
@@ -158,7 +163,7 @@ function appendRadio(parent, id, name, title, checked) {
 
 function appendRadioCol(row, id, name, title, checked) {
   const col = document.createElement("TD");
-  appendRadio(col, id, name, title, checked)
+  appendRadio(col, id, name, title, checked);
   row.appendChild(col);
 }
 
@@ -202,7 +207,7 @@ function appendCheckbox(parent, id, title, checked, enabled) {
 
 function appendCheckboxCol(row, id, title, checked, enabled) {
   const col = document.createElement("TD");
-  appendCheckbox(col, id, title, checked);
+  appendCheckbox(col, id, title, checked, enabled);
   row.appendChild(col);
 }
 
@@ -278,7 +283,7 @@ function getRule(row) {
   return rule;
 }
 
-function addRule(parent, count, rule) {
+function addRule(parent, count, total, rule) {
   if (!rule) {
     rule = {};
   }
@@ -300,9 +305,22 @@ function addRule(parent, count, rule) {
   appendInputCol(row, "titleRuleUrlNegation", rule.urlNegation, off);
   appendInputCol(row, "titleRuleSearch", rule.search, filterOrOff);
   appendInputCol(row, "titleRuleReplace", rule.replace, filterOrOff);
-  appendButtonCol(row, "regexpButton=sub" + stringCount, "titleButtonRuleSub",
+  const colUp = document.createElement("TD");
+  if ((count > 1) && (total > 1)) {
+    appendButton(colUp, "regexpButton=/" + stringCount, "titleButtonRuleUp",
+      browser.i18n.getMessage("buttonRuleUp"), null, true);
+  }
+  row.appendChild(colUp);
+  const colDown = document.createElement("TD");
+  if (count < total) {
+    appendButton(colDown, "regexpButton=*" + stringCount,
+      "titleButtonRuleDown", browser.i18n.getMessage("buttonRuleDown"),
+      null, true);
+  }
+  row.appendChild(colDown);
+  appendButtonCol(row, "regexpButton=-" + stringCount, "titleButtonRuleSub",
     browser.i18n.getMessage("buttonRuleSub"), null, true);
-  appendButtonCol(row, "regexpButton=add" + stringCount, "titleButtonRuleAdd",
+  appendButtonCol(row, "regexpButton=+" + stringCount, "titleButtonRuleAdd",
     browser.i18n.getMessage("buttonRuleAdd"), null, true);
   parent.appendChild(row);
 }
@@ -329,24 +347,39 @@ function changeRule(id) {
   children[9].firstChild.disabled = filterOrOff;
 }
 
-function addButtonsRules(restore, clean) {
-  const parent = getButtonsRules();
-  if (parent.hasChildNodes()) {  // Already done
-    const children = parent.firstChild.children;
+function addButtonsRulesLocal(restore, clean) {
+  const row = getButtonsRulesLocal();
+  if (row.hasChildNodes()) {  // Already done
+    const children = row.children;
     children[2].firstChild.disabled = !restore;
     children[3].firstChild.disabled = !clean;
     return;
   }
-  const row = document.createElement("TR");
   appendButtonCol(row, "buttonRulesDefault", "titleButtonRulesDefault",
     null, null, true);
-  appendButtonCol(row, "buttonRulesStore", "titleButtonRulesStore",
+  appendButtonCol(row, "buttonRulesStoreLocal", "titleButtonRulesStoreLocal",
     null, null, true);
-  appendButtonCol(row, "buttonRulesRestore", "titleButtonRulesRestore",
-    null, null, restore);
-  appendButtonCol(row, "buttonRulesClean", "titleButtonRulesClean",
+  appendButtonCol(row, "buttonRulesRestoreLocal",
+    "titleButtonRulesRestoreLocal", null, null, restore);
+  appendButtonCol(row, "buttonRulesCleanLocal", "titleButtonRulesCleanLocal",
     null, null, clean);
-  parent.appendChild(row);
+}
+
+function addButtonsRulesSync(restore, clean) {
+  const row = getButtonsRulesSync();
+  if (row.hasChildNodes()) {  // Already done
+    const children = row.children;
+    children[2].firstChild.disabled = !restore;
+    children[3].firstChild.disabled = !clean;
+    return;
+  }
+  appendCol(row);
+  appendButtonCol(row, "buttonRulesStoreSync", "titleButtonRulesStoreSync",
+    null, null, true);
+  appendButtonCol(row, "buttonRulesRestoreSync",
+    "titleButtonRulesRestoreSync", null, null, restore);
+  appendButtonCol(row, "buttonRulesCleanSync", "titleButtonRulesCleanSync",
+    null, null, clean);
 }
 
 function addRules(rules) {
@@ -374,14 +407,26 @@ function addRules(rules) {
     browser.i18n.getMessage("titleRuleSearch"));
   appendTextNodeCol(row, browser.i18n.getMessage("ruleReplace"),
     browser.i18n.getMessage("titleRuleReplace"));
-  row.appendChild(document.createElement("TD"));
-  appendButtonCol(row, "regexpButton=add0", "titleButtonRuleAdd",
+  for (let i = 0; i < 3; ++i) {
+    appendCol(row);
+  }
+  appendButtonCol(row, "regexpButton=+0", "titleButtonRuleAdd",
     browser.i18n.getMessage("buttonRuleAdd"), null, true);
   parent.appendChild(row);
+  const total = rules.length;
   let count = 0;
   for (let rule of rules) {
-    addRule(parent, ++count, rule);
+    addRule(parent, ++count, total, rule);
   }
+}
+
+function addCheckboxRules() {
+  const row = document.createElement("TR");
+  appendCheckboxCol(row, "checkboxRules",
+    browser.i18n.getMessage("titleCheckboxRules"), false, true);
+  appendTextNodeCol(row, browser.i18n.getMessage("CheckboxRules"));
+  const parent = getTableCheckboxRules();
+  parent.appendChild(row);
 }
 
 function addButtonsBase() {
@@ -389,8 +434,7 @@ function addButtonsBase() {
   if (parent.hasChildNodes()) {  // Already done
     return;
   }
-  setCheckboxRulesTitle(browser.i18n.getMessage("titleCheckboxRules"));
-  setCheckboxRulesText(browser.i18n.getMessage("checkboxRules"));
+  addCheckboxRules();
   const row = document.createElement("TR");
   appendButtonCol(row, "buttonListDupes", "titleButtonListDupes");
   appendButtonCol(row, "buttonListEmpty", "titleButtonListEmpty");
@@ -659,12 +703,11 @@ function addBookmark(bookmark, folders, id) {
   appendCheckboxCol(row, "bookmark=" + bookmark.id);
   if (bookmark.order !== undefined) {
     appendTextNodeCol(row, String(bookmark.order));
-    const dummy = document.createElement("TD");  // A dummy column for space
-    row.appendChild(dummy);
+    appendCol(row);
   }
   const name = getName(folders, bookmark.parent, bookmark.text);
-  const col = document.createElement("TD");
   if (bookmark.url) {
+    const col = document.createElement("TD");
     const url = bookmark.url;
     row.title = url;
     const link = document.createElement("A");
@@ -704,36 +747,91 @@ function getRules() {
 
 function redisplayRules(rules) {
   clearItem(getTableRules());
-  if (getCheckboxRules()) {
+  if (isCheckedRules()) {
     addRules(rules);
   }
 }
 
 function buttonRule(action) {
   const rules = getRules();
-  const number = Number(action.substr(3));  // 3 = "add".length = "sub".length
-  if (action.startsWith("add")) {
-    const rule = {};
-    rules.splice(number, 0, rule);
-  } else {
-    rules.splice(number - 1, 1);
+  let number = Number(action.substr(1));
+  const type = action.substr(0, 1);
+  switch(type) {
+    case "+": {
+        const rule = {};
+        rules.splice(number, 0, rule);
+      }
+      break;
+    case "-":
+      rules.splice(number - 1, 1);
+      break;
+    case "/":
+      --number;
+    case "*": {
+        const rule = rules[number - 1];
+        rules[number - 1] = rules[number];
+        rules[number] = rule;
+      }
+      break;
+    default:  // should not happen
+      return;  // it is a bug if we get here
   }
   redisplayRules(rules);
 }
 
-function buttonsRules() {
-  browser.storage.local.get().then(function (storage) {
-    const haveStorage = (storage && storage.rules);
-    addButtonsRules(haveStorage, haveStorage);
+function haveStorageSync() {  // check if supported by browser
+  return (browser.storage.sync && browser.storage.sync.get &&
+    (typeof(browser.storage.sync.get) == "function"));
+}
+
+function haveProperties(object) {
+  for (let attribute in object) {
+    return true;
+  }
+  return false;
+}
+
+function buttonsRulesQuick(storageArea, restoreRules) {
+  const addButtonsRules = ((storageArea === "sync") ?
+    addButtonsRulesSync : addButtonsRulesLocal);
+  browser.storage[storageArea].get().then(function (storage) {
+    if (!isCheckedRules()) {  // async race: user might have changed
+      return;
+    }
+    if (!storage) {
+      addButtonsRules(false, false);
+      return;
+    }
+    const clean = haveProperties(storage);
+    if (!storage.rulesV1) {
+      addButtonsRules(false, clean);
+      return;
+    }
+    if (restoreRules) {
+      redisplayRules(storage.rulesV1);
+    }
+    addButtonsRules(true, clean);
   }, function () {
+    if (!isCheckedRules()) {  // async race: user might have changed
+      return;
+    }
     addButtonsRules(false, true);
   });
 }
 
+function buttonsRules(storageArea, restoreRules) {
+  if (isCheckedRules()) {
+    buttonsRulesQuick(storageArea, restoreRules);
+  }
+}
+
 function toggleRules(rules) {
-  if (getCheckboxRules()) {
+  if (isCheckedRules()) {
     addRules(rules);
-    buttonsRules();
+    buttonsRulesQuick("local");
+    if (haveStorageSync()) {
+      buttonsRulesQuick("sync");
+    }
     return null;
   }
   if (rules) {  // checkboxRules was already unchecked
@@ -741,7 +839,8 @@ function toggleRules(rules) {
   }
   const newRules = getRules();
   clearItem(getTableRules());
-  clearItem(getButtonsRules());
+  clearItem(getButtonsRulesLocal());
+  clearItem(getButtonsRulesSync());
   return newRules;
 }
 
@@ -749,7 +848,7 @@ function toggleExtra(entryList, rulerList) {
   if (!entryList && !rulerList) {
     return;
   }
-  const fullUrl = getCheckboxFullUrl();
+  const fullUrl = isCheckedFullUrl();
   if (rulerList) {
     for (let i = 0; i < rulerList.length; ++i) {
       const col = document.getElementById("rulerExtra=" + String(i));
@@ -759,7 +858,7 @@ function toggleExtra(entryList, rulerList) {
   if (!entryList) {
     return;
   }
-  let extra = getCheckboxExtra();
+  let extra = isCheckedExtra();
   for (let i = 0; i < entryList.length; ++i) {
     const col = document.getElementById("entryExtra=" + String(i));
     const entry = entryList[i];
@@ -886,7 +985,7 @@ function markButNewest() {
 }
 
 function getSelectedIds(folderIds) {
-  const value = getSelectedFolder();
+  const value = getValueSelectedFolder();
   if ((!value) || (value === "=")) {
     return null;
   }
@@ -1129,7 +1228,7 @@ function displayProgress(textId, buttonTextId, total, todo) {
   const percentage = (100 * total) / todo;
   addProgressButton(buttonTextId, percentage);
   displayMessage(browser.i18n.getMessage(textId,
-    [String(total), String(todo), String(Math.round(percentage))]))
+    [String(total), String(todo), String(Math.round(percentage))]));
 }
 
 function displayEndProgress(textId, total, error) {
@@ -1216,7 +1315,7 @@ function textToUpperCase(text) {
 
 function compileRules(mode) {
   const compiledRules = {};
-  if (!getCheckboxRules()) {
+  if (!isCheckedRules()) {
     return compiledRules;
   }
   const rules = getRules();
@@ -1792,28 +1891,19 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   recurse();
 }
 
-function rulesStore() {
+function rulesStore(storageArea) {
   const storage = {
-    rules: getRules()
+    rulesV1: getRules()
   };
-  browser.storage.local.set(storage).then(buttonsRules, buttonsRules);
+  browser.storage[storageArea].set(storage);
 }
 
-function rulesClean() {
-  browser.storage.local.clear().then(buttonsRules, buttonsRules);
+function rulesClean(storageArea) {
+  browser.storage[storageArea].clear();
 }
 
-function rulesRestore() {
-  browser.storage.local.get().then(function (storage) {
-    if (storage && storage.rules) {
-      redisplayRules(storage.rules);
-      addButtonsRules(true, true);
-    } else {
-      addButtonsRules(false, false);
-    }
-  }, function () {
-    addButtonsRules(false, true);
-  });
+function rulesRestore(storageArea) {
+  buttonsRules(storageArea, true);
 }
 
 {
@@ -1821,16 +1911,17 @@ function rulesRestore() {
   let state = {};
   let rules;
   const rulesDefault = [
-    { radio: "url", search: "^\\w*://[^\/]*/", replace: "\\L$&" },
-    { radio: "url", urlNegation: "\\b(e?mail|bugs|youtube|translate)\\b",
-      search: "\\?.*" },
-    { radio: "off", search: "^http:", replace: "https:" },
+    { radio: "url", search: "^\\w+://[^\/]*/", replace: "\\L$&" },
     { radio: "filter",
       name: "\\0(" + browser.i18n.getMessage("regExpFrequent") + ")\\0" },
-    { radio: "url", search: "/+(index.html)?$" },
-    { radio: "url", search: "^([^:]*://)www?\\d*\.", replace: "$1" },
-    { radio: "url", search: "\.htm$", replace: ".html" },
-    { radio: "off", search: "/[^/]*$" }
+    { radio: "off", nameNegation: "\\0.*\\0" },
+    { radio: "off", urlNegation: "\\b(e?mail|bugs|youtube|translat)\\b",
+      search: "\\?.*" },
+    { radio: "off", search: "/[^/]*$" },
+    { radio: "url", search: "/+(index\\.html)?$" },
+    { radio: "url", search: "^http:", replace: "https:" },
+    { radio: "url", search: "^([^:]*://)www?\\d*\\.", replace: "$1" },
+    { radio: "url", search: "\\.htm$", replace: ".html" }
   ];
 
   function startLock() {
@@ -1862,7 +1953,7 @@ function rulesRestore() {
       return;
     }
     if (id) {
-      if (!getCheckboxCount()) {
+      if (!isCheckedCount()) {
         return;
       }
       if (isChecked(id)) {
@@ -1871,7 +1962,7 @@ function rulesRestore() {
         state.marked.delete(getBookmarkId(id));
       }
     } else {
-      if (!getCheckboxCount()) {
+      if (!isCheckedCount()) {
         if (state.hasOwnProperty("lastCount")) {
           delete state.lastCount;
           displayCount(browser.i18n.getMessage("messageNoCount"));
@@ -1898,18 +1989,50 @@ function rulesRestore() {
     rules = toggleRules(rulesDefault);
   }
 
-  function checkboxRules() {
-    if (rules !== undefined) {
-      rules = toggleRules(rules);
+  function initRulesStorage(storageArea, callback) {
+    browser.storage[storageArea].get().then(function (storage) {
+      if (storage && storage.rulesV1) {
+        rules = toggleRules(storage.rulesV1);
+        return;
+      }
+      callback();
+    }, callback);
+  }
+
+  function initRulesSync() {
+    const callback = initRulesDefault;
+    if (!haveStorageSync()) {
+      callback();
       return;
     }
-    browser.storage.local.get().then(function (storage) {
-      if (storage && storage.rules) {
-        rules = toggleRules(storage.rules);
-      } else {
-        initRulesDefault();
-      }
-    }, initRulesDefault);
+    initRulesStorage("sync", callback);
+  }
+
+  function initRulesLocal() {
+    initRulesStorage("local", initRulesSync);
+  }
+
+  function checkboxRules() {
+    if (rules === undefined) {  // first call
+      initRulesLocal();
+    } else {
+      rules = toggleRules(rules);
+    }
+  }
+
+  function storageListener(changes, storageArea) {
+    switch(storageArea) {
+      case "sync":
+        if (!haveStorageSync()) {  // only if supported by browser
+          return;
+        }
+        break;
+      case "local":
+        break;
+      default:  // unsupported storageArea (e.g. "managed")
+        return;
+    }
+    buttonsRules(storageArea);
   }
 
   function checkboxListener(event) {
@@ -1940,7 +2063,7 @@ function rulesRestore() {
     let haveSelected = state.hasOwnProperty("markFolders");
     let sameFolders = false;
     if (haveSelected) {
-      const name = getSelectedFolder();
+      const name = getValueSelectedFolder();
       if (name) {
         if (name === "=") {
           sameFolders = true;
@@ -1997,19 +2120,16 @@ function rulesRestore() {
     startLock();
     setTimeout(function () {
       processMarked(stopPressed, endLockReset, bookmarkMap);
-    })
+    });
   }
 
-  function markWrapper(func, funcargs) {
+  function markWrapper(mainFunction, arg1, arg2) {
     startLock();
     enableBookmarks(false);
-    const thisArg = this;
-    const args = Array.prototype.slice.call(arguments);
-    args.splice(0, 1);
     setTimeout(function () {
-      func.apply(thisArg, args);
+      mainFunction(arg1, arg2);
       endLockAll();
-    })
+    });
   }
 
   function clickListener(event) {
@@ -2101,14 +2221,23 @@ function rulesRestore() {
       case "buttonRulesDefault":
         redisplayRules(rulesDefault);
         return;
-      case "buttonRulesStore":
-        rulesStore();
+      case "buttonRulesStoreLocal":
+        rulesStore("local");
         return;
-      case "buttonRulesRestore":
-        rulesRestore();
+      case "buttonRulesRestoreLocal":
+        rulesRestore("local");
         return;
-      case "buttonRulesClean":
-        rulesClean();
+      case "buttonRulesCleanLocal":
+        rulesClean("local");
+        return;
+      case "buttonRulesStoreSync":
+        rulesStore("sync");
+        return;
+      case "buttonRulesRestoreSync":
+        rulesRestore("sync");
+        return;
+      case "buttonRulesCleanSync":
+        rulesClean("sync");
         return;
       default:
         if (id.startsWith("regexpButton=")) {
@@ -2125,5 +2254,6 @@ function rulesRestore() {
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);
   document.addEventListener("change", changeListener);
+  browser.storage.onChanged.addListener(storageListener);
   endLock();
 }

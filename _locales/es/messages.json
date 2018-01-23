@@ -69,7 +69,7 @@
   },
   "titleRuleUrlNegation": {
     "message": "La regla se aplica a un marcador si su URL no coincide con la expresión regular.",
-    "description": "Explain that bookmarks whose URL does not matche the regular expression will be selected"
+    "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
     "message": "Reemplazo de coincidencias de URL",
@@ -85,68 +85,148 @@
   },
   "titleRuleReplace": {
     "message": "El texto de reemplazo para la expresión regular coincide. Se pueden usar símbolos como $$& o $$1 para referirse a la coincidencia o un contenido de corchete. Los textos especiales \\L$$& y \\U$$& significan una versión en mayúsculas y minúsculas de las coincidencias, respectivamente..",
-    // "message": "El texto de reemplazo para la expresión regular coincide. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
-  "buttonRuleAdd": {
-    "message": "Nuevo",
-    "description": "Button for inserting a new rule. The text should be short"
+  "buttonRuleUp": {
+    "message": "⇧", // new
+    "description": "Button for moving a rule up. The text should be short"
   },
-  "titleButtonRuleAdd": {
-    "message": "Intertar una nueva regla.",
-    "description": "Explain that a new rule will be inserted"
+  "titleButtonRuleUp": {
+    "message": "⇧", // new (until it is translated the symbol is perhaps better than English)
+//  "message": "The rule will be moved up.",
+    "description": "Explain that the rule will be moved up"
+  },
+  "buttonRuleDown": {
+    "message": "⇩", // new
+    "description": "Button for moving a rule down. The text should be short"
+  },
+  "titleButtonRuleDown": {
+    "message": "⇩", // new (until it is translated the symbol is perhaps better than English)
+//  "message": "The rule will be moved down.",
+    "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "Eliminar",
+    "message": "❌", // new
+// changed     "Eliminar",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
     "message": "Eliminar esta regla.",
     "description": "Explain that the rule will be removed"
   },
+  "buttonRuleAdd": {
+    "message": "❎", // new
+// changed     "Nuevo",
+    "description": "Button for inserting a new rule. The text should be short"
+  },
+  "titleButtonRuleAdd": {
+    "message": "Intertar una nueva regla.",
+    "description": "Explain that a new rule will be inserted"
+  },
   "regExpFrequent": {
-    "message": "[fF]recuente. * | [oO] a menudo | [dD]uplicado",
+    "message": "[fF]recuente.*|.*\\b[mM]enudo|[dD]uplicado", // new (translation attempt; remove the comments if you agree)
+// changed     "[fF]recuente. * | [oO] a menudo | [dD]uplicado",
+// reason for the change: I suppose spaces are not meant. Also " *" means to match an arbitrary number of spaces; better use \\b if you mean end of the word (likely) or \\s+ (if you really mean that a space _must_ follow)
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
-    "message": "Restaurar reglas por defecto",
-    //"message": "Restore default rules",
+    "message": "⇇ reglas por defecto", // new (translation attempt; remove the comments if you agree)
+//  "message": "⇇ default rules",
+// changed     "Restaurar reglas por defecto",
+// changed     "Restore default rules",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {
-    "message": "Restaurar las reglas por defecto. Cualquier cambio se perderá",
-    //"message": "Restore the default rules. Any changes will be lost",
-    "description": "Explain that default rules will be restored"
+    "message": "Restaurar las reglas por defecto. Cualquier cambio se perderá", // new
+// I left the translation unchanged, but it would probably be better to make it
+// consistent with the changes in similar messages.
+//  "message": "Replace the currently displayed rules by default rules.", // new
+// changed     "Restore the default rules. Any changes will be lost",
+    "description": "Explain that current rules will be replaced by default rules"
   },
-  "buttonRulesStore": {
-    "message": "Guardar reglas",
-    //"message": "Store rules",
-    "description": "Button for putting current rules to local storage. The text should be short"
+  "buttonRulesStoreLocal": {
+    "message": "⇉ almacenamiento local", // new (translation attempt; remove the comments if you agree)
+// changed     "Guardar reglas",
+// changed     "Store rules",
+    "description": "Button for putting rules to local storage. The text should be short"
   },
-  "titleButtonRulesStore": {
-    "message": "Las reglas actuales se colocarán en el área de almacenamiento local del navegador.",
-    // "message": "The current rules will be put to the browser's local storage area.",
-    "description": "Explain that current rules will be put to local storage"
+  "titleButtonRulesStoreLocal": {
+    "message": "Las reglas actuales se colocarán en el área de almacenamiento local del navegador.", // new
+// I left the translation unchanged, but it would probably be better to make it
+// more verbose and consistent with the changes in similar messages.
+//  "message": "Put the current rules to the browser's local storage area, possibly replacing earlier stored rules.", // new
+// changed     "The current rules will be put to the browser's local storage area.",
+    "description": "Explain that current rules will replace those in the browser's local storage area"
   },
-  "buttonRulesRestore": {
-    "message": "Restaurar reglas",
-    // "message": "Restore rules",
-    "description": "Button for fetching rules from local storage. The text should be short"
+  "buttonRulesRestoreLocal": {
+    "message": "⇇ almacenamiento local", // new (translation attempt; remove the comments if you agree)
+//  "message": "⇇ local storage", // new
+// changed     "Restaurar reglas",
+// changed     "Restore rules",
+    "description": "Button for restoring rules from local storage. The text should be short"
   },
-  "titleButtonRulesRestore": {
-    "message": "Las reglas serán reemplazadas por aquellas almacenadas en el área de almacenamiento local del navegador. Cualquier cambio se perderá.",
-    // "message": "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost.",
-    "description": "Explain that rules will be fetched from local storage"
+  "titleButtonRulesRestoreLocal": {
+    "message": "Las reglas serán reemplazadas por aquellas almacenadas en el área de almacenamiento local del navegador. Cualquier cambio se perderá.", // new
+// I left the translation unchanged, but it would probably be better to make it
+// consistent with the changes in similar messages.
+//  "message": "Replace the currently displayed rules by those from the browser's local storage area.", // new
+// changed     "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost."
+    "description": "Explain that current rules will be replaced by those from the browser's local storage area"
   },
-  "buttonRulesClean": {
-    "message": "Limpiar almacenamiento local",
-    // "message": "Cleanup storage",
-    "description": "Button for cleaning local storage from stored rules. The text should be short"
+  "buttonRulesCleanLocal": {
+    "message": "❌ almacenamiento local", // new (translation attempt; remove the comments if you agree)
+//  "message": "❌ local storage", // new
+// changed     "Limpiar almacenamiento local",
+// changed     "Cleanup storage",
+    "description": "Button for cleaning local storage. The text should be short"
   },
-  "titleButtonRulesClean": {
+  "titleButtonRulesCleanLocal": {
     "message": "Se limpiarán las reglas almacenadas dentro del área de almacenamiento local del navegador. Las reglas almacenadas se perderán.",
-    // "message": "The browser's local storage area will be cleaned from stored rules. The stored rules will be lost.",
-    "description": "Explain that the local storage will be cleaned from stored rules"
+    "description": "Explain that the browser's local storage area will be cleaned from stored rules"
+  },
+  "buttonRulesStoreSync": {
+    "message": "⇉ almacenamiento sync", // new (translation attempt; remove the comments if you agree)
+//  "message": "⇉ sync storage", // new
+// changed     "Guardar reglas",
+// changed     "Store rules",
+    "description": "Button for putting rules to sync storage. The text should be short"
+  },
+  "titleButtonRulesStoreSync": {
+    "message": "Las reglas actuales se colocarán en el área de almacenamiento sync del navegador.", // new
+// I left the translation unchanged (up to the word sync), but it would probably
+// be better to make it more verbose and consistent with the changes in
+// similar messages.
+//  "message": "Put the current rules to the browser's sync storage area, possibly replacing earlier stored rules.", // new
+// changed     "The current rules will be put to the browser's local storage area.",
+    "description": "Explain that current rules will replace those in the browser's sync storage area"
+  },
+  "buttonRulesRestoreSync": {
+    "message": "⇇ almacenamiento sync", // new (translation attempt; remove the comments if you agree)
+//  "message": "⇇ sync storage", // new
+// changed     "Restaurar reglas",
+// changed     "Restore rules",
+    "description": "Button for restoring rules from sync storage. The text should be short"
+  },
+  "titleButtonRulesRestoreSync": {
+    "message": "Las reglas serán reemplazadas por aquellas almacenadas en el área de almacenamiento sync del navegador. Cualquier cambio se perderá.", // new
+// I left the translation unchanged (up to the word sync), but it would probably
+// be better to make it consistent with the changes in similar messages.
+//  "message": "Replace the currently displayed rules by those from the browser's sync storage area.", // new
+// changed     "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost."
+    "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
+  },
+  "buttonRulesCleanSync": {
+    "message": "❌ almacenamiento sync", // new (translation attempt; remove the comments if you agree)
+//  "message": "❌ sync storage", // new
+// changed     "Limpiar almacenamiento local",
+// changed     "Cleanup storage",
+    "description": "Button for cleaning sync storage. The text should be short"
+  },
+  "titleButtonRulesCleanSync": {
+    "message": "Se limpiarán las reglas almacenadas dentro del área de almacenamiento sync del navegador. Las reglas almacenadas se perderán.", // new (translation attempt; remove the comments if you agree)
+// I took the text from "titleButtonRulesCleanLocal" and changed local->sync
+//  "message": "The browser's sync storage area will be cleaned from stored rules. The stored rules will be lost.", // new
+    "description": "Explain that the browser's sync storage area will be cleaned from stored rules"
   },
   "buttonListDupes": {
     "message": "Duplicados",
@@ -154,7 +234,6 @@
   },
   "titleButtonListDupes": {
     "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. En modo experto, las reglas de preprocesamiento (sustitución) de URL seleccionadas se aplican antes de comparar las URL.",
-    // "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -403,7 +482,6 @@
   },
   "titleMessageMatches": {
     "message": "Dos marcadores se consideran duplicados si sus URL coinciden. En modo experto, las reglas de preprocesamiento (sustitución) de URL seleccionadas se aplican antes de comparar las URL.",
-    // "message": "Dos marcadores se consideran duplicados si sus URL coinciden. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.",
     "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {

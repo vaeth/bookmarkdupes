@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 Nartin Väth <martin@mvath.de>
+/* Copyright (C) 2017-2018 Nartin Väth <martin@mvath.de>
  * This project is under the GNU public license 2.0
 */
 
@@ -16,7 +16,7 @@ function createLink(title) {
     return;
   }
   const link = document.createElement("A");
-  const url = browser.extension.getURL("data/tab/index.html")
+  const url = browser.extension.getURL("data/tab/index.html");
   link.href = url;
   link.target = "_blank";
   link.textContent = title;
