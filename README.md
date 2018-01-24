@@ -118,7 +118,7 @@ They put the matches into lower or upper case, respectively.
    in the options page of the extension instead if you have this problem.
    The reason for the problem is still unknown, see
    https://github.com/vaeth/bookmarkdupes/issues/38
-5. On android, pressing any of the three many buttons causes an infinite hang
+5. On android, pressing any of the three main buttons causes an infinite hang
    for unknown reasons. Therefore, currently the extension has been disabled
    for android.
 
