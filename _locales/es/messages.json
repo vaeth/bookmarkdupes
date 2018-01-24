@@ -88,26 +88,23 @@
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
-    "message": "\U+21E7", // new
+    "message": "\U+21E7",
     "description": "Button for moving a rule up. The text should be short"
   },
   "titleButtonRuleUp": {
-    "message": "\U+21E7", // new (until it is translated the symbol is perhaps better than English)
-//  "message": "The rule will be moved up.",
+    "message": "La regla se moverá hacia arriba.",
     "description": "Explain that the rule will be moved up"
   },
   "buttonRuleDown": {
-    "message": "\U+21E9", // new
+    "message": "\U+21E9",
     "description": "Button for moving a rule down. The text should be short"
   },
   "titleButtonRuleDown": {
-    "message": "\U+21E9", // new (until it is translated the symbol is perhaps better than English)
-//  "message": "The rule will be moved down.",
+    "message": "La regla se moverá hacia abajo.",
     "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "\U+2716", // new
-// changed     "Eliminar",
+    "message": "\U+2716",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
@@ -115,8 +112,7 @@
     "description": "Explain that the rule will be removed"
   },
   "buttonRuleAdd": {
-    "message": "\U+2795", // new
-// changed     "Nuevo",
+    "message": "\U+2795",
     "description": "Button for inserting a new rule. The text should be short"
   },
   "titleButtonRuleAdd": {
@@ -124,60 +120,35 @@
     "description": "Explain that a new rule will be inserted"
   },
   "regExpFrequent": {
-    "message": "[fF]recuente.*|.*\\b[mM]enudo|[dD]uplicado", // new (translation attempt; remove the comments if you agree)
-// changed     "[fF]recuente. * | [oO] a menudo | [dD]uplicado",
-// reason for the change: I suppose spaces are not meant. Also " *" means to match an arbitrary number of spaces; better use \\b if you mean end of the word (likely) or \\s+ (if you really mean that a space _must_ follow)
+    "message": "[fF]recuente.*|[aA]\\s+[mM]enudo|[dD]uplicado",
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
-    "message": "\U+21C7 reglas por defecto", // new (translation attempt; remove the comments if you agree)
-//  "message": "\U+21C7 default rules",
-// changed     "Restaurar reglas por defecto",
-// changed     "Restore default rules",
+    "message": "\U+21C7 reglas por defecto",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {
-    "message": "Restaurar las reglas por defecto. Cualquier cambio se perderá", // new
-// I left the translation unchanged, but it would probably be better to make it
-// consistent with the changes in similar messages.
-//  "message": "Replace the currently displayed rules by default rules.", // new
-// changed     "Restore the default rules. Any changes will be lost",
+    "message": "Restaurar las reglas que se muestran actualmente por las reglas por defecto.",
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "\U+21C9 almacenamiento local", // new (translation attempt; remove the comments if you agree)
-// changed     "Guardar reglas",
-// changed     "Store rules",
+    "message": "\U+21C9 almacenamiento local",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
-    "message": "Las reglas actuales se colocarán en el área de almacenamiento local del navegador.", // new
-// I left the translation unchanged, but it would probably be better to make it
-// more verbose and consistent with the changes in similar messages.
-//  "message": "Put the current rules to the browser's local storage area, possibly replacing earlier stored rules.", // new
-// changed     "The current rules will be put to the browser's local storage area.",
+    "message": "Coloca las reglas actuales en el área de almacenamiento local del navegador, posiblemente reemplazando las reglas almacenadas anteriormente.",
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "\U+21C7 almacenamiento local", // new (translation attempt; remove the comments if you agree)
-//  "message": "\U+21C7 local storage", // new
-// changed     "Restaurar reglas",
-// changed     "Restore rules",
+    "message": "\U+21C7 almacenamiento local",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
-    "message": "Las reglas serán reemplazadas por aquellas almacenadas en el área de almacenamiento local del navegador. Cualquier cambio se perderá.", // new
-// I left the translation unchanged, but it would probably be better to make it
-// consistent with the changes in similar messages.
-//  "message": "Replace the currently displayed rules by those from the browser's local storage area.", // new
-// changed     "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost."
+    "message": "Reemplaza las reglas que se muestran actualmente por las del área de almacenamiento local del navegador..",
     "description": "Explain that current rules will be replaced by those from the browser's local storage area"
   },
   "buttonRulesCleanLocal": {
-    "message": "\U+2716 almacenamiento local", // new (translation attempt; remove the comments if you agree)
-//  "message": "\U+2716 local storage", // new
-// changed     "Limpiar almacenamiento local",
-// changed     "Cleanup storage",
+    "message": "\U+2716 almacenamiento local",
     "description": "Button for cleaning local storage. The text should be short"
   },
   "titleButtonRulesCleanLocal": {
@@ -185,47 +156,27 @@
     "description": "Explain that the browser's local storage area will be cleaned from stored rules"
   },
   "buttonRulesStoreSync": {
-    "message": "\U+21C9 almacenamiento sync", // new (translation attempt; remove the comments if you agree)
-//  "message": "\U+21C9 sync storage", // new
-// changed     "Guardar reglas",
-// changed     "Store rules",
+    "message": "\U+21C9 almacenamiento sync",
     "description": "Button for putting rules to sync storage. The text should be short"
   },
   "titleButtonRulesStoreSync": {
-    "message": "Las reglas actuales se colocarán en el área de almacenamiento sync del navegador.", // new
-// I left the translation unchanged (up to the word sync), but it would probably
-// be better to make it more verbose and consistent with the changes in
-// similar messages.
-//  "message": "Put the current rules to the browser's sync storage area, possibly replacing earlier stored rules.", // new
-// changed     "The current rules will be put to the browser's local storage area.",
+    "message": "Coloca las reglas actuales en el área de almacenamiento sync del navegador, posiblemente reemplazando las reglas almacenadas anteriormente.",
     "description": "Explain that current rules will replace those in the browser's sync storage area"
   },
   "buttonRulesRestoreSync": {
-    "message": "\U+21C7 almacenamiento sync", // new (translation attempt; remove the comments if you agree)
-//  "message": "\U+21C7 sync storage", // new
-// changed     "Restaurar reglas",
-// changed     "Restore rules",
+    "message": "\U+21C7 almacenamiento sync",
     "description": "Button for restoring rules from sync storage. The text should be short"
   },
   "titleButtonRulesRestoreSync": {
-    "message": "Las reglas serán reemplazadas por aquellas almacenadas en el área de almacenamiento sync del navegador. Cualquier cambio se perderá.", // new
-// I left the translation unchanged (up to the word sync), but it would probably
-// be better to make it consistent with the changes in similar messages.
-//  "message": "Replace the currently displayed rules by those from the browser's sync storage area.", // new
-// changed     "The rules will be replaced by those stored in the browser's local storage area. Any changes will be lost."
+    "message": "Reemplaza las reglas que se muestran actualmente por las del área de almacenamiento sync del navegador.",
     "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
   },
   "buttonRulesCleanSync": {
-    "message": "\U+2716 almacenamiento sync", // new (translation attempt; remove the comments if you agree)
-//  "message": "\U+2716 sync storage", // new
-// changed     "Limpiar almacenamiento local",
-// changed     "Cleanup storage",
+    "message": "\U+2716 almacenamiento sync",
     "description": "Button for cleaning sync storage. The text should be short"
   },
   "titleButtonRulesCleanSync": {
-    "message": "Se limpiarán las reglas almacenadas dentro del área de almacenamiento sync del navegador. Las reglas almacenadas se perderán.", // new (translation attempt; remove the comments if you agree)
-// I took the text from "titleButtonRulesCleanLocal" and changed local->sync
-//  "message": "The browser's sync storage area will be cleaned from stored rules. The stored rules will be lost.", // new
+    "message": "Se limpiarán las reglas almacenadas dentro del área de almacenamiento sync del navegador. Las reglas almacenadas se perderán.",
     "description": "Explain that the browser's sync storage area will be cleaned from stored rules"
   },
   "buttonListDupes": {
