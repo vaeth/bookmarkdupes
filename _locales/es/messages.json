@@ -88,25 +88,25 @@
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
-    "message": "⇧", // new
+    "message": "\U+21E7", // new
     "description": "Button for moving a rule up. The text should be short"
   },
   "titleButtonRuleUp": {
-    "message": "⇧", // new (until it is translated the symbol is perhaps better than English)
+    "message": "\U+21E7", // new (until it is translated the symbol is perhaps better than English)
 //  "message": "The rule will be moved up.",
     "description": "Explain that the rule will be moved up"
   },
   "buttonRuleDown": {
-    "message": "⇩", // new
+    "message": "\U+21E9", // new
     "description": "Button for moving a rule down. The text should be short"
   },
   "titleButtonRuleDown": {
-    "message": "⇩", // new (until it is translated the symbol is perhaps better than English)
+    "message": "\U+21E9", // new (until it is translated the symbol is perhaps better than English)
 //  "message": "The rule will be moved down.",
     "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "❌", // new
+    "message": "\U+2716", // new
 // changed     "Eliminar",
     "description": "Button for removing a rule. The text should be short"
   },
@@ -115,7 +115,7 @@
     "description": "Explain that the rule will be removed"
   },
   "buttonRuleAdd": {
-    "message": "✚", // new
+    "message": "\U+2795", // new
 // changed     "Nuevo",
     "description": "Button for inserting a new rule. The text should be short"
   },
@@ -130,8 +130,8 @@
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
-    "message": "⇇ reglas por defecto", // new (translation attempt; remove the comments if you agree)
-//  "message": "⇇ default rules",
+    "message": "\U+21C7 reglas por defecto", // new (translation attempt; remove the comments if you agree)
+//  "message": "\U+21C7 default rules",
 // changed     "Restaurar reglas por defecto",
 // changed     "Restore default rules",
     "description": "Button for restoring default rules. The text should be short"
@@ -145,7 +145,7 @@
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "⇉ almacenamiento local", // new (translation attempt; remove the comments if you agree)
+    "message": "\U+21C9 almacenamiento local", // new (translation attempt; remove the comments if you agree)
 // changed     "Guardar reglas",
 // changed     "Store rules",
     "description": "Button for putting rules to local storage. The text should be short"
@@ -159,8 +159,8 @@
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "⇇ almacenamiento local", // new (translation attempt; remove the comments if you agree)
-//  "message": "⇇ local storage", // new
+    "message": "\U+21C7 almacenamiento local", // new (translation attempt; remove the comments if you agree)
+//  "message": "\U+21C7 local storage", // new
 // changed     "Restaurar reglas",
 // changed     "Restore rules",
     "description": "Button for restoring rules from local storage. The text should be short"
@@ -174,8 +174,8 @@
     "description": "Explain that current rules will be replaced by those from the browser's local storage area"
   },
   "buttonRulesCleanLocal": {
-    "message": "❌ almacenamiento local", // new (translation attempt; remove the comments if you agree)
-//  "message": "❌ local storage", // new
+    "message": "\U+2716 almacenamiento local", // new (translation attempt; remove the comments if you agree)
+//  "message": "\U+2716 local storage", // new
 // changed     "Limpiar almacenamiento local",
 // changed     "Cleanup storage",
     "description": "Button for cleaning local storage. The text should be short"
@@ -185,8 +185,8 @@
     "description": "Explain that the browser's local storage area will be cleaned from stored rules"
   },
   "buttonRulesStoreSync": {
-    "message": "⇉ almacenamiento sync", // new (translation attempt; remove the comments if you agree)
-//  "message": "⇉ sync storage", // new
+    "message": "\U+21C9 almacenamiento sync", // new (translation attempt; remove the comments if you agree)
+//  "message": "\U+21C9 sync storage", // new
 // changed     "Guardar reglas",
 // changed     "Store rules",
     "description": "Button for putting rules to sync storage. The text should be short"
@@ -201,8 +201,8 @@
     "description": "Explain that current rules will replace those in the browser's sync storage area"
   },
   "buttonRulesRestoreSync": {
-    "message": "⇇ almacenamiento sync", // new (translation attempt; remove the comments if you agree)
-//  "message": "⇇ sync storage", // new
+    "message": "\U+21C7 almacenamiento sync", // new (translation attempt; remove the comments if you agree)
+//  "message": "\U+21C7 sync storage", // new
 // changed     "Restaurar reglas",
 // changed     "Restore rules",
     "description": "Button for restoring rules from sync storage. The text should be short"
@@ -216,8 +216,8 @@
     "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
   },
   "buttonRulesCleanSync": {
-    "message": "❌ almacenamiento sync", // new (translation attempt; remove the comments if you agree)
-//  "message": "❌ sync storage", // new
+    "message": "\U+2716 almacenamiento sync", // new (translation attempt; remove the comments if you agree)
+//  "message": "\U+2716 sync storage", // new
 // changed     "Limpiar almacenamiento local",
 // changed     "Cleanup storage",
     "description": "Button for cleaning sync storage. The text should be short"

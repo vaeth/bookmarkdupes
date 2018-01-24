@@ -88,7 +88,7 @@
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
-    "message": "⇧", // new
+    "message": "\U+21E7", // new
 // chaned      "Правило вгору",
     "description": "Button for moving a rule up. The text should be short"
   },
@@ -97,7 +97,7 @@
     "description": "Explain that the rule will be moved up"
   },
   "buttonRuleDown": {
-    "message": "⇩", // new
+    "message": "\U+21E9", // new
 // changed     "Правило вниз",
     "description": "Button for moving a rule down. The text should be short"
   },
@@ -106,7 +106,7 @@
     "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "❌", // new
+    "message": "\U+2716", // new
 // changed     "Видал.правило",
     "description": "Button for removing a rule. The text should be short"
   },
@@ -115,7 +115,7 @@
     "description": "Explain that the rule will be removed"
   },
   "buttonRuleAdd": {
-    "message": "✚", // new
+    "message": "\U+2795", // new
 // changed     "Дод.правило",
     "description": "Button for inserting a new rule. The text should be short"
   },
