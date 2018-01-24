@@ -114,7 +114,7 @@
     "description": "Explain that the rule will be removed"
   },
   "buttonRuleAdd": {
-    "message": "❎", // new
+    "message": "✚", // new
     "description": "Button for inserting a new rule. The text should be short"
   },
   "titleButtonRuleAdd": {
