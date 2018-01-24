@@ -5,6 +5,13 @@
 	- Change layout of "expert mode" table slightly, see
 	  https://github.com/vaeth/bookmarkdupes/issues/52
 
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-5.0:
 	Martin Väth <martin at mvath.de>:
 	- Add expert rules to ignore ("filter") certain bookmarks.
