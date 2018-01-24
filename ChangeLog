@@ -1,5 +1,10 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-5.1:
+	Martin Väth <martin at mvath.de>:
+	- Change layout of "expert mode" table slightly, see
+	  https://github.com/vaeth/bookmarkdupes/issues/52
+
 *bookmarkdupes-5.0:
 	Martin Väth <martin at mvath.de>:
 	- Add expert rules to ignore ("filter") certain bookmarks.

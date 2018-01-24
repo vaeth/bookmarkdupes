@@ -268,17 +268,17 @@ function getRule(row) {
   if (children[5].firstChild.value) {
     rule.nameNegation = children[5].firstChild.value;
   }
-  if (children[6].firstChild.value) {
-    rule.url = children[6].firstChild.value;
-  }
   if (children[7].firstChild.value) {
-    rule.urlNegation = children[7].firstChild.value;
+    rule.url = children[7].firstChild.value;
   }
   if (children[8].firstChild.value) {
-    rule.search = children[8].firstChild.value;
+    rule.urlNegation = children[8].firstChild.value;
   }
-  if (children[9].firstChild.value) {
-    rule.replace = children[9].firstChild.value;
+  if (children[10].firstChild.value) {
+    rule.search = children[10].firstChild.value;
+  }
+  if (children[11].firstChild.value) {
+    rule.replace = children[11].firstChild.value;
   }
   return rule;
 }
@@ -301,8 +301,10 @@ function addRule(parent, count, total, rule) {
   appendRadioCol(row, prefix + "Off", prefix + "Radio", "titleRadioOff", off);
   appendInputCol(row, "titleRuleName", rule.name, off);
   appendInputCol(row, "titleRuleNameNegation", rule.nameNegation, off);
+  appendCol(row);
   appendInputCol(row, "titleRuleUrl", rule.url, off);
   appendInputCol(row, "titleRuleUrlNegation", rule.urlNegation, off);
+  appendCol(row);
   appendInputCol(row, "titleRuleSearch", rule.search, filterOrOff);
   appendInputCol(row, "titleRuleReplace", rule.replace, filterOrOff);
   const colUp = document.createElement("TD");
@@ -399,10 +401,12 @@ function addRules(rules) {
     browser.i18n.getMessage("titleRuleName"));
   appendTextNodeCol(row, browser.i18n.getMessage("ruleNameNegation"),
     browser.i18n.getMessage("titleRuleNameNegation"));
+  appendTextNodeCol(row, "\xa0\xa0");
   appendTextNodeCol(row, browser.i18n.getMessage("ruleUrl"),
     browser.i18n.getMessage("titleRuleUrl"));
   appendTextNodeCol(row, browser.i18n.getMessage("ruleUrlNegation"),
     browser.i18n.getMessage("titleRuleUrlNegation"));
+  appendTextNodeCol(row, "\xa0\xa0");
   appendTextNodeCol(row, browser.i18n.getMessage("ruleSearch"),
     browser.i18n.getMessage("titleRuleSearch"));
   appendTextNodeCol(row, browser.i18n.getMessage("ruleReplace"),
