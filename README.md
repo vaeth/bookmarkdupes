@@ -25,6 +25,9 @@ Finally, there are buttons to remove the selected bookmarks in cases 1 and 2
 or to strip the descriptions of the selected bookmarks in case 3.
 (The latter has some side effects, see section **Known Bugs**).
 
+Currently, there is no working version available for android
+(see section **Known Bugs**).
+
 ## Important
 
 When you reorganized/added/removed bookmarks, make sure to update the
@@ -59,7 +62,7 @@ There are 2 types of rules: Filter rules and URL modification rules
 
 For both types of rules 4 regular expressions can be specified which are used
 to determine if the rule applies: If the corresponding regular expression is
-nonempty, the corressponding condition must be satisfied or the rule will not
+nonempty, the corresponding condition must be satisfied or the rule will not
 apply. (In the case of filter rules, at least one of these 4 regular
 expressions must be nonempty or that filter rules will not apply either.)
 
@@ -115,8 +118,11 @@ They put the matches into lower or upper case, respectively.
    in the options page of the extension instead if you have this problem.
    The reason for the problem is still unknown, see
    https://github.com/vaeth/bookmarkdupes/issues/38
+5. On android, pressing any of the three many buttons causes an infinite hang
+   for unknown reasons. Therefore, currently the extension has been disabled
+   for android.
 
-## Contributions
+## Contributors
 
 (in alphabetical order)
 
