@@ -16,7 +16,7 @@
     "description": "Explain what regular expresssions are used for"
   },
   "radioFilter": {
-    "message": "Фільтр",
+    "message": "Фільтр  ",
     "description": "Radio button for filtering a bookmark. The text should be short"
   },
   "titleRadioFilter": {
@@ -24,7 +24,7 @@
     "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
   },
   "radioUrl": {
-    "message": "Змінити",
+    "message": "Заміна  ",
     "description": "Radio button for preprocessing a URL. The text should be short"
   },
   "titleRadioUrl": {
@@ -32,7 +32,7 @@
     "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
   },
   "radioOff": {
-    "message": "Вимк.",
+    "message": "Вимк.  ",
     "description": "Radio button for ignoring the rule. The text should be short"
   },
   "titleRadioOff": {
@@ -40,7 +40,7 @@
     "description": "Explain that by choosing that button the rule has no effect"
   },
   "ruleName": {
-    "message": "Відповідність імен",
+    "message": "Відповідн. імен",
     "description": "Input field for matching the name. The text should be short"
   },
   "titleRuleName": {
@@ -48,7 +48,7 @@
     "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleNameNegation": {
-    "message": "Невідповідність імен",
+    "message": "Невідповідність",
     "description": "Input field for not matching the name. The text should be short"
   },
   "titleRuleNameNegation": {
@@ -56,7 +56,7 @@
     "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleUrl": {
-    "message": "Відповідність URL-ів",
+    "message": "URL Відповідн.",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
@@ -64,7 +64,7 @@
     "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
   },
   "ruleUrlNegation": {
-    "message": "Невідповідність URL-ів",
+    "message": "Невідповідність",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
@@ -72,7 +72,7 @@
     "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
-    "message": "Замін.URL-відповідн.",
+    "message": "Замінити ↓ URL",
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
@@ -80,7 +80,7 @@
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
-    "message": "на",
+    "message": "відповідність на:",
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
@@ -136,7 +136,7 @@
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "Збер.правила",
+    "message": "Зберегти правила   ",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
@@ -144,7 +144,7 @@
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "Відн.правила",
+    "message": "Відновити правила ",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
@@ -176,7 +176,7 @@
     "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
   },
   "buttonRulesCleanSync": {
-    "message": "Оч.синхр.сховище",
+    "message": "Оч.синхр.сховище  ",
     "description": "Button for cleaning sync storage. The text should be short"
   },
   "titleButtonRulesCleanSync": {
