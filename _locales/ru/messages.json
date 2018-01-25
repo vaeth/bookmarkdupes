@@ -16,7 +16,7 @@
     "description": "Explain what regular expresssions are used for"
   },
   "radioFilter": {
-    "message": "Фильтр",
+    "message": "Фильтр  ",
     "description": "Radio button for filtering a bookmark. The text should be short"
   },
   "titleRadioFilter": {
@@ -24,7 +24,7 @@
     "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
   },
   "radioUrl": {
-    "message": "Изменить",
+    "message": "Замена  ",
     "description": "Radio button for preprocessing a URL. The text should be short"
   },
   "titleRadioUrl": {
@@ -32,7 +32,7 @@
     "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
   },
   "radioOff": {
-    "message": "Выкл.",
+    "message": "Выкл.  ",
     "description": "Radio button for ignoring the rule. The text should be short"
   },
   "titleRadioOff": {
@@ -40,7 +40,7 @@
     "description": "Explain that by choosing that button the rule has no effect"
   },
   "ruleName": {
-    "message": "Соответствие имен",
+    "message": "Соответст. имён",
     "description": "Input field for matching the name. The text should be short"
   },
   "titleRuleName": {
@@ -48,7 +48,7 @@
     "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleNameNegation": {
-    "message": "Несоответствие имен",
+    "message": "Несоответствие",
     "description": "Input field for not matching the name. The text should be short"
   },
   "titleRuleNameNegation": {
@@ -56,7 +56,7 @@
     "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleUrl": {
-    "message": "Соответствие URL-ов",
+    "message": "Соответств. URL",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
@@ -64,7 +64,7 @@
     "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
   },
   "ruleUrlNegation": {
-    "message": "Несоответствие URL-ов",
+    "message": "Несоответствие",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
@@ -72,7 +72,7 @@
     "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
-    "message": "Замен.URL соотв.",
+    "message": "Заменить ↓ URL",
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
@@ -80,7 +80,7 @@
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
-    "message": "на",
+    "message": "соответствие на:",
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
@@ -136,7 +136,7 @@
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "Сохр.правила",
+    "message": "Сохранить правила     ",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
@@ -144,7 +144,7 @@
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "Вост.правила",
+    "message": "Восстановить правила",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
@@ -152,7 +152,7 @@
     "description": "Explain that current rules will be replaced by those from the browser's local storage area"
   },
   "buttonRulesCleanLocal": {
-    "message": "Очистка хранилища",
+    "message": "Очистка хранилища  ",
     "description": "Button for cleaning local storage. The text should be short"
   },
   "titleButtonRulesCleanLocal": {
