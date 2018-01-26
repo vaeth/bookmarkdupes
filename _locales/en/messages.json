@@ -88,7 +88,7 @@
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
-    "message": "\U+21E7",
+    "message": "\u21E7",
     "description": "Button for moving a rule up. The text should be short"
   },
   "titleButtonRuleUp": {
@@ -96,7 +96,7 @@
     "description": "Explain that the rule will be moved up"
   },
   "buttonRuleDown": {
-    "message": "\U+21E9",
+    "message": "\u21E9",
     "description": "Button for moving a rule down. The text should be short"
   },
   "titleButtonRuleDown": {
@@ -104,7 +104,7 @@
     "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "\U+2716",
+    "message": "\u2716",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
@@ -112,7 +112,7 @@
     "description": "Explain that the rule will be removed"
   },
   "buttonRuleAdd": {
-    "message": "\U+2795",
+    "message": "\u2795",
     "description": "Button for inserting a new rule. The text should be short"
   },
   "titleButtonRuleAdd": {
@@ -124,7 +124,7 @@
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
-    "message": "\U+21C7 default rules",
+    "message": "\u21C7 default rules",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {
@@ -132,7 +132,7 @@
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "\U+21C9 local storage",
+    "message": "\u21C9 local storage",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
@@ -140,7 +140,7 @@
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "\U+21C7 local storage",
+    "message": "\u21C7 local storage",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
@@ -148,7 +148,7 @@
     "description": "Explain that current rules will be replaced by those from the browser's local storage area"
   },
   "buttonRulesCleanLocal": {
-    "message": "\U+2716 local storage",
+    "message": "\u2716 local storage",
     "description": "Button for cleaning local storage. The text should be short"
   },
   "titleButtonRulesCleanLocal": {
@@ -156,7 +156,7 @@
     "description": "Explain that the browser's local storage area will be cleaned from stored rules"
   },
   "buttonRulesStoreSync": {
-    "message": "\U+21C9 sync storage",
+    "message": "\u21C9 sync storage",
     "description": "Button for putting rules to sync storage. The text should be short"
   },
   "titleButtonRulesStoreSync": {
@@ -164,7 +164,7 @@
     "description": "Explain that current rules will replace those in the browser's sync storage area"
   },
   "buttonRulesRestoreSync": {
-    "message": "\U+21C7 sync storage",
+    "message": "\u21C7 sync storage",
     "description": "Button for restoring rules from sync storage. The text should be short"
   },
   "titleButtonRulesRestoreSync": {
@@ -172,7 +172,7 @@
     "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
   },
   "buttonRulesCleanSync": {
-    "message": "\U+2716 sync storage",
+    "message": "\u2716 sync storage",
     "description": "Button for cleaning sync storage. The text should be short"
   },
   "titleButtonRulesCleanSync": {
