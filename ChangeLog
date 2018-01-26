@@ -1,5 +1,11 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-5.2:
+	Martin Väth <martin at mvath.de>:
+	- Fix regression from 5.1: radio buttons in expert mode now enable/
+	  disable correct columns again. Thanks to perdolka for reporting:
+	  https://github.com/vaeth/bookmarkdupes/issues/56
+
 *bookmarkdupes-5.1:
 	Martin Väth <martin at mvath.de>:
 	- Change layout of "expert mode" table slightly, see

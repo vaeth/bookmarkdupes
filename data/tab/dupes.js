@@ -343,10 +343,10 @@ function changeRule(id) {
   const children = row.children;
   children[4].firstChild.disabled = off;
   children[5].firstChild.disabled = off;
-  children[6].firstChild.disabled = off;
   children[7].firstChild.disabled = off;
-  children[8].firstChild.disabled = filterOrOff;
-  children[9].firstChild.disabled = filterOrOff;
+  children[8].firstChild.disabled = off;
+  children[10].firstChild.disabled = filterOrOff;
+  children[11].firstChild.disabled = filterOrOff;
 }
 
 function addButtonsRulesLocal(restore, clean) {
