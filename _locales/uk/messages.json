@@ -16,7 +16,7 @@
     "description": "Explain what regular expresssions are used for"
   },
   "radioFilter": {
-    "message": "Фільтр  ",
+    "message": "Фільтр\u00A0\u00A0",
     "description": "Radio button for filtering a bookmark. The text should be short"
   },
   "titleRadioFilter": {
@@ -24,7 +24,7 @@
     "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
   },
   "radioUrl": {
-    "message": "Заміна  ",
+    "message": "Заміна\u00A0\u00A0",
     "description": "Radio button for preprocessing a URL. The text should be short"
   },
   "titleRadioUrl": {
@@ -32,7 +32,7 @@
     "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
   },
   "radioOff": {
-    "message": "Вимк.  ",
+    "message": "Вимк.\u00A0\u00A0",
     "description": "Radio button for ignoring the rule. The text should be short"
   },
   "titleRadioOff": {
@@ -72,7 +72,7 @@
     "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
-    "message": "Замінити ↓ URL",
+    "message": "Замінити \u2193 URL",
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
@@ -136,7 +136,7 @@
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "Зберегти правила   ",
+    "message": "Зберегти правила\u00A0\u00A0\u00A0",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
@@ -144,7 +144,7 @@
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "Відновити правила ",
+    "message": "Відновити правила\u00A0",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
@@ -176,7 +176,7 @@
     "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
   },
   "buttonRulesCleanSync": {
-    "message": "Оч.синхр.сховище  ",
+    "message": "Оч.синхр.сховище\u00A0\u00A0",
     "description": "Button for cleaning sync storage. The text should be short"
   },
   "titleButtonRulesCleanSync": {
