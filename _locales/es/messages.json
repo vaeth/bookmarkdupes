@@ -7,21 +7,185 @@
     "message": "Mostrar/Eliminar marcadores duplicados, carpetas vacías, o descripciones",
     "description": "Description of the extension"
   },
-  "buttonListExactDupes": {
-    "message": "Duplicados exactos",
-    "description": "Button for listing exact dupes"
+  "checkboxRules": {
+    "message": "Modo experto: use reglas personalizadas para hacer coincidir marcadores similares o ignorar los marcadores al buscar.",
+    "description": "Checkbox text for switching on/off regexp rules"
   },
-  "titleButtonListExactDupes": {
-    "message": "(Re)calcule la lista de duplicados de marcadores exactos. Dos marcadores se consideran duplicados exactos si sus URL son idénticas.",
-    "description": "Explain that the list of exact bookmark dupes will be (re)calculated, and that exact dupes are those with identical URLs"
+  "titleCheckboxRules": {
+    "message": "Con esta opción, se pueden ignorar los marcadores o se pueden encontrar marcadores similares. Los detalles se especifican en términos de expresiones regulares.",
+    "description": "Explain what regular expresssions are used for"
   },
-  "buttonListSimilarDupes": {
-    "message": "Duplicados parecidos",
-    "description": "Button for listing similar dupes"
+  "radioFilter": {
+    "message": "Filtro",
+    "description": "Radio button for filtering a bookmark. The text should be short"
   },
-  "titleButtonListSimilarDupes": {
-    "message": "(Re)calcule la lista duplicados de marcadores parecidos. Se considera que dos marcadores son duplicados parecidos si sus URL son iguales hasta el primer “?”.",
-    "description": "Explain that the list of similar bookmasrk dupes will be (re)calculated, and that dupes are similar if their URLs match up to the first “?”"
+  "titleRadioFilter": {
+    "message": "Los marcadores que coincidan con los criterios serán ignorados.",
+    "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
+  },
+  "radioUrl": {
+    "message": "Modificar",
+    "description": "Radio button for preprocessing a URL. The text should be short"
+  },
+  "titleRadioUrl": {
+    "message": "Antes de comprobar las direcciones URL para encontrar duplicados de marcador, la dirección URL del juego marcadores se preprocesará de acuerdo con la regla especificada.",
+    "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
+  },
+  "radioOff": {
+    "message": "Apagado",
+    "description": "Radio button for ignoring the rule. The text should be short"
+  },
+  "titleRadioOff": {
+    "message": "Esta regla no tiene efecto.",
+    "description": "Explain that by choosing that button the rule has no effect"
+  },
+  "ruleName": {
+    "message": "El nombre coincide",
+    "description": "Input field for matching the name. The text should be short"
+  },
+  "titleRuleName": {
+    "message": "La regla se aplica a un marcador si la ruta del marcador (carpetas + nombre) coincide con la expresión regular. El separador de carpetas es \\0 o \\x00.",
+    "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
+  },
+  "ruleNameNegation": {
+    "message": "El nombre no coincide",
+    "description": "Input field for not matching the name. The text should be short"
+  },
+  "titleRuleNameNegation": {
+    "message": "La regla se aplica a un marcador si la ruta del marcador (carpetas + nombre) no coincide con la expresión regular. El separador de carpetas es \\0 o \\x00.",
+    "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
+  },
+  "ruleUrl": {
+    "message": "La URL coincide",
+    "description": "Input field for matching the URL. The text should be short"
+  },
+  "titleRuleUrl": {
+    "message": "La regla se aplica a un marcador si su URL coincide con la expresión regular.",
+    "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
+  },
+  "ruleUrlNegation": {
+    "message": "La URL no coincide",
+    "description": "Input field for matching the URL. The text should be short"
+  },
+  "titleRuleUrlNegation": {
+    "message": "La regla se aplica a un marcador si su URL no coincide con la expresión regular.",
+    "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
+  },
+  "ruleSearch": {
+    "message": "Reemplazo de coincidencias de URL",
+    "description": "Input field for the search part of the URL. The text should be short"
+  },
+  "titleRuleSearch": {
+    "message": "Al comparar las URL, las partes que coincidan con la expresión regular serán reemplazadas por el texto posterior.",
+    "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
+  },
+  "ruleReplace": {
+    "message": "por",
+    "description": "Input field for the replacement text for the regular expression matches. The text should be short"
+  },
+  "titleRuleReplace": {
+    "message": "El texto de reemplazo para la expresión regular coincide. Se pueden usar símbolos como $$& o $$1 para referirse a la coincidencia o un contenido de corchete. Los textos especiales \\L$$& y \\U$$& significan una versión en mayúsculas y minúsculas de las coincidencias, respectivamente..",
+    "description": "Explain that the text will be used as replacement text for the regular expression matches"
+  },
+  "buttonRuleUp": {
+    "message": "\u21E7",
+    "description": "Button for moving a rule up. The text should be short"
+  },
+  "titleButtonRuleUp": {
+    "message": "La regla se moverá hacia arriba.",
+    "description": "Explain that the rule will be moved up"
+  },
+  "buttonRuleDown": {
+    "message": "\u21E9",
+    "description": "Button for moving a rule down. The text should be short"
+  },
+  "titleButtonRuleDown": {
+    "message": "La regla se moverá hacia abajo.",
+    "description": "Explain that the rule will be moved down"
+  },
+  "buttonRuleSub": {
+    "message": "\u2716",
+    "description": "Button for removing a rule. The text should be short"
+  },
+  "titleButtonRuleSub": {
+    "message": "Eliminar esta regla.",
+    "description": "Explain that the rule will be removed"
+  },
+  "buttonRuleAdd": {
+    "message": "\u2795",
+    "description": "Button for inserting a new rule. The text should be short"
+  },
+  "titleButtonRuleAdd": {
+    "message": "Intertar una nueva regla.",
+    "description": "Explain that a new rule will be inserted"
+  },
+  "regExpFrequent": {
+    "message": "[fF]recuente.*|[aA]\\s+[mM]enudo|[dD]uplicado",
+    "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
+  },
+  "buttonRulesDefault": {
+    "message": "\u21C7 reglas por defecto",
+    "description": "Button for restoring default rules. The text should be short"
+  },
+  "titleButtonRulesDefault": {
+    "message": "Restaurar las reglas que se muestran actualmente por las reglas por defecto.",
+    "description": "Explain that current rules will be replaced by default rules"
+  },
+  "buttonRulesStoreLocal": {
+    "message": "\u21C9 almacenamiento local",
+    "description": "Button for putting rules to local storage. The text should be short"
+  },
+  "titleButtonRulesStoreLocal": {
+    "message": "Coloca las reglas actuales en el área de almacenamiento local del navegador, posiblemente reemplazando las reglas almacenadas anteriormente.",
+    "description": "Explain that current rules will replace those in the browser's local storage area"
+  },
+  "buttonRulesRestoreLocal": {
+    "message": "\u21C7 almacenamiento local",
+    "description": "Button for restoring rules from local storage. The text should be short"
+  },
+  "titleButtonRulesRestoreLocal": {
+    "message": "Reemplaza las reglas que se muestran actualmente por las del área de almacenamiento local del navegador..",
+    "description": "Explain that current rules will be replaced by those from the browser's local storage area"
+  },
+  "buttonRulesCleanLocal": {
+    "message": "\u2716 almacenamiento local",
+    "description": "Button for cleaning local storage. The text should be short"
+  },
+  "titleButtonRulesCleanLocal": {
+    "message": "Se limpiarán las reglas almacenadas dentro del área de almacenamiento local del navegador. Las reglas almacenadas se perderán.",
+    "description": "Explain that the browser's local storage area will be cleaned from stored rules"
+  },
+  "buttonRulesStoreSync": {
+    "message": "\u21C9 almacenamiento sync",
+    "description": "Button for putting rules to sync storage. The text should be short"
+  },
+  "titleButtonRulesStoreSync": {
+    "message": "Coloca las reglas actuales en el área de almacenamiento sync del navegador, posiblemente reemplazando las reglas almacenadas anteriormente.",
+    "description": "Explain that current rules will replace those in the browser's sync storage area"
+  },
+  "buttonRulesRestoreSync": {
+    "message": "\u21C7 almacenamiento sync",
+    "description": "Button for restoring rules from sync storage. The text should be short"
+  },
+  "titleButtonRulesRestoreSync": {
+    "message": "Reemplaza las reglas que se muestran actualmente por las del área de almacenamiento sync del navegador.",
+    "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
+  },
+  "buttonRulesCleanSync": {
+    "message": "\u2716 almacenamiento sync",
+    "description": "Button for cleaning sync storage. The text should be short"
+  },
+  "titleButtonRulesCleanSync": {
+    "message": "Se limpiarán las reglas almacenadas dentro del área de almacenamiento sync del navegador. Las reglas almacenadas se perderán.",
+    "description": "Explain that the browser's sync storage area will be cleaned from stored rules"
+  },
+  "buttonListDupes": {
+    "message": "Duplicados",
+    "description": "Button for listing dupes"
+  },
+  "titleButtonListDupes": {
+    "message": "(Re)calcule la lista de duplicados de marcadores. Dos marcadores se consideran duplicados si sus URL coinciden. En modo experto, las reglas de preprocesamiento (sustitución) de URL seleccionadas se aplican antes de comparar las URL.",
+    "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
     "message": "Carpetas vacías",
@@ -91,6 +255,10 @@
     "message": "-- Seleccione una carpeta para obtener los botones correspondientes para marcar --",
     "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
   },
+  "optionSameFolder": {
+    "message": "-- Carpetas idénticas en el mismo grupo --",
+    "description": "Name of a special folder selection: Identical folders in the same group"
+  },
   "titleSelectFolder": {
     "message": "Si se selecciona una carpeta, aparecerán los botones correspondientes para el marcado.",
     "description": "Explain that selecting a folder will provide corresponding buttons for marking"
@@ -151,6 +319,54 @@
     "message": "En grupos con la carpeta seleccionada, marca todos los marcadores de esa carpeta y desmarca todos los demás. Si no hay otros, desmarca el más nuevo.",
     "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
   },
+  "buttonMarkSame": {
+    "message": "Marcar todas las carpetas idénticas en el mismo grupo",
+    "description": "Button for marking all of the same folders in the same group"
+  },
+  "titleButtonMarkSame": {
+    "message": "Marcar todos los marcadores de carpetas idénticas en el mismo grupo.",
+    "description": "Explain that all bookmarks of identical folders in the same group will be marked"
+  },
+  "buttonUnmarkSame": {
+    "message": "Desmarcar todas las carpetas idénticas en el mismo grupo",
+    "description": "Button for unmarking all of the same folders in the same group"
+  },
+  "titleButtonUnmarkSame": {
+    "message": "Desmarcar todos los marcadores de carpetas idénticas en el mismo grupo.",
+    "description": "Explain that all bookmarks of identical folders in the same group will be unmarked"
+  },
+  "buttonMarkSameButFirst": {
+    "message": "Marcar todo, pero el primero de las carpetas idénticas en un mismo grupo",
+    "description": "Button for marking all but the first of identical folders in the same group"
+  },
+  "titleButtonMarkSameButFirst": {
+    "message": "Además, el primero de las carpetas idénticas en el mismo grupo se desmarcará.",
+    "description": "Explain that additionally for identical folders in the same group the first will be unmarked"
+  },
+  "buttonMarkSameButLast": {
+    "message": "Marcar todo, pero el último de las carpetas idénticas en un mismo grupo",
+    "description": "Button for marking all but the last of identical folders in the same group"
+  },
+  "titleButtonMarkSameButLast": {
+    "message": "Además, el último de las carpetas idénticas en el mismo grupo se desmarcará.",
+    "description": "Explain that additionally for identical folders in the same group the last will be unmarked"
+  },
+  "buttonMarkSameButOldest": {
+    "message": "Marcar todo menos el más viejo de carpetas idénticas en el mismo grupo",
+    "description": "Button for marking all but the oldest of identical folders in the same group"
+  },
+  "titleButtonMarkSameButOldest": {
+    "message": "Adicionalmente, el más viejo de carpetas idénticas en el mismo grupo se desmarcará.",
+    "description": "Explain that additionally for identical folders in the same group the oldest will be unmarked"
+  },
+  "buttonMarkSameButNewest": {
+    "message": "Marcar todo menos el más nuevo de carpetas idénticas en el mismo grupo",
+    "description": "Button for marking all but the newest of identical folders in the same group"
+  },
+  "titleButtonMarkSameButNewest": {
+    "message": "Adicionalmente, el más nuevo de carpetas idénticas en el mismo grupo se desmarcará.",
+    "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
+  },
   "buttonRemoveMarked": {
     "message": "Eliminar marcadores marcados",
     "description": "Button for removing marked bookmarks"
@@ -180,8 +396,8 @@
     "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
   },
   "checkboxExtra": {
-    "message": "Mostrar cola de URL (después de “?”) En la lista",
-    "description": "Checkbox for displaying the URL tail (following “?”) in the similar matching listing"
+    "message": "Mostrar contenido de URL reemplazado en la lista",
+    "description": "Checkbox for displaying the replaced URL content in listing"
   },
   "messageCount": {
     "message": "$TOTAL$ marcadores marcados",
@@ -194,12 +410,12 @@
     }
   },
   "messageNoCount": {
-    "message": "Number of marked bookmarks not displayed for speed reasons", // new
+    "message": "El número de marcadores seleccionados no mostrado por razones de velocidad",
     "description": "Report that marks are not counted for speed reasons"
   },
-  "messageExactMatchesGroups": {
-    "message": "$TOTAL$ (de $ALL$) duplicados exactos dentro de $GROUPS$ grupos",
-    "description": "Report specified numbers of exact matches and groups of all",
+  "messageMatches": {
+    "message": "$TOTAL$ (de $ALL$) duplicados dentro de $GROUPS$ grupos",
+    "description": "Report specified numbers of matches and groups of all",
     "placeholders": {
       "total": {
         "content": "$1",
@@ -215,31 +431,9 @@
       }
     }
   },
-  "titleMessageExactMatchesGroups": {
-    "message": "Dos marcadores se consideran duplicados exactos si sus URL son idénticas.",
-    "description": "Explain that exact dupes are those with identical URLs"
-  },
-  "messageSimilarMatchesGroups": {
-    "message": "$TOTAL$ (de $ALL$) duplicados parecidos dentro de $GROUPS$ grupos",
-    "description": "Report specified numbers of similar matches and groups of all",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "2"
-      },
-      "groups": {
-        "content": "$2",
-        "example": "1"
-      },
-      "all": {
-        "content": "$3",
-        "example": "1"
-      }
-    }
-  },
-  "titleMessageSimilarMatchesGroups": {
-    "message": "Se considera que dos marcadores son duplicados similares si sus URL coinciden hasta el primer “?”.",
-    "description": "Explain that similar dupes are those whose URLs match up to the first “?”"
+  "titleMessageMatches": {
+    "message": "Dos marcadores se consideran duplicados si sus URL coinciden. En modo experto, las reglas de preprocesamiento (sustitución) de URL seleccionadas se aplican antes de comparar las URL.",
+    "description": "Explain how bookmark dupes are defined"
   },
   "messageEmpty": {
     "message": "$TOTAL$ carpetas vacías encontradas",
@@ -279,7 +473,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description" // new
+        "example": "error description"
       }
     }
   },
@@ -321,7 +515,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description" // new
+        "example": "error description"
       },
       "total": {
         "content": "$2",
@@ -367,7 +561,7 @@
     "placeholders": {
       "error": {
         "content": "$1",
-        "example": "error description" // new
+        "example": "error description"
       },
       "total": {
         "content": "$2",

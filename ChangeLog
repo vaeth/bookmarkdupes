@@ -1,8 +1,78 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-5.2:
+	Martin Väth <martin at mvath.de>:
+	- Fix regression from 5.1: radio buttons in expert mode now enable/
+	  disable correct columns again. Thanks to perdolka for reporting:
+	  https://github.com/vaeth/bookmarkdupes/issues/56
+
+*bookmarkdupes-5.1:
+	Martin Väth <martin at mvath.de>:
+	- Change layout of "expert mode" table slightly, see
+	  https://github.com/vaeth/bookmarkdupes/issues/52
+
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
+*bookmarkdupes-5.0:
+	Martin Väth <martin at mvath.de>:
+	- Add expert rules to ignore ("filter") certain bookmarks.
+	  Storage permissions are required to store these expert rules in
+	  the local or sync storage.
+	- Expert rules can define when bookmarks are considered as dupes.
+	  This replaces the previous unsatisfactory "Similar Dupes" button and
+	  implements also https://github.com/vaeth/bookmarkdupes/issues/45
+	- Default expert rules deal with much more than \? tails.
+	  Actually, the \? tails rule is now by default deactivated because it
+	  has too many false positives: only relatively safe rules are active
+	  in the defaults, and in addition one locale-specific example of a
+	  filter rule.
+	- Remove tabs permissions.
+	  The price is that several tabs open when clicked several times
+	- bugfix: increase minimal gecko version to 48.0 to reflect that
+	  manifest.json itself apparently requires that version, see
+	  https://github.com/vaeth/bookmarkdupes/issues/44
+	- bugfix: calculation error messages are now displayed correctly
+	- bugfix: use safe (guaranteed non-duplicate) ids for bookmarks
+	- bugfix: add some forgotten semicolons. Another missing semicolon
+	  (in menwhile changed code) might also have been a reason for
+	  https://github.com/vaeth/bookmarkdupes/issues/38
+	  However, currently the options page is not removed: some users might
+	  find it convenient.
+	- internal: remove redundant SplitNumber
+	- internal: avoid arguments array when simple args passing will do
+	- internal: improve some function names
+
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
+*bookmarkdupes-4.2:
+	Martin Väth <martin at mvath.de>:
+	- Add an options page with a link as an alternative way to open the
+	  extension. This is mainly meant as a workaround for
+	  https://github.com/vaeth/bookmarkdupes/issues/38
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-4.1:
+	Martin Väth <martin at mvath.de>:
+	- Add buttons for marking from identical folders in the same group
+	- internal: avoid redundant braces for Boolean negation
+
 	Henaro aka Ironwool:
 	- Set a reasonable page title
+	- Fix bugs in English translation
+	- Update uk locales
+	- Update ru locales
 
 *bookmarkdupes-4.0:
 	Martin Väth <martin at mvath.de>:

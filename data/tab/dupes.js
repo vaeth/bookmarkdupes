@@ -1,11 +1,18 @@
-/* Copyright (C) 2017 Nartin Väth <martin@mvath.de>
+/* Copyright (C) 2017-2018 Nartin Väth <martin@mvath.de>
  * This project is under the GNU public license 2.0
 */
 
 // For documentation on the bookmark API see e.g.
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/
+// For documentation on the storage API see e.g.
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/
 
 "use strict";
+
+function isChecked(id) {
+  const checkbox = document.getElementById(id);
+  return (checkbox && checkbox.checked);
+}
 
 function setTitle(title) {
   document.getElementById("pageTitle").textContent = title;
@@ -51,19 +58,37 @@ function getMessageNode() {
   return document.getElementById("textMessage");
 }
 
-function getCheckboxFullUrl() {
-  const checkboxFullUrl = document.getElementById("checkboxFullUrl");
-  return (checkboxFullUrl && checkboxFullUrl.checked);
+function getButtonsRulesLocal() {
+  return document.getElementById("buttonsRulesLocal");
 }
 
-function getCheckboxExtra() {
-  const checkboxExtra = document.getElementById("checkboxExtra");
-  return (checkboxExtra && checkboxExtra.checked);
+function getButtonsRulesSync() {
+  return document.getElementById("buttonsRulesSync");
 }
 
-function getSelectedFolder() {
+function getTableRules() {
+  return document.getElementById("tableRules");
+}
+
+function isCheckedRules() {
+  return isChecked("checkboxRules");
+}
+
+function getTableCheckboxRules() {
+  return document.getElementById("tableCheckboxRules");
+}
+
+function isCheckedFullUrl() {
+  return isChecked("checkboxFullUrl");
+}
+
+function isCheckedExtra() {
+  return isChecked("checkboxExtra");
+}
+
+function getValueSelectedFolder() {
   const value = document.getElementById("selectedFolder").value;
-  return (((!value) || (value === "'")) ? null : value);
+  return ((!value || (value === "@")) ? null : value);
 }
 
 function getTableCount() {
@@ -74,8 +99,8 @@ function getTextCount() {
   return document.getElementById("textCount");
 }
 
-function getCheckboxCount() {
-  return document.getElementById("checkboxCount");
+function isCheckedCount() {
+  return isChecked("checkboxCount");
 }
 
 function displayCount(text) {
@@ -92,13 +117,21 @@ function displayMessage(text, title) {
   message.removeAttribute("TITLE");
 }
 
-function getName(folders, parent, name) {
+function getName(folders, parent, name, separator) {
+  if (!separator) {
+    separator = " | ";
+  }
   while (parent || (parent === 0)) {
     const folder = folders[parent];
-    name = folder.name + ' | ' + name;
+    name = folder.name + separator + name;
     parent = folder.parent;
   }
   return name;
+}
+
+function appendCol(row) {
+  const col = document.createElement("TD");
+  row.appendChild(col);
 }
 
 function appendTextNodeCol(row, text, title, id) {
@@ -114,7 +147,49 @@ function appendTextNodeCol(row, text, title, id) {
   row.appendChild(col);
 }
 
-function appendCheckbox(parent, id, title, checked) {
+function appendRadio(parent, id, name, title, checked) {
+  const radiobox = document.createElement("INPUT");
+  radiobox.type = "radio";
+  radiobox.id = id;
+  radiobox.name = name;
+  if (title) {
+    radiobox.title = browser.i18n.getMessage(title);
+  }
+  if (checked) {
+    radiobox.checked = checked;
+  }
+  parent.appendChild(radiobox);
+}
+
+function appendRadioCol(row, id, name, title, checked) {
+  const col = document.createElement("TD");
+  appendRadio(col, id, name, title, checked);
+  row.appendChild(col);
+}
+
+function appendInput(parent, title, content, disabled) {
+  const input = document.createElement("INPUT");
+  input.type = "text";
+  if (title) {
+    input.title = browser.i18n.getMessage(title);
+  }
+  if (content) {
+    input.value = content;
+  }
+  input.size = 15;
+  if (disabled) {
+    input.disabled = true;
+  }
+  parent.appendChild(input);
+}
+
+function appendInputCol(row, title, content, disabled) {
+  const col = document.createElement("TD");
+  appendInput(col, title, content, disabled);
+  row.appendChild(col);
+}
+
+function appendCheckbox(parent, id, title, checked, enabled) {
   const checkbox = document.createElement("INPUT");
   checkbox.type = "checkbox";
   if (title) {
@@ -124,13 +199,15 @@ function appendCheckbox(parent, id, title, checked) {
     checkbox.checked = checked;
   }
   checkbox.id = id;
-  checkbox.disabled = true;
+  if (!enabled) {
+    checkbox.disabled = true;
+  }
   parent.appendChild(checkbox);
 }
 
-function appendCheckboxCol(row, id, title, checked) {
+function appendCheckboxCol(row, id, title, checked, enabled) {
   const col = document.createElement("TD");
-  appendCheckbox(col, id, title, checked);
+  appendCheckbox(col, id, title, checked, enabled);
   row.appendChild(col);
 }
 
@@ -149,7 +226,7 @@ function appendButton(parent, id, titleId, text, titleText, enabled) {
   const button = document.createElement("BUTTON");
   button.type = "button";
   button.id = id;
-  button.textContent = (text ? text : browser.i18n.getMessage(id));
+  button.textContent = (text || browser.i18n.getMessage(id));
   if (titleId) {
     button.title = browser.i18n.getMessage(titleId);
   } else if (titleText) {
@@ -173,15 +250,197 @@ function appendButtonRow(parent, id, titleId, text, titleText, enabled) {
   parent.appendChild(row);
 }
 
+function getRule(row) {
+  const radio = row.children[1].firstChild;
+  if (radio.nodeName != "INPUT") {
+    return null;
+  }
+  const children = row.children;
+  const rule = {};
+  if (radio.checked) {
+    rule.radio = "filter";
+  } else if (children[2].firstChild.checked) {
+    rule.radio = "url";
+  }
+  if (children[4].firstChild.value) {
+    rule.name = children[4].firstChild.value;
+  }
+  if (children[5].firstChild.value) {
+    rule.nameNegation = children[5].firstChild.value;
+  }
+  if (children[7].firstChild.value) {
+    rule.url = children[7].firstChild.value;
+  }
+  if (children[8].firstChild.value) {
+    rule.urlNegation = children[8].firstChild.value;
+  }
+  if (children[10].firstChild.value) {
+    rule.search = children[10].firstChild.value;
+  }
+  if (children[11].firstChild.value) {
+    rule.replace = children[11].firstChild.value;
+  }
+  return rule;
+}
+
+function addRule(parent, count, total, rule) {
+  if (!rule) {
+    rule = {};
+  }
+  const row = document.createElement("TR");
+  const stringCount = String(count);
+  appendTextNodeCol(row, stringCount);
+  const prefix = "regexpRule=" + stringCount;
+  const filter = (rule.radio === "filter");
+  const off = (!rule.radio || (rule.radio === "off"));
+  const filterOrOff = (filter || off);
+  appendRadioCol(row, prefix + "Filter", prefix + "Radio", "titleRadioFilter",
+    filter);
+  appendRadioCol(row, prefix + "Url", prefix + "Radio", "titleRadioUrl",
+    rule.radio === "url");
+  appendRadioCol(row, prefix + "Off", prefix + "Radio", "titleRadioOff", off);
+  appendInputCol(row, "titleRuleName", rule.name, off);
+  appendInputCol(row, "titleRuleNameNegation", rule.nameNegation, off);
+  appendCol(row);
+  appendInputCol(row, "titleRuleUrl", rule.url, off);
+  appendInputCol(row, "titleRuleUrlNegation", rule.urlNegation, off);
+  appendCol(row);
+  appendInputCol(row, "titleRuleSearch", rule.search, filterOrOff);
+  appendInputCol(row, "titleRuleReplace", rule.replace, filterOrOff);
+  const colUp = document.createElement("TD");
+  if ((count > 1) && (total > 1)) {
+    appendButton(colUp, "regexpButton=/" + stringCount, "titleButtonRuleUp",
+      browser.i18n.getMessage("buttonRuleUp"), null, true);
+  }
+  row.appendChild(colUp);
+  const colDown = document.createElement("TD");
+  if (count < total) {
+    appendButton(colDown, "regexpButton=*" + stringCount,
+      "titleButtonRuleDown", browser.i18n.getMessage("buttonRuleDown"),
+      null, true);
+  }
+  row.appendChild(colDown);
+  appendButtonCol(row, "regexpButton=-" + stringCount, "titleButtonRuleSub",
+    browser.i18n.getMessage("buttonRuleSub"), null, true);
+  appendButtonCol(row, "regexpButton=+" + stringCount, "titleButtonRuleAdd",
+    browser.i18n.getMessage("buttonRuleAdd"), null, true);
+  parent.appendChild(row);
+}
+
+function changeRule(id) {
+  const child = document.getElementById(id);
+  if (!child) {
+    return;
+  }
+  const row = child.parentNode.parentNode;
+  const rule = getRule(row);
+  if (!rule) {
+    return;
+  }
+  const filter = (rule.radio === "filter");
+  const off = (!rule.radio || (rule.radio === "off"));
+  const filterOrOff = (filter || off);
+  const children = row.children;
+  children[4].firstChild.disabled = off;
+  children[5].firstChild.disabled = off;
+  children[7].firstChild.disabled = off;
+  children[8].firstChild.disabled = off;
+  children[10].firstChild.disabled = filterOrOff;
+  children[11].firstChild.disabled = filterOrOff;
+}
+
+function addButtonsRulesLocal(restore, clean) {
+  const row = getButtonsRulesLocal();
+  if (row.hasChildNodes()) {  // Already done
+    const children = row.children;
+    children[2].firstChild.disabled = !restore;
+    children[3].firstChild.disabled = !clean;
+    return;
+  }
+  appendButtonCol(row, "buttonRulesDefault", "titleButtonRulesDefault",
+    null, null, true);
+  appendButtonCol(row, "buttonRulesStoreLocal", "titleButtonRulesStoreLocal",
+    null, null, true);
+  appendButtonCol(row, "buttonRulesRestoreLocal",
+    "titleButtonRulesRestoreLocal", null, null, restore);
+  appendButtonCol(row, "buttonRulesCleanLocal", "titleButtonRulesCleanLocal",
+    null, null, clean);
+}
+
+function addButtonsRulesSync(restore, clean) {
+  const row = getButtonsRulesSync();
+  if (row.hasChildNodes()) {  // Already done
+    const children = row.children;
+    children[2].firstChild.disabled = !restore;
+    children[3].firstChild.disabled = !clean;
+    return;
+  }
+  appendCol(row);
+  appendButtonCol(row, "buttonRulesStoreSync", "titleButtonRulesStoreSync",
+    null, null, true);
+  appendButtonCol(row, "buttonRulesRestoreSync",
+    "titleButtonRulesRestoreSync", null, null, restore);
+  appendButtonCol(row, "buttonRulesCleanSync", "titleButtonRulesCleanSync",
+    null, null, clean);
+}
+
+function addRules(rules) {
+  const parent = getTableRules();
+  if (parent.hasChildNodes()) {  // Already done
+    return;
+  }
+  const row = document.createElement("TR");
+  row.appendChild(document.createElement("TD"));
+  appendTextNodeCol(row, browser.i18n.getMessage("radioFilter"),
+    browser.i18n.getMessage("titleRadioFilter"));
+  appendTextNodeCol(row, browser.i18n.getMessage("radioUrl"),
+    browser.i18n.getMessage("titleRadioUrl"));
+  appendTextNodeCol(row, browser.i18n.getMessage("radioOff"),
+    browser.i18n.getMessage("titleRadioOff"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleName"),
+    browser.i18n.getMessage("titleRuleName"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleNameNegation"),
+    browser.i18n.getMessage("titleRuleNameNegation"));
+  appendTextNodeCol(row, "\xa0\xa0");
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleUrl"),
+    browser.i18n.getMessage("titleRuleUrl"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleUrlNegation"),
+    browser.i18n.getMessage("titleRuleUrlNegation"));
+  appendTextNodeCol(row, "\xa0\xa0");
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleSearch"),
+    browser.i18n.getMessage("titleRuleSearch"));
+  appendTextNodeCol(row, browser.i18n.getMessage("ruleReplace"),
+    browser.i18n.getMessage("titleRuleReplace"));
+  for (let i = 0; i < 3; ++i) {
+    appendCol(row);
+  }
+  appendButtonCol(row, "regexpButton=+0", "titleButtonRuleAdd",
+    browser.i18n.getMessage("buttonRuleAdd"), null, true);
+  parent.appendChild(row);
+  const total = rules.length;
+  let count = 0;
+  for (let rule of rules) {
+    addRule(parent, ++count, total, rule);
+  }
+}
+
+function addCheckboxRules() {
+  const row = document.createElement("TR");
+  appendCheckboxCol(row, "checkboxRules",
+    browser.i18n.getMessage("titleCheckboxRules"), false, true);
+  appendTextNodeCol(row, browser.i18n.getMessage("CheckboxRules"));
+  const parent = getTableCheckboxRules();
+  parent.appendChild(row);
+}
+
 function addButtonsBase() {
   const parent = getButtonsBase();
   if (parent.hasChildNodes()) {  // Already done
     return;
   }
+  addCheckboxRules();
   const row = document.createElement("TR");
-  appendButtonCol(row, "buttonListExactDupes", "titleButtonListExactDupes");
-  appendButtonCol(row, "buttonListSimilarDupes",
-    "titleButtonListSimilarDupes");
+  appendButtonCol(row, "buttonListDupes", "titleButtonListDupes");
   appendButtonCol(row, "buttonListEmpty", "titleButtonListEmpty");
   appendButtonCol(row, "buttonListAll", "titleButtonListAll");
   parent.appendChild(row);
@@ -196,6 +455,25 @@ function addButtonRemove(buttonId, titleId) {
   appendButtonCol(row, buttonId, titleId);
   const parent = getButtonsRemove();
   parent.appendChild(row);
+}
+
+function addButtonsSame(enabled) {
+  const parent = getButtonsFolders();
+  if (parent.hasChildNodes()) {  // Already done
+    return;
+  }
+  appendButtonRow(parent, "buttonMarkSame", "titleButtonMarkFolder",
+    null, null, enabled);
+  appendButtonRow(parent, "buttonUnmarkSame", "titleButtonUnmarkFolder",
+    null, null, enabled);
+  appendButtonRow(parent, "buttonMarkSameButFirst",
+    "titleButtonMarkSameButFirst", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkSameButLast",
+    "titleButtonMarkSameButLast", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkSameButOldest",
+    "titleButtonMarkSameButOldest", null, null, enabled);
+  appendButtonRow(parent, "buttonMarkSameButNewest",
+    "titleButtonMarkSameButNewest", null, null, enabled);
 }
 
 function addButtonsFolders(mode, enabled) {
@@ -233,22 +511,26 @@ function addSelectOption(select, content, value) {
   select.appendChild(option);
 }
 
-function addSelectFolder(folders) {
+function addSelectFolder(sameFolders, folderIds, folders) {
   const select = document.createElement("SELECT");
   select.title = browser.i18n.getMessage("titleSelectFolder");
   select.id = "selectedFolder";
-  addSelectOption(select, browser.i18n.getMessage("OptionNonFolder"), "'");
-  let folderIds = [];
-  for (let folder of folders) {
-    if (!folder) {
-      continue;
+  addSelectOption(select, browser.i18n.getMessage("optionNonFolder"), "@");
+  if (sameFolders) {
+    addSelectOption(select, browser.i18n.getMessage("optionSameFolder"), "=");
+  }
+  if (folderIds) {
+    for (let folder of folders) {
+      if (!folder) {
+        continue;
+      }
+      if (!folder.used) {
+        continue;
+      }
+      addSelectOption(select, getName(folders, folder.parent, folder.name),
+        String(folderIds.length));
+      folderIds.push(folder.used);
     }
-    if (!folder.used) {
-      continue;
-    }
-    addSelectOption(select, getName(folders, folder.parent, folder.name),
-      String(folderIds.length));
-    folderIds.push(folder.used);
   }
   const col = document.createElement("TD");
   col.appendChild(select);
@@ -256,7 +538,6 @@ function addSelectFolder(folders) {
   row.appendChild(col);
   const parent = getSelectFolder();
   parent.appendChild(row);
-  return folderIds;
 }
 
 function addButtonsMark(mode) {
@@ -417,24 +698,27 @@ function entryExtra(col, text) {
   rulerExtra(col, text);  // by accident the same mechanism works
 }
 
+function getBookmarkId(id) {
+  return id.substr(9);  // 9 = "bookmark=".length
+}
+
 function addBookmark(bookmark, folders, id) {
   const row = document.createElement("TR");
-  appendCheckboxCol(row, bookmark.id);
+  appendCheckboxCol(row, "bookmark=" + bookmark.id);
   if (bookmark.order !== undefined) {
     appendTextNodeCol(row, String(bookmark.order));
-    const dummy = document.createElement("TD");  // A dummy column for space
-    row.appendChild(dummy);
+    appendCol(row);
   }
   const name = getName(folders, bookmark.parent, bookmark.text);
-  const col = document.createElement("TD");
   if (bookmark.url) {
+    const col = document.createElement("TD");
     const url = bookmark.url;
     row.title = url;
     const link = document.createElement("A");
     link.href = url;
     link.target = "_blank";
     link.textContent = name;
-    link.referrerpolicy = 'no-referrer';
+    link.referrerpolicy = "no-referrer";
     col.appendChild(link);
     if (id) {
       col.id = id;
@@ -450,23 +734,137 @@ function addBookmark(bookmark, folders, id) {
   top.appendChild(row);
 }
 
+function getRules() {
+  const parent = getTableRules();
+  const rules = [];
+  if (!parent.hasChildNodes()) {
+    return rules;
+  }
+  for (let row of parent.children) {
+    const rule = getRule(row);
+    if (rule) {
+      rules.push(rule);
+    }
+  }
+  return rules;
+}
+
+function redisplayRules(rules) {
+  clearItem(getTableRules());
+  if (isCheckedRules()) {
+    addRules(rules);
+  }
+}
+
+function buttonRule(action) {
+  const rules = getRules();
+  let number = Number(action.substr(1));
+  const type = action.substr(0, 1);
+  switch(type) {
+    case "+": {
+        const rule = {};
+        rules.splice(number, 0, rule);
+      }
+      break;
+    case "-":
+      rules.splice(number - 1, 1);
+      break;
+    case "/":
+      --number;
+    case "*": {
+        const rule = rules[number - 1];
+        rules[number - 1] = rules[number];
+        rules[number] = rule;
+      }
+      break;
+    default:  // should not happen
+      return;  // it is a bug if we get here
+  }
+  redisplayRules(rules);
+}
+
+function haveStorageSync() {  // check if supported by browser
+  return (browser.storage.sync && browser.storage.sync.get &&
+    (typeof(browser.storage.sync.get) == "function"));
+}
+
+function haveProperties(object) {
+  for (let attribute in object) {
+    return true;
+  }
+  return false;
+}
+
+function buttonsRulesQuick(storageArea, restoreRules) {
+  const addButtonsRules = ((storageArea === "sync") ?
+    addButtonsRulesSync : addButtonsRulesLocal);
+  browser.storage[storageArea].get().then(function (storage) {
+    if (!isCheckedRules()) {  // async race: user might have changed
+      return;
+    }
+    if (!storage) {
+      addButtonsRules(false, false);
+      return;
+    }
+    const clean = haveProperties(storage);
+    if (!storage.rulesV1) {
+      addButtonsRules(false, clean);
+      return;
+    }
+    if (restoreRules) {
+      redisplayRules(storage.rulesV1);
+    }
+    addButtonsRules(true, clean);
+  }, function () {
+    if (!isCheckedRules()) {  // async race: user might have changed
+      return;
+    }
+    addButtonsRules(false, true);
+  });
+}
+
+function buttonsRules(storageArea, restoreRules) {
+  if (isCheckedRules()) {
+    buttonsRulesQuick(storageArea, restoreRules);
+  }
+}
+
+function toggleRules(rules) {
+  if (isCheckedRules()) {
+    addRules(rules);
+    buttonsRulesQuick("local");
+    if (haveStorageSync()) {
+      buttonsRulesQuick("sync");
+    }
+    return null;
+  }
+  if (rules) {  // checkboxRules was already unchecked
+    return rules;
+  }
+  const newRules = getRules();
+  clearItem(getTableRules());
+  clearItem(getButtonsRulesLocal());
+  clearItem(getButtonsRulesSync());
+  return newRules;
+}
+
 function toggleExtra(entryList, rulerList) {
-  if ((!entryList) && !rulerList) {
+  if (!entryList && !rulerList) {
     return;
   }
-  const fullUrl = getCheckboxFullUrl();
+  const fullUrl = isCheckedFullUrl();
   if (rulerList) {
     for (let i = 0; i < rulerList.length; ++i) {
-      const col = document.getElementById("rulerExtra" + String(i));
+      const col = document.getElementById("rulerExtra=" + String(i));
       rulerExtra(col, (fullUrl ? rulerList[i] : null));
     }
   }
   if (!entryList) {
     return;
   }
-  let extra = getCheckboxExtra();
+  let extra = isCheckedExtra();
   for (let i = 0; i < entryList.length; ++i) {
-    const col = document.getElementById("entryExtra" + String(i));
+    const col = document.getElementById("entryExtra=" + String(i));
     const entry = entryList[i];
     let text;
     if (fullUrl && entry.url) {
@@ -590,16 +988,9 @@ function markButNewest() {
   }
 }
 
-function SplitNumber(text, begin) {
-  if (text.substring(0, begin.length) !== begin) {
-    return -1;
-  }
-  return Number(text.substring(begin.length));
-}
-
 function getSelectedIds(folderIds) {
-  const value = getSelectedFolder();
-  if (!value) {
+  const value = getValueSelectedFolder();
+  if ((!value) || (value === "=")) {
     return null;
   }
   return folderIds[Number(value)];
@@ -619,7 +1010,7 @@ function markFolder(folderIds, checked) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    if (!ids.has(checkbox.id)) {
+    if (!ids.has(getBookmarkId(checkbox.id))) {
       continue;
     }
     checkbox.checked = checked;
@@ -650,7 +1041,7 @@ function markFolderGroup(folderIds, mode) {
   let groupMatches = false;
   let dateMatch;
   let dateSeen = 0;
-  function MarkGroup() {
+  function markGroup() {
     if (!groupMatches) {
       return;
     }
@@ -675,7 +1066,7 @@ function markFolderGroup(folderIds, mode) {
   }
   for (let node of top.childNodes) {
     if (!isCheckbox(node)) {  // ruler
-      MarkGroup();
+      markGroup();
       if (checkboxesOthers.length) {  // test for speed reasons
         checkboxesOthers = [];
       }
@@ -687,7 +1078,7 @@ function markFolderGroup(folderIds, mode) {
       continue;
     }
     const checkbox = getCheckbox(node);
-    if (!ids.has(checkbox.id)) {
+    if (!ids.has(getBookmarkId(checkbox.id))) {
       checkboxesOthers.push(checkbox);
       continue;
     }
@@ -709,12 +1100,102 @@ function markFolderGroup(folderIds, mode) {
     dateSeen = current;
     dateMatch = checkboxesMe.length;
   }
-  MarkGroup();
+  markGroup();
 }
 
-function isMarked(id) {
-  const checkbox = document.getElementById(id);
-  return (checkbox && checkbox.checked);
+function markSame(folders, checked) {
+  const top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {
+      continue;
+    }
+    const checkbox = getCheckbox(node);
+    const folder = folders.get(getBookmarkId(checkbox.id));
+    if (folder === undefined) {
+      continue;
+    }
+    checkbox.checked = checked;
+  }
+}
+
+function markSameGroup(folders, mode) {
+  const top = getTop();
+  if (!top.hasChildNodes()) {
+    return;
+  }
+  let items = null;
+  function markGroup() {
+    if (!items) {
+      return;
+    }
+    let i = 0;
+    for (let item of items) {
+      ++i;
+      item.checkbox.checked = (i != item.folderData.match);
+    }
+  }
+  let folderMap = null;
+  let checkTime = 0;
+  let first = false;
+  if (mode == "oldest") {
+    checkTime = -1;
+  } else if (mode == "newest") {
+    checkTime = 1;
+  } else if (mode == "first") {
+    first = true;
+  }
+  for (let node of top.childNodes) {
+    if (!isCheckbox(node)) {  // ruler
+      markGroup();
+      items = null;
+      folderMap = null;
+      continue;
+    }
+    const checkbox = getCheckbox(node);
+    const id = getBookmarkId(checkbox.id);
+    let folder = folders.get(id);
+    if (folder === undefined) {
+      continue;
+    }
+    let folderData;
+    if (items) {
+      folderData = folderMap.get(folder);
+    } else {
+      items = [];
+      folderMap = new Map();
+    }
+    if (!folderData) {
+      folderData = {};
+      folderMap.set(folder, folderData);
+    }
+    const item = {
+      checkbox: checkbox,
+      folderData: folderData
+    };
+    items.push(item);
+    if (!checkTime) {
+      if (!first || !folderData.match) {
+        folderData.match = items.length;
+      }
+      continue;
+    }
+    const current = getOrder(node);
+    if (folderData.dateSeen) {
+      if (checkTime > 0) {
+        if (current < folderData.dateSeen) {
+          continue;
+        }
+      } else if (current >= folderData.dateSeen) {
+        continue;
+      }
+    }
+    folderData.dateSeen = current;
+    folderData.match = items.length;
+  }
+  markGroup();
 }
 
 function getMarked(returnSet) {
@@ -741,7 +1222,7 @@ function getMarked(returnSet) {
     }
     const checkbox = getCheckbox(node);
     if (checkbox.checked) {
-      adding(checkbox.id);
+      adding(getBookmarkId(checkbox.id));
     }
   }
   return marked;
@@ -751,7 +1232,7 @@ function displayProgress(textId, buttonTextId, total, todo) {
   const percentage = (100 * total) / todo;
   addProgressButton(buttonTextId, percentage);
   displayMessage(browser.i18n.getMessage(textId,
-    [String(total), String(todo), String(Math.round(percentage))]))
+    [String(total), String(todo), String(Math.round(percentage))]));
 }
 
 function displayEndProgress(textId, total, error) {
@@ -792,12 +1273,12 @@ function normalizeGroup(group) {
 function normalizeFolders(folders) {
   for (let i = 0; i < folders.length; ++i) {
     const folder = folders[i];
-    if ((!folder.used) || (!folder.used.size)) {
+    if (!folder.used || !folder.used.size) {
       delete folders[i];
       continue;
     }
     parent = folder.parent;
-    if ((!parent) && (parent !== 0)) {
+    if (!parent && (parent !== 0)) {
       continue;
     }
     const used = folder.used.size;
@@ -818,7 +1299,7 @@ function normalizeFolders(folders) {
       continue;
     }
     if ((folder.childs && (folder.childs.size > 1)) ||
-        (folder.used && folder.used.size && ((!folder.usedByChilds)
+        (folder.used && folder.used.size && (!folder.usedByChilds
         || (folder.used.size > folder.usedByChilds)))) {
       ++display;
     }
@@ -826,6 +1307,150 @@ function normalizeFolders(folders) {
     delete folder.usedByChilds;
   }
   return display;
+}
+
+function textToLowerCase(text) {
+  return text.toLowerCase();
+}
+
+function textToUpperCase(text) {
+  return text.toUpperCase();
+}
+
+function compileRules(mode) {
+  const compiledRules = {};
+  if (!isCheckedRules()) {
+    return compiledRules;
+  }
+  const rules = getRules();
+  const compiled = [];
+  let count = 0;
+  for (let rule of rules) {
+    ++count;
+    const replaceRule = ((mode > 0) && rule.search && (rule.radio === "url"));
+    if (!replaceRule && (rule.radio !== "filter")) {
+      continue;
+    }
+    let name, url;
+    const compiledRule = {};
+    try {
+      if (rule.name) {
+        name = true;
+        compiledRule.name = new RegExp(rule.name);
+      }
+      if (rule.nameNegation) {
+        name = true;
+        compiledRule.nameNegation = new RegExp(rule.nameNegation);
+      }
+      if (mode) {
+        if (rule.url) {
+          url = true;
+          compiledRule.url = new RegExp(rule.url);
+        }
+        if (rule.urlNegation) {
+          url = true;
+          compiledRule.urlNegation = new RegExp(rule.urlNegation);
+        }
+        if (replaceRule) {
+          compiledRule.search = new RegExp(rule.search, "g");
+        }
+      }
+    }
+    catch(error) {
+      compiledRules.error = error;
+      return compiledRules;
+    }
+    if (replaceRule) {
+      if (!rule.replace) {
+        compiledRule.replace = "";
+      } else if (rule.replace === "\\L$&") {
+        compiledRule.replace = textToLowerCase;
+      } else if (rule.replace === "\\U$&") {
+        compiledRule.replace = textToUpperCase;
+      } else {
+        compiledRule.replace = rule.replace;
+      }
+    }
+    if (name || url) {
+      compiledRule.conditional = true;
+      if (name) {
+        compiledRules.conditionalName = true;
+      }
+      if (url) {
+        compiledRules.conditionalUrl = true;
+      }
+    } else if (!replaceRule) {
+      continue;
+    }
+    compiledRule.prefix = String(count) + ": ";
+    compiled.push(compiledRule);
+  }
+  if (compiled.length) {
+    compiledRules.compiled = compiled;
+  }
+  return compiledRules;
+}
+
+function rulesFilter(compiledRules, folders, parent, title, url, processed) {
+  const compiled = (compiledRules.compiled || false);
+  if (!compiled) {  // shortcut most likely case
+    if (processed) {
+      processed.url = url;
+    }
+    return false;
+  }
+  const name = (compiledRules.conditionalName &&
+    getName(folders, parent, title, "\0"));
+  let extra;
+  for (let compiledRule of compiled) {
+    if (compiledRule.conditional) {
+      if (compiledRule.name && !compiledRule.name.exec(name)) {
+        continue;
+      }
+      if (compiledRule.nameNegation && compiledRule.nameNegation.exec(name)) {
+        continue;
+      }
+      if (compiledRule.url && !compiledRule.url.exec(url)) {
+        continue;
+      }
+      if (compiledRule.urlNegation && compiledRule.urlNegation.exec(url)) {
+        continue;
+      }
+    }
+    const search = (compiledRule.search || false);
+    if (!search) {
+      return true;
+    }
+    const matches = url.match(search);
+    if (!matches) {
+      continue;
+    }
+    let replacedUrl;
+    try {
+      replacedUrl = url.replace(search, compiledRule.replace);
+    }
+    catch(error) {
+      replacedUrl = false;
+    }
+    if (!replacedUrl || (replacedUrl == url)) {
+      continue;
+    }
+    url = replacedUrl;
+    if (extra) {
+      extra += " ";
+    } else {
+      extra = "";
+    }
+    extra += compiledRule.prefix + matches.join(" ");
+//  extra += " -> " + url;  // rules debugging
+  }
+  if (processed) {
+    processed.url = url;
+    if (extra) {
+      processed.extra = extra;
+    }
+  }
+  return false;
 }
 
 function coincidingUrl(bookmarkList, url) {
@@ -838,7 +1463,8 @@ function coincidingUrl(bookmarkList, url) {
 }
 
 function calculate(command, state, callback) {
-  let similar;
+  let extra;
+  let compiledRules;
   let folderMode;
   let handleFunction;
   let urlMap;
@@ -848,7 +1474,7 @@ function calculate(command, state, callback) {
   let entryList;
 
   function calculateError(error) {
-    displayMessage("messageCalculateError", error);
+    displayMessage(browser.i18n.getMessage("messageCalculateError", error));
     callback();
   }
 
@@ -885,16 +1511,13 @@ function calculate(command, state, callback) {
 
   function handleDupe(node, parent) {
     ++allCount;
+    const title = node.title;
     const url = node.url;
-    let groupIndex = url;
-    let extra;
-    if (similar) {
-      let index = groupIndex.indexOf("?");
-      if (index > 0) {
-        groupIndex = groupIndex.substring(0, index);
-        extra = url.substring(index);
-      }
+    const processed = {};
+    if (rulesFilter(compiledRules, folders, parent, title, url, processed)) {
+      return;
     }
+    const groupIndex = processed.url;
     const id = node.id;
     let group = urlMap.get(groupIndex);
     if (!group) {
@@ -907,11 +1530,12 @@ function calculate(command, state, callback) {
       id: id,
       order: ((node.dateAdded !== undefined) ? node.dateAdded : (-1)),
       parent: parent,
-      text: node.title,
+      text: title,
       url: url
     };
-    if (extra !== undefined) {
-      bookmark.extra = extra;
+    if (processed.extra) {
+      extra = true;
+      bookmark.extra = processed.extra;
     }
     group.push(bookmark);
   }
@@ -920,30 +1544,39 @@ function calculate(command, state, callback) {
     if (node.url || (node.type && (node.type != "folder"))) {
       return;
     }
+    const title = node.title;
+    if (rulesFilter(compiledRules, folders, parent, title)) {
+      return;
+    }
     const id = node.id;
     parentUsed(parent, id);
     const bookmark = {
       id: id,
       parent: parent,
-      text: node.title
+      text: title
     };
     result.push(bookmark);
   }
 
   function handleAll(node, parent, index) {
+    const title = node.title;
+    const url = node.url
+    if (rulesFilter(compiledRules, folders, parent, title, url)) {
+      return;
+    }
     const id = node.id;
     parentUsed(parent, id);
     const bookmarkResult = {
       id: id,
       parent: parent,
-      text: node.title,
-      url: node.url
+      text: title,
+      url: url
     };
     result.push(bookmarkResult);
     const bookmark = {
       parentId: node.parentId,
-      title: node.title,
-      url: node.url,
+      title: title,
+      url: url,
       index: ((node.index !== undefined) ? node.index : index)
     };
     if (node.type !== undefined) {
@@ -954,13 +1587,13 @@ function calculate(command, state, callback) {
 
   function recurse(node) {
     function recurseMain(node, parent, index) {
-      if ((!node.children) || (!node.children.length)) {
+      if (!node.children || !node.children.length) {
         if ((parent !== null) && !node.unmodifable) {
           if (folderMode) {
             handleFunction(node, parent);
             return;
-          } else if (node.url && ((!node.type) || (node.type == "bookmark")) &&
-              (node.url.substr(0, 6) !== "place:")) {
+          } else if (node.url && (!node.type || (node.type == "bookmark")) &&
+              !node.url.startsWith("place:")) {
             handleFunction(node, parent, index);
           }
         }
@@ -988,13 +1621,51 @@ function calculate(command, state, callback) {
     recurseMain(node, null, 0);
   }
 
-  function addButtons(mode) {
+  function addButtons(mode, sameFolders) {
     state.marked = new Set();
     addButtonsMode(mode);
     const display = normalizeFolders(folders);
     if (display > 1) {
-      state.folderIds = addSelectFolder(folders);
+      state.folderIds = [];
+    }
+    if (sameFolders || state.folderIds) {
+      addSelectFolder(sameFolders, state.folderIds, folders);
       state.markFolders = mode;
+    }
+  }
+
+  function haveSameParents(bookmarkList) {
+    const parents = new Set();
+    for (let bookmark of bookmarkList) {
+      const parent = bookmark.parent;
+      if (parent === null) {
+        continue;
+      }
+      if (parents.has(parent)) {
+        return true;
+      }
+      parents.add(parent);
+    }
+    return false;
+  }
+
+  function sameFoldersParents(bookmarkList) {
+    const folders = new Map();
+    for (let bookmark of bookmarkList) {
+      if (!bookmark.parent && (bookmark.parent !== 0)) {
+        continue;
+      }
+      const folder = bookmark.parent;
+      const folderEntry = folders.get(folder);
+      if (folderEntry === undefined) {
+        folders.set(folder, bookmark.id);
+        continue;
+      }
+      if (folderEntry) {
+        state.folders.set(folderEntry, folder);
+        folders.set(folder, null);
+      }
+      state.folders.set(bookmark.id, folder);
     }
   }
 
@@ -1014,7 +1685,7 @@ function calculate(command, state, callback) {
         entry.extra = bookmark.extra;
       }
       if (entry) {
-        id = "entryExtra" + String(entryList.length);
+        id = "entryExtra=" + String(entryList.length);
         entryList.push(entry);
       }
       addBookmark(bookmark, folders, id);
@@ -1027,6 +1698,7 @@ function calculate(command, state, callback) {
     recurse(nodes[0]);
     let groupNumber = 0;
     let total = 0;
+    let sameFolders = false;
     for (let i = 0; i < result.length; ++i) {
       const group = result[i];
       if (group.length < 2) {
@@ -1037,24 +1709,19 @@ function calculate(command, state, callback) {
         delete result[i];
         continue;
       }
+      if (!sameFolders && haveSameParents(group)) {
+        sameFolders = true;
+      }
       normalizeGroup(group);
       ++groupNumber;
       total += group.length;
     }
-    let message, title;
-    if (similar) {
-      message = "messageSimilarMatchesGroups";
-      title = "titleMessageSimilarMatchesGroups"
-    } else {
-      message = "messageExactMatchesGroups";
-      title = "titleMessageExactMatchesGroups"
-    }
-    title = browser.i18n.getMessage(title);
+    const title = browser.i18n.getMessage("titleMessageMatches");
     if (groupNumber) {
-      addButtons(0);
-      addCheckboxExtra(title, similar);
+      addButtons(0, sameFolders);
+      addCheckboxExtra(title, extra);
     }
-    displayMessage(browser.i18n.getMessage(message,
+    displayMessage(browser.i18n.getMessage("messageMatches",
       [String(total), String(groupNumber), String(allCount)]), title);
     if (!groupNumber) {
       calculateFinish();
@@ -1063,19 +1730,25 @@ function calculate(command, state, callback) {
     createCount(title);
     entryList = [];
     const rulerList = [];
+    if (sameFolders) {
+      state.folders = new Map();
+    }
     for (let group of result) {
       if (!group) {
         continue;
       }
       const url = group[0].url;
-      if ((!similar) || coincidingUrl(group, url)) {
-        const id = "rulerExtra" + String(rulerList.length);
+      if (!extra || coincidingUrl(group, url)) {
+        const id = "rulerExtra=" + String(rulerList.length);
         rulerList.push(url);
         addRuler(id);
         addBookmarks(group);
       } else {
         addRuler();
         addBookmarks(group, true);
+      }
+      if (sameFolders) {
+        sameFoldersParents(group);
       }
     }
     if (rulerList && rulerList.length) {
@@ -1124,24 +1797,28 @@ function calculate(command, state, callback) {
   let mainFunction;
   folderMode = false;
   switch (command) {
-    case "similar":
-      similar = true;
-      // fallthrough
-    case "exact":
+    case "dupes":
+      compiledRules = compileRules(1);
       mainFunction = calculateDupes;
       handleFunction = handleDupe;
       break;
     case "empty":
       folderMode = true;
+      compiledRules = compileRules(0);
       mainFunction = calculateEmpty;
       handleFunction = handleEmpty;
       break;
     case "all":
+      compiledRules = compileRules(-1);
       mainFunction = calculateAll;
       handleFunction = handleAll;
       break;
     default:  // should not happen
       return;  // it is a bug if we get here
+  }
+  if (compiledRules.error) {
+    calculateError(compiledRules.error);
+    return;
   }
   folders = [];
   result = [];
@@ -1176,7 +1853,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       return stopPressed();
     };
     process = function (id, next) {
-      stripBookmark(id, bookmarkMap.get(id), next, function (error) {
+      stripBookmark(id, bookmarkMap.get(id), next, function () {
         displayEndProgress("messageStripError", total);
         callback();
       });
@@ -1190,7 +1867,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       return stopPressed();
     };
     process = function (id, next) {
-      removeFolder(id, next, function (error) {
+      removeFolder(id, next, function () {
         displayEndProgress("messageRemoveError", total);
         callback();
       });
@@ -1218,9 +1895,38 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   recurse();
 }
 
+function rulesStore(storageArea) {
+  const storage = {
+    rulesV1: getRules()
+  };
+  browser.storage[storageArea].set(storage);
+}
+
+function rulesClean(storageArea) {
+  browser.storage[storageArea].clear();
+}
+
+function rulesRestore(storageArea) {
+  buttonsRules(storageArea, true);
+}
+
 {
   // state variables
   let state = {};
+  let rules;
+  const rulesDefault = [
+    { radio: "url", search: "^\\w+://[^\/]*/", replace: "\\L$&" },
+    { radio: "filter",
+      name: "\\0(" + browser.i18n.getMessage("regExpFrequent") + ")\\0" },
+    { radio: "off", nameNegation: "\\0.*\\0" },
+    { radio: "off", urlNegation: "\\b(e?mail|bugs|youtube|translat)\\b",
+      search: "\\?.*" },
+    { radio: "off", search: "/[^/]*$" },
+    { radio: "url", search: "/+(index\\.html)?$" },
+    { radio: "url", search: "^http:", replace: "https:" },
+    { radio: "url", search: "^([^:]*://)www?\\d*\\.", replace: "$1" },
+    { radio: "url", search: "\\.htm$", replace: ".html" }
+  ];
 
   function startLock() {
     state.lock = true;
@@ -1233,7 +1939,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   }
 
   function stopPressed() {
-    return (state.stop ? true : false);
+    return (state.stop || false);
   }
 
   function startLockReset() {
@@ -1251,16 +1957,16 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       return;
     }
     if (id) {
-      if (!getCheckboxCount().checked) {
+      if (!isCheckedCount()) {
         return;
       }
-      if (isMarked(id)) {
-        state.marked.add(id);
+      if (isChecked(id)) {
+        state.marked.add(getBookmarkId(id));
       } else {
-        state.marked.delete(id);
+        state.marked.delete(getBookmarkId(id));
       }
     } else {
-      if (!getCheckboxCount().checked) {
+      if (!isCheckedCount()) {
         if (state.hasOwnProperty("lastCount")) {
           delete state.lastCount;
           displayCount(browser.i18n.getMessage("messageNoCount"));
@@ -1283,8 +1989,58 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     endLock();
   }
 
+  function initRulesDefault() {
+    rules = toggleRules(rulesDefault);
+  }
+
+  function initRulesStorage(storageArea, callback) {
+    browser.storage[storageArea].get().then(function (storage) {
+      if (storage && storage.rulesV1) {
+        rules = toggleRules(storage.rulesV1);
+        return;
+      }
+      callback();
+    }, callback);
+  }
+
+  function initRulesSync() {
+    const callback = initRulesDefault;
+    if (!haveStorageSync()) {
+      callback();
+      return;
+    }
+    initRulesStorage("sync", callback);
+  }
+
+  function initRulesLocal() {
+    initRulesStorage("local", initRulesSync);
+  }
+
+  function checkboxRules() {
+    if (rules === undefined) {  // first call
+      initRulesLocal();
+    } else {
+      rules = toggleRules(rules);
+    }
+  }
+
+  function storageListener(changes, storageArea) {
+    switch(storageArea) {
+      case "sync":
+        if (!haveStorageSync()) {  // only if supported by browser
+          return;
+        }
+        break;
+      case "local":
+        break;
+      default:  // unsupported storageArea (e.g. "managed")
+        return;
+    }
+    buttonsRules(storageArea);
+  }
+
   function checkboxListener(event) {
-    if ((!event.target) || (!event.target.id)) {
+    if (!event.target || !event.target.id) {
       return;
     }
     switch (event.target.id) {
@@ -1295,34 +2051,64 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       case "checkboxCount":
         marked();
         return;
-      default:  // bookmark checkbox id
-        marked(event.target.id);
+      case "checkboxRules":
+        checkboxRules();
         return;
+      default:
+        const id = event.target.id;
+        if (id.startsWith("bookmark=")) {  // bookmark checkbox id
+          marked(id);
+          return;
+        }
     }
   }
 
   function toggleButtonsFolders() {
     let haveSelected = state.hasOwnProperty("markFolders");
+    let sameFolders = false;
     if (haveSelected) {
-      const name = getSelectedFolder();
-      if (!name) {
+      const name = getValueSelectedFolder();
+      if (name) {
+        if (name === "=") {
+          sameFolders = true;
+        }
+      } else {
         haveSelected = false;
       }
     }
     if (!haveSelected) {
+      delete state.folderButtons;
       clearButtonsFolders();
       return;
     }
-    addButtonsFolders(state.markFolders, !state.lock);
+    if (state.hasOwnProperty("folderButtons")) {
+      if (state.folderButtons === sameFolders) {  // display is up-to-date
+        return;
+      }
+      clearButtonsFolders();
+    }
+    state.folderButtons = sameFolders;
+    if (sameFolders) {
+      addButtonsSame(!state.lock);
+    } else {
+      addButtonsFolders(state.markFolders, !state.lock);
+    }
   }
 
-  function selectListener(event) {
-    if ((!event.target) || (!event.target.id)) {
+  function changeListener(event) {
+    if (!event.target || !event.target.id) {
       return;
     }
-    switch (event.target.id) {
+    const id = event.target.id
+    switch (id) {
       case "selectedFolder":
         toggleButtonsFolders();
+        return;
+      default:
+        if (id.startsWith("regexpRule=")) {  // rule radio button
+          changeRule(id);
+          return;
+        }
     }
   }
 
@@ -1338,23 +2124,20 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     startLock();
     setTimeout(function () {
       processMarked(stopPressed, endLockReset, bookmarkMap);
-    })
+    });
   }
 
-  function markWrapper(func, funcargs) {
+  function markWrapper(mainFunction, arg1, arg2) {
     startLock();
     enableBookmarks(false);
-    const thisArg = this;
-    const args = Array.prototype.slice.call(arguments);
-    args.splice(0, 1);
     setTimeout(function () {
-      func.apply(thisArg, args);
+      mainFunction(arg1, arg2);
       endLockAll();
-    })
+    });
   }
 
   function clickListener(event) {
-    if ((!event.target) || (!event.target.id)) {
+    if (!event.target || !event.target.id) {
       return;
     }
     if (event.target.id == "buttonStop") {
@@ -1365,12 +2148,10 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       (event.buttons && (event.buttons != 1))) {
       return;
     }
-    switch (event.target.id) {
-      case "buttonListExactDupes":
-        calculateWrapper("exact");
-        return;
-      case "buttonListSimilarDupes":
-        calculateWrapper("similar");
+    const id = event.target.id;
+    switch (id) {
+      case "buttonListDupes":
+        calculateWrapper("dupes");
         return;
       case "buttonListEmpty":
         calculateWrapper("empty");
@@ -1423,8 +2204,52 @@ function processMarked(stopPressed, callback, bookmarkMap) {
       case "buttonMarkFolderButNewest":
         markWrapper(markFolderGroup, state.folderIds, "newest");
         return;
-      // default:  // checkboxes: handled by checkboxListener()
-      //   return;
+      case "buttonMarkSame":
+        markWrapper(markSame, state.folders, true);
+        return;
+      case "buttonUnmarkSame":
+        markWrapper(markSame, state.folders, false);
+        return;
+      case "buttonMarkSameButFirst":
+        markWrapper(markSameGroup, state.folders, "first");
+        return;
+      case "buttonMarkSameButLast":
+        markWrapper(markSameGroup, state.folders, "last");
+        return;
+      case "buttonMarkSameButOldest":
+        markWrapper(markSameGroup, state.folders, "oldest");
+        return;
+      case "buttonMarkSameButNewest":
+        markWrapper(markSameGroup, state.folders, "newest");
+        return;
+      case "buttonRulesDefault":
+        redisplayRules(rulesDefault);
+        return;
+      case "buttonRulesStoreLocal":
+        rulesStore("local");
+        return;
+      case "buttonRulesRestoreLocal":
+        rulesRestore("local");
+        return;
+      case "buttonRulesCleanLocal":
+        rulesClean("local");
+        return;
+      case "buttonRulesStoreSync":
+        rulesStore("sync");
+        return;
+      case "buttonRulesRestoreSync":
+        rulesRestore("sync");
+        return;
+      case "buttonRulesCleanSync":
+        rulesClean("sync");
+        return;
+      default:
+        if (id.startsWith("regexpButton=")) {
+          buttonRule(id.substring(13));  // 13 = "regexpButton=".length
+          return;
+        }
+      // checkboxes: handled by checkboxListener()
+      // radioButtons, select: handled by changeListener()
     }
   }
 
@@ -1432,6 +2257,7 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   addButtonsBase();
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);
-  document.addEventListener("change", selectListener);
+  document.addEventListener("change", changeListener);
+  browser.storage.onChanged.addListener(storageListener);
   endLock();
 }
