@@ -1,5 +1,9 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-5.3:
+	Henaro aka Ironwool:
+	- Redesign icon in svg
+
 *bookmarkdupes-5.2:
 	Martin Väth <martin at mvath.de>:
 	- Fix regression from 5.1: radio buttons in expert mode now enable/
