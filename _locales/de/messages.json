@@ -7,6 +7,14 @@
     "message": "Anzeige/Entfernung doppelter Lesezeichen, leerer Ordner oder Beschreibungen",
     "description": "Description of the extension"
   },
+  "warningExpertStrong": {
+    "message": "\u26A0\u00A0",
+    "description": "First part of warning to enable expert mode: emphasized"
+  },
+  "warningExpertText": {
+    "message": "Aktivieren Sie nicht den Expertenmodus, wenn Ihnen die Konsequenzen nicht vollständig klar sind!",
+    "description": "Second part of warning to enable expert mode: normal"
+  },
   "checkboxRules": {
     "message": "Expertenmodus: anpassbare Regeln zum Finden ähnlicher Lesezeichen oder Ignorieren von Lesezeichen",
     "description": "Checkbox text for switching on/off regexp rules"
@@ -367,6 +375,10 @@
     "message": "Zusätzlich wird die Markierung des jeweils neuesten Lesezeichens von identischen Ordnern aus der gleichen Gruppe entfernt.",
     "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
   },
+  "warningRemoveMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for removing marked bookmarks"
+  },
   "buttonRemoveMarked": {
     "message": "Markierte Lesezeichen löschen",
     "description": "Button for removing marked bookmarks"
@@ -374,6 +386,10 @@
   "titleButtonRemoveMarked": {
     "message": "Markierte Lesezeichen beziehen sich auf diejenigen seit dem letzten Drücken des Knopfes zur Berechnung der Liste.",
     "description": "Explain that bookmarks refer to those of last update of the list"
+  },
+  "warningStripMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for stripping descriptions of marked bookmarks"
   },
   "buttonStripMarked": {
     "message": "Beschreibungen markierter Lesezeichen entfernen",

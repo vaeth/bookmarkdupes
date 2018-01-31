@@ -10,7 +10,7 @@ After installing bookmarkdupes, the usage is rather simple:
 
 To open bookmarkdupes, click the extension symbol (duplicate stars) or
 use the link in the options page of the extension.
-**Do not enable “Expert Mode”** (unless you know what you are doing,
+**Do not enable “Expert Mode”** (unless you fully understand the consequences,
 see separate section).
 Then select what you want to display:
 
@@ -27,7 +27,10 @@ Finally, there are buttons to remove the selected bookmarks in cases 1 and 2
 or to strip the descriptions of the selected bookmarks in case 3.
 (The latter has some side effects, see section **Known Bugs**).
 
-Currently, there is no working version available for android
+**Be aware that removing bookmarks or stripping descriptions is irreversible!**
+*It is recommended to make backups of you bookmarks first!*
+
+Currently, there is no working version of the extension available for android
 (see section **Known Bugs**).
 
 ## Important

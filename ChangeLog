@@ -5,6 +5,11 @@
 	- Redesign icon in svg
 	- Provide favicon
 
+	Martin Väth <martin at mvath.de>:
+	- Add page heading with icon and name of the extension
+	- Add warnings about expert mode and for removal/strip button
+	- Display title for expert mode checkbox text
+
 *bookmarkdupes-5.2:
 	Martin Väth <martin at mvath.de>:
 	- Fix regression from 5.1: radio buttons in expert mode now enable/

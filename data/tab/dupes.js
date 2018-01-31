@@ -18,6 +18,21 @@ function setTitle(title) {
   document.getElementById("pageTitle").textContent = title;
 }
 
+function setHeadTitle(text, title) {
+  const head = document.getElementById("headTitle");
+  head.title = title;
+  head.appendChild(document.createTextNode("\xa0" + text));
+}
+
+function setWarningExpert(warningId, textId) {
+  const warning = document.createElement("STRONG");
+  warning.textContent = browser.i18n.getMessage(warningId);
+  const parent = document.getElementById("warningExpert");
+  const text = document.createTextNode(browser.i18n.getMessage(textId));
+  parent.appendChild(warning);
+  parent.appendChild(text);
+}
+
 function getButtonsBase() {
   return document.getElementById("buttonsBase");
 }
@@ -426,9 +441,9 @@ function addRules(rules) {
 
 function addCheckboxRules() {
   const row = document.createElement("TR");
-  appendCheckboxCol(row, "checkboxRules",
-    browser.i18n.getMessage("titleCheckboxRules"), false, true);
-  appendTextNodeCol(row, browser.i18n.getMessage("CheckboxRules"));
+  const title = browser.i18n.getMessage("titleCheckboxRules");
+  appendCheckboxCol(row, "checkboxRules", title , false, true);
+  appendTextNodeCol(row, browser.i18n.getMessage("CheckboxRules"), title);
   const parent = getTableCheckboxRules();
   parent.appendChild(row);
 }
@@ -446,13 +461,20 @@ function addButtonsBase() {
   parent.appendChild(row);
 }
 
-function addButtonRemove(buttonId, titleId) {
+function addButtonRemove(warningId, buttonId, titleId) {
   const row = document.createElement("TR");
+  const title = browser.i18n.getMessage(titleId);
+  row.title = title;
   const col = document.createElement("TD");
   col.width = "50pt";
   col.style.height = "50pt";
-  row.append(col);
-  appendButtonCol(row, buttonId, titleId);
+  col.style.textAlign = "center";
+  const text = document.createTextNode(browser.i18n.getMessage(warningId));
+  const strong = document.createElement("STRONG");
+  strong.appendChild(text);
+  col.appendChild(strong);
+  row.appendChild(col);
+  appendButtonCol(row, buttonId);
   const parent = getButtonsRemove();
   parent.appendChild(row);
 }
@@ -560,9 +582,11 @@ function addButtonsMark(mode) {
 
 function addButtonsMode(mode, folders) {
   if (mode == 2) {
-    addButtonRemove("buttonStripMarked", "titleButtonStripMarked");
+    addButtonRemove("warningStripMarked",
+      "buttonStripMarked", "titleButtonStripMarked");
   } else {
-    addButtonRemove("buttonRemoveMarked", "titleButtonRemoveMarked");
+    addButtonRemove("warningRemoveMarked",
+      "buttonRemoveMarked", "titleButtonRemoveMarked");
   }
   addButtonsMark(mode);
 }
@@ -2253,7 +2277,10 @@ function rulesRestore(storageArea) {
     }
   }
 
-  setTitle(browser.i18n.getMessage("extensionName"));
+  const title = browser.i18n.getMessage("extensionName");
+  setTitle(title);
+  setHeadTitle(title, browser.i18n.getMessage("extensionDescription"));
+  setWarningExpert("warningExpertStrong", "warningExpertText");
   addButtonsBase();
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);

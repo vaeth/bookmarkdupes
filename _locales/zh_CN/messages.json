@@ -7,6 +7,14 @@
     "message": "显示/移除重复的书签、空文件夹或描述",
     "description": "Description of the extension"
   },
+  "warningExpertStrong": {
+    "message": "\u26A0\u00A0", // new
+    "description": "First part of warning to enable expert mode: emphasized"
+  },
+  "warningExpertText": {
+    "message": "Do not enable expert mode unless you fully understand the consequences!", // new
+    "description": "Second part of warning to enable expert mode: normal"
+  },
   "checkboxRules": {
     "message": "Expert mode: use customized rules to match similar bookmarks or to ignore bookmarks when searching.", // new
     "description": "Checkbox text for switching on/off regexp rules"
@@ -371,6 +379,10 @@
     "message": "Additionally the newest of identical folders in the same group will be unmarked.", // new
     "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
   },
+  "warningRemoveMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for removing marked bookmarks"
+  },
   "buttonRemoveMarked": {
     "message": "移除选中的书签",
     "description": "Button for removing marked bookmarks"
@@ -378,6 +390,10 @@
   "titleButtonRemoveMarked": {
     "message": "Marked bookmarks refer to those since you last pressed the button to calculate the list.", // new
     "description": "Explain that bookmarks refer to those of last update of the list"
+  },
+  "warningStripMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for stripping descriptions of marked bookmarks"
   },
   "buttonStripMarked": {
     "message": "剥离选中书签的描述",

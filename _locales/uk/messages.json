@@ -7,6 +7,14 @@
     "message": "Пошук, відображення та видалення дублів закладок, порожніх папок або описів",
     "description": "Description of the extension"
   },
+  "warningExpertStrong": {
+    "message": "\u26A0\u00A0", // new
+    "description": "First part of warning to enable expert mode: emphasized"
+  },
+  "warningExpertText": {
+    "message": "Do not enable expert mode unless you fully understand the consequences!", // new
+    "description": "Second part of warning to enable expert mode: normal"
+  },
   "checkboxRules": {
     "message": "Експертний режим: використовуйте власні правила, щоб знаходити або ігнорувати закладки під час пошуку.",
     "description": "Checkbox text for switching on/off regexp rules"
@@ -371,6 +379,10 @@
     "message": "Буде позначено всі ідентичні папки в одній групі, крім самих нових.",
     "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
   },
+  "warningRemoveMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for removing marked bookmarks"
+  },
   "buttonRemoveMarked": {
     "message": "Видалити позначені закладки",
     "description": "Button for removing marked bookmarks"
@@ -378,6 +390,10 @@
   "titleButtonRemoveMarked": {
     "message": "Закладки позначено відтоді, як ви в останнє натискали кнопку, вираховуючи список.",
     "description": "Explain that bookmarks refer to those of last update of the list"
+  },
+  "warningStripMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for stripping descriptions of marked bookmarks"
   },
   "buttonStripMarked": {
     "message": "Очистити описи позначених закладок",
