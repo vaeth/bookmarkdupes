@@ -129,6 +129,6 @@ They put the matches into lower or upper case, respectively.
 
 (in alphabetical order)
 
-- Henaro aka Ironwool https://github.com/perdolka (Russian and Ukrainian translation; redesign icon in svg)
+- Henaro aka Ironwool https://github.com/perdolka (Russian and Ukrainian translation; redesign icon in svg; provide favicon)
 - Juan Salvador Aleixandre Talens https://github.com/juaalta (Spanish translation)
 - YFdyh000 <yfdyh000 at gmail.com> https://github.com/yfdyh000 (Simplified Chinese translation)
