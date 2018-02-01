@@ -9,7 +9,7 @@
   },
   "warningExpertStrong": {
     "message": "\u26A0\u00A0",
-    "description": "First part of warning to enable expert mode: emphasized"
+    "description": "First part of warning to enable expert mode: strong"
   },
   "warningExpertText": {
     "message": "No habilite el modo experto si no se entiende completamente las consecuencias!",
