@@ -12,7 +12,7 @@
     "description": "First part of warning to enable expert mode: emphasized"
   },
   "warningExpertText": {
-    "message": "Не включайте экспертный режим, если вы не понимаете последствия!",
+    "message": "Не включайте экспертный режим, если не понимаете последствия!",
     "description": "Second part of warning to enable expert mode: normal"
   },
   "checkboxRules": {
