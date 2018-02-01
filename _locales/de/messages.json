@@ -7,6 +7,14 @@
     "message": "Anzeige/Entfernung doppelter Lesezeichen, leerer Ordner oder Beschreibungen",
     "description": "Description of the extension"
   },
+  "warningExpertStrong": {
+    "message": "\u26A0\u00A0",
+    "description": "First part of warning to enable expert mode: emphasized"
+  },
+  "warningExpertText": {
+    "message": "Aktivieren Sie nicht den Expertenmodus, wenn Ihnen die Konsequenzen nicht vollständig klar sind!",
+    "description": "Second part of warning to enable expert mode: normal"
+  },
   "checkboxRules": {
     "message": "Expertenmodus: anpassbare Regeln zum Finden ähnlicher Lesezeichen oder Ignorieren von Lesezeichen",
     "description": "Checkbox text for switching on/off regexp rules"
@@ -88,7 +96,7 @@
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
-    "message": "⇧",
+    "message": "\u21E7",
     "description": "Button for moving a rule up. The text should be short"
   },
   "titleButtonRuleUp": {
@@ -96,7 +104,7 @@
     "description": "Explain that the rule will be moved up"
   },
   "buttonRuleDown": {
-    "message": "⇩",
+    "message": "\u21E9",
     "description": "Button for moving a rule down. The text should be short"
   },
   "titleButtonRuleDown": {
@@ -104,7 +112,7 @@
     "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "❌",
+    "message": "\u2716",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
@@ -112,7 +120,7 @@
     "description": "Explain that the rule will be removed"
   },
   "buttonRuleAdd": {
-    "message": "❎",
+    "message": "\u2795",
     "description": "Button for inserting a new rule. The text should be short"
   },
   "titleButtonRuleAdd": {
@@ -124,7 +132,7 @@
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
-    "message": "⇇ voreingestellte Regeln",
+    "message": "\u21C7 voreingestellte Regeln",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {
@@ -132,7 +140,7 @@
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "⇉ lokaler Speicher",
+    "message": "\u21C9 lokaler Speicher",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
@@ -140,7 +148,7 @@
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "⇇ lokaler Speicher",
+    "message": "\u21C7 lokaler Speicher",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
@@ -148,7 +156,7 @@
     "description": "Explain that current rules will be replaced by those from the browser's local storage area"
   },
   "buttonRulesCleanLocal": {
-    "message": "❌ lokaler Speicher",
+    "message": "\u2716 lokaler Speicher",
     "description": "Button for cleaning local storage. The text should be short"
   },
   "titleButtonRulesCleanLocal": {
@@ -156,7 +164,7 @@
     "description": "Explain that the browser's local storage area will be cleaned from stored rules"
   },
   "buttonRulesStoreSync": {
-    "message": "⇉ Sync-Speicher",
+    "message": "\u21C9 Sync-Speicher",
     "description": "Button for putting rules to sync storage. The text should be short"
   },
   "titleButtonRulesStoreSync": {
@@ -164,7 +172,7 @@
     "description": "Explain that current rules will replace those in the browser's sync storage area"
   },
   "buttonRulesRestoreSync": {
-    "message": "⇇ Sync-Speicher",
+    "message": "\u21C7 Sync-Speicher",
     "description": "Button for restoring rules from sync storage. The text should be short"
   },
   "titleButtonRulesRestoreSync": {
@@ -172,7 +180,7 @@
     "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
   },
   "buttonRulesCleanSync": {
-    "message": "❌ Sync-Speicher",
+    "message": "\u2716 Sync-Speicher",
     "description": "Button for cleaning sync storage. The text should be short"
   },
   "titleButtonRulesCleanSync": {
@@ -367,6 +375,10 @@
     "message": "Zusätzlich wird die Markierung des jeweils neuesten Lesezeichens von identischen Ordnern aus der gleichen Gruppe entfernt.",
     "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
   },
+  "warningRemoveMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for removing marked bookmarks"
+  },
   "buttonRemoveMarked": {
     "message": "Markierte Lesezeichen löschen",
     "description": "Button for removing marked bookmarks"
@@ -374,6 +386,10 @@
   "titleButtonRemoveMarked": {
     "message": "Markierte Lesezeichen beziehen sich auf diejenigen seit dem letzten Drücken des Knopfes zur Berechnung der Liste.",
     "description": "Explain that bookmarks refer to those of last update of the list"
+  },
+  "warningStripMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for stripping descriptions of marked bookmarks"
   },
   "buttonStripMarked": {
     "message": "Beschreibungen markierter Lesezeichen entfernen",

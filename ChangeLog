@@ -1,5 +1,33 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-5.3:
+	Henaro aka Ironwool:
+	- Redesign icon in svg
+	- Provide favicon
+
+	Martin Väth <martin at mvath.de>:
+	- Add page heading with icon and name of the extension
+	- Add warnings about expert mode and for removal/strip button
+	- Display title for expert mode checkbox text
+
+*bookmarkdupes-5.2:
+	Martin Väth <martin at mvath.de>:
+	- Fix regression from 5.1: radio buttons in expert mode now enable/
+	  disable correct columns again. Thanks to perdolka for reporting:
+	  https://github.com/vaeth/bookmarkdupes/issues/56
+
+*bookmarkdupes-5.1:
+	Martin Väth <martin at mvath.de>:
+	- Change layout of "expert mode" table slightly, see
+	  https://github.com/vaeth/bookmarkdupes/issues/52
+
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-5.0:
 	Martin Väth <martin at mvath.de>:
 	- Add expert rules to ignore ("filter") certain bookmarks.

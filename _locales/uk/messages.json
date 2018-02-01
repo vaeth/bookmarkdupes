@@ -7,6 +7,14 @@
     "message": "Пошук, відображення та видалення дублів закладок, порожніх папок або описів",
     "description": "Description of the extension"
   },
+  "warningExpertStrong": {
+    "message": "\u26A0\u00A0", // new
+    "description": "First part of warning to enable expert mode: emphasized"
+  },
+  "warningExpertText": {
+    "message": "Do not enable expert mode unless you fully understand the consequences!", // new
+    "description": "Second part of warning to enable expert mode: normal"
+  },
   "checkboxRules": {
     "message": "Експертний режим: використовуйте власні правила, щоб знаходити або ігнорувати закладки під час пошуку.",
     "description": "Checkbox text for switching on/off regexp rules"
@@ -16,7 +24,7 @@
     "description": "Explain what regular expresssions are used for"
   },
   "radioFilter": {
-    "message": "Фільтр",
+    "message": "Фільтр\u00A0\u00A0",
     "description": "Radio button for filtering a bookmark. The text should be short"
   },
   "titleRadioFilter": {
@@ -24,7 +32,7 @@
     "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
   },
   "radioUrl": {
-    "message": "Змінити",
+    "message": "Заміна\u00A0\u00A0",
     "description": "Radio button for preprocessing a URL. The text should be short"
   },
   "titleRadioUrl": {
@@ -32,7 +40,7 @@
     "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
   },
   "radioOff": {
-    "message": "Вимк.",
+    "message": "Вимк.\u00A0\u00A0",
     "description": "Radio button for ignoring the rule. The text should be short"
   },
   "titleRadioOff": {
@@ -40,7 +48,7 @@
     "description": "Explain that by choosing that button the rule has no effect"
   },
   "ruleName": {
-    "message": "Відповідність імен",
+    "message": "Відповідн. імен",
     "description": "Input field for matching the name. The text should be short"
   },
   "titleRuleName": {
@@ -48,7 +56,7 @@
     "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleNameNegation": {
-    "message": "Невідповідність імен",
+    "message": "Невідповідність",
     "description": "Input field for not matching the name. The text should be short"
   },
   "titleRuleNameNegation": {
@@ -56,7 +64,7 @@
     "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleUrl": {
-    "message": "Відповідність URL-ів",
+    "message": "URL Відповідн.",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
@@ -64,7 +72,7 @@
     "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
   },
   "ruleUrlNegation": {
-    "message": "Невідповідність URL-ів",
+    "message": "Невідповідність",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrlNegation": {
@@ -72,7 +80,7 @@
     "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
   },
   "ruleSearch": {
-    "message": "Замін.URL-відповідн.",
+    "message": "Замінити \u2193 URL",
     "description": "Input field for the search part of the URL. The text should be short"
   },
   "titleRuleSearch": {
@@ -80,7 +88,7 @@
     "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
   },
   "ruleReplace": {
-    "message": "на",
+    "message": "відповідність на:",
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
@@ -88,7 +96,8 @@
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
-    "message": "Правило вгору",
+    "message": "\u21E7", // new
+// chaned      "Правило вгору",
     "description": "Button for moving a rule up. The text should be short"
   },
   "titleButtonRuleUp": {
@@ -96,7 +105,8 @@
     "description": "Explain that the rule will be moved up"
   },
   "buttonRuleDown": {
-    "message": "Правило вниз",
+    "message": "\u21E9", // new
+// changed     "Правило вниз",
     "description": "Button for moving a rule down. The text should be short"
   },
   "titleButtonRuleDown": {
@@ -104,7 +114,8 @@
     "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "Видал.правило",
+    "message": "\u2716", // new
+// changed     "Видал.правило",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
@@ -112,7 +123,8 @@
     "description": "Explain that the rule will be removed"
   },
   "buttonRuleAdd": {
-    "message": "Дод.правило",
+    "message": "\u2795", // new
+// changed     "Дод.правило",
     "description": "Button for inserting a new rule. The text should be short"
   },
   "titleButtonRuleAdd": {
@@ -132,7 +144,7 @@
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "Збер.правила",
+    "message": "Зберегти правила\u00A0\u00A0\u00A0",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
@@ -140,7 +152,7 @@
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "Відн.правила",
+    "message": "Відновити правила\u00A0",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
@@ -172,7 +184,7 @@
     "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
   },
   "buttonRulesCleanSync": {
-    "message": "Оч.синхр.сховище",
+    "message": "Оч.синхр.сховище\u00A0\u00A0",
     "description": "Button for cleaning sync storage. The text should be short"
   },
   "titleButtonRulesCleanSync": {
@@ -367,6 +379,10 @@
     "message": "Буде позначено всі ідентичні папки в одній групі, крім самих нових.",
     "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
   },
+  "warningRemoveMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for removing marked bookmarks"
+  },
   "buttonRemoveMarked": {
     "message": "Видалити позначені закладки",
     "description": "Button for removing marked bookmarks"
@@ -374,6 +390,10 @@
   "titleButtonRemoveMarked": {
     "message": "Закладки позначено відтоді, як ви в останнє натискали кнопку, вираховуючи список.",
     "description": "Explain that bookmarks refer to those of last update of the list"
+  },
+  "warningStripMarked": {
+    "message": "\u26A0", // new
+    "description": "Text in front of button for stripping descriptions of marked bookmarks"
   },
   "buttonStripMarked": {
     "message": "Очистити описи позначених закладок",

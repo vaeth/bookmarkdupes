@@ -3,7 +3,7 @@
   "short_name": "bookmarkdupes",
   "description": "__MSG_extensionDescription__",
   "author": "Martin Väth",
-  "version": "5.0",
+  "version": "5.3",
   "manifest_version": 2,
   "homepage_url": "https://addons.mozilla.org/en-US/firefox/addon/bookmark-dupes/",
   "default_locale": "en",
@@ -21,7 +21,17 @@
 
   "browser_action": {
     "default_icon": {
-      "48": "data/icons/48.png"
+      "16": "data/icons/48.svg",
+      "19": "data/icons/48.svg",
+      "20": "data/icons/48.svg",
+      "24": "data/icons/48.svg",
+      "30": "data/icons/48.svg",
+      "32": "data/icons/48.svg",
+      "38": "data/icons/48.svg",
+      "48": "data/icons/48.svg",
+      "64": "data/icons/48.svg",
+      "96": "data/icons/48.svg",
+      "128": "data/icons/48.svg"
     }
   },
 
@@ -31,7 +41,17 @@
   },
 
   "icons": {
-    "48": "data/icons/48.png"
+    "16": "data/icons/48.svg",
+    "19": "data/icons/48.svg",
+    "20": "data/icons/48.svg",
+    "24": "data/icons/48.svg",
+    "30": "data/icons/48.svg",
+    "32": "data/icons/48.svg",
+    "38": "data/icons/48.svg",
+    "48": "data/icons/48.svg",
+    "64": "data/icons/48.svg",
+    "96": "data/icons/48.svg",
+    "128": "data/icons/48.svg"
   },
 
   "applications": {

@@ -18,6 +18,21 @@ function setTitle(title) {
   document.getElementById("pageTitle").textContent = title;
 }
 
+function setHeadTitle(text, title) {
+  const head = document.getElementById("headTitle");
+  head.title = title;
+  head.appendChild(document.createTextNode("\xa0" + text));
+}
+
+function setWarningExpert(warningId, textId) {
+  const warning = document.createElement("STRONG");
+  warning.textContent = browser.i18n.getMessage(warningId);
+  const parent = document.getElementById("warningExpert");
+  const text = document.createTextNode(browser.i18n.getMessage(textId));
+  parent.appendChild(warning);
+  parent.appendChild(text);
+}
+
 function getButtonsBase() {
   return document.getElementById("buttonsBase");
 }
@@ -268,17 +283,17 @@ function getRule(row) {
   if (children[5].firstChild.value) {
     rule.nameNegation = children[5].firstChild.value;
   }
-  if (children[6].firstChild.value) {
-    rule.url = children[6].firstChild.value;
-  }
   if (children[7].firstChild.value) {
-    rule.urlNegation = children[7].firstChild.value;
+    rule.url = children[7].firstChild.value;
   }
   if (children[8].firstChild.value) {
-    rule.search = children[8].firstChild.value;
+    rule.urlNegation = children[8].firstChild.value;
   }
-  if (children[9].firstChild.value) {
-    rule.replace = children[9].firstChild.value;
+  if (children[10].firstChild.value) {
+    rule.search = children[10].firstChild.value;
+  }
+  if (children[11].firstChild.value) {
+    rule.replace = children[11].firstChild.value;
   }
   return rule;
 }
@@ -301,8 +316,10 @@ function addRule(parent, count, total, rule) {
   appendRadioCol(row, prefix + "Off", prefix + "Radio", "titleRadioOff", off);
   appendInputCol(row, "titleRuleName", rule.name, off);
   appendInputCol(row, "titleRuleNameNegation", rule.nameNegation, off);
+  appendCol(row);
   appendInputCol(row, "titleRuleUrl", rule.url, off);
   appendInputCol(row, "titleRuleUrlNegation", rule.urlNegation, off);
+  appendCol(row);
   appendInputCol(row, "titleRuleSearch", rule.search, filterOrOff);
   appendInputCol(row, "titleRuleReplace", rule.replace, filterOrOff);
   const colUp = document.createElement("TD");
@@ -341,10 +358,10 @@ function changeRule(id) {
   const children = row.children;
   children[4].firstChild.disabled = off;
   children[5].firstChild.disabled = off;
-  children[6].firstChild.disabled = off;
   children[7].firstChild.disabled = off;
-  children[8].firstChild.disabled = filterOrOff;
-  children[9].firstChild.disabled = filterOrOff;
+  children[8].firstChild.disabled = off;
+  children[10].firstChild.disabled = filterOrOff;
+  children[11].firstChild.disabled = filterOrOff;
 }
 
 function addButtonsRulesLocal(restore, clean) {
@@ -399,10 +416,12 @@ function addRules(rules) {
     browser.i18n.getMessage("titleRuleName"));
   appendTextNodeCol(row, browser.i18n.getMessage("ruleNameNegation"),
     browser.i18n.getMessage("titleRuleNameNegation"));
+  appendTextNodeCol(row, "\xa0\xa0");
   appendTextNodeCol(row, browser.i18n.getMessage("ruleUrl"),
     browser.i18n.getMessage("titleRuleUrl"));
   appendTextNodeCol(row, browser.i18n.getMessage("ruleUrlNegation"),
     browser.i18n.getMessage("titleRuleUrlNegation"));
+  appendTextNodeCol(row, "\xa0\xa0");
   appendTextNodeCol(row, browser.i18n.getMessage("ruleSearch"),
     browser.i18n.getMessage("titleRuleSearch"));
   appendTextNodeCol(row, browser.i18n.getMessage("ruleReplace"),
@@ -422,9 +441,9 @@ function addRules(rules) {
 
 function addCheckboxRules() {
   const row = document.createElement("TR");
-  appendCheckboxCol(row, "checkboxRules",
-    browser.i18n.getMessage("titleCheckboxRules"), false, true);
-  appendTextNodeCol(row, browser.i18n.getMessage("CheckboxRules"));
+  const title = browser.i18n.getMessage("titleCheckboxRules");
+  appendCheckboxCol(row, "checkboxRules", title , false, true);
+  appendTextNodeCol(row, browser.i18n.getMessage("CheckboxRules"), title);
   const parent = getTableCheckboxRules();
   parent.appendChild(row);
 }
@@ -442,13 +461,20 @@ function addButtonsBase() {
   parent.appendChild(row);
 }
 
-function addButtonRemove(buttonId, titleId) {
+function addButtonRemove(warningId, buttonId, titleId) {
   const row = document.createElement("TR");
+  const title = browser.i18n.getMessage(titleId);
+  row.title = title;
   const col = document.createElement("TD");
   col.width = "50pt";
   col.style.height = "50pt";
-  row.append(col);
-  appendButtonCol(row, buttonId, titleId);
+  col.style.textAlign = "center";
+  const text = document.createTextNode(browser.i18n.getMessage(warningId));
+  const strong = document.createElement("STRONG");
+  strong.appendChild(text);
+  col.appendChild(strong);
+  row.appendChild(col);
+  appendButtonCol(row, buttonId);
   const parent = getButtonsRemove();
   parent.appendChild(row);
 }
@@ -556,9 +582,11 @@ function addButtonsMark(mode) {
 
 function addButtonsMode(mode, folders) {
   if (mode == 2) {
-    addButtonRemove("buttonStripMarked", "titleButtonStripMarked");
+    addButtonRemove("warningStripMarked",
+      "buttonStripMarked", "titleButtonStripMarked");
   } else {
-    addButtonRemove("buttonRemoveMarked", "titleButtonRemoveMarked");
+    addButtonRemove("warningRemoveMarked",
+      "buttonRemoveMarked", "titleButtonRemoveMarked");
   }
   addButtonsMark(mode);
 }
@@ -2249,7 +2277,10 @@ function rulesRestore(storageArea) {
     }
   }
 
-  setTitle(browser.i18n.getMessage("extensionName"));
+  const title = browser.i18n.getMessage("extensionName");
+  setTitle(title);
+  setHeadTitle(title, browser.i18n.getMessage("extensionDescription"));
+  setWarningExpert("warningExpertStrong", "warningExpertText");
   addButtonsBase();
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);

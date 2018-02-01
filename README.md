@@ -10,6 +10,8 @@ After installing bookmarkdupes, the usage is rather simple:
 
 To open bookmarkdupes, click the extension symbol (duplicate stars) or
 use the link in the options page of the extension.
+**Do not enable “Expert Mode”** (unless you fully understand the consequences,
+see separate section).
 Then select what you want to display:
 
 1. Bookmark duplicates
@@ -25,6 +27,12 @@ Finally, there are buttons to remove the selected bookmarks in cases 1 and 2
 or to strip the descriptions of the selected bookmarks in case 3.
 (The latter has some side effects, see section **Known Bugs**).
 
+**Be aware that removing bookmarks or stripping descriptions is irreversible!**
+*It is recommended to make backups of you bookmarks first!*
+
+Currently, there is no working version of the extension available for android
+(see section **Known Bugs**).
+
 ## Important
 
 When you reorganized/added/removed bookmarks, make sure to update the
@@ -37,9 +45,9 @@ the corresponding bookmarks to their previous location in the bookmark menu!
 
 The extension requires the following permissions for these reasons:
 
-1. "bookmarks" to read/modify bookmarks
-2. "storage" to store/restore the customized rules in expert mode.
-   Unfortunately, "storage" is not one of the optional_permissions which might
+1. “bookmarks” to read/modify bookmarks
+2. “storage“ to store/restore the customized rules in expert mode.
+   Unfortunately, “storage” is not one of the optional_permissions which might
    be required only if that feature is actually requested by the user, see
    https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json/optional_permissions
 
@@ -49,9 +57,10 @@ When selecting the checkbox for expert mode, details can be configured to
 ignore certain bookmarks when calculating the list or under which cases
 bookmarks are considered to be dupes of each other.
 
-Normally two bookmarks are considered to be duplicates of each other if their
-URL coincides. By using custom rules, the URL which is actually used for
-comparison can be preprocessed. The details are as follows.
+In non-expert mode, two bookmarks are considered to be duplicates of each
+other if their URL coincides.
+In expert mode there are custom rules by which the URL which is actually
+used for comparison is to be modified. The details are as follows.
 
 For every bookmark the rules are applied in the given order.
 There are 2 types of rules: Filter rules and URL modification rules
@@ -59,24 +68,24 @@ There are 2 types of rules: Filter rules and URL modification rules
 
 For both types of rules 4 regular expressions can be specified which are used
 to determine if the rule applies: If the corresponding regular expression is
-nonempty, the corressponding condition must be satisfied or the rule will not
+nonempty, the corresponding condition must be satisfied or the rule will not
 apply. (In the case of filter rules, at least one of these 4 regular
 expressions must be nonempty or that filter rules will not apply either.)
 
 The 4 regular expressions refer to the bookmark's name or url, respectively,
 and the regular expressions must either match or not match, respectively.
 
-- The term "regular expression" refers to a javascript type regular expression
+- The term “regular expression” refers to a javascript type regular expression
   as described e.g. in
   https://wiki.selfhtml.org/wiki/JavaScript/Objekte/RegExp
   or
   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 - The bookmark's name refers to the full bookmark path as it appears in the
   browser with folder names separated by the null character.
-  For instance, if you have in "Bookmark Menu" a folder "Collection"
+  For instance, if you have in “Bookmark Menu” a folder “Collection”
   which contains your bookmark "Example", the bookmark's name becomes
-  "Bookmark Menu\0Collection\0Example" (where \0 denotes the null character
-  which can be matched by the regular expression with \0 or \x00).
+  `Bookmark Menu\0Collection\0Example` (where `\0` denotes the null character
+  which can be matched by the regular expression with `\0` or `\x00`).
 - The bookmark's url refers to the bookmark url after possible modifications
   by previous modifier rules.
 
@@ -94,10 +103,10 @@ or
 https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace
 
 In particular, the replacement text can contain symbols like
-```$&``` or ```$1``` to refer to the whole matched text or to the
+`$&` or `$1` to refer to the whole matched text or to the
 match of the first brace in the regular expression, respectively.
 
-The replacement texts ```\L$&``` and ```\U$&``` have a special meaning:
+The replacement texts `\L$&` and `\U$&` have a special meaning:
 They put the matches into lower or upper case, respectively.
 
 ## Known Bugs
@@ -115,11 +124,14 @@ They put the matches into lower or upper case, respectively.
    in the options page of the extension instead if you have this problem.
    The reason for the problem is still unknown, see
    https://github.com/vaeth/bookmarkdupes/issues/38
+5. On android, pressing any of the three main buttons causes an infinite hang
+   for unknown reasons. Therefore, currently the extension has been disabled
+   for android.
 
-## Contributions
+## Contributors
 
 (in alphabetical order)
 
-- Henaro aka Ironwool https://github.com/perdolka (Russian and Ukrainian translation)
+- Henaro aka Ironwool https://github.com/perdolka (Russian and Ukrainian translation; redesign icon in svg; provide favicon)
 - Juan Salvador Aleixandre Talens https://github.com/juaalta (Spanish translation)
 - YFdyh000 <yfdyh000 at gmail.com> https://github.com/yfdyh000 (Simplified Chinese translation)
