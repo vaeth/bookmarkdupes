@@ -8,11 +8,11 @@
     "description": "Description of the extension"
   },
   "warningExpertStrong": {
-    "message": "\u26A0\u00A0", // new
+    "message": "\u26A0\u00A0",
     "description": "First part of warning to enable expert mode: emphasized"
   },
   "warningExpertText": {
-    "message": "Do not enable expert mode unless you fully understand the consequences!", // new
+    "message": "Не включайте экспертный режим, если не понимаете последствия!",
     "description": "Second part of warning to enable expert mode: normal"
   },
   "checkboxRules": {
@@ -96,8 +96,7 @@
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
-    "message": "\u21E7", // new
-// changed     "Правило вверх",
+    "message": "\u21E7",
     "description": "Button for moving a rule up. The text should be short"
   },
   "titleButtonRuleUp": {
@@ -105,8 +104,7 @@
     "description": "Explain that the rule will be moved up"
   },
   "buttonRuleDown": {
-    "message": "\u21E9", // new
-// changed     "Правило вниз",
+    "message": "\u21E9",
     "description": "Button for moving a rule down. The text should be short"
   },
   "titleButtonRuleDown": {
@@ -114,8 +112,7 @@
     "description": "Explain that the rule will be moved down"
   },
   "buttonRuleSub": {
-    "message": "\u2716", // new
-// changed     "Удал.правило",
+    "message": "\u2716",
     "description": "Button for removing a rule. The text should be short"
   },
   "titleButtonRuleSub": {
@@ -123,8 +120,7 @@
     "description": "Explain that the rule will be removed"
   },
   "buttonRuleAdd": {
-    "message": "\u2795", // new
-// changed     "Доб.правило",
+    "message": "\u2795",
     "description": "Button for inserting a new rule. The text should be short"
   },
   "titleButtonRuleAdd": {
@@ -380,7 +376,7 @@
     "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
   },
   "warningRemoveMarked": {
-    "message": "\u26A0", // new
+    "message": "\u26A0",
     "description": "Text in front of button for removing marked bookmarks"
   },
   "buttonRemoveMarked": {
@@ -392,7 +388,7 @@
     "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "warningStripMarked": {
-    "message": "\u26A0", // new
+    "message": "\u26A0",
     "description": "Text in front of button for stripping descriptions of marked bookmarks"
   },
   "buttonStripMarked": {
