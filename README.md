@@ -28,7 +28,7 @@ or to strip the descriptions of the selected bookmarks in case 3.
 (The latter has some side effects, see section **Known Bugs**).
 
 **Be aware that removing bookmarks or stripping descriptions is irreversible!**
-*It is recommended to make backups of you bookmarks first!*
+*It is recommended to make backups of your bookmarks first!*
 
 Currently, there is no working version of the extension available for android
 (see section **Known Bugs**).
