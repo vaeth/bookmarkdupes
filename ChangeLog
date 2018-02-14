@@ -1,5 +1,9 @@
 # ChangeLog for squashmount
 
+*bookmarkdupes-5.4:
+	Martin Väth <martin at mvath.de>:
+	- Specify browser_style for browser_action
+
 *bookmarkdupes-5.3:
 	Henaro aka Ironwool:
 	- Redesign icon in svg
