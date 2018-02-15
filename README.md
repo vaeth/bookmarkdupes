@@ -91,7 +91,7 @@ and the regular expressions must either match or not match, respectively.
 
 If a filter rule applies, the corresponding bookmark is ignored, i.e.,
 it will not be considered as a duplicate and will neither appear in the
-list of empty folders or of all bookmarks.
+list of empty folders nor of all bookmarks.
 
 If a URL modification rule applies, a text replacement will occur:
 All parts matching a specified regular expression are substituted by a
