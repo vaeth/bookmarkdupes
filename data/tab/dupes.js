@@ -2123,7 +2123,7 @@ function rulesRestore(storageArea) {
     if (!event.target || !event.target.id) {
       return;
     }
-    const id = event.target.id
+    const id = event.target.id;
     switch (id) {
       case "selectedFolder":
         toggleButtonsFolders();

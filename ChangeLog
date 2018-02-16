@@ -1,7 +1,8 @@
-# ChangeLog for squashmount
+# ChangeLog for bookmarkdupes
 
 *bookmarkdupes-5.4:
 	Martin Väth <martin at mvath.de>:
+	- Fix forgotten semicolons in javascript
 	- Specify browser_style for browser_action
 
 *bookmarkdupes-5.3:
