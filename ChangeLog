@@ -3,6 +3,7 @@
 *bookmarkdupes-5.4:
 	Martin Väth <martin at mvath.de>:
 	- Fix forgotten semicolons in javascript
+	- Use valid html
 	- Specify browser_style for browser_action
 
 *bookmarkdupes-5.3:
