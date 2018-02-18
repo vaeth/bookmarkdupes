@@ -7,12 +7,9 @@
 // For documentation on the tab API see e.g.
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs
 
-function onClickedListener() {
-  const properties = {
+browser.browserAction.onClicked.addListener(function () {
+  browser.tabs.create({
     url: browser.extension.getURL("data/tab/index.html"),
     active: true
-  };
-  browser.tabs.create(properties);
-}
-
-browser.browserAction.onClicked.addListener(onClickedListener);
+  });
+});

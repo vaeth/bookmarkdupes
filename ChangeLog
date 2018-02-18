@@ -5,6 +5,7 @@
 	- Fix forgotten semicolons in javascript
 	- Use valid html
 	- Specify browser_style for browser_action
+	- Simplify background.js
 
 *bookmarkdupes-5.3:
 	Henaro aka Ironwool:
