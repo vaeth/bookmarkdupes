@@ -1,5 +1,9 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-5.5:
+	Martin Väth <martin at mvath.de>:
+	- bugfix: more careful detection of empty storage
+
 *bookmarkdupes-5.4:
 	Martin Väth <martin at mvath.de>:
 	- Fix forgotten semicolons in javascript

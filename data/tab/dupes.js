@@ -826,7 +826,7 @@ function buttonsRulesQuick(storageArea, restoreRules) {
     if (!isCheckedRules()) {  // async race: user might have changed
       return;
     }
-    if (!storage) {
+    if (!storage || !Object.getOwnPropertyNames(storage).length) {
       addButtonsRules(false, false);
       return;
     }
