@@ -2,6 +2,8 @@
  * This project is under the GNU public license 2.0
 */
 
+"use strict";
+
 function setTitle(title) {
   document.getElementById("pageTitle").textContent = title;
 }
