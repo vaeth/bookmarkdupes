@@ -92,7 +92,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "Der Ersetzungstext für den passenden Teil des regulären Ausdrucks. Symbole wie $$& oder $$1 können benutzt werden, um auf Treffer oder Klammern zu verweisen. Die speziellen Texte \\L$$& und \\U$$& bedeuten eine klein- bzw. großgeschriebene Version der Treffer.",
+    "message": "Der Ersetzungstext für den passenden Teil des regulären Ausdrucks. Symbole wie $$& oder $$1 können benutzt werden, um auf Treffer oder Klammern zu verweisen. Die speziellen Texte \\L$$& und \\U$$& bedeuten eine klein- bzw. großgeschriebene Version der Treffer. Die speziellen Texte $URL, $NAME und $TITLE bedeuten die ursprüngliche (unmodifizierte) URL bzw. den Lesezeichennamen/-Titel (mit bzw. ohne vollen Pfad).",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {

@@ -1387,21 +1387,35 @@ function compileRules(mode) {
     if (replaceRule) {
       if (!rule.replace) {
         compiledRule.replace = "";
-      } else if (rule.replace === "\\L$&") {
-        compiledRule.replace = textToLowerCase;
-      } else if (rule.replace === "\\U$&") {
-        compiledRule.replace = textToUpperCase;
       } else {
-        compiledRule.replace = rule.replace;
+        switch (rule.replace) {
+          case "\\L\$\&":
+            compiledRule.replace = textToLowerCase;
+            break;
+          case "\\U\$\&":
+            compiledRule.replace = textToUpperCase;
+            break;
+          case "\$URL":
+            compiledRule.replace = 0;
+            compiledRules.needSpecials = true;
+            break;
+          case "\$NAME":
+            compiledRule.replace = 1;
+            compiledRules.needSpecials = compiledRules.needName = true;
+            break;
+          case "\$TITLE":
+            compiledRule.replace = 2;
+            compiledRules.needSpecials = true;
+            break;
+          default:
+            compiledRule.replace = rule.replace;
+        }
       }
     }
     if (name || url) {
       compiledRule.conditional = true;
       if (name) {
-        compiledRules.conditionalName = true;
-      }
-      if (url) {
-        compiledRules.conditionalUrl = true;
+        compiledRules.needName = true;
       }
     } else if (!replaceRule) {
       continue;
@@ -1423,8 +1437,18 @@ function rulesFilter(compiledRules, folders, parent, title, url, processed) {
     }
     return false;
   }
-  const name = (compiledRules.conditionalName &&
+  // name and specials are calculated only if we really need them
+  const name = (compiledRules.needName &&
     getName(folders, parent, title, "\0"));
+  let specials;
+  if (compiledRules.needSpecials) {
+    const originalUrl = url;
+    specials = [
+      function () { return originalUrl; },
+      function () { return name; },
+      function () { return title; }
+    ];
+  }
   let extra;
   for (let compiledRule of compiled) {
     if (compiledRule.conditional) {
@@ -1450,13 +1474,17 @@ function rulesFilter(compiledRules, folders, parent, title, url, processed) {
       continue;
     }
     let replacedUrl;
+    let replace = compiledRule.replace;
+    if (typeof(replace) == "number") {
+      replace = specials[replace];
+    }
     try {
-      replacedUrl = url.replace(search, compiledRule.replace);
+      replacedUrl = url.replace(search, replace);
     }
     catch(error) {
       replacedUrl = false;
     }
-    if (!replacedUrl || (replacedUrl == url)) {
+    if (replacedUrl == url) {
       continue;
     }
     url = replacedUrl;
@@ -1465,8 +1493,7 @@ function rulesFilter(compiledRules, folders, parent, title, url, processed) {
     } else {
       extra = "";
     }
-    extra += compiledRule.prefix + matches.join(" ");
-//  extra += " -> " + url;  // rules debugging
+    extra += compiledRule.prefix + matches.join(" ").replace(/\0/g, "\\0");
   }
   if (processed) {
     processed.url = url;
