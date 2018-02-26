@@ -92,7 +92,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "Текст заміни по відповідності регулярному виразу. Символи типу $$& чи $$1 можуть використовуватися для позначення відповідностей чи вмісту дужок (). Спеціальні тексти \\L$$& та \\U$$& означають нижній та верхній регістр відповідно. The special texts $URL, $NAME, and $TITLE mean the original (unmodified) URL and the bookmark full name/title (with/without path), respectively.", // new: a sentence was added // new
+    "message": "Текст заміни по відповідності регулярному виразу. Символи типу $$& чи $$1 можуть використовуватися для позначення відповідностей чи вмісту дужок (). Спеціальні тексти \\L$$& та \\U$$& означають нижній та верхній регістр відповідно. Спеціальні тексти $URL, $NAME, $TITLE означають початкові (немодифіковані) URL-и і повні назви/заголовки закладок (з/без шляху) відповідно.",
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
