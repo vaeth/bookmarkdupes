@@ -1,5 +1,13 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-5.5:
+	Martin Väth <martin at mvath.de>:
+	- Introduce $URL $NAME $TITLE as special replacement texts
+	- Provide some examples for tasks in expert mode in README.md
+	- Expert mode: allow replacement of whole URL by the empty string
+	- Display in replaced URLs the null character visibly
+	- More careful detection of empty storage
+
 *bookmarkdupes-5.4:
 	Martin Väth <martin at mvath.de>:
 	- Fix forgotten semicolons in javascript
