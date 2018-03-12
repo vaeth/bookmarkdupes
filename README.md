@@ -96,8 +96,8 @@ list of empty folders nor of all bookmarks.
 If a URL modification rule applies, a text replacement will occur:
 All parts matching a specified regular expression are substituted by a
 replacement text (which might be empty).
-The rules for this correspond to the javascript replace function with the
-global modifier, see e.g.
+The rules for this correspond to the javascript String.prototype.replace
+function with the global modifier, see e.g.
 https://wiki.selfhtml.org/wiki/JavaScript/Objekte/String/replace
 or
 https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace
@@ -191,9 +191,8 @@ Explanation: First replace the URL by its full name path, and then omit the last
    in the options page of the extension instead if you have this problem.
    The reason for the problem is still unknown, see
    https://github.com/vaeth/bookmarkdupes/issues/38
-5. On android, pressing any of the three main buttons causes an infinite hang
-   for unknown reasons. Therefore, currently the extension has been disabled
-   for android.
+5. Android lacks the bookmark API necessary for bookmarkdupes:
+   https://github.com/vaeth/bookmarkdupes/issues/53
 
 ## Contributors
 

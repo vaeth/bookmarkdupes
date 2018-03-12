@@ -8,6 +8,13 @@
 	- Display in replaced URLs the null character visibly
 	- More careful detection of empty storage
 
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-5.4:
 	Martin Väth <martin at mvath.de>:
 	- Fix forgotten semicolons in javascript
