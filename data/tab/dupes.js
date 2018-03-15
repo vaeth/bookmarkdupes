@@ -209,7 +209,7 @@ function appendRadio(parent, id, name, title, checked) {
   parent.appendChild(radiobox);
 }
 
-function appendTextarea(parent, title, content, disabled) {
+function appendTextarea(parent, title, content, disabled, mutationObserver) {
   const textarea = document.createElement("TEXTAREA");
   if (title) {
     textarea.title = browser.i18n.getMessage(title);
@@ -222,7 +222,12 @@ function appendTextarea(parent, title, content, disabled) {
   if (disabled) {
     textarea.disabled = true;
   }
+  mutationObserver.observe(textarea, {
+    attributeFilter: [ "style" ],
+    attributes: true
+  });
   parent.appendChild(textarea);
+  return textarea;
 }
 
 function appendCheckbox(parent, id, title, checked, enabled) {
@@ -272,39 +277,100 @@ function appendButton(parent, id, titleId, text, titleText, enabled,
 }
 
 function getRule(row) {
-  const radio = row.children[1].firstChild;
+  const radio = row.childNodes[1].firstChild;
   if (radio.nodeName != "INPUT") {
     return null;
   }
-  const children = row.children;
+  const childNodes = row.childNodes;
   const rule = {};
   if (radio.checked) {
     rule.radio = "filter";
-  } else if (children[2].firstChild.checked) {
+  } else if (childNodes[2].firstChild.checked) {
     rule.radio = "url";
   }
-  if (children[4].firstChild.value) {
-    rule.name = children[4].firstChild.value;
+  if (childNodes[4].firstChild.value) {
+    rule.name = childNodes[4].firstChild.value;
   }
-  if (children[5].firstChild.value) {
-    rule.nameNegation = children[5].firstChild.value;
+  if (childNodes[5].firstChild.value) {
+    rule.nameNegation = childNodes[5].firstChild.value;
   }
-  if (children[7].firstChild.value) {
-    rule.url = children[7].firstChild.value;
+  if (childNodes[7].firstChild.value) {
+    rule.url = childNodes[7].firstChild.value;
   }
-  if (children[8].firstChild.value) {
-    rule.urlNegation = children[8].firstChild.value;
+  if (childNodes[8].firstChild.value) {
+    rule.urlNegation = childNodes[8].firstChild.value;
   }
-  if (children[10].firstChild.value) {
-    rule.search = children[10].firstChild.value;
+  if (childNodes[10].firstChild.value) {
+    rule.search = childNodes[10].firstChild.value;
   }
-  if (children[11].firstChild.value) {
-    rule.replace = children[11].firstChild.value;
+  if (childNodes[11].firstChild.value) {
+    rule.replace = childNodes[11].firstChild.value;
   }
   return rule;
 }
 
-function addRule(parent, count, total, rule) {
+function adjustHeight(targetRow, targetColumn, height) {
+  let index = 0;
+  let found;
+  for (let column of targetRow.childNodes) {
+    if (!found) {
+      if (column === targetColumn) {
+        found = true;
+        continue;
+      }
+      ++index;
+    }
+    if (column.nodeName !== "TD") {
+      continue;
+    }
+    const textarea = (column.firstChild || null);
+    if (!textarea || (textarea.nodeName !== "TEXTAREA")) {
+      continue;
+    }
+    const style = textarea.style;
+    if (style.height != height) {
+      style.height = height;
+    }
+  }
+  return index;
+}
+
+function adjustWidth(targetRow, index, width) {
+  for (let row of targetRow.parentNode.childNodes) {
+    if ((row === targetRow) || (row.nodeName !== "TR")) {
+      continue;
+    }
+    const column = row.childNodes[index];
+    if (!column || (column.nodeName !== "TD")) {
+      continue;
+    }
+    const textarea = (column.firstChild || null);
+    if (!textarea || (textarea.nodeName !== "TEXTAREA")) {
+      continue;
+    }
+    const style = textarea.style;
+    if (style.width != width) {
+      style.width = width;
+    }
+  }
+}
+
+function mutationListener(mutationRecords) {
+  for (let mutationRecord of mutationRecords) {
+    const target = mutationRecord.target;
+    if (target.nodeName !== "TEXTAREA") {  // sanity check
+      continue;  // should not happen
+    }
+    const style = target.style;
+    const targetColumn = target.parentNode;
+    const targetRow = targetColumn.parentNode;
+    const index = adjustHeight(targetRow, targetColumn, style.height);
+    adjustWidth(targetRow, index, style.width);
+  }
+}
+
+
+function addRule(parent, count, total, rule, mutationObserver) {
   if (!rule) {
     rule = {};
   }
@@ -321,18 +387,20 @@ function addRule(parent, count, total, rule) {
     "titleRadioUrl", rule.radio === "url");
   appendCol(row, appendRadio, prefix + "Off", prefix + "Radio",
     "titleRadioOff", off);
-  appendCol(row, appendTextarea, "titleRuleName", rule.name, off);
+  appendCol(row, appendTextarea, "titleRuleName", rule.name, off,
+    mutationObserver);
   appendCol(row, appendTextarea, "titleRuleNameNegation", rule.nameNegation,
-    off);
+    off, mutationObserver);
   appendCol(row);
-  appendCol(row, appendTextarea, "titleRuleUrl", rule.url, off);
+  appendCol(row, appendTextarea, "titleRuleUrl", rule.url, off,
+    mutationObserver);
   appendCol(row, appendTextarea, "titleRuleUrlNegation", rule.urlNegation,
-    off);
+    off, mutationObserver);
   appendCol(row);
   appendCol(row, appendTextarea, "titleRuleSearch", rule.search,
-    filterOrOff);
+    filterOrOff, mutationObserver);
   appendCol(row, appendTextarea, "titleRuleReplace", rule.replace,
-    filterOrOff);
+    filterOrOff, mutationObserver);
   const colUp = document.createElement("TD");
   if ((count > 1) && (total > 1)) {
     appendButton(colUp, "regexpButton=/" + stringCount, "titleButtonRuleUp",
@@ -369,13 +437,13 @@ function changeRule(id) {
   const filter = (rule.radio === "filter");
   const off = (!rule.radio || (rule.radio === "off"));
   const filterOrOff = (filter || off);
-  const children = row.children;
-  setDisabled(children[4].firstChild, off);
-  setDisabled(children[5].firstChild, off);
-  setDisabled(children[7].firstChild, off);
-  setDisabled(children[8].firstChild, off);
-  setDisabled(children[10].firstChild, filterOrOff);
-  setDisabled(children[11].firstChild, filterOrOff);
+  const childNodes = row.childNodes;
+  setDisabled(childNodes[4].firstChild, off);
+  setDisabled(childNodes[5].firstChild, off);
+  setDisabled(childNodes[7].firstChild, off);
+  setDisabled(childNodes[8].firstChild, off);
+  setDisabled(childNodes[10].firstChild, filterOrOff);
+  setDisabled(childNodes[11].firstChild, filterOrOff);
 }
 
 function addButtonsRules(storageArea, restore, clean) {
@@ -383,9 +451,9 @@ function addButtonsRules(storageArea, restore, clean) {
     "buttonsRulesSync");
   const existingRow = document.getElementById(id);
   if (existingRow) {  // Buttons are already displayed; only adjust state
-    const children = existingRow.children;
-    setDisabled(children[2].firstChild, !restore);
-    setDisabled(children[3].firstChild, !clean);
+    const childNodes = existingRow.childNodes;
+    setDisabled(childNodes[2].firstChild, !restore);
+    setDisabled(childNodes[3].firstChild, !clean);
     return;
   }
   const row = document.createElement("TR");
@@ -421,7 +489,7 @@ function addButtonsRules(storageArea, restore, clean) {
   }
 }
 
-function addRules(rules) {
+function addRules(rules, mutationObserver) {
   const parent = getTableRules();
   if (parent.hasChildNodes()) {  // Already done
     return;
@@ -458,7 +526,7 @@ function addRules(rules) {
   const total = rules.length;
   let count = 0;
   for (let rule of rules) {
-    addRule(table, ++count, total, rule);
+    addRule(table, ++count, total, rule, mutationObserver);
   }
   parent.appendChild(table);
 }
@@ -745,12 +813,12 @@ function clearWindow() {
 
 function rulerExtra(col, text) {
   if (!text) {
-    if (col.children.length > 1) {
+    if (col.childNodes.length > 1) {
       col.removeChild(col.lastChild);
     }
     return;
   }
-  if (col.children.length > 1) {
+  if (col.childNodes.length > 1) {
     col.lastChild.textContent = text;
     return;
   }
@@ -819,7 +887,7 @@ function getRules() {
   if (!table.hasChildNodes()) {
     return rules;
   }
-  for (let row of table.children) {
+  for (let row of table.childNodes) {
     const rule = getRule(row);
     if (rule) {
       rules.push(rule);
@@ -828,14 +896,15 @@ function getRules() {
   return rules;
 }
 
-function redisplayRules(rules) {
+function redisplayRules(rules, mutationObserver) {
   clearItem(getTableRules());
+  mutationObserver.disconnect();
   if (isCheckedRules()) {
-    addRules(rules);
+    addRules(rules, mutationObserver);
   }
 }
 
-function buttonRule(action) {
+function buttonRule(action, mutationObserver) {
   const rules = getRules();
   let number = Number(action.substr(1));
   const type = action.substr(0, 1);
@@ -859,7 +928,7 @@ function buttonRule(action) {
     default:  // should not happen
       return;  // it is a bug if we get here
   }
-  redisplayRules(rules);
+  redisplayRules(rules, mutationObserver);
 }
 
 function haveStorageSync() {  // check if supported by browser
@@ -867,7 +936,7 @@ function haveStorageSync() {  // check if supported by browser
     (typeof(browser.storage.sync.get) == "function"));
 }
 
-function buttonsRulesQuick(storageArea, restoreRules) {
+function buttonsRulesQuick(storageArea, mutationObserver) {
   browser.storage[storageArea].get().then(function (storage) {
     if (!isCheckedRules()) {  // async race: user might have changed
       return;
@@ -880,8 +949,8 @@ function buttonsRulesQuick(storageArea, restoreRules) {
       addButtonsRules(storageArea, false, true);
       return;
     }
-    if (restoreRules) {
-      redisplayRules(storage.rulesV1);
+    if (mutationObserver) {
+      redisplayRules(storage.rulesV1, mutationObserver);
     }
     addButtonsRules(storageArea, true, true);
   }, function () {
@@ -892,15 +961,16 @@ function buttonsRulesQuick(storageArea, restoreRules) {
   });
 }
 
-function buttonsRules(storageArea, restoreRules) {
+function buttonsRules(storageArea, mutationObserver) {
   if (isCheckedRules()) {
-    buttonsRulesQuick(storageArea, restoreRules);
+    buttonsRulesQuick(storageArea, mutationObserver);
   }
 }
 
-function toggleRules(rules) {
+function toggleRules(rules, mutationObserver) {
+  mutationObserver.disconnect();
   if (isCheckedRules()) {
-    addRules(rules);
+    addRules(rules, mutationObserver);
     buttonsRulesQuick("local");
     if (haveStorageSync()) {
       buttonsRulesQuick("sync");
@@ -1682,7 +1752,7 @@ function calculate(command, state, callback) {
 
   function recurse(node) {
     function recurseMain(node, parent, index) {
-      if (!node.children || !node.children.length) {
+      if (!node.childNodes || !node.childNodes.length) {
         if ((parent !== null) && !node.unmodifable) {
           if (folderMode) {
             handleFunction(node, parent);
@@ -1705,7 +1775,7 @@ function calculate(command, state, callback) {
         folders.push(folder);
       }
       index = 0;
-      for (let child of node.children) {
+      for (let child of node.childNodes) {
         recurseMain(child, parent, ++index);
       }
       if (node.title && !folder.used) {
@@ -2001,10 +2071,6 @@ function rulesClean(storageArea) {
   browser.storage[storageArea].clear();
 }
 
-function rulesRestore(storageArea) {
-  buttonsRules(storageArea, true);
-}
-
 function marked(state, id) {
   if (!state.marked) {
     return;
@@ -2068,6 +2134,7 @@ function storageListener(changes, storageArea) {
     { radio: "url", search: "^([^:]*://)www?\\d*\\.", replace: "$1" },
     { radio: "url", search: "\\.htm$", replace: ".html" }
   ];
+  let mutationObserver;
 
   function startLock() {
     state.lock = true;
@@ -2094,14 +2161,18 @@ function storageListener(changes, storageArea) {
     endLock();
   }
 
+  function rulesRestore(storageArea) {
+    buttonsRules(storageArea, mutationObserver);
+  }
+
   function initRulesDefault() {
-    rules = toggleRules(rulesDefault);
+    rules = toggleRules(rulesDefault, mutationObserver);
   }
 
   function initRulesStorage(storageArea, callback) {
     browser.storage[storageArea].get().then(function (storage) {
       if (storage && storage.rulesV1) {
-        rules = toggleRules(storage.rulesV1);
+        rules = toggleRules(storage.rulesV1, mutationObserver);
         return;
       }
       callback();
@@ -2123,9 +2194,12 @@ function storageListener(changes, storageArea) {
 
   function checkboxRules() {
     if (rules === undefined) {  // first call
+      if (mutationObserver === undefined) {  // be aware of possible race
+        mutationObserver = new MutationObserver(mutationListener);
+      }
       initRulesLocal();
     } else {
-      rules = toggleRules(rules);
+      rules = toggleRules(rules, mutationObserver);
     }
   }
 
@@ -2313,7 +2387,7 @@ function storageListener(changes, storageArea) {
         markWrapper(markSameGroup, state.folders, "newest");
         return;
       case "buttonRulesDefault":
-        redisplayRules(rulesDefault);
+        redisplayRules(rulesDefault, mutationObserver);
         return;
       case "buttonRulesStoreLocal":
         rulesStore("local");
@@ -2335,7 +2409,8 @@ function storageListener(changes, storageArea) {
         return;
       default:
         if (id.startsWith("regexpButton=")) {
-          buttonRule(id.substring(13));  // 13 = "regexpButton=".length
+          buttonRule(id.substring(13),  // 13 = "regexpButton=".length
+            mutationObserver);
           return;
         }
       // checkboxes: handled by checkboxListener()
