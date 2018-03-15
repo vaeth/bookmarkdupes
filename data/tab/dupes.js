@@ -209,20 +209,20 @@ function appendRadio(parent, id, name, title, checked) {
   parent.appendChild(radiobox);
 }
 
-function appendInput(parent, title, content, disabled) {
-  const input = document.createElement("INPUT");
-  input.type = "text";
+function appendTextarea(parent, title, content, disabled) {
+  const textarea = document.createElement("TEXTAREA");
   if (title) {
-    input.title = browser.i18n.getMessage(title);
+    textarea.title = browser.i18n.getMessage(title);
   }
   if (content) {
-    input.value = content;
+    textarea.value = content;
   }
-  input.size = 15;
+  textarea.cols = 18;
+  textarea.rows = 2;
   if (disabled) {
-    input.disabled = true;
+    textarea.disabled = true;
   }
-  parent.appendChild(input);
+  parent.appendChild(textarea);
 }
 
 function appendCheckbox(parent, id, title, checked, enabled) {
@@ -321,14 +321,18 @@ function addRule(parent, count, total, rule) {
     "titleRadioUrl", rule.radio === "url");
   appendCol(row, appendRadio, prefix + "Off", prefix + "Radio",
     "titleRadioOff", off);
-  appendCol(row, appendInput, "titleRuleName", rule.name, off);
-  appendCol(row, appendInput, "titleRuleNameNegation", rule.nameNegation, off);
+  appendCol(row, appendTextarea, "titleRuleName", rule.name, off);
+  appendCol(row, appendTextarea, "titleRuleNameNegation", rule.nameNegation,
+    off);
   appendCol(row);
-  appendCol(row, appendInput, "titleRuleUrl", rule.url, off);
-  appendCol(row, appendInput, "titleRuleUrlNegation", rule.urlNegation, off);
+  appendCol(row, appendTextarea, "titleRuleUrl", rule.url, off);
+  appendCol(row, appendTextarea, "titleRuleUrlNegation", rule.urlNegation,
+    off);
   appendCol(row);
-  appendCol(row, appendInput, "titleRuleSearch", rule.search, filterOrOff);
-  appendCol(row, appendInput, "titleRuleReplace", rule.replace, filterOrOff);
+  appendCol(row, appendTextarea, "titleRuleSearch", rule.search,
+    filterOrOff);
+  appendCol(row, appendTextarea, "titleRuleReplace", rule.replace,
+    filterOrOff);
   const colUp = document.createElement("TD");
   if ((count > 1) && (total > 1)) {
     appendButton(colUp, "regexpButton=/" + stringCount, "titleButtonRuleUp",

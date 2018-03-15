@@ -2,6 +2,7 @@
 
 *bookmarkdupes-5.6:
 	Martin Väth <martin at mvath.de>:
+	- Major layout change: Use textarea instead of input field
 	- Minor layout changes: Warning placement, table head, arrows
 	- Fixed minor mistakes in DOM tree which worked only by accident
 	- Internal: use generic wrapper functions for DOM appending
