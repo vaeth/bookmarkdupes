@@ -5,6 +5,8 @@
 	- Fixed minor mistakes in DOM tree which worked only by accident
 	- Internal: use generic wrapper functions for DOM appending
 	- Internal: use clean HTML5 which passes https://validator.w3.org/
+	- Internal: remove redundant checks
+	- Internal: avoid unnecessary function nesting
 
 *bookmarkdupes-5.5:
 	Martin Väth <martin at mvath.de>:

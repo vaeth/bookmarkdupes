@@ -25,13 +25,13 @@ function appendX(parent, type, appendItem) {
   return element;
 }
 
-function appendCol(parent) {
+function appendCol() {
   const args = Array.apply(null, arguments);
   args.splice(1, 0, "TD");
   return appendX.apply(null, args);
 }
 
-function appendRow(parent) {
+function appendRow() {
   const args = Array.apply(null, arguments);
   args.splice(1, 0, "TR", appendCol);
   return appendX.apply(null, args);
@@ -42,14 +42,20 @@ function isChecked(id) {
   return (checkbox && checkbox.checked);
 }
 
-function setTitle(title) {
-  document.getElementById("pageTitle").textContent = title;
+function setDisabled(item, disabled) {
+  if (item && (!item.disabled != !disabled)) {
+    item.disabled = !!disabled;
+  }
+}
+
+function setTitle(text) {
+  document.getElementById("pageTitle").textContent = text;
 }
 
 function setHeadTitle(text, title) {
   const head = document.getElementById("headTitle");
   head.title = title;
-  head.appendChild(document.createTextNode(text));
+  head.textContent = text;
 }
 
 function setWarningExpert(warningId, textId) {
@@ -112,20 +118,8 @@ function getMessageNode() {
   return document.getElementById("textMessage");
 }
 
-function getButtonsRules(storageArea) {
-  const div = document.getElementById("buttonsRules");
-  if (!storageArea) {
-    return div;
-  }
-  let table;
-  if (div.hasChildNodes()) {
-    table = div.firstChild;
-  } else {
-    table = appendX(div, "TABLE");
-    appendX(table, "TR");
-    appendX(table, "TR");
-  }
-  return ((storageArea === "local") ? table.firstChild : table.children[1]);
+function getButtonsRules() {
+  return document.getElementById("buttonsRules");
 }
 
 function getTableRules() {
@@ -370,47 +364,55 @@ function changeRule(id) {
   const off = (!rule.radio || (rule.radio === "off"));
   const filterOrOff = (filter || off);
   const children = row.children;
-  children[4].firstChild.disabled = off;
-  children[5].firstChild.disabled = off;
-  children[7].firstChild.disabled = off;
-  children[8].firstChild.disabled = off;
-  children[10].firstChild.disabled = filterOrOff;
-  children[11].firstChild.disabled = filterOrOff;
+  setDisabled(children[4].firstChild, off);
+  setDisabled(children[5].firstChild, off);
+  setDisabled(children[7].firstChild, off);
+  setDisabled(children[8].firstChild, off);
+  setDisabled(children[10].firstChild, filterOrOff);
+  setDisabled(children[11].firstChild, filterOrOff);
 }
 
-function addButtonsRulesLocal(restore, clean) {
-  const row = getButtonsRules("local");
-  if (row.hasChildNodes()) {  // Already done
-    const children = row.children;
-    children[2].firstChild.disabled = !restore;
-    children[3].firstChild.disabled = !clean;
+function addButtonsRules(storageArea, restore, clean) {
+  const id = ((storageArea === "local") ? "buttonsRulesLocal" :
+    "buttonsRulesSync");
+  const existingRow = document.getElementById(id);
+  if (existingRow) {  // Buttons are already displayed; only adjust state
+    const children = existingRow.children;
+    setDisabled(children[2].firstChild, !restore);
+    setDisabled(children[3].firstChild, !clean);
     return;
   }
-  appendCol(row, appendButton, "buttonRulesDefault", "titleButtonRulesDefault",
-    null, null, true);
-  appendCol(row, appendButton, "buttonRulesStoreLocal",
-    "titleButtonRulesStoreLocal", null, null, true);
-  appendCol(row, appendButton, "buttonRulesRestoreLocal",
-    "titleButtonRulesRestoreLocal", null, null, restore);
-  appendCol(row, appendButton, "buttonRulesCleanLocal",
-    "titleButtonRulesCleanLocal", null, null, clean);
-}
-
-function addButtonsRulesSync(restore, clean) {
-  const row = getButtonsRules("sync");
-  if (row.hasChildNodes()) {  // Already done
-    const children = row.children;
-    children[2].firstChild.disabled = !restore;
-    children[3].firstChild.disabled = !clean;
+  const row = document.createElement("TR");
+  row.id = id;
+  if (storageArea === "local") {
+    appendCol(row, appendButton, "buttonRulesDefault",
+      "titleButtonRulesDefault", null, null, true);
+    appendCol(row, appendButton, "buttonRulesStoreLocal",
+      "titleButtonRulesStoreLocal", null, null, true);
+    appendCol(row, appendButton, "buttonRulesRestoreLocal",
+      "titleButtonRulesRestoreLocal", null, null, restore);
+    appendCol(row, appendButton, "buttonRulesCleanLocal",
+      "titleButtonRulesCleanLocal", null, null, clean);
+  } else {
+    appendCol(row);
+    appendCol(row, appendButton, "buttonRulesStoreSync",
+      "titleButtonRulesStoreSync", null, null, true);
+    appendCol(row, appendButton, "buttonRulesRestoreSync",
+      "titleButtonRulesRestoreSync", null, null, restore);
+    appendCol(row, appendButton, "buttonRulesCleanSync",
+      "titleButtonRulesCleanSync", null, null, clean);
+  }
+  const parent = getButtonsRules();
+  if (!parent.hasChildNodes()) {
+    appendX(parent, "TABLE", row);
     return;
   }
-  appendCol(row);
-  appendCol(row, appendButton, "buttonRulesStoreSync",
-    "titleButtonRulesStoreSync", null, null, true);
-  appendCol(row, appendButton, "buttonRulesRestoreSync",
-    "titleButtonRulesRestoreSync", null, null, restore);
-  appendCol(row, appendButton, "buttonRulesCleanSync",
-    "titleButtonRulesCleanSync", null, null, clean);
+  const table = parent.firstChild;
+  if (storageArea === "local") {
+    table.insertBefore(row, table.firstChild);
+  } else {
+    table.appendChild(row);
+  }
 }
 
 function addRules(rules) {
@@ -838,38 +840,28 @@ function haveStorageSync() {  // check if supported by browser
     (typeof(browser.storage.sync.get) == "function"));
 }
 
-function haveProperties(object) {
-  for (let attribute in object) {
-    return true;
-  }
-  return false;
-}
-
 function buttonsRulesQuick(storageArea, restoreRules) {
-  const addButtonsRules = ((storageArea === "sync") ?
-    addButtonsRulesSync : addButtonsRulesLocal);
   browser.storage[storageArea].get().then(function (storage) {
     if (!isCheckedRules()) {  // async race: user might have changed
       return;
     }
     if (!storage || !Object.getOwnPropertyNames(storage).length) {
-      addButtonsRules(false, false);
+      addButtonsRules(storageArea, false, false);
       return;
     }
-    const clean = haveProperties(storage);
     if (!storage.rulesV1) {
-      addButtonsRules(false, clean);
+      addButtonsRules(storageArea, false, true);
       return;
     }
     if (restoreRules) {
       redisplayRules(storage.rulesV1);
     }
-    addButtonsRules(true, clean);
+    addButtonsRules(storageArea, true, true);
   }, function () {
     if (!isCheckedRules()) {  // async race: user might have changed
       return;
     }
-    addButtonsRules(false, true);
+    addButtonsRules(storageArea, false, true);
   });
 }
 
@@ -1986,6 +1978,52 @@ function rulesRestore(storageArea) {
   buttonsRules(storageArea, true);
 }
 
+function marked(state, id) {
+  if (!state.marked) {
+    return;
+  }
+  if (id) {
+    if (!isCheckedCount()) {
+      return;
+    }
+    if (isChecked(id)) {
+      state.marked.add(getBookmarkId(id));
+    } else {
+      state.marked.delete(getBookmarkId(id));
+    }
+  } else {
+    if (!isCheckedCount()) {
+      if (state.hasOwnProperty("lastCount")) {
+        delete state.lastCount;
+        displayCount(browser.i18n.getMessage("messageNoCount"));
+      }
+      return;
+    }
+    state.marked = getMarked(true);
+  }
+  const count = state.marked.size;
+  if (count === state.lastCount) {
+    return;
+  }
+  state.lastCount = count;
+  displayCount(browser.i18n.getMessage("messageCount", count));
+}
+
+function storageListener(changes, storageArea) {
+  switch(storageArea) {
+    case "sync":
+      if (!haveStorageSync()) {  // only if supported by browser
+        return;
+      }
+      break;
+    case "local":
+      break;
+    default:  // unsupported storageArea (e.g. "managed")
+      return;
+  }
+  buttonsRules(storageArea);
+}
+
 {
   // state variables
   let state = {};
@@ -2018,49 +2056,13 @@ function rulesRestore(storageArea) {
     return (state.stop || false);
   }
 
-  function startLockReset() {
-    state = {};
-    startLock();
-  }
-
   function endLockReset() {
     state = {};
     endLock();
   }
 
-  function marked(id) {
-    if (!state.marked) {
-      return;
-    }
-    if (id) {
-      if (!isCheckedCount()) {
-        return;
-      }
-      if (isChecked(id)) {
-        state.marked.add(getBookmarkId(id));
-      } else {
-        state.marked.delete(getBookmarkId(id));
-      }
-    } else {
-      if (!isCheckedCount()) {
-        if (state.hasOwnProperty("lastCount")) {
-          delete state.lastCount;
-          displayCount(browser.i18n.getMessage("messageNoCount"));
-        }
-        return;
-      }
-      state.marked = getMarked(true);
-    }
-    const count = state.marked.size;
-    if (count === state.lastCount) {
-      return;
-    }
-    state.lastCount = count;
-    displayCount(browser.i18n.getMessage("messageCount", count));
-  }
-
   function endLockAll() {
-    marked();
+    marked(state);
     enableBookmarks();
     endLock();
   }
@@ -2100,21 +2102,6 @@ function rulesRestore(storageArea) {
     }
   }
 
-  function storageListener(changes, storageArea) {
-    switch(storageArea) {
-      case "sync":
-        if (!haveStorageSync()) {  // only if supported by browser
-          return;
-        }
-        break;
-      case "local":
-        break;
-      default:  // unsupported storageArea (e.g. "managed")
-        return;
-    }
-    buttonsRules(storageArea);
-  }
-
   function checkboxListener(event) {
     if (!event.target || !event.target.id) {
       return;
@@ -2125,7 +2112,7 @@ function rulesRestore(storageArea) {
         toggleExtra(state.entryList, state.rulerList);
         return;
       case "checkboxCount":
-        marked();
+        marked(state);
         return;
       case "checkboxRules":
         checkboxRules();
@@ -2133,7 +2120,7 @@ function rulesRestore(storageArea) {
       default:
         const id = event.target.id;
         if (id.startsWith("bookmark=")) {  // bookmark checkbox id
-          marked(id);
+          marked(state, id);
           return;
         }
     }
