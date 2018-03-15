@@ -37,6 +37,25 @@ function appendRow() {
   return appendX.apply(null, args);
 }
 
+function appendTextNodeX(row, type, text, title, id) {
+  const col = document.createElement(type);
+  const textNode = document.createTextNode(text);
+  if (id) {
+    col.id = id;
+  }
+  col.appendChild(textNode);
+  if (title) {
+    col.title = title;
+  }
+  row.appendChild(col);
+}
+
+function appendTextNodeCol() {
+  const args = Array.apply(null, arguments);
+  args.splice(1, 0, "TD");
+  return appendTextNodeX.apply(null, args);
+}
+
 function isChecked(id) {
   const checkbox = document.getElementById(id);
   return (checkbox && checkbox.checked);
@@ -56,15 +75,6 @@ function setHeadTitle(text, title) {
   const head = document.getElementById("headTitle");
   head.title = title;
   head.textContent = text;
-}
-
-function setWarningExpert(warningId, textId) {
-  const warning = document.createElement("STRONG");
-  warning.textContent = browser.i18n.getMessage(warningId);
-  const parent = document.getElementById("warningExpert");
-  const text = document.createTextNode(browser.i18n.getMessage(textId));
-  parent.appendChild(warning);
-  parent.appendChild(text);
 }
 
 function getButtonsBase() {
@@ -185,19 +195,6 @@ function getName(folders, parent, name, separator) {
   return name;
 }
 
-function appendTextNodeCol(row, text, title, id) {
-  const col = document.createElement("TD");
-  const textNode = document.createTextNode(text);
-  if (id) {
-    col.id = id;
-  }
-  col.appendChild(textNode);
-  if (title) {
-    col.title = title;
-  }
-  row.appendChild(col);
-}
-
 function appendRadio(parent, id, name, title, checked) {
   const radiobox = document.createElement("INPUT");
   radiobox.type = "radio";
@@ -254,7 +251,8 @@ function createCount(title) {
   appendX(getTableCount(), "TABLE", row);
 }
 
-function appendButton(parent, id, titleId, text, titleText, enabled) {
+function appendButton(parent, id, titleId, text, titleText, enabled,
+  fontWeightId) {
   const button = document.createElement("BUTTON");
   button.type = "button";
   button.id = id;
@@ -266,6 +264,9 @@ function appendButton(parent, id, titleId, text, titleText, enabled) {
   }
   if (!enabled) {
     button.disabled = true;
+  }
+  if (fontWeightId) {
+    button.style.fontWeight = browser.i18n.getMessage(fontWeightId);
   }
   parent.appendChild(button);
 }
@@ -309,7 +310,7 @@ function addRule(parent, count, total, rule) {
   }
   const row = document.createElement("TR");
   const stringCount = String(count);
-  appendTextNodeCol(row, stringCount);
+  appendTextNodeX(row, "TH", stringCount);
   const prefix = "regexpRule=" + stringCount;
   const filter = (rule.radio === "filter");
   const off = (!rule.radio || (rule.radio === "off"));
@@ -331,14 +332,15 @@ function addRule(parent, count, total, rule) {
   const colUp = document.createElement("TD");
   if ((count > 1) && (total > 1)) {
     appendButton(colUp, "regexpButton=/" + stringCount, "titleButtonRuleUp",
-      browser.i18n.getMessage("buttonRuleUp"), null, true);
+      browser.i18n.getMessage("buttonRuleUp"), null, true,
+      "buttonRuleUpFontWeight");
   }
   row.appendChild(colUp);
   const colDown = document.createElement("TD");
   if (count < total) {
     appendButton(colDown, "regexpButton=*" + stringCount,
       "titleButtonRuleDown", browser.i18n.getMessage("buttonRuleDown"),
-      null, true);
+      null, true, "buttonRuleDownFontWeight");
   }
   row.appendChild(colDown);
   appendCol(row, appendButton, "regexpButton=-" + stringCount,
@@ -421,26 +423,26 @@ function addRules(rules) {
     return;
   }
   const row = document.createElement("TR");
-  appendCol(row);
-  appendTextNodeCol(row, browser.i18n.getMessage("radioFilter"),
+  appendX(row, "TH");
+  appendTextNodeX(row, "TH", browser.i18n.getMessage("radioFilter"),
     browser.i18n.getMessage("titleRadioFilter"));
-  appendTextNodeCol(row, browser.i18n.getMessage("radioUrl"),
+  appendTextNodeX(row, "TH", browser.i18n.getMessage("radioUrl"),
     browser.i18n.getMessage("titleRadioUrl"));
-  appendTextNodeCol(row, browser.i18n.getMessage("radioOff"),
+  appendTextNodeX(row, "TH", browser.i18n.getMessage("radioOff"),
     browser.i18n.getMessage("titleRadioOff"));
-  appendTextNodeCol(row, browser.i18n.getMessage("ruleName"),
+  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleName"),
     browser.i18n.getMessage("titleRuleName"));
-  appendTextNodeCol(row, browser.i18n.getMessage("ruleNameNegation"),
+  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleNameNegation"),
     browser.i18n.getMessage("titleRuleNameNegation"));
-  appendTextNodeCol(row, "\xa0\xa0");
-  appendTextNodeCol(row, browser.i18n.getMessage("ruleUrl"),
+  appendTextNodeX(row, "TH", "\xa0\xa0");
+  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleUrl"),
     browser.i18n.getMessage("titleRuleUrl"));
-  appendTextNodeCol(row, browser.i18n.getMessage("ruleUrlNegation"),
+  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleUrlNegation"),
     browser.i18n.getMessage("titleRuleUrlNegation"));
-  appendTextNodeCol(row, "\xa0\xa0");
-  appendTextNodeCol(row, browser.i18n.getMessage("ruleSearch"),
+  appendTextNodeX(row, "TH", "\xa0\xa0");
+  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleSearch"),
     browser.i18n.getMessage("titleRuleSearch"));
-  appendTextNodeCol(row, browser.i18n.getMessage("ruleReplace"),
+  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleReplace"),
     browser.i18n.getMessage("titleRuleReplace"));
   for (let i = 0; i < 3; ++i) {
     appendCol(row);
@@ -457,12 +459,33 @@ function addRules(rules) {
   parent.appendChild(table);
 }
 
+
+function appendWarningExpert(row, title, warningId, textId) {
+  const warning = document.createElement("STRONG");
+  warning.textContent = browser.i18n.getMessage(warningId);
+  const text = document.createTextNode(browser.i18n.getMessage(textId));
+  const col = document.createElement("TD");
+  col.title = title;
+  col.appendChild(warning);
+  col.appendChild(text);
+  row.appendChild(col);
+}
+
 function addCheckboxRules() {
-  const row = document.createElement("TR");
   const title = browser.i18n.getMessage("titleCheckboxRules");
-  appendCol(row, appendCheckbox, "checkboxRules", title , false, true);
-  appendTextNodeCol(row, browser.i18n.getMessage("CheckboxRules"), title);
-  appendX(getTableCheckboxRules(), "TABLE", row);
+  const col = document.createElement("TD");
+  col.rowSpan = 2;
+  col.style.verticalAlign = "middle";
+  appendCheckbox(col, "checkboxRules", title , false, true);
+  const row1 = document.createElement("TR");
+  row1.appendChild(col);
+  appendWarningExpert(row1, title, "warningExpertStrong", "warningExpertText");
+  const table = document.createElement("TABLE");
+  table.appendChild(row1);
+  const row2 = document.createElement("TR");
+  appendTextNodeCol(row2, browser.i18n.getMessage("CheckboxRules"), title);
+  table.appendChild(row2);
+  getTableCheckboxRules().appendChild(table);
 }
 
 function addButtonsBase() {
@@ -2319,7 +2342,6 @@ function storageListener(changes, storageArea) {
   const title = browser.i18n.getMessage("extensionName");
   setTitle(title);
   setHeadTitle(title, browser.i18n.getMessage("extensionDescription"));
-  setWarningExpert("warningExpertStrong", "warningExpertText");
   addButtonsBase();
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);

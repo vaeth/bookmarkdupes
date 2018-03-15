@@ -99,6 +99,10 @@
     "message": "\u21E7",
     "description": "Button for moving a rule up. The text should be short"
   },
+  "buttonRuleUpFontWeight": {
+    "message": "bolder",
+    "description": "font-weight property for buttonRuleUp"
+  },
   "titleButtonRuleUp": {
     "message": "Правило будет перемещено вверх.",
     "description": "Explain that the rule will be moved up"
@@ -106,6 +110,10 @@
   "buttonRuleDown": {
     "message": "\u21E9",
     "description": "Button for moving a rule down. The text should be short"
+  },
+  "buttonRuleDownFontWeight": {
+    "message": "bolder",
+    "description": "font-weight property for buttonRuleDown"
   },
   "titleButtonRuleDown": {
     "message": "Правило будет перемещено вниз.",
