@@ -2117,7 +2117,16 @@ function storageListener(changes, storageArea) {
   buttonsRules(storageArea);
 }
 
-{
+function checkCompatibility() {
+  if (browser && browser.bookmarks && browser.bookmarks.getTree &&
+    typeof(browser.bookmarks.getTree) == "function") {
+    return true;
+  }
+  displayMessage(browser.i18n.getMessage("errorNoBookmarks"));
+  return false;
+}
+
+function initMain() {
   // state variables
   let state = {};
   let rules;
@@ -2421,6 +2430,9 @@ function storageListener(changes, storageArea) {
   const title = browser.i18n.getMessage("extensionName");
   setTitle(title);
   setHeadTitle(title, browser.i18n.getMessage("extensionDescription"));
+  if (!checkCompatibility()) {
+    return;
+  }
   addButtonsBase();
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);
@@ -2428,3 +2440,5 @@ function storageListener(changes, storageArea) {
   browser.storage.onChanged.addListener(storageListener);
   endLock();
 }
+
+initMain();

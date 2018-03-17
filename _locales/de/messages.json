@@ -7,6 +7,10 @@
     "message": "Anzeige/Entfernung doppelter Lesezeichen, leerer Ordner oder Beschreibungen",
     "description": "Description of the extension"
   },
+  "errorNoBookmarks": {
+    "message": "Diese Browser-Version besitzt nicht die benötigte Lesezeichen-API. Erweiterungen wie „Lesezeichenduplikate“ können ohne diese API leider nicht funktionieren.",
+    "description": "Report that the extension will not work on that browser"
+  },
   "warningExpertStrong": {
     "message": "\u26A0\u00A0",
     "description": "First part of warning to enable expert mode: strong"

@@ -7,6 +7,10 @@
     "message": "显示/移除重复的书签、空文件夹或描述",
     "description": "Description of the extension"
   },
+  "errorNoBookmarks": {
+    "message": "This browser version is lacking the required bookmarks API. Bookmark Dupes and similar extensions cannot work without that API. Sorry.", // new
+    "description": "Report that the extension will not work on that browser"
+  },
   "warningExpertStrong": {
     "message": "\u26A0\u00A0", // new
     "description": "First part of warning to enable expert mode: strong"

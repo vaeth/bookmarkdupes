@@ -7,6 +7,10 @@
     "message": "Display/Remove duplicate bookmarks, empty folders, or descriptions",
     "description": "Description of the extension"
   },
+  "errorNoBookmarks": {
+    "message": "This browser version is lacking the required bookmarks API. Bookmark Dupes and similar extensions cannot work without that API. Sorry.",
+    "description": "Report that the extension will not work on that browser"
+  },
   "warningExpertStrong": {
     "message": "\u26A0\u00A0",
     "description": "First part of warning to enable expert mode: strong"
