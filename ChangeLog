@@ -1,5 +1,9 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-5.8:
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-5.7:
 	Martin Väth <martin at mvath.de>:
 	- Fix regression from 5.6 which caused a complete failure:
