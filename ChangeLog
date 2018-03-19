@@ -1,5 +1,11 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-5.7:
+	Martin Väth <martin at mvath.de>:
+	- Fix regression from 5.6 which caused a complete failure:
+	  https://github.com/vaeth/bookmarkdupes/issues/66
+	  (Reason was a too hasty children->childNodes replacement)
+
 *bookmarkdupes-5.6:
 	Martin Väth <martin at mvath.de>:
 	- Major layout change: Use textarea instead of input field

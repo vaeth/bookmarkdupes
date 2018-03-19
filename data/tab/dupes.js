@@ -741,12 +741,12 @@ function addCheckboxExtra(title, extra) {
   parent.appendChild(table);
 }
 
-function enableButtonsOf(top, enabled) {
-  if (!top.hasChildNodes()) {
+function enableButtonsOf(node, enabled) {
+  if (!node || !node.hasChildNodes()) {
     return;
   }
   const disabled = ((enabled !== undefined) && !enabled);
-  for (let child of top.childNodes) {
+  for (let child of node.childNodes) {
     if ((child.nodeName == "BUTTON") || (child.nodeName == "INPUT")
       || (child.nodeName == "SELECT")) {
       child.disabled = disabled;
@@ -774,12 +774,12 @@ function enableBookmarks(enabled) {
   enableButtonsOf(getTop(), enabled);
 }
 
-function clearItem(top) {
-  if (!top) {
+function clearItem(node) {
+  if (!node) {
     return;
   }
-  while (top.lastChild) {
-    top.removeChild(top.lastChild);
+  while (node.lastChild) {
+    node.removeChild(node.lastChild);
   }
 }
 
@@ -1752,7 +1752,7 @@ function calculate(command, state, callback) {
 
   function recurse(node) {
     function recurseMain(node, parent, index) {
-      if (!node.childNodes || !node.childNodes.length) {
+      if (!node.children || !node.children.length) {
         if ((parent !== null) && !node.unmodifable) {
           if (folderMode) {
             handleFunction(node, parent);
@@ -1775,7 +1775,7 @@ function calculate(command, state, callback) {
         folders.push(folder);
       }
       index = 0;
-      for (let child of node.childNodes) {
+      for (let child of node.children) {
         recurseMain(child, parent, ++index);
       }
       if (node.title && !folder.used) {
