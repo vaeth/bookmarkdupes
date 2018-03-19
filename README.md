@@ -47,7 +47,7 @@ The extension requires the following permissions for these reasons:
 
 1. “bookmarks” to read/modify bookmarks
 2. “storage“ to store/restore the customized rules in expert mode.
-   Unfortunately, “storage” is not one of the optional_permissions which might
+   Unfortunately, “storage” is not one of the optional permissions which might
    be required only if that feature is actually requested by the user, see
    https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json/optional_permissions
 
@@ -150,7 +150,7 @@ by `https:`, it does not matter whether the actual URL started with `http:`
 or `https:`. Of course, we could have exchanged the roles of `http`
 and `https` in our rule.
 
-2. Use the replacement rule: “Replace URL matches” `\?.*` “by” ``
+2. Use the replacement rule: “Replace URL matches” `\?.*` “by” ` ` (empty string)
 
 Explanation: Simply omit the ? symbol and all other symbols following it
 in all URLs.
@@ -172,7 +172,7 @@ This works only if the folder contains at least 2 bookmarks (because otherwise `
 
 Explanation: Replace all bookmark URLs by the corresponding bookmark title when looking for dupes.
 
-7. Use the replacement rule “Replace URL matches” `.+` “by” `$NAME` followed by a further replacement rule “Replace URL matches” `[^\0]*$` “by” ``.
+7. Use the replacement rule “Replace URL matches” `.+` “by” `$NAME` followed by a further replacement rule “Replace URL matches” `[^\0]*$` “by” ` ` (empty string)
 
 Explanation: First replace the URL by its full name path, and then omit the last component of this path by cutting of the longest sequence of non-`\0`-symbols at the end.
 

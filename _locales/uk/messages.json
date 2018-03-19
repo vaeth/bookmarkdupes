@@ -7,6 +7,10 @@
     "message": "Пошук, відображення та видалення дублів закладок, порожніх папок або описів",
     "description": "Description of the extension"
   },
+  "errorNoBookmarks": {
+    "message": "This browser version is lacking the required bookmarks API. Bookmark Dupes and similar extensions cannot work without that API. Sorry.", // new
+    "description": "Report that the extension will not work on that browser"
+  },
   "warningExpertStrong": {
     "message": "\u26A0\u00A0",
     "description": "First part of warning to enable expert mode: strong"
@@ -99,6 +103,10 @@
     "message": "\u21E7",
     "description": "Button for moving a rule up. The text should be short"
   },
+  "buttonRuleUpFontWeight": {
+    "message": "bolder",
+    "description": "font-weight property for buttonRuleUp"
+  },
   "titleButtonRuleUp": {
     "message": "Правило буде переміщено вгору.",
     "description": "Explain that the rule will be moved up"
@@ -106,6 +114,10 @@
   "buttonRuleDown": {
     "message": "\u21E9",
     "description": "Button for moving a rule down. The text should be short"
+  },
+  "buttonRuleDownFontWeight": {
+    "message": "bolder",
+    "description": "font-weight property for buttonRuleDown"
   },
   "titleButtonRuleDown": {
     "message": "Правило буде переміщено вниз.",

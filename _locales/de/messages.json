@@ -7,6 +7,10 @@
     "message": "Anzeige/Entfernung doppelter Lesezeichen, leerer Ordner oder Beschreibungen",
     "description": "Description of the extension"
   },
+  "errorNoBookmarks": {
+    "message": "Diese Browser-Version besitzt nicht die benötigte Lesezeichen-API. Erweiterungen wie „Lesezeichenduplikate“ können ohne diese API leider nicht funktionieren.",
+    "description": "Report that the extension will not work on that browser"
+  },
   "warningExpertStrong": {
     "message": "\u26A0\u00A0",
     "description": "First part of warning to enable expert mode: strong"
@@ -99,6 +103,10 @@
     "message": "\u21E7",
     "description": "Button for moving a rule up. The text should be short"
   },
+  "buttonRuleUpFontWeight": {
+    "message": "bolder",
+    "description": "font-weight property for buttonRuleUp"
+  },
   "titleButtonRuleUp": {
     "message": "Die Regel wird nach oben verschoben.",
     "description": "Explain that the rule will be moved up"
@@ -106,6 +114,10 @@
   "buttonRuleDown": {
     "message": "\u21E9",
     "description": "Button for moving a rule down. The text should be short"
+  },
+  "buttonRuleDownFontWeight": {
+    "message": "bolder",
+    "description": "font-weight property for buttonRuleDown"
   },
   "titleButtonRuleDown": {
     "message": "Die Regel wird nach unten verschoben.",
@@ -132,7 +144,7 @@
     "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
   },
   "buttonRulesDefault": {
-    "message": "\u21C7 voreingestellte Regeln",
+    "message": "\u21D0 voreingestellte Regeln",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {
@@ -140,7 +152,7 @@
     "description": "Explain that current rules will be replaced by default rules"
   },
   "buttonRulesStoreLocal": {
-    "message": "\u21C9 lokaler Speicher",
+    "message": "\u21D2 lokaler Speicher",
     "description": "Button for putting rules to local storage. The text should be short"
   },
   "titleButtonRulesStoreLocal": {
@@ -148,7 +160,7 @@
     "description": "Explain that current rules will replace those in the browser's local storage area"
   },
   "buttonRulesRestoreLocal": {
-    "message": "\u21C7 lokaler Speicher",
+    "message": "\u21D0 lokaler Speicher",
     "description": "Button for restoring rules from local storage. The text should be short"
   },
   "titleButtonRulesRestoreLocal": {
@@ -164,7 +176,7 @@
     "description": "Explain that the browser's local storage area will be cleaned from stored rules"
   },
   "buttonRulesStoreSync": {
-    "message": "\u21C9 Sync-Speicher",
+    "message": "\u21D2 Sync-Speicher",
     "description": "Button for putting rules to sync storage. The text should be short"
   },
   "titleButtonRulesStoreSync": {
@@ -172,7 +184,7 @@
     "description": "Explain that current rules will replace those in the browser's sync storage area"
   },
   "buttonRulesRestoreSync": {
-    "message": "\u21C7 Sync-Speicher",
+    "message": "\u21D0 Sync-Speicher",
     "description": "Button for restoring rules from sync storage. The text should be short"
   },
   "titleButtonRulesRestoreSync": {
