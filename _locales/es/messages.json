@@ -8,7 +8,7 @@
     "description": "Description of the extension"
   },
   "errorNoBookmarks": {
-    "message": "Esta versión del navegador carece de la API requerida de marcadores. Marcadores Duplicados y extensiones similares no pueden funcionar sin esa API. Lo siento.", // new
+    "message": "Esta versión del navegador carece de la API requerida de marcadores. Marcadores Duplicados y extensiones similares no pueden funcionar sin esa API. Lo siento.",
     "description": "Report that the extension will not work on that browser"
   },
   "warningExpertStrong": {

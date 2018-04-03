@@ -8,7 +8,7 @@
     "description": "Description of the extension"
   },
   "errorNoBookmarks": {
-    "message": "This browser version is lacking the required bookmarks API. Bookmark Dupes and similar extensions cannot work without that API. Sorry.", // new
+    "message": "В этой версии браузера отсутствует требуемый API закладок. Bookmark Dupes (и другие подобные аддоны) не работает без этого API. Извините.",
     "description": "Report that the extension will not work on that browser"
   },
   "warningExpertStrong": {
