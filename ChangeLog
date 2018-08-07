@@ -1,5 +1,10 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-5.9:
+	Martin Väth <martin at mvath.de>:
+	- Place button for removal more towards the end, see
+	  https://addons.mozilla.org/de/firefox/addon/bookmark-dupes/reviews/1170320/
+
 *bookmarkdupes-5.8:
 	Henaro aka Ironwool:
 	- Update uk locales
