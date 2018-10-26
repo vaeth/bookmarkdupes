@@ -573,7 +573,7 @@ function addButtonsBase() {
   appendX(parent, "TABLE", row);
 }
 
-function addButtonRemove(warningId, buttonId, titleId) {
+function addButtonRemove(warningId, buttonId, titleId, mode) {
   const row = document.createElement("TR");
   const title = browser.i18n.getMessage(titleId);
   row.title = title;
@@ -587,6 +587,11 @@ function addButtonRemove(warningId, buttonId, titleId) {
   col.appendChild(strong);
   row.appendChild(col);
   appendCol(row, appendButton, buttonId);
+  if (!mode) {
+    appendCol(row, appendButton, "buttonMoveMarked", null,
+        browser.i18n.getMessage("buttonMoveMarked").replace(/\{0\}/g,
+            browser.i18n.getMessage("trashFolder")));
+  }
   appendX(getButtonsRemove(), "TABLE", row);
 }
 
@@ -701,10 +706,10 @@ function addButtonsMark(mode) {
 function addButtonsMode(mode, folders) {
   if (mode == 2) {
     addButtonRemove("warningStripMarked",
-      "buttonStripMarked", "titleButtonStripMarked");
+      "buttonStripMarked", "titleButtonStripMarked", mode);
   } else {
     addButtonRemove("warningRemoveMarked",
-      "buttonRemoveMarked", "titleButtonRemoveMarked");
+      "buttonRemoveMarked", "titleButtonRemoveMarked", mode);
   }
   addButtonsMark(mode);
 }
@@ -1994,13 +1999,29 @@ function removeFolder(id, callback, errorCallback) {
   return browser.bookmarks.remove(id).then(callback, errorCallback);
 }
 
+function moveFolder(id, destination, callback, errorCallback) {
+  return browser.bookmarks.move(id, destination).then(callback, errorCallback);
+}
+
 function stripBookmark(id, bookmarkData, callback, errorCallback) {
   return browser.bookmarks.create(bookmarkData).then(function () {
     browser.bookmarks.remove(id).then(callback, errorCallback);
   }, errorCallback);
 }
 
-function processMarked(stopPressed, callback, bookmarkMap) {
+function getFirstFolder(parent, title) {
+  for (let node of parent.children) {
+    if (!node.url && (node.type !== "bookmark")) {
+      if (!title || (node.title === title)) {
+        return node;
+      }
+    }
+  }
+  return null;
+}
+
+
+function processMarked(stopPressed, callback, moveToTrash, bookmarkMap) {
   const marked = getMarked();
   const todo = marked.length;
   let total = 0;
@@ -2008,36 +2029,8 @@ function processMarked(stopPressed, callback, bookmarkMap) {
   let finishId;
   let progress;
   let process;
-
-  if (bookmarkMap) {
-    displayMessage(browser.i18n.getMessage("messageStripMarked"));
-    finishId = "messageStripSuccess";
-    progress = function () {
-      displayProgress("messageStripProgress", "buttonStopStripping",
-        total, todo);
-      return stopPressed();
-    };
-    process = function (id, next) {
-      stripBookmark(id, bookmarkMap.get(id), next, function () {
-        displayEndProgress("messageStripError", total);
-        callback();
-      });
-    };
-  } else {
-    displayMessage(browser.i18n.getMessage("messageRemoveMarked"));
-    finishId = "messageRemoveSuccess";
-    progress = function () {
-      displayProgress("messageRemoveProgress", "buttonStopRemoving",
-        total, todo);
-      return stopPressed();
-    };
-    process = function (id, next) {
-      removeFolder(id, next, function () {
-        displayEndProgress("messageRemoveError", total);
-        callback();
-      });
-    };
-  }
+  let mainAction;
+  let finishError;
 
   function finish() {
     displayEndProgress(finishId, total);
@@ -2053,11 +2046,90 @@ function processMarked(stopPressed, callback, bookmarkMap) {
     process(id, recurse);
   }
 
+  if (bookmarkMap) {
+    displayMessage(browser.i18n.getMessage("messageStripMarked"));
+    finishId = "messageStripSuccess";
+    progress = function () {
+      displayProgress("messageStripProgress", "buttonStopStripping",
+        total, todo);
+      return stopPressed();
+    };
+    finishError = function (error) {
+      displayEndProgress("messageStripError", total, error);
+      callback();
+    };
+    process = function (id, next) {
+      stripBookmark(id, bookmarkMap.get(id), next, finishError);
+    };
+    mainAction = recurse;
+  } else if (!moveToTrash) {
+    displayMessage(browser.i18n.getMessage("messageRemoveMarked"));
+    finishId = "messageRemoveSuccess";
+    progress = function () {
+      displayProgress("messageRemoveProgress", "buttonStopRemoving",
+        total, todo);
+      return stopPressed();
+    };
+    finishError = function (error) {
+      displayEndProgress("messageRemoveError", total, error);
+      callback();
+    };
+    process = function (id, next) {
+      removeFolder(id, next, finishError);
+    };
+    mainAction = recurse;
+  } else {
+    displayMessage(browser.i18n.getMessage("messageMoveMarked"));
+    finishId = "messageMoveSuccess";
+    progress = function () {
+      displayProgress("messageMoveProgress", "buttonStopMoving",
+        total, todo);
+      return stopPressed();
+    };
+    finishError = function (error) {
+      displayEndProgress("messageMoveError", total, error);
+      callback();
+    };
+    mainAction = function () {
+      function setTrashNode(trashNode) {
+        let destination = {
+          parentId: trashNode.id
+        };
+        process = function (id, next) {
+          moveFolder(id, destination, next, finishError);
+        };
+      }
+
+      browser.bookmarks.getTree().then(function (nodes) {
+        let parent = getFirstFolder(nodes[0]);
+        if (!parent) {
+          finishError(browser.i18n.getMessage("errorNoBookmarkFolderFound"));
+          return;
+        }
+        let trash = browser.i18n.getMessage("trashFolder");
+        let trashNode = getFirstFolder(parent, trash);
+        if (trashNode) {
+          setTrashNode(trashNode);
+          recurse();
+        } else {
+          browser.bookmarks.create({
+            parentId: parent.id,
+            type: "folder",
+            title: trash
+          }).then(function (trashNodeArg) {
+            setTrashNode(trashNodeArg);
+            recurse();
+          }, finishError);
+        }
+      }, finishError);
+    };
+  }
+
   if (!marked.length) {
     finish();
     return;
   }
-  recurse();
+  mainAction();
 }
 
 function rulesStore(storageArea) {
@@ -2132,8 +2204,8 @@ function initMain() {
   let rules;
   const rulesDefault = [
     { radio: "url", search: "^\\w+://[^\/]*/", replace: "\\L$&" },
-    { radio: "filter",
-      name: "\\0(" + browser.i18n.getMessage("regExpFrequent") + ")\\0" },
+    { radio: "filter", name:
+      "^[^\\0]+\\0" + browser.i18n.getMessage("regExpTrashFolder") + "\\0" },
     { radio: "off", nameNegation: "\\0.*\\0" },
     { radio: "off", urlNegation: "\\b(e?mail|bugs|youtube|translat)\\b",
       search: "\\?.*" },
@@ -2293,10 +2365,10 @@ function initMain() {
     });
   }
 
-  function processWrapper(bookmarkMap) {
+  function processWrapper(moveToTrash, bookmarkMap) {
     startLock();
     setTimeout(function () {
-      processMarked(stopPressed, endLockReset, bookmarkMap);
+      processMarked(stopPressed, endLockReset, moveToTrash, bookmarkMap);
     });
   }
 
@@ -2333,10 +2405,13 @@ function initMain() {
         calculateWrapper("all");
         return;
       case "buttonRemoveMarked":
-        processWrapper();
+        processWrapper(false);
+        return;
+      case "buttonMoveMarked":
+        processWrapper(true);
         return;
       case "buttonStripMarked":
-        processWrapper(state.bookmarkMap);
+        processWrapper(false, state.bookmarkMap);
         return;
       case "buttonMarkAll":
         markWrapper(mark, true);

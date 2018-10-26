@@ -139,9 +139,13 @@
     "message": "Einfügen einer neuen Regel.",
     "description": "Explain that a new rule will be inserted"
   },
-  "regExpFrequent": {
-    "message": "[hH]äufig.*|[oO]ft|[dD]uplikate",
-    "description": "A regular expression for folder names which intentionally might contain duplicate bookmarks (e.g. \"Frequently used\"). The expression is enclosed into \\0(...)\\0"
+  "trashFolder": {
+    "message": "Duplikate",
+    "description": "The name of the trash folder. Should match regExpTrashFolder"
+  },
+  "regExpTrashFolder": {
+    "message": "Duplikate",
+    "description": "A regular expression matching trashFolder; symbols like .?\\[]()* should be quoted by \\ or surrounded by []"
   },
   "buttonRulesDefault": {
     "message": "\u21D0 voreingestellte Regeln",
@@ -399,6 +403,10 @@
     "message": "Markierte Lesezeichen beziehen sich auf diejenigen seit dem letzten Drücken des Knopfes zur Berechnung der Liste.",
     "description": "Explain that bookmarks refer to those of last update of the list"
   },
+  "buttonMoveMarked": {
+    "message": "Markierte Lesezeichen nach „{0}“ verschieben",
+    "description": "Button for moving marked bookmarks to trash folder. The trash folder name in the text should be {0}"
+  },
   "warningStripMarked": {
     "message": "\u26A0",
     "description": "Text in front of button for stripping descriptions of marked bookmarks"
@@ -414,6 +422,10 @@
   "buttonStopRemoving": {
     "message": "Löschen abbrechen!",
     "description": "Button for emergency stop of bookmark removing"
+  },
+  "buttonStopMoving": {
+    "message": "Verschieben abbrechen!",
+    "description": "Button for emergency stop of bookmark moving"
   },
   "buttonStopStripping": {
     "message": "Entfernen abbrechen!",
@@ -550,6 +562,56 @@
         "example": "0"
       }
     }
+  },
+  "messageMoveMarked": {
+    "message": "Markierte Lesezeichen werden verschoben.",
+    "description": "Report that moving of marked bookmarks started"
+  },
+  "messageMoveProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ von $TODO$ Lesezeichen verschoben",
+    "description": "Report that specified number/total/percentage of bookmarks are moved",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageMoveSuccess": {
+    "message": "$TOTAL$ Lesezeichen verschoben!",
+    "description": "Report success when moving specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageMoveError": {
+    "message": "Fehler nach Verschieben von $TOTAL$ Lesezeichen: $ERROR$",
+    "description": "Report specified error after moving specified number of bookmarks",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  },
+  "errorNoBookmarkFolderFound": {
+    "message": "Kein Lesezeichenordner gefunden.",
+    "description": "Report that no bookmark folder was found"
   },
   "messageStripMarked": {
     "message": "Beschreibungen markierter Lesezeichen werden entfernt.",
