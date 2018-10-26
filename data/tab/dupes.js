@@ -703,7 +703,7 @@ function addButtonsMark(mode) {
   getButtonsMark().appendChild(table);
 }
 
-function addButtonsMode(mode, folders) {
+function addButtonsMode(mode) {
   if (mode == 2) {
     addButtonRemove("warningStripMarked",
       "buttonStripMarked", "titleButtonStripMarked", mode);
