@@ -587,7 +587,7 @@ function addButtonRemove(warningId, buttonId, titleId, mode) {
   col.appendChild(strong);
   row.appendChild(col);
   appendCol(row, appendButton, buttonId);
-  if (!mode) {
+  if (mode < 2) {
     appendCol(row, appendButton, "buttonMoveMarked", null,
         browser.i18n.getMessage("buttonMoveMarked").replace(/\{0\}/g,
             browser.i18n.getMessage("trashFolder")));

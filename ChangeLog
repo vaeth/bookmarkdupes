@@ -2,7 +2,7 @@
 
 *bookmarkdupes-5.9:
 	Martin Väth <martin at mvath.de>:
-	- Add option to move dupes to trash instead of removing
+	- Add option to move dupes/empty folders instead of removing
 	- Fix error message display when removing
 	- Place button for removal more towards the end, see
 	  https://addons.mozilla.org/de/firefox/addon/bookmark-dupes/reviews/1170320/
