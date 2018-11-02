@@ -16,18 +16,15 @@ Then select what you want to display:
 
 1. Bookmark duplicates
 2. Empty folders
-3. All bookmarks
 
 After this, you will be offered the list of bookmarks with checkboxes;
 in case 1 the numbers indicate the order in which matching bookmarks
 were added according to the internally stored date.
 There are also buttons to select/unselect convenient sets of checkboxes.
 
-Finally, there are buttons to remove the selected bookmarks in cases 1 and 2
-or to strip the descriptions of the selected bookmarks in case 3.
-(The latter has some side effects, see section **Known Bugs**).
+Finally, there are buttons to remove the selected bookmarks.
 
-**Be aware that removing bookmarks or stripping descriptions is irreversible!**
+**Be aware that removing bookmarks is irreversible!**
 *It is recommended to make backups of your bookmarks first!*
 
 Currently, there is no working version of the extension available for android
@@ -37,9 +34,7 @@ Currently, there is no working version of the extension available for android
 
 When you reorganized/added/removed bookmarks, make sure to update the
 displayed list (by pressing the corresponding button) before removing
-bookmarks or stripping descriptions!
-In particular, stripping descriptions with an outdated list will move
-the corresponding bookmarks to their previous location in the bookmark menu!
+bookmarks!
 
 ## Permissions
 
@@ -180,18 +175,12 @@ Explanation: First replace the URL by its full name path, and then omit the last
 
 1. Live bookmarks are falsely recognized as empty folders, see
    https://github.com/vaeth/bookmarkdupes/issues/4
-2. Stripping of descriptions works by replacing the bookmark by a freshly
-   created one. In particular, it updates the bookmark creation date.
-3. Stripping of descriptions creates bookmarks in the place where it was when
-   the displayed list was calculated, see
-   https://github.com/vaeth/bookmarkdupes/issues/11 and the second part of
-   https://github.com/vaeth/bookmarkdupes/issues/8
-4. In some firefox versions (e.g. 55.0.3) it has been reported that pressing
+2. In some firefox versions (e.g. 55.0.3) it has been reported that pressing
    the duplicate stars does not open a new tab. You can try to use the link
    in the options page of the extension instead if you have this problem.
    The reason for the problem is still unknown, see
    https://github.com/vaeth/bookmarkdupes/issues/38
-5. Android lacks the bookmark API necessary for bookmarkdupes:
+3. Android lacks the bookmark API necessary for bookmarkdupes:
    https://github.com/vaeth/bookmarkdupes/issues/53
 
 ## Contributors

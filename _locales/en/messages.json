@@ -219,14 +219,6 @@
     "message": "(Re)calculate the list of empty folders. The result might falsely contain live bookmarks.",
     "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
   },
-  "buttonListAll": {
-    "message": "All bookmarks",
-    "description": "Button for listing all bookmarks"
-  },
-  "titleButtonListAll": {
-    "message": "(Re)calculate the list of all bookmarks for stripping descriptions. The list consists of those bookmarks with a nonempty URL.",
-    "description": "Explain that the list of all bookmarks will be (re)calculated for stripping descriptions and that it consists of those bookmarks with a nonempty URL"
-  },
   "buttonMarkButFirst": {
     "message": "Mark all but first in each group",
     "description": "Button for marking all but first"
@@ -407,18 +399,6 @@
     "message": "Move marked bookmarks to “{0}”",
     "description": "Button for moving marked bookmarks to trash folder. The trash folder name in the text should be {0}"
   },
-  "warningStripMarked": {
-    "message": "\u26A0",
-    "description": "Text in front of button for stripping descriptions of marked bookmarks"
-  },
-  "buttonStripMarked": {
-    "message": "Strip descriptions of marked bookmarks",
-    "description": "Button for stripping descriptions of marked bookmarks"
-  },
-  "titleButtonStripMarked": {
-    "message": "Stripping of descriptions will update the internal bookmark generation date. Moreover, it will move the bookmark to the location where it was since you last pressed the button to calculate this list.",
-    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
-  },
   "buttonStopRemoving": {
     "message": "Stop removing!",
     "description": "Button for emergency stop of bookmark removing"
@@ -426,10 +406,6 @@
   "buttonStopMoving": {
     "message": "Stop moving!",
     "description": "Button for emergency stop of bookmark moving"
-  },
-  "buttonStopStripping": {
-    "message": "Stop stripping!",
-    "description": "Button for emergency stop of description stripping"
   },
   "checkboxFullUrl": {
     "message": "Display URL in listing. In any case the URL will appear if you hover over the bookmark.",
@@ -488,20 +464,6 @@
   "titleMessageEmpty": {
     "message": "The list might falsely contain live bookmarks.",
     "description": "Explain that the list might falsely contain live bookmarks"
-  },
-  "messageAll": {
-    "message": "$TOTAL$ bookmarks found",
-    "description": "Report specified number of bookmarks",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "0"
-      }
-    }
-  },
-  "titleMessageAll": {
-    "message": "The list consists of those bookmarks with a nonempty URL.",
-    "description": "Explain that the list consists of those bookmarks with a nonempty URL"
   },
   "messageCalculating": {
     "message": "Searching",
@@ -612,51 +574,5 @@
   "errorNoBookmarkFolderFound": {
     "message": "No bookmark folder found",
     "description": "Report that no bookmark folder was found"
-  },
-  "messageStripMarked": {
-    "message": "Stripping descriptions of marked bookmarks",
-    "description": "Report that description stripping started"
-  },
-  "messageStripProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ of $TODO$ descriptions stripped",
-    "description": "Report that specified number/total/percentage of descriptions are stripped",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "0"
-      },
-      "todo": {
-        "content": "$2",
-        "example": "1"
-      },
-      "percentage": {
-        "content": "$3",
-        "example": "0"
-      }
-    }
-  },
-  "messageStripSuccess": {
-    "message": "$TOTAL$ descriptions stripped!",
-    "description": "Report success when stripping specified number of descriptions",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "0"
-      }
-    }
-  },
-  "messageStripError": {
-    "message": "Error after stripping $TOTAL$ descriptions: $ERROR$",
-    "description": "Report specified error after stripping specified number of descriptions",
-    "placeholders": {
-      "error": {
-        "content": "$1",
-        "example": "error description"
-      },
-      "total": {
-        "content": "$2",
-        "example": "0"
-      }
-    }
   }
 }

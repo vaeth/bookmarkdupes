@@ -1,11 +1,18 @@
 # ChangeLog for bookmarkdupes
 
-*bookmarkdupes-5.9:
+*bookmarkdupes-6.0:
+	Martin Väth <martin at mvath.de>:
+	- Remove support for stripping descriptions:
+	  Descriptions are no longer handled by firefox
+
+*bookmarkdupes-6.9:
 	Martin Väth <martin at mvath.de>:
 	- Add option to move dupes/empty folders instead of removing
 	- Fix error message display when removing
 	- Place button for removal more towards the end, see
 	  https://addons.mozilla.org/de/firefox/addon/bookmark-dupes/reviews/1170320/
+	- Remove support for stripping descriptions:
+	  Descriptions are no longer handled by firefox
 
 	Juan Salvador Aleixandre Talens:
 	- Update es locales
