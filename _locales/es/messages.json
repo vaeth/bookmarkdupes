@@ -404,7 +404,7 @@
     "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "buttonMoveMarked": {
-    "message": "Move marked bookmarks to “{0}”", // new
+    "message": "Mover los marcadores marcados a “{0}”", // new
     "description": "Button for moving marked bookmarks to trash folder. The trash folder name in the text should be {0}"
   },
   "warningStripMarked": {
@@ -424,7 +424,7 @@
     "description": "Button for emergency stop of bookmark removing"
   },
   "buttonStopMoving": {
-    "message": "Stop moving!", // new
+    "message": "Parar me mover!", // new
     "description": "Button for emergency stop of bookmark moving"
   },
   "buttonStopStripping": {
@@ -564,11 +564,11 @@
     }
   },
   "messageMoveMarked": {
-    "message": "Moving marked bookmarks", // new
+    "message": "Moviendo marcadores marcados", // new
     "description": "Report that moving of marked bookmarks started"
   },
   "messageMoveProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ of $TODO$ bookmarks moved", // new
+    "message": "($PERCENTAGE$ %) $TOTAL$ de $TODO$ marcadores movidos", // new
     "description": "Report that specified number/total/percentage of bookmarks are moved",
     "placeholders": {
       "total": {
@@ -586,7 +586,7 @@
     }
   },
   "messageMoveSuccess": {
-    "message": "$TOTAL$ bookmarks moved!", // new
+    "message": "$TOTAL$ marcadores movidos!", // new
     "description": "Report success when moving specified number of bookmarks",
     "placeholders": {
       "total": {
@@ -596,7 +596,7 @@
     }
   },
   "messageMoveError": {
-    "message": "Error after moving $TOTAL$ bookmarks: $ERROR$", // new
+    "message": "Error despues de mover $TOTAL$ marcadores: $ERROR$", // new
     "description": "Report specified error after moving specified number of bookmarks",
     "placeholders": {
       "error": {
@@ -610,7 +610,7 @@
     }
   },
   "errorNoBookmarkFolderFound": {
-    "message": "No bookmark folder found", // new
+    "message": "No se ha encontrado la carpeta de marcadores", // new
     "description": "Report that no bookmark folder was found"
   },
   "messageStripMarked": {
