@@ -1,5 +1,10 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-5.10:
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
 *bookmarkdupes-5.9:
 	Martin Väth <martin at mvath.de>:
 	- Add option to move dupes/empty folders instead of removing
