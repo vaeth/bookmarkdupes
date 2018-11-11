@@ -140,11 +140,11 @@
     "description": "Explain that a new rule will be inserted"
   },
   "trashFolder": {
-    "message": "Закладки", // new
+    "message": "Дублі", 
     "description": "The name of the trash folder. Should match regExpTrashFolder"
   },
   "regExpTrashFolder": {
-    "message": "Закладки", // new
+    "message": "Dupes",
     "description": "A regular expression matching trashFolder; symbols like .?\\[]()* should be quoted by \\ or surrounded by []"
   },
   "buttonRulesDefault": {
@@ -404,7 +404,7 @@
     "description": "Explain that bookmarks refer to those of last update of the list"
   },
   "buttonMoveMarked": {
-    "message": "Move marked bookmarks to “{0}”", // new
+    "message": "Перемістити позначені закладки в “{0}”",
     "description": "Button for moving marked bookmarks to trash folder. The trash folder name in the text should be {0}"
   },
   "warningStripMarked": {
@@ -424,7 +424,7 @@
     "description": "Button for emergency stop of bookmark removing"
   },
   "buttonStopMoving": {
-    "message": "Stop moving!", // new
+    "message": "Зупинити переміщення!",
     "description": "Button for emergency stop of bookmark moving"
   },
   "buttonStopStripping": {
@@ -564,11 +564,11 @@
     }
   },
   "messageMoveMarked": {
-    "message": "Moving marked bookmarks", // new
+    "message": "Позначені закладки переміщаються...",
     "description": "Report that moving of marked bookmarks started"
   },
   "messageMoveProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ of $TODO$ bookmarks moved", // new
+    "message": "($PERCENTAGE$ %) $TOTAL$ із $TODO$ закладок переміщено",
     "description": "Report that specified number/total/percentage of bookmarks are moved",
     "placeholders": {
       "total": {
@@ -586,7 +586,7 @@
     }
   },
   "messageMoveSuccess": {
-    "message": "$TOTAL$ bookmarks moved!", // new
+    "message": "$TOTAL$ закладок переміщено!",
     "description": "Report success when moving specified number of bookmarks",
     "placeholders": {
       "total": {
@@ -596,7 +596,7 @@
     }
   },
   "messageMoveError": {
-    "message": "Error after moving $TOTAL$ bookmarks: $ERROR$", // new
+    "message": "Помилка переміщення $TOTAL$ закладок: $ERROR$",
     "description": "Report specified error after moving specified number of bookmarks",
     "placeholders": {
       "error": {
@@ -610,7 +610,7 @@
     }
   },
   "errorNoBookmarkFolderFound": {
-    "message": "No bookmark folder found", // new
+    "message": "Не знайдено папок із закладками",
     "description": "Report that no bookmark folder was found"
   },
   "messageStripMarked": {
