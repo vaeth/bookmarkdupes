@@ -6,6 +6,9 @@
 	  Descriptions are no longer handled by firefox
 
 *bookmarkdupes-5.11:
+	Martin Väth <martin at mvath.de>:
+	- Fix minimally supported firefox version
+
 	Henaro aka Ironwool:
 	- Update uk locales
 
