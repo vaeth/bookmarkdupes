@@ -52,7 +52,7 @@
     "description": "Explain that by choosing that button the rule has no effect"
   },
   "ruleName": {
-    "message": "Відповідн. імен",
+    "message": "Відповідність імен",
     "description": "Input field for matching the name. The text should be short"
   },
   "titleRuleName": {
@@ -68,7 +68,7 @@
     "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
   },
   "ruleUrl": {
-    "message": "URL Відповідн.",
+    "message": "URL Відповідність",
     "description": "Input field for matching the URL. The text should be short"
   },
   "titleRuleUrl": {
@@ -148,7 +148,7 @@
     "description": "A regular expression matching trashFolder; symbols like .?\\[]()* should be quoted by \\ or surrounded by []"
   },
   "buttonRulesDefault": {
-    "message": "Відн.стандарт.правила",
+    "message": "Відновити типові правила",
     "description": "Button for restoring default rules. The text should be short"
   },
   "titleButtonRulesDefault": {

@@ -5,6 +5,10 @@
 	- Remove support for stripping descriptions:
 	  Descriptions are no longer handled by firefox
 
+*bookmarkdupes-5.11:
+	Henaro aka Ironwool:
+	- Update uk locales
+
 *bookmarkdupes-5.10:
 	Henaro aka Ironwool:
 	- Update uk locales
