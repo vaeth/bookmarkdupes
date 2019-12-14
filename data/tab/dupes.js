@@ -569,6 +569,7 @@ function addButtonsBase() {
   const row = document.createElement("TR");
   appendCol(row, appendButton, "buttonListDupes", "titleButtonListDupes");
   appendCol(row, appendButton, "buttonListEmpty", "titleButtonListEmpty");
+  appendCol(row, appendButton, "buttonListSingles", "titleButtonListSingles");
   appendCol(row, appendButton, "buttonListAll", "titleButtonListAll");
   appendX(parent, "TABLE", row);
 }
@@ -1728,6 +1729,35 @@ function calculate(command, state, callback) {
     result.push(bookmark);
   }
 
+  function handleSingles(node, parent) {
+    ++allCount;
+    const title = node.title;
+    const url = node.url;
+    const processed = {};
+    if (rulesFilter(compiledRules, folders, parent, title, url, processed)) {
+      return;
+    }
+    const processedUrl = processed.url;
+    let bookmark = urlMap.get(processedUrl);
+    if (bookmark !== undefined) {
+      if (bookmark) {
+        parentUnused(bookmark.parent, bookmark.id);
+        urlMap.set(processedUrl, null);
+      }
+      return;
+    }
+    const id = node.id;
+    parentUsed(parent, id);
+    bookmark = {
+      id: id,
+      parent: parent,
+      text: title,
+      url: url
+    };
+    urlMap.set(processedUrl, bookmark);
+    result.push(processedUrl);
+  }
+
   function handleAll(node, parent, index) {
     const title = node.title;
     const url = node.url
@@ -1943,6 +1973,32 @@ function calculate(command, state, callback) {
     calculateFinish();
   }
 
+  function calculateSingles(nodes) {
+    urlMap = new Map();
+    allCount = 0;
+    recurse(nodes[0]);
+    const singles = [];
+    for (let url of result) {
+      const bookmark = urlMap.get(url);
+      if (bookmark) {
+        singles.push(bookmark);
+      }
+    }
+    const total = singles.length;
+    const title = browser.i18n.getMessage("titleMessageSingles");
+    if (total) {
+      addButtons(1);
+    }
+    displayMessage(browser.i18n.getMessage("messageSingles",
+      [String(total), String(allCount)]), title);
+
+    if (total) {
+      createCount(title);
+      addBookmarks(singles);
+    }
+    calculateFinish();
+  }
+
   function calculateAll(nodes) {
     state.bookmarkMap = new Map();
     recurse(nodes[0]);
@@ -1977,6 +2033,11 @@ function calculate(command, state, callback) {
       compiledRules = compileRules(0);
       mainFunction = calculateEmpty;
       handleFunction = handleEmpty;
+      break;
+    case "singles":
+      compiledRules = compileRules(1);
+      mainFunction = calculateSingles;
+      handleFunction = handleSingles;
       break;
     case "all":
       compiledRules = compileRules(-1);
@@ -2400,6 +2461,9 @@ function initMain() {
         return;
       case "buttonListEmpty":
         calculateWrapper("empty");
+        return;
+      case "buttonListSingles":
+        calculateWrapper("singles");
         return;
       case "buttonListAll":
         calculateWrapper("all");

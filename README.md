@@ -16,15 +16,16 @@ Then select what you want to display:
 
 1. Bookmark duplicates
 2. Empty folders
-3. All bookmarks
+3. Non-duplicate bookmarks
+4. All bookmarks
 
 After this, you will be offered the list of bookmarks with checkboxes;
 in case 1 the numbers indicate the order in which matching bookmarks
 were added according to the internally stored date.
 There are also buttons to select/unselect convenient sets of checkboxes.
 
-Finally, there are buttons to remove the selected bookmarks in cases 1 and 2
-or to strip the descriptions of the selected bookmarks in case 3.
+Finally, there are buttons to remove the selected bookmarks in cases 1-3
+or to strip the descriptions of the selected bookmarks in case 4.
 (The latter has some side effects, see section **Known Bugs**).
 
 **Be aware that removing bookmarks or stripping descriptions is irreversible!**

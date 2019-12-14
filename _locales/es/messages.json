@@ -219,6 +219,14 @@
     "message": "(Re)calcule la lisa de varpetas vacías. El resultado, falsamente, puede contener marcadores dinámicos.",
     "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
   },
+  "buttonListSingles": {
+    "message": "Non-Dupes", // new
+    "description": "Button for listing all non-dupe bookmarks"
+  },
+  "titleButtonListSingles": {
+    "message": "(Re)calculate the list of non-dupe bookmark. Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
+    "description": "Explain that the list of all non-dupe bookmarks will be (re)calculated, and how bookmark dupes are defined"
+  },
   "buttonListAll": {
     "message": "Todos los marcadores",
     "description": "Button for listing all bookmarks"
@@ -488,6 +496,24 @@
   "titleMessageEmpty": {
     "message": "La lista puede contener falsamente marcadores vivos.",
     "description": "Explain that the list might falsely contain live bookmarks"
+  },
+  "messageSingles": {
+    "message": "$TOTAL$ (of $ALL$) non-dupes found", // new
+    "description": "Report specified number of non-dupes",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "all": {
+        "content": "$2",
+        "example": "1"
+      }
+    }
+  },
+  "titleMessageSingles": {
+    "message": "List of non-dupes", // new
+    "description": "List of non-dupes"
   },
   "messageAll": {
     "message": "$TOTAL$ marcadores encontrados",

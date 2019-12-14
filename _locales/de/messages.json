@@ -219,6 +219,14 @@
     "message": "Berechne (erneut) die Liste leerer Ordner. Das Ergebnis kann fälschlicherweise auch Live-Lesezeichen enthalten.",
     "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
   },
+  "buttonListSingles": {
+    "message": "Nicht-Duplikate",
+    "description": "Button for listing all non-dupe bookmarks"
+  },
+  "titleButtonListSingles": {
+    "message": "Berechne (erneut) die Liste aller nicht-doppelten Lesezeichen. Zwei Lesezeichen werden als Duplikate betrachtet, wenn ihre URL übereinstimmt. Im Expertenmodus werden die ausgewählten URL-Ersetzungsregeln vor dem Vergleich der URLs angewandt.",
+    "description": "Explain that the list of all non-dupe bookmarks will be (re)calculated, and how bookmark dupes are defined"
+  },
   "buttonListAll": {
     "message": "Alle Lesezeichen",
     "description": "Button for listing all bookmarks"
@@ -488,6 +496,24 @@
   "titleMessageEmpty": {
     "message": "Die Liste kann fälschlicherweise auch Live-Lesezeichen enthalten.",
     "description": "Explain that the list might falsely contain live bookmarks"
+  },
+  "messageSingles": {
+    "message": "$TOTAL$ (von $ALL$) nicht-Duplikate gefunden",
+    "description": "Report specified number of non-dupes",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "all": {
+        "content": "$2",
+        "example": "1"
+      }
+    }
+  },
+  "titleMessageSingles": {
+    "message": "Liste der Nicht-Duplikate",
+    "description": "List of non-dupes"
   },
   "messageAll": {
     "message": "$TOTAL$ Lesezeichen gefunden",
