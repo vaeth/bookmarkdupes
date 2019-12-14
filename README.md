@@ -16,6 +16,7 @@ Then select what you want to display:
 
 1. Bookmark duplicates
 2. Empty folders
+3. Non-duplicate bookmarks
 
 After this, you will be offered the list of bookmarks with checkboxes;
 in case 1 the numbers indicate the order in which matching bookmarks
