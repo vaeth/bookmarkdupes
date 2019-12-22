@@ -4,6 +4,9 @@
 	Martin Väth <martin at mvath.de>:
 	- Add non-dupes button https://github.com/vaeth/bookmarkdupes/issues/87
 
+	Juan Salvador Aleixandre Talens:
+	- Update es locales
+
 *bookmarkdupes-5.11:
 	Martin Väth <martin at mvath.de>:
 	- Fix minimally supported firefox version
