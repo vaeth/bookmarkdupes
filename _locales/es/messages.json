@@ -220,11 +220,11 @@
     "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
   },
   "buttonListSingles": {
-    "message": "Non-Dupes", // new
+    "message": "No duplicados",
     "description": "Button for listing all non-dupe bookmarks"
   },
   "titleButtonListSingles": {
-    "message": "(Re)calculate the list of non-dupe bookmark. Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
+    "message": "(Re) calcule la lista de marcadores no duplicados. Dos marcadores se consideran duplicados si sus URL coinciden. En modo experto, las reglas de preprocesamiento (sustitución) de URL seleccionadas se aplican antes de comparar las URL.",
     "description": "Explain that the list of all non-dupe bookmarks will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonMarkButFirst": {
@@ -474,7 +474,7 @@
     "description": "Explain that the list might falsely contain live bookmarks"
   },
   "messageSingles": {
-    "message": "$TOTAL$ (of $ALL$) non-dupes found", // new
+    "message": "$TOTAL$ (de $ALL$) no duplicados encontrados",
     "description": "Report specified number of non-dupes",
     "placeholders": {
       "total": {
@@ -488,7 +488,7 @@
     }
   },
   "titleMessageSingles": {
-    "message": "List of non-dupes", // new
+    "message": "Lista de no duplicados",
     "description": "List of non-dupes"
   },
   "messageCalculating": {
