@@ -1,6 +1,6 @@
 # bookmarkdupes
 
-(C) Martin Väth <martin@mvath.de>, <mvath@google.com>
+(C) Martin Väth <martin@mvath.de>, <mvath.develop@gmail.com>
 
 This project is under the GNU Public License 2.0.
 
