@@ -2075,19 +2075,6 @@ function processMarked(stopPressed, callback, moveToTrash) {
   const todo = marked.length;
   let total = 0;
 
-  function progress() {
-    displayProgress("messageRemoveProgress", "buttonStopRemoving",
-      total, todo);
-    return stopPressed();
-  }
-
-  function process(id, next) {
-    removeFolder(id, next, function () {
-      displayEndProgress("messageRemoveError", total);
-      callback();
-    });
-  }
-
   function finish() {
     displayEndProgress("messageRemoveSuccess", total);
     callback();
