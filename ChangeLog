@@ -1,9 +1,13 @@
 # ChangeLog for bookmarkdupes
 
 *bookmarkdupes-7.0:
-	Martin Väth <martin at mvath.de>:
-	- Remove support for stripping descriptions:
-	  Descriptions are no longer handled by firefox
+	Martin Väth <mvath at google.com>:
+	- Remove support for stripping descriptions
+
+*bookmarkdupes-6.1:
+	Martin Väth <mvath at google.com>:
+	- Provide chrome compatibility layer in javascript
+	- Slight clarification in English formulation for non-dupe bookmarks
 
 *bookmarkdupes-6.0:
 	Martin Väth <martin at mvath.de>:

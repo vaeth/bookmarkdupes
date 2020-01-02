@@ -1,8 +1,15 @@
-/* Copyright (C) 2017-2019 Martin Väth <martin@mvath.de>
+/* Copyright (C) 2017-2020 Martin Väth <martin@mvath.de>, <mvath@google.com>
  * This project is under the GNU public license 2.0
 */
 
 "use strict";
+
+const compatible = (typeof(browser) != "undefined"
+    && Object.getPrototypeOf(browser) === Object.prototype) ? {
+  browser: browser
+} : {
+  browser: chrome
+};
 
 function setTitle(title) {
   document.getElementById("pageTitle").textContent = title;
@@ -18,7 +25,7 @@ function createLink(title) {
     return;
   }
   const link = document.createElement("A");
-  const url = browser.extension.getURL("data/tab/index.html");
+  const url = compatible.browser.extension.getURL("data/tab/index.html");
   link.href = url;
   link.target = "_blank";
   link.textContent = title;
@@ -27,7 +34,7 @@ function createLink(title) {
 }
 
 {
-  const title = browser.i18n.getMessage("extensionName");
+  const title = compatible.browser.i18n.getMessage("extensionName");
   setTitle(title);
   createLink(title);
 }

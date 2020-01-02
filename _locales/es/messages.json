@@ -475,7 +475,7 @@
   },
   "messageSingles": {
     "message": "$TOTAL$ (de $ALL$) no duplicados encontrados",
-    "description": "Report specified number of non-dupes",
+    "description": "Report specified number of non-dupe bookmarks",
     "placeholders": {
       "total": {
         "content": "$1",
@@ -489,7 +489,7 @@
   },
   "titleMessageSingles": {
     "message": "Lista de no duplicados",
-    "description": "List of non-dupes"
+    "description": "Explain that list of non-dupe bookmarks is shown"
   },
   "messageCalculating": {
     "message": "Buscando",

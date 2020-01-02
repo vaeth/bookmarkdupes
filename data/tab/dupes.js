@@ -1,4 +1,4 @@
-/* Copyright (C) 2017-2019 Martin Väth <martin@mvath.de>
+/* Copyright (C) 2017-2020 Martin Väth <martin@mvath.de>, <mvath@google.com>
  * This project is under the GNU public license 2.0
 */
 
@@ -8,6 +8,59 @@
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/
 
 "use strict";
+
+const compatible = (typeof(browser) != "undefined"
+    && Object.getPrototypeOf(browser) === Object.prototype) ? {
+  browser: browser,
+  getMessage: browser.i18n.getMessage,
+  storageGet: function(storageArea, callback, errorCallback) {
+    browser.storage[storageArea].get().then(callback, errorCallback);
+  },
+  bookmarksGetTree: function(callback, errorCallback) {
+    browser.bookmarks.getTree().then(callback, errorCallback);
+  },
+  bookmarksRemove: function(id, callback, errorCallback) {
+    browser.bookmarks.remove(id).then(callback, errorCallback);
+  },
+  bookmarksMove: function(id, destination, callback, errorCallback) {
+    browser.bookmarks.move(id, destination).then(callback, errorCallback);
+  },
+  bookmarksCreate: function(callback, errorCallback) {
+    browser.bookmarks.create(bookmarkData).then(callback, errorCallback);
+  }
+} : {
+  browser: chrome,
+  getMessage: chrome.i18n.getMessage,
+  callbackOrError: function(callback, error) {
+    return function(arg) {
+      if (chrome.runtime.lastError) {
+        error(chrome.runtime.lastError);
+      } else {
+        callback(arg);
+      }
+    };
+  },
+  storageGet: function(storageArea, callback, errorCallback) {
+    chrome.storage[storageArea].get(
+      compatible.callbackOrError(callback, errorCallback));
+  },
+  bookmarksGetTree: function(callback, errorCallback) {
+    chrome.bookmarks.getTree(
+      compatible.callbackOrError(callback, errorCallback));
+  },
+  bookmarksRemove: function(id, callback, errorCallback) {
+    chrome.bookmarks.remove(id,
+      compatible.callbackOrError(callback, errorCallback));
+  },
+  bookmarksMove: function(id, destination, callback, errorCallback) {
+    chrome.bookmarks.move(id, destination,
+      compatible.callbackOrError(callback, errorCallback));
+  },
+  bookmarksCreate: function(callback, errorCallback) {
+    chrome.bookmarks.create(bookmarkData,
+      compatible.callbackOrError(callback, errorCallback));
+  }
+};
 
 function appendX(parent, type, appendItem) {
   const item = document.createElement(type);
@@ -201,7 +254,7 @@ function appendRadio(parent, id, name, title, checked) {
   radiobox.id = id;
   radiobox.name = name;
   if (title) {
-    radiobox.title = browser.i18n.getMessage(title);
+    radiobox.title = compatible.getMessage(title);
   }
   if (checked) {
     radiobox.checked = checked;
@@ -212,7 +265,7 @@ function appendRadio(parent, id, name, title, checked) {
 function appendTextarea(parent, title, content, disabled, mutationObserver) {
   const textarea = document.createElement("TEXTAREA");
   if (title) {
-    textarea.title = browser.i18n.getMessage(title);
+    textarea.title = compatible.getMessage(title);
   }
   if (content) {
     textarea.value = content;
@@ -261,9 +314,9 @@ function appendButton(parent, id, titleId, text, titleText, enabled,
   const button = document.createElement("BUTTON");
   button.type = "button";
   button.id = id;
-  button.textContent = (text || browser.i18n.getMessage(id));
+  button.textContent = (text || compatible.getMessage(id));
   if (titleId) {
-    button.title = browser.i18n.getMessage(titleId);
+    button.title = compatible.getMessage(titleId);
   } else if (titleText) {
     button.title = titleText;
   }
@@ -271,7 +324,7 @@ function appendButton(parent, id, titleId, text, titleText, enabled,
     button.disabled = true;
   }
   if (fontWeightId) {
-    button.style.fontWeight = browser.i18n.getMessage(fontWeightId);
+    button.style.fontWeight = compatible.getMessage(fontWeightId);
   }
   parent.appendChild(button);
 }
@@ -404,22 +457,22 @@ function addRule(parent, count, total, rule, mutationObserver) {
   const colUp = document.createElement("TD");
   if ((count > 1) && (total > 1)) {
     appendButton(colUp, "regexpButton=/" + stringCount, "titleButtonRuleUp",
-      browser.i18n.getMessage("buttonRuleUp"), null, true,
+      compatible.getMessage("buttonRuleUp"), null, true,
       "buttonRuleUpFontWeight");
   }
   row.appendChild(colUp);
   const colDown = document.createElement("TD");
   if (count < total) {
     appendButton(colDown, "regexpButton=*" + stringCount,
-      "titleButtonRuleDown", browser.i18n.getMessage("buttonRuleDown"),
+      "titleButtonRuleDown", compatible.getMessage("buttonRuleDown"),
       null, true, "buttonRuleDownFontWeight");
   }
   row.appendChild(colDown);
   appendCol(row, appendButton, "regexpButton=-" + stringCount,
-    "titleButtonRuleSub", browser.i18n.getMessage("buttonRuleSub"), null,
+    "titleButtonRuleSub", compatible.getMessage("buttonRuleSub"), null,
     true);
   appendCol(row, appendButton, "regexpButton=+" + stringCount,
-    "titleButtonRuleAdd", browser.i18n.getMessage("buttonRuleAdd"), null,
+    "titleButtonRuleAdd", compatible.getMessage("buttonRuleAdd"), null,
     true);
   parent.appendChild(row);
 }
@@ -496,31 +549,31 @@ function addRules(rules, mutationObserver) {
   }
   const row = document.createElement("TR");
   appendX(row, "TH");
-  appendTextNodeX(row, "TH", browser.i18n.getMessage("radioFilter"),
-    browser.i18n.getMessage("titleRadioFilter"));
-  appendTextNodeX(row, "TH", browser.i18n.getMessage("radioUrl"),
-    browser.i18n.getMessage("titleRadioUrl"));
-  appendTextNodeX(row, "TH", browser.i18n.getMessage("radioOff"),
-    browser.i18n.getMessage("titleRadioOff"));
-  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleName"),
-    browser.i18n.getMessage("titleRuleName"));
-  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleNameNegation"),
-    browser.i18n.getMessage("titleRuleNameNegation"));
+  appendTextNodeX(row, "TH", compatible.getMessage("radioFilter"),
+    compatible.getMessage("titleRadioFilter"));
+  appendTextNodeX(row, "TH", compatible.getMessage("radioUrl"),
+    compatible.getMessage("titleRadioUrl"));
+  appendTextNodeX(row, "TH", compatible.getMessage("radioOff"),
+    compatible.getMessage("titleRadioOff"));
+  appendTextNodeX(row, "TH", compatible.getMessage("ruleName"),
+    compatible.getMessage("titleRuleName"));
+  appendTextNodeX(row, "TH", compatible.getMessage("ruleNameNegation"),
+    compatible.getMessage("titleRuleNameNegation"));
   appendTextNodeX(row, "TH", "\xa0\xa0");
-  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleUrl"),
-    browser.i18n.getMessage("titleRuleUrl"));
-  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleUrlNegation"),
-    browser.i18n.getMessage("titleRuleUrlNegation"));
+  appendTextNodeX(row, "TH", compatible.getMessage("ruleUrl"),
+    compatible.getMessage("titleRuleUrl"));
+  appendTextNodeX(row, "TH", compatible.getMessage("ruleUrlNegation"),
+    compatible.getMessage("titleRuleUrlNegation"));
   appendTextNodeX(row, "TH", "\xa0\xa0");
-  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleSearch"),
-    browser.i18n.getMessage("titleRuleSearch"));
-  appendTextNodeX(row, "TH", browser.i18n.getMessage("ruleReplace"),
-    browser.i18n.getMessage("titleRuleReplace"));
+  appendTextNodeX(row, "TH", compatible.getMessage("ruleSearch"),
+    compatible.getMessage("titleRuleSearch"));
+  appendTextNodeX(row, "TH", compatible.getMessage("ruleReplace"),
+    compatible.getMessage("titleRuleReplace"));
   for (let i = 0; i < 3; ++i) {
     appendCol(row);
   }
   appendCol(row, appendButton, "regexpButton=+0", "titleButtonRuleAdd",
-    browser.i18n.getMessage("buttonRuleAdd"), null, true);
+    compatible.getMessage("buttonRuleAdd"), null, true);
   const table = document.createElement("TABLE");
   table.appendChild(row);
   const total = rules.length;
@@ -534,8 +587,8 @@ function addRules(rules, mutationObserver) {
 
 function appendWarningExpert(row, title, warningId, textId) {
   const warning = document.createElement("STRONG");
-  warning.textContent = browser.i18n.getMessage(warningId);
-  const text = document.createTextNode(browser.i18n.getMessage(textId));
+  warning.textContent = compatible.getMessage(warningId);
+  const text = document.createTextNode(compatible.getMessage(textId));
   const col = document.createElement("TD");
   col.title = title;
   col.appendChild(warning);
@@ -544,7 +597,7 @@ function appendWarningExpert(row, title, warningId, textId) {
 }
 
 function addCheckboxRules() {
-  const title = browser.i18n.getMessage("titleCheckboxRules");
+  const title = compatible.getMessage("titleCheckboxRules");
   const col = document.createElement("TD");
   col.rowSpan = 2;
   col.style.verticalAlign = "middle";
@@ -555,7 +608,7 @@ function addCheckboxRules() {
   const table = document.createElement("TABLE");
   table.appendChild(row1);
   const row2 = document.createElement("TR");
-  appendTextNodeCol(row2, browser.i18n.getMessage("CheckboxRules"), title);
+  appendTextNodeCol(row2, compatible.getMessage("CheckboxRules"), title);
   table.appendChild(row2);
   getTableCheckboxRules().appendChild(table);
 }
@@ -575,22 +628,22 @@ function addButtonsBase() {
 
 function addButtonRemove() {
   const row = document.createElement("TR");
-  const title = browser.i18n.getMessage("titleButtonRemoveMarked");
+  const title = compatible.getMessage("titleButtonRemoveMarked");
   row.title = title;
   const col = document.createElement("TD");
   col.width = "50pt";
   col.style.height = "50pt";
   col.style.textAlign = "center";
   const text = document.createTextNode(
-      browser.i18n.getMessage("warningRemoveMarked"));
+     compatible.getMessage("warningRemoveMarked"));
   const strong = document.createElement("STRONG");
   strong.appendChild(text);
   col.appendChild(strong);
   row.appendChild(col);
   appendCol(row, appendButton, "buttonRemoveMarked");
   appendCol(row, appendButton, "buttonMoveMarked", null,
-      browser.i18n.getMessage("buttonMoveMarked").replace(/\{0\}/g,
-        browser.i18n.getMessage("trashFolder")));
+      compatible.getMessage("buttonMoveMarked").replace(/\{0\}/g,
+        compatible.getMessage("trashFolder")));
   appendX(getButtonsRemove(), "TABLE", row);
 }
 
@@ -653,11 +706,11 @@ function addSelectOption(select, content, value) {
 
 function addSelectFolder(sameFolders, folderIds, folders) {
   const select = document.createElement("SELECT");
-  select.title = browser.i18n.getMessage("titleSelectFolder");
+  select.title = compatible.getMessage("titleSelectFolder");
   select.id = "selectedFolder";
-  addSelectOption(select, browser.i18n.getMessage("optionNonFolder"), "@");
+  addSelectOption(select, compatible.getMessage("optionNonFolder"), "@");
   if (sameFolders) {
-    addSelectOption(select, browser.i18n.getMessage("optionSameFolder"), "=");
+    addSelectOption(select, compatible.getMessage("optionSameFolder"), "=");
   }
   if (folderIds) {
     for (let folder of folders) {
@@ -719,19 +772,19 @@ function addProgressButton(textId, percentage) {
   bar.appendChild(progress);
   const stop = getButtonStop();
   appendButton(stop, "buttonStop", null,
-    browser.i18n.getMessage(textId), null, true);
+    compatible.getMessage(textId), null, true);
 }
 
 function addCheckboxExtra(title, extra) {
   const row = document.createElement("TR");
   appendCol(row, appendCheckbox, "checkboxFullUrl", title);
-  appendTextNodeCol(row, browser.i18n.getMessage("checkboxFullUrl"), title);
+  appendTextNodeCol(row, compatible.getMessage("checkboxFullUrl"), title);
   const table = document.createElement("TABLE");
   table.appendChild(row);
   if (extra) {
     const rowExtra = document.createElement("TR");
     appendCol(rowExtra, appendCheckbox, "checkboxExtra", title, true);
-    appendTextNodeCol(rowExtra, browser.i18n.getMessage("checkboxExtra"),
+    appendTextNodeCol(rowExtra, compatible.getMessage("checkboxExtra"),
       title);
     table.appendChild(rowExtra);
   }
@@ -930,12 +983,13 @@ function buttonRule(action, mutationObserver) {
 }
 
 function haveStorageSync() {  // check if supported by browser
-  return (browser.storage.sync && browser.storage.sync.get &&
-    (typeof(browser.storage.sync.get) == "function"));
+  return (compatible.browser.storage.sync
+    && compatible.browser.storage.sync.get
+    && (typeof(compatible.browser.storage.sync.get) == "function"));
 }
 
 function buttonsRulesQuick(storageArea, mutationObserver) {
-  browser.storage[storageArea].get().then(function (storage) {
+  compatible.storageGet(storageArea, function (storage) {
     if (!isCheckedRules()) {  // async race: user might have changed
       return;
     }
@@ -1367,17 +1421,17 @@ function getMarked(returnSet) {
 function displayProgress(textId, buttonTextId, total, todo) {
   const percentage = (100 * total) / todo;
   addProgressButton(buttonTextId, percentage);
-  displayMessage(browser.i18n.getMessage(textId,
+  displayMessage(compatible.getMessage(textId,
     [String(total), String(todo), String(Math.round(percentage))]));
 }
 
 function displayEndProgress(textId, total, error) {
   clearWindow();
   if (error) {
-    displayMessage(browser.i18n.getMessage(textId,
+    displayMessage(compatible.getMessage(textId,
       [error, String(total)]));
   } else {
-    displayMessage(browser.i18n.getMessage(textId, String(total)));
+    displayMessage(compatible.getMessage(textId, String(total)));
   }
 }
 
@@ -1637,7 +1691,7 @@ function calculate(command, state, callback) {
   let entryList;
 
   function calculateError(error) {
-    displayMessage(browser.i18n.getMessage("messageCalculateError", error));
+    displayMessage(compatible.getMessage("messageCalculateError", error));
     callback();
   }
 
@@ -1881,12 +1935,12 @@ function calculate(command, state, callback) {
       ++groupNumber;
       total += group.length;
     }
-    const title = browser.i18n.getMessage("titleMessageMatches");
+    const title = compatible.getMessage("titleMessageMatches");
     if (groupNumber) {
       addButtons(0, sameFolders);
       addCheckboxExtra(title, extra);
     }
-    displayMessage(browser.i18n.getMessage("messageMatches",
+    displayMessage(compatible.getMessage("messageMatches",
       [String(total), String(groupNumber), String(allCount)]), title);
     if (!groupNumber) {
       calculateFinish();
@@ -1925,11 +1979,11 @@ function calculate(command, state, callback) {
   function calculateEmpty(nodes) {
     recurse(nodes[0]);
     const total = result.length;
-    const title = browser.i18n.getMessage("titleMessageEmpty");
+    const title = compatible.getMessage("titleMessageEmpty");
     if (total) {
       addButtons(1);
     }
-    displayMessage(browser.i18n.getMessage("messageEmpty", String(total)),
+    displayMessage(compatible.getMessage("messageEmpty", String(total)),
       title);
     if (total) {
       createCount(title);
@@ -1950,11 +2004,11 @@ function calculate(command, state, callback) {
       }
     }
     const total = singles.length;
-    const title = browser.i18n.getMessage("titleMessageSingles");
+    const title = compatible.getMessage("titleMessageSingles");
     if (total) {
       addButtons(1);
     }
-    displayMessage(browser.i18n.getMessage("messageSingles",
+    displayMessage(compatible.getMessage("messageSingles",
       [String(total), String(allCount)]), title);
 
     if (total) {
@@ -1965,7 +2019,7 @@ function calculate(command, state, callback) {
   }
 
   clearWindow();
-  displayMessage(browser.i18n.getMessage("messageCalculating"));
+  displayMessage(compatible.getMessage("messageCalculating"));
   let mainFunction;
   folderMode = false;
   switch (command) {
@@ -1994,15 +2048,15 @@ function calculate(command, state, callback) {
   }
   folders = [];
   result = [];
-  browser.bookmarks.getTree().then(mainFunction, calculateError);
+  compatible.bookmarksGetTree(mainFunction, calculateError);
 }
 
 function removeFolder(id, callback, errorCallback) {
-  return browser.bookmarks.remove(id).then(callback, errorCallback);
+  compatible.bookmarksRemove(id, callback, errorCallback);
 }
 
 function moveFolder(id, destination, callback, errorCallback) {
-  return browser.bookmarks.move(id, destination).then(callback, errorCallback);
+  compatible.bookmarksMove(id, destination, callback, errorCallback);
 }
 
 function getFirstFolder(parent, title) {
@@ -2060,7 +2114,7 @@ function processMarked(stopPressed, callback, moveToTrash) {
   }
 
   if (!moveToTrash) {
-    displayMessage(browser.i18n.getMessage("messageRemoveMarked"));
+    displayMessage(compatible.getMessage("messageRemoveMarked"));
     finishId = "messageRemoveSuccess";
     progress = function () {
       displayProgress("messageRemoveProgress", "buttonStopRemoving",
@@ -2076,7 +2130,7 @@ function processMarked(stopPressed, callback, moveToTrash) {
     };
     mainAction = recurse;
   } else {
-    displayMessage(browser.i18n.getMessage("messageMoveMarked"));
+    displayMessage(compatible.getMessage("messageMoveMarked"));
     finishId = "messageMoveSuccess";
     progress = function () {
       displayProgress("messageMoveProgress", "buttonStopMoving",
@@ -2097,23 +2151,23 @@ function processMarked(stopPressed, callback, moveToTrash) {
         };
       }
 
-      browser.bookmarks.getTree().then(function (nodes) {
+      compatible.bookmarksGetTree(function (nodes) {
         let parent = getFirstFolder(nodes[0]);
         if (!parent) {
-          finishError(browser.i18n.getMessage("errorNoBookmarkFolderFound"));
+          finishError(compatible.getMessage("errorNoBookmarkFolderFound"));
           return;
         }
-        let trash = browser.i18n.getMessage("trashFolder");
+        let trash = compatible.getMessage("trashFolder");
         let trashNode = getFirstFolder(parent, trash);
         if (trashNode) {
           setTrashNode(trashNode);
           recurse();
         } else {
-          browser.bookmarks.create({
+          compatible.bookmarksCreate({
             parentId: parent.id,
             type: "folder",
             title: trash
-          }).then(function (trashNodeArg) {
+          }, function (trashNodeArg) {
             setTrashNode(trashNodeArg);
             recurse();
           }, finishError);
@@ -2126,7 +2180,7 @@ function processMarked(stopPressed, callback, moveToTrash) {
     finish();
     return;
   }
-  displayMessage(browser.i18n.getMessage("messageRemoveMarked"));
+  displayMessage(compatible.getMessage("messageRemoveMarked"));
   mainAction();
 }
 
@@ -2134,11 +2188,11 @@ function rulesStore(storageArea) {
   const storage = {
     rulesV1: getRules()
   };
-  browser.storage[storageArea].set(storage);
+  compatible.browser.storage[storageArea].set(storage);
 }
 
 function rulesClean(storageArea) {
-  browser.storage[storageArea].clear();
+  compatible.browser.storage[storageArea].clear();
 }
 
 function marked(state, id) {
@@ -2158,7 +2212,7 @@ function marked(state, id) {
     if (!isCheckedCount()) {
       if (state.hasOwnProperty("lastCount")) {
         delete state.lastCount;
-        displayCount(browser.i18n.getMessage("messageNoCount"));
+        displayCount(compatible.getMessage("messageNoCount"));
       }
       return;
     }
@@ -2169,7 +2223,7 @@ function marked(state, id) {
     return;
   }
   state.lastCount = count;
-  displayCount(browser.i18n.getMessage("messageCount", count));
+  displayCount(compatible.getMessage("messageCount", count));
 }
 
 function storageListener(changes, storageArea) {
@@ -2188,11 +2242,13 @@ function storageListener(changes, storageArea) {
 }
 
 function checkCompatibility() {
-  if (browser && browser.bookmarks && browser.bookmarks.getTree &&
-    typeof(browser.bookmarks.getTree) == "function") {
+  if (compatible.browser
+      && compatible.browser.bookmarks
+      && compatible.browser.bookmarks.getTree
+      && typeof(compatible.browser.bookmarks.getTree) == "function") {
     return true;
   }
-  displayMessage(browser.i18n.getMessage("errorNoBookmarks"));
+  displayMessage(compatible.getMessage("errorNoBookmarks"));
   return false;
 }
 
@@ -2203,7 +2259,7 @@ function initMain() {
   const rulesDefault = [
     { radio: "url", search: "^\\w+://[^\/]*/", replace: "\\L$&" },
     { radio: "filter", name:
-      "^[^\\0]+\\0" + browser.i18n.getMessage("regExpTrashFolder") + "\\0" },
+      "^[^\\0]+\\0" + compatible.getMessage("regExpTrashFolder") + "\\0" },
     { radio: "off", nameNegation: "\\0.*\\0" },
     { radio: "off", urlNegation: "\\b(e?mail|bugs|youtube|translat)\\b",
       search: "\\?.*" },
@@ -2249,7 +2305,7 @@ function initMain() {
   }
 
   function initRulesStorage(storageArea, callback) {
-    browser.storage[storageArea].get().then(function (storage) {
+    compatible.storageGet(storageArea, function (storage) {
       if (storage && storage.rulesV1) {
         rules = toggleRules(storage.rulesV1, mutationObserver);
         return;
@@ -2497,9 +2553,9 @@ function initMain() {
     }
   }
 
-  const title = browser.i18n.getMessage("extensionName");
+  const title = compatible.getMessage("extensionName");
   setTitle(title);
-  setHeadTitle(title, browser.i18n.getMessage("extensionDescription"));
+  setHeadTitle(title, compatible.getMessage("extensionDescription"));
   if (!checkCompatibility()) {
     return;
   }
@@ -2507,7 +2563,7 @@ function initMain() {
   document.addEventListener("CheckboxStateChange", checkboxListener);
   document.addEventListener("click", clickListener);
   document.addEventListener("change", changeListener);
-  browser.storage.onChanged.addListener(storageListener);
+  compatible.browser.storage.onChanged.addListener(storageListener);
   endLock();
 }
 
