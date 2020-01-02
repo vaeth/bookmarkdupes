@@ -1,6 +1,6 @@
 # bookmarkdupes
 
-(C) Martin Väth <martin@mvath.de>, <mvath@google.com>
+(C) Martin Väth <martin@mvath.de>, <mvath.develop@gmail.com>
 
 This project is under the GNU Public License 2.0.
 
@@ -171,18 +171,6 @@ Explanation: Replace all bookmark URLs by the corresponding bookmark title when 
 7. Use the replacement rule “Replace URL matches” `.+` “by” `$NAME` followed by a further replacement rule “Replace URL matches” `[^\0]*$` “by” ` ` (empty string)
 
 Explanation: First replace the URL by its full name path, and then omit the last component of this path by cutting of the longest sequence of non-`\0`-symbols at the end.
-
-## Known Bugs
-
-1. Live bookmarks are falsely recognized as empty folders, see
-   https://github.com/vaeth/bookmarkdupes/issues/4
-2. In some firefox versions (e.g. 55.0.3) it has been reported that pressing
-   the duplicate stars does not open a new tab. You can try to use the link
-   in the options page of the extension instead if you have this problem.
-   The reason for the problem is still unknown, see
-   https://github.com/vaeth/bookmarkdupes/issues/38
-3. Android lacks the bookmark API necessary for bookmarkdupes:
-   https://github.com/vaeth/bookmarkdupes/issues/53
 
 ## Contributors
 

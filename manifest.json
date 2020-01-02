@@ -21,44 +21,22 @@
 
   "browser_action": {
     "default_icon": {
-      "16": "data/icons/48.svg",
-      "19": "data/icons/48.svg",
-      "20": "data/icons/48.svg",
-      "24": "data/icons/48.svg",
-      "30": "data/icons/48.svg",
-      "32": "data/icons/48.svg",
-      "38": "data/icons/48.svg",
-      "48": "data/icons/48.svg",
-      "64": "data/icons/48.svg",
-      "96": "data/icons/48.svg",
-      "128": "data/icons/48.svg"
+      "16": "data/icons/16.png",
+      "32": "data/icons/32.png",
+      "48": "data/icons/48.png",
+      "128": "data/icons/128.png"
     },
     "browser_style": true
   },
 
   "options_ui": {
-    "page": "data/options/index.html",
-    "browser_style": true
+    "page": "data/options/index.html"
   },
 
   "icons": {
-    "16": "data/icons/48.svg",
-    "19": "data/icons/48.svg",
-    "20": "data/icons/48.svg",
-    "24": "data/icons/48.svg",
-    "30": "data/icons/48.svg",
-    "32": "data/icons/48.svg",
-    "38": "data/icons/48.svg",
-    "48": "data/icons/48.svg",
-    "64": "data/icons/48.svg",
-    "96": "data/icons/48.svg",
-    "128": "data/icons/48.svg"
-  },
-
-  "applications": {
-    "gecko": {
-      "id": "bookmarkdupes@martin-vaeth.org",
-      "strict_min_version": "57.0"
-    }
+    "16": "data/icons/16.png",
+    "32": "data/icons/32.png",
+    "48": "data/icons/48.png",
+    "128": "data/icons/128.png"
   }
 }

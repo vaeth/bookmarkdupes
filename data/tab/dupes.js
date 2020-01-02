@@ -2210,7 +2210,7 @@ function marked(state, id) {
     return;
   }
   state.lastCount = count;
-  displayCount(compatible.getMessage("messageCount", count));
+  displayCount(compatible.getMessage("messageCount", String(count)));
 }
 
 function storageListener(changes, storageArea) {
@@ -2547,7 +2547,7 @@ function initMain() {
     return;
   }
   addButtonsBase();
-  document.addEventListener("CheckboxStateChange", checkboxListener);
+  document.addEventListener("change", checkboxListener);
   document.addEventListener("click", clickListener);
   document.addEventListener("change", changeListener);
   compatible.browser.storage.onChanged.addListener(storageListener);
