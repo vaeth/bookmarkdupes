@@ -1,7 +1,7 @@
 # ChangeLog for bookmarkdupes
 
 *bookmarkdupes-6.1:
-	Martin Väth <mvath at google.com>:
+	Martin Väth <mvath at mvath.de>:
 	- Provide chrome compatibility layer in javascript
 	- Slight clarification in English formulation for non-dupe bookmarks
 

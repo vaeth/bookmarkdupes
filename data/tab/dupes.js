@@ -2286,7 +2286,7 @@ function marked(state, id) {
     return;
   }
   state.lastCount = count;
-  displayCount(compatible.getMessage("messageCount", count));
+  displayCount(compatible.getMessage("messageCount", String(count)));
 }
 
 function storageListener(changes, storageArea) {
