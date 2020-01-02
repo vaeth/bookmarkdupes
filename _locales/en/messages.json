@@ -498,8 +498,8 @@
     "description": "Explain that the list might falsely contain live bookmarks"
   },
   "messageSingles": {
-    "message": "$TOTAL$ (of $ALL$) non-dupes found",
-    "description": "Report specified number of non-dupes",
+    "message": "$TOTAL$ (of $ALL$) non-dupe bookmarks found",
+    "description": "Report specified number of non-dupe bookmarks",
     "placeholders": {
       "total": {
         "content": "$1",
@@ -512,8 +512,8 @@
     }
   },
   "titleMessageSingles": {
-    "message": "List of non-dupes",
-    "description": "List of non-dupes"
+    "message": "List of non-dupe bookmarks",
+    "description": "Explain that list of non-dupe bookmarks is shown"
   },
   "messageAll": {
     "message": "$TOTAL$ bookmarks found",

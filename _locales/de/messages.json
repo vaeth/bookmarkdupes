@@ -513,7 +513,7 @@
   },
   "titleMessageSingles": {
     "message": "Liste der Nicht-Duplikate",
-    "description": "List of non-dupes"
+    "description": "Explain that list of non-dupe bookmarks is shown"
   },
   "messageAll": {
     "message": "$TOTAL$ Lesezeichen gefunden",
