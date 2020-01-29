@@ -4,7 +4,7 @@
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Display/Remove duplicate bookmarks, empty folders, or descriptions",
+    "message": "Display/Remove duplicate bookmarks or empty folders",
     "description": "Description of the extension"
   },
   "errorNoBookmarks": {

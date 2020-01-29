@@ -4,7 +4,7 @@
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Mostrar/Eliminar marcadores duplicados, carpetas vacías, o descripciones",
+    "message": "Mostrar/Eliminar marcadores duplicados o carpetas vacías", // new (modified): removed o descripciones
     "description": "Description of the extension"
   },
   "errorNoBookmarks": {

@@ -4,7 +4,7 @@
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Anzeige/Entfernung doppelter Lesezeichen, leerer Ordner oder Beschreibungen",
+    "message": "Anzeige/Entfernung doppelter Lesezeichen oder leerer Ordner",
     "description": "Description of the extension"
   },
   "errorNoBookmarks": {
