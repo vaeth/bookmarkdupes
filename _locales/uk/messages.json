@@ -4,7 +4,7 @@
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "Пошук, відображення та видалення дублів закладок, порожніх папок або описів",
+    "message": "Пошук, відображення та видалення дублів закладок або порожніх папок", // new (modified): removed або описів
     "description": "Description of the extension"
   },
   "errorNoBookmarks": {

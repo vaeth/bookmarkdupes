@@ -4,7 +4,7 @@
     "description": "Name of the extension"
   },
   "extensionDescription": {
-    "message": "显示/移除重复的书签、空文件夹或描述",
+    "message": "显示/移除重复的书签或空文件夹", // new: modified from "显示/移除重复的书签、空文件夹或描述"
     "description": "Description of the extension"
   },
   "errorNoBookmarks": {
