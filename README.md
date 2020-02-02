@@ -44,8 +44,7 @@ The extension requires the following permissions for these reasons:
 1. “bookmarks” to read/modify bookmarks
 2. “storage” to store/restore the customized rules in expert mode.
    Unfortunately, “storage” is not one of the optional permissions which might
-   be required only if that feature is actually requested by the user, see
-   https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json/optional_permissions
+   be required only if that feature is actually requested by the user.
 
 ## Expert Mode
 
@@ -71,11 +70,7 @@ expressions must be nonempty or that filter rules will not apply either.)
 The 4 regular expressions refer to the bookmark's name or url, respectively,
 and the regular expressions must either match or not match, respectively.
 
-- The term “regular expression” refers to a javascript type regular expression
-  as described e.g. in
-  https://wiki.selfhtml.org/wiki/JavaScript/Objekte/RegExp
-  or
-  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+- The term “regular expression” refers to a javascript type regular expression.
 - The bookmark's name refers to the full bookmark path as it appears in the
   browser with folder names separated by the null character.
   For instance, if you have in “Bookmark Menu” a folder “Collection”
@@ -93,10 +88,7 @@ If a URL modification rule applies, a text replacement will occur:
 All parts matching a specified regular expression are substituted by a
 replacement text (which might be empty).
 The rules for this correspond to the javascript String.prototype.replace
-function with the global modifier, see e.g.
-https://wiki.selfhtml.org/wiki/JavaScript/Objekte/String/replace
-or
-https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String/replace
+function with the global modifier.
 
 In particular, the replacement text can contain symbols like
 `$&` or `$1` to refer to the whole matched text or to the
@@ -155,14 +147,14 @@ in all URLs.
 
 Explanation: If a bookmark is in a folder named “Mr. Dupe”, its full name (path) will contain the text “\0Mr. Dupe\0”; so match that text. Since the “.” symbol has a special meaning for regular expressions, we have to quote it. This can be done by either `\.` or by looking for a character class `[…]` which contains only the single symbol `.`.
 
-4. Use the replacement rule: “Replace URL matches” `.+` “by” `http://dummy`
+4. Use the replacement rule: “Replace URL matches” `.+` “by” `constant`
 
-Explanation: Pretend that every bookmark has the URL `http://dummy` by replacing all characters (`.+`) of the original URL by that text.
+Explanation: Pretend that every bookmark has the URL `constant` by replacing all characters (`.+`) of the original URL by that text.
 
-5. Use the replacement rule: “Name Matches” `^Bookmark Menu\0Remove\0` “Replace URL matches” `.+` “by” `http://dummy`
+5. Use the replacement rule: “Name Matches” `^Bookmark Menu\0Remove\0` “Replace URL matches” `.+` “by” `constant`
 
 As in 4, but only for bookmarks whose full name starts with the matching path.
-This works only if the folder contains at least 2 bookmarks (because otherwise `http://dummy` is not a duplicate URL). Of course, one might use an actually duplicate URL instead of `http://dummy` to work around this limitation.
+This works only if the folder contains at least 2 bookmarks (because otherwise `constant` is not a duplicate URL). Of course, one might use an actually duplicate URL instead of `constant` to work around this limitation.
 
 6. Use the replacement rule: “Replace URL matches” `.+` “by” `$TITLE`
 
@@ -176,6 +168,6 @@ Explanation: First replace the URL by its full name path, and then omit the last
 
 (in alphabetical order)
 
-- Henaro aka Ironwool https://github.com/perdolka (Russian and Ukrainian translation; redesign icon in svg; provide favicon)
-- Juan Salvador Aleixandre Talens https://github.com/juaalta (Spanish translation)
-- YFdyh000 <yfdyh000 at gmail.com> https://github.com/yfdyh000 (Simplified Chinese translation)
+- Henaro aka Ironwool (Russian and Ukrainian translation; redesign icon in svg; provide favicon)
+- Juan Salvador Aleixandre Talens (Spanish translation)
+- YFdyh000 (Simplified Chinese translation)

@@ -4,9 +4,6 @@
 
 "use strict";
 
-// For documentation on the tab API see e.g.
-// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs
-
 const compatible = (typeof(browser) != "undefined"
     && Object.getPrototypeOf(browser) === Object.prototype) ? {
   browser: browser

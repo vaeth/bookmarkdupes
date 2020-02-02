@@ -2,11 +2,6 @@
  * This project is under the GNU public license 2.0
 */
 
-// For documentation on the bookmark API see e.g.
-// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/bookmarks/
-// For documentation on the storage API see e.g.
-// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/storage/
-
 "use strict";
 
 const compatible = (typeof(browser) != "undefined"

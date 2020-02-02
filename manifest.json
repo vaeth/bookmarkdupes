@@ -5,7 +5,6 @@
   "author": "Martin Väth",
   "version": "7.0",
   "manifest_version": 2,
-  "homepage_url": "https://addons.mozilla.org/en-US/firefox/addon/bookmark-dupes/",
   "default_locale": "en",
 
   "permissions": [
