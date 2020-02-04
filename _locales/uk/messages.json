@@ -208,7 +208,7 @@
     "description": "Button for listing dupes"
   },
   "titleButtonListDupes": {
-    "message": "(Пере)визначити список дублів. Дві закладки вважаються дублями, якщо їх URL-и однакові. В Експертному режимі, обрані правила попередньої обробки (заміни) застосовуються перед порівнянням URL-ів .",
+    "message": "(Пере)визначити список дублів. Дві закладки вважаються дублями, якщо їх URL-и однакові. В Експертному режимі, обрані правила попередньої обробки (заміни) застосовуються перед порівнянням URL-ів.",
     "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListEmpty": {
@@ -220,11 +220,11 @@
     "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
   },
   "buttonListSingles": {
-    "message": "Non-Dupes", // new
+    "message": "НЕ-дублі",
     "description": "Button for listing all non-dupe bookmarks"
   },
   "titleButtonListSingles": {
-    "message": "(Re)calculate the list of non-dupe bookmark. Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
+    "message": "(Пере)визначити список закладок-НЕ-дублів. Дві закладки вважаються дублями, якщо їх URL-и однакові. В Експертному режимі, обрані правила попередньої обробки (заміни) застосовуються перед порівнянням URL-ів.",
     "description": "Explain that the list of all non-dupe bookmarks will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonListAll": {
@@ -498,7 +498,7 @@
     "description": "Explain that the list might falsely contain live bookmarks"
   },
   "messageSingles": {
-    "message": "$TOTAL$ (of $ALL$) non-dupe bookmarks found", // new
+    "message": "$TOTAL$ (із $ALL$) закладок-НЕ-дублів знайдено",
     "description": "Report specified number of non-dupe bookmarks",
     "placeholders": {
       "total": {
@@ -512,7 +512,7 @@
     }
   },
   "titleMessageSingles": {
-    "message": "List of non-dupe bookmarks", // new
+    "message": "Список закладок-НЕ-дублів",
     "description": "Explain that list of non-dupe bookmarks is shown"
   },
   "messageAll": {
