@@ -5,6 +5,10 @@
 	- Provide chrome compatibility layer in javascript
 	- Slight clarification in English formulation for non-dupe bookmarks
 
+	Henaro aka Ironwool:
+	- Update uk locales
+	- Update ru locales
+
 *bookmarkdupes-6.0:
 	Martin Väth <martin at mvath.de>:
 	- Add non-dupes button https://github.com/vaeth/bookmarkdupes/issues/87
