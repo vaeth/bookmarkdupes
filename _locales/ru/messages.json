@@ -220,11 +220,11 @@
     "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
   },
   "buttonListSingles": {
-    "message": "Non-Dupes", // new
+    "message": "НЕ-дубли",
     "description": "Button for listing all non-dupe bookmarks"
   },
   "titleButtonListSingles": {
-    "message": "(Re)calculate the list of non-dupe bookmark. Two bookmarks are considered to be dupes if their URLs coincide. In expert mode, the selected URL preprocessing (substitution) rules are applied before the URLs are compared.", // new
+    "message": "(Пере)определить список закладок-НЕ-дублей. Две закладки считаются дублями, если их URL-ы одинаковы. В Экспертном режиме, выбранные правила предварительной обработки (замены) применяются перед сравнением URL-ов.",
     "description": "Explain that the list of all non-dupe bookmarks will be (re)calculated, and how bookmark dupes are defined"
   },
   "buttonMarkButFirst": {
@@ -474,7 +474,7 @@
     "description": "Explain that the list might falsely contain live bookmarks"
   },
   "messageSingles": {
-    "message": "$TOTAL$ (of $ALL$) non-dupe bookmarks found", // new
+    "message": "$TOTAL$ (из $ALL$) закладок-НЕ-дублей найдено",
     "description": "Report specified number of non-dupe bookmarks",
     "placeholders": {
       "total": {
@@ -488,7 +488,7 @@
     }
   },
   "titleMessageSingles": {
-    "message": "List of non-dupe bookmarks", // new
+    "message": "Список закладок-НЕ-дублей",
     "description": "Explain that list of non-dupe bookmarks is shown"
   },
   "messageCalculating": {
