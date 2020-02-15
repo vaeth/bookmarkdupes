@@ -1,5 +1,9 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-6.2:
+	Martin Väth <mvath at mvath.de>:
+	- Slight clarification in English/German formulation for count messages
+
 *bookmarkdupes-6.1:
 	Martin Väth <mvath at mvath.de>:
 	- Provide chrome compatibility layer in javascript
