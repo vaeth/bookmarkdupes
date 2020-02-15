@@ -4,6 +4,10 @@
 	Martin Väth <martin at mvath.de>:
 	- Remove support for stripping descriptions
 
+*bookmarkdupes-6.2:
+	Martin Väth <mvath at mvath.de>:
+	- Slight clarification in English/German formulation for count messages
+
 *bookmarkdupes-6.1:
 	Martin Väth <martin at mvath.de>:
 	- Provide chrome compatibility layer in javascript
