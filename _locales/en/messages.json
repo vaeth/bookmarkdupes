@@ -438,7 +438,7 @@
     "description": "Report that marks are not counted for speed reasons"
   },
   "messageMatches": {
-    "message": "$TOTAL$ (of $ALL$) dupes in $GROUPS$ groups",
+    "message": "$TOTAL$ dupes (of $ALL$ bookmarks) in $GROUPS$ groups",
     "description": "Report specified numbers of matches and groups of all",
     "placeholders": {
       "total": {
@@ -474,7 +474,7 @@
     "description": "Explain that the list might falsely contain live bookmarks"
   },
   "messageSingles": {
-    "message": "$TOTAL$ (of $ALL$) non-dupe bookmarks found",
+    "message": "$TOTAL$ non-dupe bookmarks (of $ALL$ bookmarks) found",
     "description": "Report specified number of non-dupe bookmarks",
     "placeholders": {
       "total": {

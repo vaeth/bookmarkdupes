@@ -438,7 +438,7 @@
     "description": "Report that marks are not counted for speed reasons"
   },
   "messageMatches": {
-    "message": "$TOTAL$ (von $ALL$) Duplikate in $GROUPS$ Gruppen",
+    "message": "$TOTAL$ Duplikate (von $ALL$ Lesezeichen) in $GROUPS$ Gruppen",
     "description": "Report specified numbers of matches and groups of all",
     "placeholders": {
       "total": {
@@ -474,7 +474,7 @@
     "description": "Explain that the list might falsely contain live bookmarks"
   },
   "messageSingles": {
-    "message": "$TOTAL$ (von $ALL$) nicht-Duplikate gefunden",
+    "message": "$TOTAL$ nicht-Duplikate (von $ALL$ Lesezeichen) gefunden",
     "description": "Report specified number of non-dupes",
     "placeholders": {
       "total": {
