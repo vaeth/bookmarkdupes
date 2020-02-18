@@ -438,7 +438,7 @@
     "description": "Report that marks are not counted for speed reasons"
   },
   "messageMatches": {
-    "message": "$TOTAL$ (de $ALL$) duplicados dentro de $GROUPS$ grupos",
+    "message": "$TOTAL$ duplicados (of $ALL$ marcadores) en $GROUPS$ grupos",
     "description": "Report specified numbers of matches and groups of all",
     "placeholders": {
       "total": {
@@ -474,7 +474,7 @@
     "description": "Explain that the list might falsely contain live bookmarks"
   },
   "messageSingles": {
-    "message": "$TOTAL$ (de $ALL$) no duplicados encontrados",
+    "message": "$TOTAL$ marcadores no duplicados (de $ALL$ marcadores) encontrados",
     "description": "Report specified number of non-dupe bookmarks",
     "placeholders": {
       "total": {
