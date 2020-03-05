@@ -4,6 +4,11 @@
 	Martin Väth <martin at mvath.de>:
 	- Remove support for stripping descriptions
 
+*bookmarkdupes-6.3:
+	Martin Väth <mvath at mvath.de>:
+	- Fix strip bookmarks and moving to "Dupes" folder: Regresion from 6.1
+	  https://github.com/vaeth/bookmarkdupes/issues/93
+
 *bookmarkdupes-6.2:
 	Martin Väth <mvath at mvath.de>:
 	- Slight clarification in English/German formulation for count messages

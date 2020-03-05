@@ -1,4 +1,4 @@
-/* Copyright (C) 2017-2020 Martin Väth <martin@mvath.de>, <mvath@google.com>
+/* Copyright (C) 2017-2020 Martin Väth <martin@mvath.de>
  * This project is under the GNU public license 2.0
 */
 
