@@ -1,4 +1,4 @@
-/* Copyright (C) 2017-2020 Martin Väth <martin@mvath.de>, <mvath@google.com>
+/* Copyright (C) 2017-2020 Martin Väth <martin@mvath.de>
  * This project is under the GNU public license 2.0
 */
 
@@ -25,7 +25,7 @@ const compatible = (typeof(browser) != "undefined"
   bookmarksMove: function(id, destination, callback, errorCallback) {
     browser.bookmarks.move(id, destination).then(callback, errorCallback);
   },
-  bookmarksCreate: function(callback, errorCallback) {
+  bookmarksCreate: function(bookmarkData, callback, errorCallback) {
     browser.bookmarks.create(bookmarkData).then(callback, errorCallback);
   }
 } : {
@@ -56,7 +56,7 @@ const compatible = (typeof(browser) != "undefined"
     chrome.bookmarks.move(id, destination,
       compatible.callbackOrError(callback, errorCallback));
   },
-  bookmarksCreate: function(callback, errorCallback) {
+  bookmarksCreate: function(bookmarkData, callback, errorCallback) {
     chrome.bookmarks.create(bookmarkData,
       compatible.callbackOrError(callback, errorCallback));
   }
