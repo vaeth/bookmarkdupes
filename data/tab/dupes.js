@@ -1560,12 +1560,36 @@ function compileRules(mode) {
             compiledRule.replace = 0;
             compiledRules.needSpecials = true;
             break;
-          case "\$NAME":
+          case "\$\&\$URL":
             compiledRule.replace = 1;
+            compiledRules.needSpecials = true;
+            break;
+          case "\$URL\$\&":
+            compiledRule.replace = 2;
+            compiledRules.needSpecials = true;
+            break;
+          case "\$NAME":
+            compiledRule.replace = 3;
+            compiledRules.needSpecials = compiledRules.needName = true;
+            break;
+          case "\$\&\$NAME":
+            compiledRule.replace = 4;
+            compiledRules.needSpecials = compiledRules.needName = true;
+            break;
+          case "\$NAME\$\&":
+            compiledRule.replace = 5;
             compiledRules.needSpecials = compiledRules.needName = true;
             break;
           case "\$TITLE":
-            compiledRule.replace = 2;
+            compiledRule.replace = 6;
+            compiledRules.needSpecials = true;
+            break;
+          case "\$\&\$TITLE":
+            compiledRule.replace = 7;
+            compiledRules.needSpecials = true;
+            break;
+          case "\$TITLE\$\&":
+            compiledRule.replace = 8;
             compiledRules.needSpecials = true;
             break;
           default:
@@ -1606,8 +1630,14 @@ function rulesFilter(compiledRules, folders, parent, title, url, processed) {
     const originalUrl = url;
     specials = [
       function () { return originalUrl; },
+      function (found) { return found.concat(originalUrl); },
+      function (found) { return originalUrl.concat(found); },
       function () { return name; },
-      function () { return title; }
+      function (found) { return found.concat(name); },
+      function (found) { return name.concat(found); },
+      function () { return title; },
+      function (found) { return found.concat(title); },
+      function (found) { return title.concat(found); }
     ];
   }
   let extra;
@@ -2239,17 +2269,19 @@ function initMain() {
   let state = {};
   let rules;
   const rulesDefault = [
-    { radio: "url", search: "^\\w+://[^\/]*/", replace: "\\L$&" },
+    { radio: "url", search: "^\\w\+://\[\^\/\]*/", replace: "\\L\$\&" },
     { radio: "filter", name:
-      "^[^\\0]+\\0" + compatible.getMessage("regExpTrashFolder") + "\\0" },
+      "^[^\\0]\+\\0" + compatible.getMessage("regExpTrashFolder") + "\\0" },
     { radio: "off", nameNegation: "\\0.*\\0" },
-    { radio: "off", urlNegation: "\\b(e?mail|bugs|youtube|translat)\\b",
+    { radio: "off", urlNegation: "\\b\(e?mail|bugs|youtube|translat\)\\b",
       search: "\\?.*" },
-    { radio: "off", search: "/[^/]*$" },
-    { radio: "url", search: "/+(index\\.html)?$" },
+    { radio: "off", search: "/[^/]*\$" },
+    { radio: "url", search: "/\+\(index\\.html\)?\$" },
     { radio: "url", search: "^http:", replace: "https:" },
-    { radio: "url", search: "^([^:]*://)www?\\d*\\.", replace: "$1" },
-    { radio: "url", search: "\\.htm$", replace: ".html" }
+    { radio: "url", search: "^([^:]*://)www?\\d*\\.", replace: "\$1" },
+    { radio: "url", search: "\\.htm\$", replace: ".html" },
+    { radio: "off", search: ".\+", replace: "\$\&\$TITLE" },
+    { radio: "off", search: ".\+", replace: "DEBUG: \$\&" }
   ];
   let mutationObserver;
 

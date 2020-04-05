@@ -96,7 +96,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "The replacement text for the regular expresssion matches. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively. The special texts $URL, $NAME, and $TITLE mean the original (unmodified) URL and the bookmark full name/title (with/without path), respectively.", // new
+    "message": "The replacement text for the regular expresssion matches. Symbols like $$& or $$1 can be used to refer to the match or a brace content. The special texts \\L$$& and \\U$$& mean a lower and upper case version of the matches, respectively. The special texts $$URL, $$NAME, and $$TITLE mean the original (unmodified) URL and the bookmark full name/title (with/without path), respectively. The latter three can be preceeded or followed by $$& to prepend or append the original match", // new
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {
