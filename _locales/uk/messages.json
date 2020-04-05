@@ -96,7 +96,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "Текст заміни по відповідності регулярному виразу. Символи типу $$& чи $$1 можуть використовуватися для позначення відповідностей чи вмісту дужок (). Спеціальні тексти \\L$$& та \\U$$& означають нижній та верхній регістр відповідно. Спеціальні тексти $URL, $NAME, $TITLE означають початкові (немодифіковані) URL-и і повні назви/заголовки закладок (з/без шляху) відповідно.",
+    "message": "Текст заміни по відповідності регулярному виразу. Символи типу $$& чи $$1 можуть використовуватися для позначення відповідностей чи вмісту дужок (). Спеціальні тексти \\L$$& та \\U$$& означають нижній та верхній регістр відповідно. Спеціальні тексти $$URL, $$NAME, $$TITLE означають початкові (немодифіковані) URL-и і повні назви/заголовки закладок (з/без шляху) відповідно. The latter three can be preceeded or followed by $$& to prepend or append the original match", // new
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {

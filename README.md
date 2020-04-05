@@ -124,6 +124,8 @@ several rules to work around that limitation if necessary.)
 5. `$TITLE` is the bookmark's title without the path; for instance, for the
     bookmark name “Bookmark Menu | Collection | Example” it is “Example”.
 
+Cases 3-5 can be preceeded or followed by `$$&` to prepend or append the match.
+
 ## Examples for special tasks which can be done in Expert Mode
 
 ### Task
