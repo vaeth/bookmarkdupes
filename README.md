@@ -4,7 +4,7 @@
 
 This project is under the GNU Public License 2.0.
 
-A WebExtension which can display/remove duplicate bookmarks, empty folders, or descriptions
+A WebExtension which can display/remove duplicate bookmarks or empty folders.
 
 After installing bookmarkdupes, the usage is rather simple:
 
