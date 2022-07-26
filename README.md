@@ -201,9 +201,7 @@ Explanation: First replace the URL by its full name path, and then omit the last
 
 (in alphabetical order)
 
-- Essam Ambr aka (JaMaYcKa)  https://github.com/JaMaYcKa2B1 (Arabic translation)
+- Essam Ambr aka (JaMaYcKa) https://github.com/JaMaYcKa2B1 (Arabic translation)
 - Henaro aka Ironwool https://github.com/perdolka (Russian and Ukrainian translation; redesign icon in svg; provide favicon)
 - Juan Salvador Aleixandre Talens https://github.com/juaalta (Spanish translation)
 - YFdyh000 <yfdyh000 at gmail.com> https://github.com/yfdyh000 (Simplified Chinese translation)
-
-   
