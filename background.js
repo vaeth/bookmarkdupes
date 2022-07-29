@@ -1,4 +1,4 @@
-/* Copyright (C) 2017-2020 Martin Väth <martin@mvath.de>
+/* Copyright (C) 2017-2022 Martin Väth <martin@mvath.de>
  * This project is under the GNU public license 2.0
 */
 
@@ -14,9 +14,11 @@ const compatible = (typeof(browser) != "undefined"
   browser: chrome
 };
 
-compatible.browser.browserAction.onClicked.addListener(function () {
+((typeof(compatible.browser.action) != "undefined")
+  ? compatible.browser.action : compatible.browser.browserAction )
+.onClicked.addListener(function () {
   compatible.browser.tabs.create({
-    url: compatible.browser.extension.getURL("data/tab/index.html"),
+    url: compatible.browser.runtime.getURL("data/tab/index.html"),
     active: true
   });
 });
