@@ -5,17 +5,17 @@
 	- Remove support for stripping descriptions
 
 *bookmarkdupes-6.4:
-	Martin Väth <mvath at mvath.de>:
+	Martin Väth <martin at mvath.de>:
 	- Support $&$TITLE, $TITLE$&, and analogously with $NAME and $URL:
 	  https://github.com/vaeth/bookmarkdupes/issues/94
 
 *bookmarkdupes-6.3:
-	Martin Väth <mvath at mvath.de>:
+	Martin Väth <martin at mvath.de>:
 	- Fix strip bookmarks and moving to "Dupes" folder: Regression from 6.1
 	  https://github.com/vaeth/bookmarkdupes/issues/93
 
 *bookmarkdupes-6.2:
-	Martin Väth <mvath at mvath.de>:
+	Martin Väth <martin at mvath.de>:
 	- Slight clarification in English/German formulation for count messages
 
 	Juan Salvador Aleixandre Talens:
