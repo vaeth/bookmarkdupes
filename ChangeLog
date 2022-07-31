@@ -3,6 +3,8 @@
 *bookmarkdupes-6.5:
 	Martin Väth <martin at mvath.de>:
 	- Minor compatibility improvements
+	- ar locales: Fix typos in placeholder reference
+	- ar locales: Use \n instead of \r\n for the end of the line
 
 	Essam Ambr:
 	- Create ar locales

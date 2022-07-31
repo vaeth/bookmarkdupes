@@ -548,7 +548,7 @@
     "description" : "التقرير الذي تم بدء ازالة علامات التوقف المعلمة به "
   },
   "messageRemoveProgress" : {
-    "message" : "($ECEGAGE$%)  تم ازالة $TOTAL$ من $TODO$ علامات التوقف ",
+    "message" : "($PERCENTAGE$%)  تم ازالة $TOTAL$ من $TODO$ علامات التوقف ",
     "description" : "التقرير الذي قام بتحديد عدد / اجمالي / نسبة علامات التوقف التي تم ازالتها ",
     "placeholders" : {
       "total" : {
@@ -594,7 +594,7 @@
     "description" : "تقرير بأن تحريك علامات التوقف التي تم تعليمها قد بدأ "
   },
   "messageMoveProgress" : {
-    "message" : "($ECEGAGE$%)  تم نقل $TOTAL$ من $TODO$ علامات التوقف ",
+    "message" : "($PERCENTAGE$%)  تم نقل $TOTAL$ من $TODO$ علامات التوقف ",
     "description" : "التقرير الذي تم تحديد عدد / اجمالي / النسبة المئوية لعلامات التوقف التي تم نقلها ",
     "placeholders" : {
       "total" : {
@@ -644,7 +644,7 @@
     "description" : "التقرير الذي تم بدء تشغيل الوصف الخاص به "
   },
   "messageStripProgress" : {
-    "message" : "($ECEGAGE$%)  تم تجريد $TOTAL$ من $TODO$ الأوصاف ",
+    "message" : "($PERCENTAGE$%)  تم تجريد $TOTAL$ من $TODO$ الأوصاف ",
     "description" : "التقرير الذي تم فيه تجريد العدد / المجموع / النسبة المئوية للمواصفات ",
     "placeholders" : {
       "total" : {
