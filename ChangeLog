@@ -1,8 +1,21 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-7.1:
+	Martin Väth <martin at mvath.de>:
+	- Merge changes from 6.5 (in particular: include arabic locales)
+
 *bookmarkdupes-7.0:
 	Martin Väth <martin at mvath.de>:
 	- Remove support for stripping descriptions
+
+*bookmarkdupes-6.5:
+	Martin Väth <martin at mvath.de>:
+	- Minor compatibility improvements
+	- ar locales: Fix typos in placeholder reference
+	- ar locales: Use \n instead of \r\n for the end of the line
+
+	Essam Ambr:
+	- Create ar locales
 
 *bookmarkdupes-6.4:
 	Martin Väth <martin at mvath.de>:
