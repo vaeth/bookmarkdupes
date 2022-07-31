@@ -1,5 +1,12 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-6.5:
+	Martin Väth <martin at mvath.de>:
+	- Minor compatibility improvements
+
+	Essam Ambr:
+	- Create ar locales
+
 *bookmarkdupes-6.4:
 	Martin Väth <martin at mvath.de>:
 	- Support $&$TITLE, $TITLE$&, and analogously with $NAME and $URL:
