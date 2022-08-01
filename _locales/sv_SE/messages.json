@@ -227,14 +227,6 @@
     "message": "Beräkna (om) listan över icke-bokmärkesdubbletter. Två bokmärken anses vara dubbletter om deras webbadresser sammanfaller. I expertläge tillämpas de valda webbadressförbehandlingsreglerna (ersättningsreglerna) innan webbadresserna jämförs.",
     "description": "Explain that the list of all non-dupe bookmarks will be (re)calculated, and how bookmark dupes are defined"
   },
-  "buttonListAll": {
-    "message": "Alla bokmärken",
-    "description": "Button for listing all bookmarks"
-  },
-  "titleButtonListAll": {
-    "message": "Beräkna (om) listan över alla bokmärken för att ta bort beskrivningar. Listan består av de bokmärken med en icke-tom webbadress.",
-    "description": "Explain that the list of all bookmarks will be (re)calculated for stripping descriptions and that it consists of those bookmarks with a nonempty URL"
-  },
   "buttonMarkButFirst": {
     "message": "Markera alla utom den första i varje grupp",
     "description": "Button for marking all but first"
@@ -415,18 +407,6 @@
     "message": "Flytta markerade bokmärken till “{0}”",
     "description": "Button for moving marked bookmarks to trash folder. The trash folder name in the text should be {0}"
   },
-  "warningStripMarked": {
-    "message": "\u26A0",
-    "description": "Text in front of button for stripping descriptions of marked bookmarks"
-  },
-  "buttonStripMarked": {
-    "message": "Rensa beskrivningar av markerade bokmärken",
-    "description": "Button for stripping descriptions of marked bookmarks"
-  },
-  "titleButtonStripMarked": {
-    "message": "Rensning av beskrivningar uppdaterar bokmärkets interna genereringsdatum. Dessutom kommer den att flytta bokmärket till den plats där det var sedan du senast tryckte på knappen för att beräkna denna listan.",
-    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
-  },
   "buttonStopRemoving": {
     "message": "Stoppa borttagningen!",
     "description": "Button for emergency stop of bookmark removing"
@@ -434,10 +414,6 @@
   "buttonStopMoving": {
     "message": "Stoppa flyttningen!",
     "description": "Button for emergency stop of bookmark moving"
-  },
-  "buttonStopStripping": {
-    "message": "Stoppa rensningen!",
-    "description": "Button for emergency stop of description stripping"
   },
   "checkboxFullUrl": {
     "message": "Visa webbadressen i listan. Webbadressen visas om du håller muspekaren över bokmärket.",
@@ -514,20 +490,6 @@
   "titleMessageSingles": {
     "message": "Lista över bokmärken som är icke-dubbletter",
     "description": "Explain that list of non-dupe bookmarks is shown"
-  },
-  "messageAll": {
-    "message": "Hittade $TOTAL$ bokmärken",
-    "description": "Report specified number of bookmarks",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "0"
-      }
-    }
-  },
-  "titleMessageAll": {
-    "message": "Listan består av bokmärken som har en webbadress.",
-    "description": "Explain that the list consists of those bookmarks with a nonempty URL"
   },
   "messageCalculating": {
     "message": "Söker",
@@ -638,51 +600,5 @@
   "errorNoBookmarkFolderFound": {
     "message": "Hittade inga bokmärkesmappar",
     "description": "Report that no bookmark folder was found"
-  },
-  "messageStripMarked": {
-    "message": "Rensar beskrivning av markerade bokmärken",
-    "description": "Report that description stripping started"
-  },
-  "messageStripProgress": {
-    "message": "($PERCENTAGE$ %) $TOTAL$ av $TODO$ beskrivningar rensade",
-    "description": "Report that specified number/total/percentage of descriptions are stripped",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "0"
-      },
-      "todo": {
-        "content": "$2",
-        "example": "1"
-      },
-      "percentage": {
-        "content": "$3",
-        "example": "0"
-      }
-    }
-  },
-  "messageStripSuccess": {
-    "message": "$TOTAL$ beskrivningar rensade!",
-    "description": "Report success when stripping specified number of descriptions",
-    "placeholders": {
-      "total": {
-        "content": "$1",
-        "example": "0"
-      }
-    }
-  },
-  "messageStripError": {
-    "message": "Fel efter rensning av $TOTAL$ beskrivningar: $ERROR$",
-    "description": "Report specified error after stripping specified number of descriptions",
-    "placeholders": {
-      "error": {
-        "content": "$1",
-        "example": "error description"
-      },
-      "total": {
-        "content": "$2",
-        "example": "0"
-      }
-    }
   }
 }
