@@ -1,5 +1,9 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-6.6:
+	Sopor:
+	- Create ar sv_SE locales
+
 *bookmarkdupes-6.5:
 	Martin Väth <martin at mvath.de>:
 	- Minor compatibility improvements
