@@ -1,0 +1,688 @@
+{
+  "extensionName": {
+    "message": "Bookmark Dupes",
+    "description": "Name of the extension"
+  },
+  "extensionDescription": {
+    "message": "Visa/ta bort dubbletter av bokmärken, tomma mappar eller beskrivningar",
+    "description": "Description of the extension"
+  },
+  "errorNoBookmarks": {
+    "message": "Den här webbläsarversionen saknar det obligatoriska bokmärkes-API. Bookmark Dupes och liknande tillägg kan inte fungera utan det API, tyvärr.",
+    "description": "Report that the extension will not work on that browser"
+  },
+  "warningExpertStrong": {
+    "message": "\u26A0\u00A0",
+    "description": "First part of warning to enable expert mode: strong"
+  },
+  "warningExpertText": {
+    "message": "Aktivera inte expertläget såvida du inte helt förstår konsekvenserna!",
+    "description": "Second part of warning to enable expert mode: normal"
+  },
+  "checkboxRules": {
+    "message": "Expertläge: använd anpassade regler för att matcha liknande bokmärken eller för att ignorera bokmärken när du söker.",
+    "description": "Checkbox text for switching on/off regexp rules"
+  },
+  "titleCheckboxRules": {
+    "message": "Med det här alternativet kan bokmärken ignoreras eller liknande bokmärken hittas. Detaljerna specificeras i termer av reguljära uttryck.",
+    "description": "Explain what regular expresssions are used for"
+  },
+  "radioFilter": {
+    "message": "Filter",
+    "description": "Radio button for filtering a bookmark. The text should be short"
+  },
+  "titleRadioFilter": {
+    "message": "Bokmärken som matchar kriterierna kommer att ignoreras.",
+    "description": "Explain that by choosing that button the corresponding bookmark will be ignored"
+  },
+  "radioUrl": {
+    "message": "Ändra",
+    "description": "Radio button for preprocessing a URL. The text should be short"
+  },
+  "titleRadioUrl": {
+    "message": "Innan du kontrollerar webbadresser för att hitta dubbletter av bokmärken, kommer webbadressen till matchande bokmärken att förbehandlas enligt den angivna regeln.",
+    "description": "Explain that by choosing that button the url of matching bookmarks will be preprocessed"
+  },
+  "radioOff": {
+    "message": "Av",
+    "description": "Radio button for ignoring the rule. The text should be short"
+  },
+  "titleRadioOff": {
+    "message": "Denna regel har ingen effekt.",
+    "description": "Explain that by choosing that button the rule has no effect"
+  },
+  "ruleName": {
+    "message": "Matcha namn",
+    "description": "Input field for matching the name. The text should be short"
+  },
+  "titleRuleName": {
+    "message": "Regeln gäller för ett bokmärke om sökvägen till bokmärket (mappar + namn) matchar det reguljära uttrycket. Avgränsaren för mappar är \\0 eller \\x00.",
+    "description": "Explain that bookmarks whose name matches the regular expression will be selected and that folders names are separated by \\0 or \\x00"
+  },
+  "ruleNameNegation": {
+    "message": "Namnet matchar inte",
+    "description": "Input field for not matching the name. The text should be short"
+  },
+  "titleRuleNameNegation": {
+    "message": "The rule applies to a bookmark if the bookmark path (folders + name) does not match the regular expression. The separator for folders is \\0 or \\x00.",
+    "description": "Explain that bookmarks whose names does not match the regular expression will be selected and that folders names are separated by \\0 or \\x00"
+  },
+  "ruleUrl": {
+    "message": "Webbadressmatchningar",
+    "description": "Input field for matching the URL. The text should be short"
+  },
+  "titleRuleUrl": {
+    "message": "Regeln gäller för ett bokmärke om dess webbadress matchar det reguljära uttrycket.",
+    "description": "Explain that bookmarks whose URL matches the regular expression will be selected"
+  },
+  "ruleUrlNegation": {
+    "message": "Webbadressen matchar inte",
+    "description": "Input field for matching the URL. The text should be short"
+  },
+  "titleRuleUrlNegation": {
+    "message": "Regeln gäller för ett bokmärke om dess webbadress inte matchar det reguljära uttrycket.",
+    "description": "Explain that bookmarks whose URL does not match the regular expression will be selected"
+  },
+  "ruleSearch": {
+    "message": "Ersätt webbadressmatchningar",
+    "description": "Input field for the search part of the URL. The text should be short"
+  },
+  "titleRuleSearch": {
+    "message": "När man jämför webbadresser kommer de delar som matchar det reguljära uttrycket att ersättas av den efterföljande texten.",
+    "description": "Explain that the corresponding parts of the URL will be replaced for comparison"
+  },
+  "ruleReplace": {
+    "message": "av",
+    "description": "Input field for the replacement text for the regular expression matches. The text should be short"
+  },
+  "titleRuleReplace": {
+    "message": "Ersättningstext för de matchande reguljära uttrycken. Symboler som $$& eller $$1 kan användas för att referera till matchningen eller ett parentesinnehåll. De speciella texterna \\L$$& och \\U$$& betyder en version med gemener respektive versaler av matchningarna. Specialtexterna $$URL, $$NAME och $$TITLE betyder den ursprungliga (omodifierade) webbadressen respektive bokmärkets fullständiga namn/titel (med/utan sökväg). De tre sistnämnda kan föregås eller följas av $$& för att läggas till i början eller slutet till den ursprungliga matchningen",
+    "description": "Explain that the text will be used as replacement text for the regular expression matches"
+  },
+  "buttonRuleUp": {
+    "message": "\u21E7",
+    "description": "Button for moving a rule up. The text should be short"
+  },
+  "buttonRuleUpFontWeight": {
+    "message": "bolder",
+    "description": "font-weight property for buttonRuleUp"
+  },
+  "titleButtonRuleUp": {
+    "message": "Regeln flyttas upp.",
+    "description": "Explain that the rule will be moved up"
+  },
+  "buttonRuleDown": {
+    "message": "\u21E9",
+    "description": "Button for moving a rule down. The text should be short"
+  },
+  "buttonRuleDownFontWeight": {
+    "message": "bolder",
+    "description": "font-weight property for buttonRuleDown"
+  },
+  "titleButtonRuleDown": {
+    "message": "Regeln flyttas uer.",
+    "description": "Explain that the rule will be moved down"
+  },
+  "buttonRuleSub": {
+    "message": "\u2716",
+    "description": "Button for removing a rule. The text should be short"
+  },
+  "titleButtonRuleSub": {
+    "message": "Ta bort regeln.",
+    "description": "Explain that the rule will be removed"
+  },
+  "buttonRuleAdd": {
+    "message": "\u2795",
+    "description": "Button for inserting a new rule. The text should be short"
+  },
+  "titleButtonRuleAdd": {
+    "message": "Infoga en ny regel.",
+    "description": "Explain that a new rule will be inserted"
+  },
+  "trashFolder": {
+    "message": "Dubbletter",
+    "description": "The name of the trash folder. Should match regExpTrashFolder"
+  },
+  "regExpTrashFolder": {
+    "message": "Dubbletter",
+    "description": "A regular expression matching trashFolder; symbols like .?\\[]()* should be quoted by \\ or surrounded by []"
+  },
+  "buttonRulesDefault": {
+    "message": "\u21D0 standardregler",
+    "description": "Button for restoring default rules. The text should be short"
+  },
+  "titleButtonRulesDefault": {
+    "message": "Ersätter reglerna som visas för närvarande med standardreglerna.",
+    "description": "Explain that current rules will be replaced by default rules"
+  },
+  "buttonRulesStoreLocal": {
+    "message": "\u21D2 lokal lagring",
+    "description": "Button for putting rules to local storage. The text should be short"
+  },
+  "titleButtonRulesStoreLocal": {
+    "message": "Lägg de nuvarande reglerna till webbläsarens lokala lagringsområde, eventuellt ersätt tidigare lagrade regler.",
+    "description": "Explain that current rules will replace those in the browser's local storage area"
+  },
+  "buttonRulesRestoreLocal": {
+    "message": "\u21D0 lokal lagring",
+    "description": "Button for restoring rules from local storage. The text should be short"
+  },
+  "titleButtonRulesRestoreLocal": {
+    "message": "Ersätt de regler som visas för närvarande med reglerna från webbläsarens lokala lagringsområde.",
+    "description": "Explain that current rules will be replaced by those from the browser's local storage area"
+  },
+  "buttonRulesCleanLocal": {
+    "message": "\u2716 lokal lagring",
+    "description": "Button for cleaning local storage. The text should be short"
+  },
+  "titleButtonRulesCleanLocal": {
+    "message": "Webbläsarens lokala lagringsområde kommer att rensas från lagrade regler. De lagrade reglerna kommer att gå förlorade.",
+    "description": "Explain that the browser's local storage area will be cleaned from stored rules"
+  },
+  "buttonRulesStoreSync": {
+    "message": "\u21D2 synkronisera lagring",
+    "description": "Button for putting rules to sync storage. The text should be short"
+  },
+  "titleButtonRulesStoreSync": {
+    "message": "Lägg de nuvarande reglerna till webbläsarens synklagringsområde, och ersätt eventuellt tidigare lagrade regler.",
+    "description": "Explain that current rules will replace those in the browser's sync storage area"
+  },
+  "buttonRulesRestoreSync": {
+    "message": "\u21D0 synkronisera lagring",
+    "description": "Button for restoring rules from sync storage. The text should be short"
+  },
+  "titleButtonRulesRestoreSync": {
+    "message": "Ersätt de regler som visas för närvarande med reglerna från webbläsarens synklagringsområde.",
+    "description": "Explain that current rules will be replaced by those from the browser's sync storage area"
+  },
+  "buttonRulesCleanSync": {
+    "message": "\u2716 synkronisera lagring",
+    "description": "Button for cleaning sync storage. The text should be short"
+  },
+  "titleButtonRulesCleanSync": {
+    "message": "Webbläsarens synklagringsområde kommer att rensas från lagrade regler. De lagrade reglerna kommer att gå förlorade.",
+    "description": "Explain that the sync browser's storage area will be cleaned from stored rules"
+  },
+  "buttonListDupes": {
+    "message": "Dubbletter",
+    "description": "Button for listing dupes"
+  },
+  "titleButtonListDupes": {
+    "message": "Beräkna (om) listan över bokmärkesdubbletter. Två bokmärken anses vara dubbletter om deras webbadresser sammanfaller. I expertläge tillämpas de valda webbadressförbehandlingsreglerna (ersättningsreglerna) innan webbadresserna jämförs.",
+    "description": "Explain that the list of bookmark dupes will be (re)calculated, and how bookmark dupes are defined"
+  },
+  "buttonListEmpty": {
+    "message": "Tomma mappar",
+    "description": "Button for listing empty folders"
+  },
+  "titleButtonListEmpty": {
+    "message": "Beräkna (om) listan över tomma mappar. Resultatet kan felaktigt innehålla bokmärken.",
+    "description": "Explain that the list of empty folders will be (re)calculated, and that the result might falsely contain live bookmarks"
+  },
+  "buttonListSingles": {
+    "message": "Icke-dubbletter",
+    "description": "Button for listing all non-dupe bookmarks"
+  },
+  "titleButtonListSingles": {
+    "message": "Beräkna (om) listan över icke-bokmärkesdubbletter. Två bokmärken anses vara dubbletter om deras webbadresser sammanfaller. I expertläge tillämpas de valda webbadressförbehandlingsreglerna (ersättningsreglerna) innan webbadresserna jämförs.",
+    "description": "Explain that the list of all non-dupe bookmarks will be (re)calculated, and how bookmark dupes are defined"
+  },
+  "buttonListAll": {
+    "message": "Alla bokmärken",
+    "description": "Button for listing all bookmarks"
+  },
+  "titleButtonListAll": {
+    "message": "Beräkna (om) listan över alla bokmärken för att ta bort beskrivningar. Listan består av de bokmärken med en icke-tom webbadress.",
+    "description": "Explain that the list of all bookmarks will be (re)calculated for stripping descriptions and that it consists of those bookmarks with a nonempty URL"
+  },
+  "buttonMarkButFirst": {
+    "message": "Markera alla utom den första i varje grupp",
+    "description": "Button for marking all but first"
+  },
+  "titleButtonMarkButFirst": {
+    "message": "Dessutom kommer det första bokmärket i varje grupp att avmarkeras.",
+    "description": "Explain that additionally the first bookmark in each group will be unmarked"
+  },
+  "buttonMarkButLast": {
+    "message": "Markera alla utom den sista i varje grupp",
+    "description": "Button for marking all but last"
+  },
+  "titleButtonMarkButLast": {
+    "message": "Dessutom kommer det sista bokmärket i varje grupp att avmarkeras.",
+    "description": "Explain that additionally the last bookmark in each group will be unmarked"
+  },
+  "buttonMarkButOldest": {
+    "message": "Markera alla utom den äldsta i varje grupp",
+    "description": "Button for marking all but oldest"
+  },
+  "titleButtonMarkButOldest": {
+    "message": "Dessutom kommer det äldsta bokmärket i varje grupp att avmarkeras.",
+    "description": "Explain that additionally the oldest bookmark in each group will be unmarked"
+  },
+  "buttonMarkButNewest": {
+    "message": "Markera alla utom den nyaste i varje grupp",
+    "description": "Button for marking all but newest"
+  },
+  "titleButtonMarkButNewest": {
+    "message": "Dessutom kommer det nyaste bokmärket i varje grupp att avmarkeras.",
+    "description": "Explain that additionally the newest bookmark in each group will be unmarked"
+  },
+  "buttonMarkAll": {
+    "message": "Markera alla",
+    "description": "Button for marking all"
+  },
+  "titleButtonMarkAll": {
+    "message": "Markera alla bokmärken.",
+    "description": "Explain that all bookmarks will be marked"
+  },
+  "buttonUnmarkAll": {
+    "message": "Avmarkera alla",
+    "description": "Button for unmarking all"
+  },
+  "titleButtonUnmarkAll": {
+    "message": "Avmarkera alla bokmärken.",
+    "description": "Explain that all bookmarks will be unmarked"
+  },
+  "optionNonFolder": {
+    "message": "-- Välj en mapp för att få motsvarande knappar för markering --",
+    "description": "Name of the non-folder. It might indicate that buttons for markings appear if another name is selected."
+  },
+  "optionSameFolder": {
+    "message": "-- Identiska mappar i samma grupp --",
+    "description": "Name of a special folder selection: Identical folders in the same group"
+  },
+  "titleSelectFolder": {
+    "message": "Om en mapp är vald visas motsvarande knappar för markering.",
+    "description": "Explain that selecting a folder will provide corresponding buttons for marking"
+  },
+  "buttonMarkFolder": {
+    "message": "Markera alla från vald mapp",
+    "description": "Button for marking all of the selected folder"
+  },
+  "titleButtonMarkFolder": {
+    "message": "Markera alla bokmärken från den valda mappen.",
+    "description": "Explain that all bookmarks of selected folder will be marked"
+  },
+  "buttonUnmarkFolder": {
+    "message": "Avmarkera alla från vald mapp",
+    "description": "Button for unmarking all of selected folder"
+  },
+  "titleButtonUnmarkFolder": {
+    "message": "Avmarkera alla bokmärken från den valda mappen.",
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
+  },
+  "buttonMarkFolderOther": {
+    "message": "I grupper med markerade mappar, markera alla utom dessa",
+    "description": "Button for marking all but selected folder in groups with it"
+  },
+  "titleButtonMarkFolderOther": {
+    "message": "Dessutom kommer bokmärkena från den valda mappen att avmarkeras.",
+    "description": "Explain that all bookmarks of selected folder will be unmarked"
+  },
+  "buttonMarkFolderButFirst": {
+    "message": "I grupper med markerade mappar, avmarkera alla andra eller första",
+    "description": "Button for unmarking all but selected folder or first in groups with it"
+  },
+  "titleButtonMarkFolderButFirst": {
+    "message": "I grupper med markerade mappar, alla bokmärken från den mappen och avmarkera alla andra. Om det inte finns några andra, avmarkera de första.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the first is unmarked"
+  },
+  "buttonMarkFolderButLast": {
+    "message": "I grupper med markerade mappar, avmarkera alla andra eller sista",
+    "description": "Button for unmarking all but selected folder or last in groups with it"
+  },
+  "titleButtonMarkFolderButLast": {
+    "message": "I grupper med markerade mappar, alla bokmärken från den mappen och avmarkera alla andra. Om det inte finns några andra, avmarkera de sista.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the last is unmarked"
+  },
+  "buttonMarkFolderButOldest": {
+    "message": "I grupper med markerade mappar, avmarkera alla andra eller de älsta",
+    "description": "Button for unmarking all but selected folder or oldest in groups with it"
+  },
+  "titleButtonMarkFolderButOldest": {
+    "message": "I grupper med markerade mappar, alla bokmärken från den mappen och avmarkera alla andra. Om det inte finns några andra, avmarkera de äldsta.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the oldest is unmarked"
+  },
+  "buttonMarkFolderButNewest": {
+    "message": "I grupper med markerade mappar, avmarkera alla andra eller de nyaste",
+    "description": "Button for unmarking all but selected folder or newest in groups with it"
+  },
+  "titleButtonMarkFolderButNewest": {
+    "message": "I grupper med markerade mappar, alla bokmärken från den mappen och avmarkera alla andra. Om det inte finns några andra, avmarkera de nyaste.",
+    "description": "Explain that in groups with selected folder all bookmarks from that folder will be marked and all others unmarked; if there are no others, the newest is unmarked"
+  },
+  "buttonMarkSame": {
+    "message": "Markera alla identiska mappar i samma grupp",
+    "description": "Button for marking all of the same folders in the same group"
+  },
+  "titleButtonMarkSame": {
+    "message": "Markera alla bokmärken från identiska mappar i samma grupp.",
+    "description": "Explain that all bookmarks of identical folders in the same group will be marked"
+  },
+  "buttonUnmarkSame": {
+    "message": "Avmarkera alla identiska mappar i samma grupp",
+    "description": "Button for unmarking all of the same folders in the same group"
+  },
+  "titleButtonUnmarkSame": {
+    "message": "Avmarkera alla bokmärken från identiska mappar i samma grupp.",
+    "description": "Explain that all bookmarks of identical folders in the same group will be unmarked"
+  },
+  "buttonMarkSameButFirst": {
+    "message": "Markera alla utom den första av identiska mappar i samma grupp",
+    "description": "Button for marking all but the first of identical folders in the same group"
+  },
+  "titleButtonMarkSameButFirst": {
+    "message": "Dessutom kommer den första av identiska mappar i samma grupp att avmarkeras.",
+    "description": "Explain that additionally for identical folders in the same group the first will be unmarked"
+  },
+  "buttonMarkSameButLast": {
+    "message": "Markera alla utom den sista av identiska mappar i samma grupp",
+    "description": "Button for marking all but the last of identical folders in the same group"
+  },
+  "titleButtonMarkSameButLast": {
+    "message": "Dessutom kommer den sista av identiska mappar i samma grupp att avmarkeras.",
+    "description": "Explain that additionally for identical folders in the same group the last will be unmarked"
+  },
+  "buttonMarkSameButOldest": {
+    "message": "Markera alla utom den äldsta av identiska mappar i samma grupp",
+    "description": "Button for marking all but the oldest of identical folders in the same group"
+  },
+  "titleButtonMarkSameButOldest": {
+    "message": "Dessutom kommer den äldsta av identiska mappar i samma grupp att avmarkeras.",
+    "description": "Explain that additionally for identical folders in the same group the oldest will be unmarked"
+  },
+  "buttonMarkSameButNewest": {
+    "message": "Markera alla utom den nyaste av identiska mappar i samma grupp",
+    "description": "Button for marking all but the newest of identical folders in the same group"
+  },
+  "titleButtonMarkSameButNewest": {
+    "message": "Dessutom kommer den nyaste av identiska mappar i samma grupp att avmarkeras.",
+    "description": "Explain that additionally for identical folders in the same group the newest will be unmarked"
+  },
+  "warningRemoveMarked": {
+    "message": "\u26A0",
+    "description": "Text in front of button for removing marked bookmarks"
+  },
+  "buttonRemoveMarked": {
+    "message": "Ta bort markerade bokmärken",
+    "description": "Button for removing marked bookmarks"
+  },
+  "titleButtonRemoveMarked": {
+    "message": "Markerade bokmärken avser de sedan du senast tryckte på knappen för att beräkna listan.",
+    "description": "Explain that bookmarks refer to those of last update of the list"
+  },
+  "buttonMoveMarked": {
+    "message": "Flytta markerade bokmärken till “{0}”",
+    "description": "Button for moving marked bookmarks to trash folder. The trash folder name in the text should be {0}"
+  },
+  "warningStripMarked": {
+    "message": "\u26A0",
+    "description": "Text in front of button for stripping descriptions of marked bookmarks"
+  },
+  "buttonStripMarked": {
+    "message": "Rensa beskrivningar av markerade bokmärken",
+    "description": "Button for stripping descriptions of marked bookmarks"
+  },
+  "titleButtonStripMarked": {
+    "message": "Rensning av beskrivningar uppdaterar bokmärkets interna genereringsdatum. Dessutom kommer den att flytta bokmärket till den plats där det var sedan du senast tryckte på knappen för att beräkna denna listan.",
+    "description": "Explain the side effects that stripping updates the date of bookmarks and moves them to the location of the last calculation of the list"
+  },
+  "buttonStopRemoving": {
+    "message": "Stoppa borttagningen!",
+    "description": "Button for emergency stop of bookmark removing"
+  },
+  "buttonStopMoving": {
+    "message": "Stoppa flyttningen!",
+    "description": "Button for emergency stop of bookmark moving"
+  },
+  "buttonStopStripping": {
+    "message": "Stoppa rensningen!",
+    "description": "Button for emergency stop of description stripping"
+  },
+  "checkboxFullUrl": {
+    "message": "Visa webbadressen i listan. Webbadressen visas om du håller muspekaren över bokmärket.",
+    "description": "Checkbox for displaying URL in listing. Explain that the URL will appear as title anyway"
+  },
+  "checkboxExtra": {
+    "message": "Visa ersatt webbadressinnehåll i listan",
+    "description": "Checkbox for displaying the replaced URL content in listing"
+  },
+  "messageCount": {
+    "message": "$TOTAL$ bokmärken markerade",
+    "description": "Report specified number of marked bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageNoCount": {
+    "message": "Antal markerade bokmärken som inte visas av hastighetsskäl",
+    "description": "Report that marks are not counted for speed reasons"
+  },
+  "messageMatches": {
+    "message": "$TOTAL$ dubbletter (av $ALL$ bokmärken) i $GROUPS$ grupper",
+    "description": "Report specified numbers of matches and groups of all",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "2"
+      },
+      "groups": {
+        "content": "$2",
+        "example": "1"
+      },
+      "all": {
+        "content": "$3",
+        "example": "1"
+      }
+    }
+  },
+  "titleMessageMatches": {
+    "message": "Två bokmärken anses vara dubbletter om deras webbadresser sammanfaller. II expertläge tillämpas de valda webbadressförbehandlingsreglerna (ersättningsreglerna) innan webbadresserna jämförs.",
+    "description": "Explain how bookmark dupes are defined"
+  },
+  "messageEmpty": {
+    "message": "Hittade $TOTAL$ tomma mappar",
+    "description": "Report specified number of empty folders",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "titleMessageEmpty": {
+    "message": "Listan kan felaktigt innehålla bokmärken.",
+    "description": "Explain that the list might falsely contain live bookmarks"
+  },
+  "messageSingles": {
+    "message": "Hittade $TOTAL$ bokmärken som är icke-dubbletter (av $ALL$ bokmärken)",
+    "description": "Report specified number of non-dupe bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "all": {
+        "content": "$2",
+        "example": "1"
+      }
+    }
+  },
+  "titleMessageSingles": {
+    "message": "Lista över bokmärken som är icke-dubbletter",
+    "description": "Explain that list of non-dupe bookmarks is shown"
+  },
+  "messageAll": {
+    "message": "Hittade $TOTAL$ bokmärken",
+    "description": "Report specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "titleMessageAll": {
+    "message": "Listan består av bokmärken som har en webbadress.",
+    "description": "Explain that the list consists of those bookmarks with a nonempty URL"
+  },
+  "messageCalculating": {
+    "message": "Söker",
+    "description": "Report that calculation started"
+  },
+  "messageCalculateError": {
+    "message": "Fel: $ERROR$",
+    "description": "Report specified error during calculation",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      }
+    }
+  },
+  "messageRemoveMarked": {
+    "message": "Tar bort markerade bokmärken",
+    "description": "Report that removal of marked bookmarks started"
+  },
+  "messageRemoveProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ av $TODO$ bokmärken borttagna",
+    "description": "Report that specified number/total/percentage of bookmarks are removed",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemoveSuccess": {
+    "message": "$TOTAL$ bokmärken borttagna!",
+    "description": "Report success when removing specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageRemoveError": {
+    "message": "Fel efter borttagning av $TOTAL$ bokmärken: $ERROR$",
+    "description": "Report specified error after removing specified number of bookmarks",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  },
+  "messageMoveMarked": {
+    "message": "Flyttar markerade bokmärken",
+    "description": "Report that moving of marked bookmarks started"
+  },
+  "messageMoveProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ av $TODO$ bokmärken flyttade",
+    "description": "Report that specified number/total/percentage of bookmarks are moved",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageMoveSuccess": {
+    "message": "$TOTAL$ bokmärken flyttade!",
+    "description": "Report success when moving specified number of bookmarks",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageMoveError": {
+    "message": "Fel efter flytt av $TOTAL$ bokmärken: $ERROR$",
+    "description": "Report specified error after moving specified number of bookmarks",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  },
+  "errorNoBookmarkFolderFound": {
+    "message": "Hittade inga bokmärkesmappar",
+    "description": "Report that no bookmark folder was found"
+  },
+  "messageStripMarked": {
+    "message": "Rensar beskrivning av markerade bokmärken",
+    "description": "Report that description stripping started"
+  },
+  "messageStripProgress": {
+    "message": "($PERCENTAGE$ %) $TOTAL$ av $TODO$ beskrivningar rensade",
+    "description": "Report that specified number/total/percentage of descriptions are stripped",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      },
+      "todo": {
+        "content": "$2",
+        "example": "1"
+      },
+      "percentage": {
+        "content": "$3",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripSuccess": {
+    "message": "$TOTAL$ beskrivningar rensade!",
+    "description": "Report success when stripping specified number of descriptions",
+    "placeholders": {
+      "total": {
+        "content": "$1",
+        "example": "0"
+      }
+    }
+  },
+  "messageStripError": {
+    "message": "Fel efter rensning av $TOTAL$ beskrivningar: $ERROR$",
+    "description": "Report specified error after stripping specified number of descriptions",
+    "placeholders": {
+      "error": {
+        "content": "$1",
+        "example": "error description"
+      },
+      "total": {
+        "content": "$2",
+        "example": "0"
+      }
+    }
+  }
+}
