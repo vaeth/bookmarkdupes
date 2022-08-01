@@ -25,7 +25,7 @@
   },
   "titleCheckboxRules": {
     "message": "Con esta opción, se pueden ignorar los marcadores o se pueden encontrar marcadores similares. Los detalles se especifican en términos de expresiones regulares.",
-    "description": "Explain what regular expresssions are used for"
+    "description": "Explain what regular expressions are used for"
   },
   "radioFilter": {
     "message": "Filtro",

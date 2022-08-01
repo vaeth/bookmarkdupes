@@ -3,7 +3,7 @@
   "short_name": "bookmarkdupes",
   "description": "__MSG_extensionDescription__",
   "author": "Martin Väth",
-  "version": "7.1",
+  "version": "7.2",
   "manifest_version": 3,
   "default_locale": "en",
 

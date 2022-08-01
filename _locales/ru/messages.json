@@ -25,7 +25,7 @@
   },
   "titleCheckboxRules": {
     "message": "С помощью этой опции можно игнорировать или находить подобные закладки, в соответствии с правилами. Подробности указано в терминах регулярных выражений.",
-    "description": "Explain what regular expresssions are used for"
+    "description": "Explain what regular expressions are used for"
   },
   "radioFilter": {
     "message": "Фильтр\u00A0\u00A0",

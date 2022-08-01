@@ -25,7 +25,7 @@
   },
   "titleCheckboxRules": {
     "message": "З допомогою цієї опції закладки можна ігнорувати чи знаходити подібні, відповідно до правил. Подробиці вказано у термінах регулярних виразів.",
-    "description": "Explain what regular expresssions are used for"
+    "description": "Explain what regular expressions are used for"
   },
   "radioFilter": {
     "message": "Фільтр\u00A0\u00A0",

@@ -1,5 +1,9 @@
 # ChangeLog for bookmarkdupes
 
+*bookmarkdupes-7.2:
+	Martin Väth <martin at mvath.de>:
+	- Merge changes from 6.6 (in particular: include swedish locales)
+
 *bookmarkdupes-7.1:
 	Martin Väth <martin at mvath.de>:
 	- Merge changes from 6.5 (in particular: include arabic locales)
@@ -7,6 +11,10 @@
 *bookmarkdupes-7.0:
 	Martin Väth <martin at mvath.de>:
 	- Remove support for stripping descriptions
+
+*bookmarkdupes-6.6:
+	Sopor:
+	- Create ar sv_SE locales
 
 *bookmarkdupes-6.5:
 	Martin Väth <martin at mvath.de>:
