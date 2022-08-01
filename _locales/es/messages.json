@@ -25,7 +25,7 @@
   },
   "titleCheckboxRules": {
     "message": "Con esta opción, se pueden ignorar los marcadores o se pueden encontrar marcadores similares. Los detalles se especifican en términos de expresiones regulares.",
-    "description": "Explain what regular expresssions are used for"
+    "description": "Explain what regular expressions are used for"
   },
   "radioFilter": {
     "message": "Filtro",
@@ -96,7 +96,7 @@
     "description": "Input field for the replacement text for the regular expression matches. The text should be short"
   },
   "titleRuleReplace": {
-    "message": "El texto de reemplazo para la expresión regular coincide. Se pueden usar símbolos como $$& o $$1 para referirse a la coincidencia o un contenido de corchete. Los textos especiales \\L$$& y \\U$$& significan una versión en mayúsculas y minúsculas de las coincidencias, respectivamente. Los textos especiales $$URL, $$NAME y $$TITLE significan la URL original (sin modificar) y el nombre completo / título del marcador (con / sin ruta), respectivamente. The latter three can be preceeded or followed by $$& to prepend or append the original match", // new
+    "message": "El texto de reemplazo para la expresión regular coincide. Se pueden usar símbolos como $$& o $$1 para referirse a la coincidencia o un contenido de corchete. Los textos especiales \\L$$& y \\U$$& significan una versión en mayúsculas y minúsculas de las coincidencias, respectivamente. Los textos especiales $$URL, $$NAME y $$TITLE significan la URL original (sin modificar) y el nombre completo / título del marcador (con / sin ruta), respectivamente. The latter three can be preceded or followed by $$& to prepend or append the original match", // new
     "description": "Explain that the text will be used as replacement text for the regular expression matches"
   },
   "buttonRuleUp": {

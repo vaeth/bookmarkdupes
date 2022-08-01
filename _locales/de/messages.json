@@ -25,7 +25,7 @@
   },
   "titleCheckboxRules": {
     "message": "Mit dieser Option können Lesezeichen ignoriert oder ähnliche Lesezeichen gefunden werde. Die Details werden mit Hilfe regulärer Ausdrücke festgelegt.",
-    "description": "Explain what regular expresssions are used for"
+    "description": "Explain what regular expressions are used for"
   },
   "radioFilter": {
     "message": "Ignorieren",

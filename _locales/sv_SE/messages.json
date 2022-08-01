@@ -25,7 +25,7 @@
   },
   "titleCheckboxRules": {
     "message": "Med det här alternativet kan bokmärken ignoreras eller liknande bokmärken hittas. Detaljerna specificeras i termer av reguljära uttryck.",
-    "description": "Explain what regular expresssions are used for"
+    "description": "Explain what regular expressions are used for"
   },
   "radioFilter": {
     "message": "Filter",
