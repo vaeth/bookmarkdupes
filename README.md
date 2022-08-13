@@ -6,6 +6,9 @@ This project is under the GNU Public License 2.0.
 
 A WebExtension which can display/remove duplicate bookmarks, empty folders, or descriptions
 
+Available on AMO here:
+https://addons.mozilla.org/firefox/addon/bookmark-dupes/
+
 After installing bookmarkdupes, the usage is rather simple:
 
 To open bookmarkdupes, click the extension symbol (duplicate stars) or
